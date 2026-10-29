@@ -1,10 +1,12 @@
-ARÈNE BEYBLADE — mode d'emploi
+ARÈNE BEYBLADE (Beybey 0.41) — mode d'emploi
 ==============================
 
 Contenu du dossier
   index.html   la page (ne pas toucher)
   data.js      TES TOUPIES : le seul fichier à modifier
   photos/      les photos (une par pièce)
+  sons/        les sons du match (ne pas toucher)
+  manifest.json, icon-*.png, apple-touch-icon.png   pour installer l'appli sur l'écran d'accueil (ne pas toucher)
 
 Ouvrir la page
   Double-clic sur index.html (marche sans internet ni compte), ou via GitHub Pages (voir plus bas).
@@ -25,7 +27,7 @@ Les noms de fichiers sont sensibles aux majuscules sur GitHub : écris-les exact
 
 Héberger gratuitement avec GitHub Pages
   1. Crée un compte sur github.com et un nouveau dépôt public (ex. beyblade).
-  2. "Add file" > "Upload files" : glisse index.html, data.js et le dossier photos.
+  2. "Add file" > "Upload files" : glisse tout le contenu du dossier (index.html, data.js, photos, sons, manifest.json et les icônes).
   3. Settings > Pages > Source : "Deploy from a branch", branche main, dossier /(root), Save.
   4. Après ~1 minute, ton lien est : https://TON-PSEUDO.github.io/beyblade/
   Pour modifier ensuite : ouvre data.js sur github.com, clique sur le crayon, modifie, "Commit changes". Pour une photo : "Add file" > "Upload files" dans le dossier photos.

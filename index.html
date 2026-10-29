@@ -396,6 +396,13 @@ select option:hover,select option:focus,select option:active,select option:check
 .cso.on{background:var(--accent);color:var(--accent-ink);font-weight:var(--fw-semi)}
 :is([data-theme="futur"],[data-theme="futurl"]):is([data-theme="futur"],[data-theme="futurl"]) .csb{border:1px solid var(--frame);border-radius:2px}
 :is([data-theme="futur"],[data-theme="futurl"]):is([data-theme="futur"],[data-theme="futurl"]) .csb:focus-visible,:is([data-theme="futur"],[data-theme="futurl"]):is([data-theme="futur"],[data-theme="futurl"]) .csb[aria-expanded="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+
+.frame.f3{grid-template-columns:repeat(3,1fr)}
+.soon{text-align:left}.soon b{font:var(--fw-semi) var(--fs-lg) var(--font);color:var(--accent)}
+.hist{margin-top:var(--sp-4)}.hh{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3)}
+.hr{padding:var(--sp-3) 0;border-top:1px solid var(--border);display:grid;gap:4px}
+.hm{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap}.hn{font-weight:var(--fw-medium)}.hn.hw{font-weight:var(--fw-bold);text-decoration:underline;text-underline-offset:3px}
+.hsc{font-size:var(--fs-lg);font-variant-numeric:tabular-nums}.hs{font-size:var(--fs-sm)}.hs i{font-style:normal;opacity:.7}.hd{font-size:var(--fs-xs)}
 </style>
 </head>
 <body>
@@ -458,7 +465,7 @@ let AC=null,run=0;
 const sv=(p)=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 const IC={grid:sv('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
   build:sv('<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/>'),
-  bolt:`<svg viewBox="0 0 40 24" width="40" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="12" r="5.2"/><path d="M6.5 10.5L6.5 8.4"/><path d="M7.8 12.8L9.6 13.8"/><path d="M5.2 12.8L3.4 13.8"/><circle cx="33.5" cy="12" r="5.2"/><path d="M33.5 10.5L33.5 8.4"/><path d="M34.8 12.8L36.6 13.8"/><path d="M32.2 12.8L30.4 13.8"/><text x="20" y="15.2" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="900" fill="currentColor" stroke="none">VS</text></svg>`,
+  bolt:sv('<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'),
   search:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>'};
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 const hit=(s)=>!st.q||s.toLowerCase().includes(st.q.trim().toLowerCase());
@@ -615,12 +622,15 @@ function slotUI(p,s){
   return `<div class="slot">${st.m.mode==='tournoi'?`<div class="sl">Toupie ${s+1}</div>`:''}${sw}${body}<div class="prv">${img(r.img,'sm')}<div><b>${r.name}</b><div class="mut prm">${typ(r.ty)}<span>${r.w} g</span></div></div></div></div>`;
 }
 function matchUI(){
-  const M=st.m,n=M.mode==='tournoi'?3:1;
-  const modes='<div class="frame">'+[['simple','Match simple'],['tournoi','Tournoi 3 vs 3']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div>';
+  const M=st.m;
+  if(M.mode==='bracket') return '<div class="top">'+'<div class="frame f3">'+[['simple','Match simple'],['tournoi','Match 3v3'],['bracket','Tournoi']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div></div>'
+    +'<div class="pcard soon"><div class="sl">Tournoi</div><b>Arrive bientôt</b><div class="mut">Un tableau à élimination directe : tu ajoutes les joueurs, chacun enregistre ses toupies, et c\'est parti.</div></div>';
+  const n=M.mode==='tournoi'?3:1;
+  const modes='<div class="frame f3">'+[['simple','Match simple'],['tournoi','Match 3v3'],['bracket','Tournoi']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div>';
   const rules=`<div class="rules"><label>Premier à<select onchange="mSet('target',+this.value)">${opt([3,4,5,7,10].map(v=>[v,v+' points']),M.target)}</select></label><label>Rounds<select onchange="mSet('rounds',+this.value)">${opt([[0,'Illimités'],...[1,3,5,7,9].map(v=>[v,v])],M.rounds)}</select></label></div>`;
   const note=M.mode==='tournoi'?'<div class="mut note">3 toupies par joueur, une par round, chacune une seule fois. Fin après 3 rounds ou au score.</div>':'';
   const players=[0,1].map(p=>`<div class="pcard p${p}" style="--pc:${PCOL[p]}"><input class="nm" value="${esc(M.names[p])}" oninput="st.m.names[${p}]=this.value" aria-label="Nom du joueur ${p+1}">${Array.from({length:n},(_,s)=>slotUI(p,s)).join('')}</div>`).join('');
-  return '<div class="top">'+modes+rules+'</div>'+note+'<div class="pls">'+players+'</div>'+`<div class="act"><div class="opts"><label><input type="checkbox" ${st.son?'checked':''} onchange="st.son=this.checked"> Son</label></div><button class="go" onclick="startMatch()">Lancer le match</button></div>`;
+  return '<div class="top">'+modes+rules+'</div>'+note+'<div class="pls">'+players+'</div>'+`<div class="act"><div class="opts"><label><input type="checkbox" ${st.son?'checked':''} onchange="st.son=this.checked"> Son</label></div><button class="go" onclick="startMatch()">Lancer le match</button></div>`+histUI(M.mode);
 }
 
 const fmt=ms=>{const t=Math.floor(ms/100),s=Math.floor(t/10);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')+'.'+(t%10);};
@@ -649,7 +659,7 @@ function leaveLandscape(){
   try{ screen.orientation.unlock(); }catch(e){}
   try{ if(document.fullscreenElement) document.exitFullscreen(); }catch(e){}
 }
-function stopMatch(){ leaveLandscape(); run++; stopTimer(); try{ speechSynthesis.cancel(); }catch(e){} document.getElementById('ov').classList.remove('show'); G=null; }
+function stopMatch(){ leaveLandscape(); run++; stopTimer(); try{ speechSynthesis.cancel(); }catch(e){} document.getElementById('ov').classList.remove('show'); G=null; if(st.tab==='match') draw(); }
 function pickSlot(p,s){ G.pick[p]=s; arena(); }
 function confirmPick(){ G.cur=[G.pick[0],G.pick[1]]; G.ready=[false,false]; G.phase='ready'; arena(); }
 
@@ -939,11 +949,33 @@ function cancelCount(){
   if(G.tour) G.cur.forEach((s,p)=>{ const i=G.used[p].lastIndexOf(s); if(i>=0) G.used[p].splice(i,1); });
   G.ready=[false,false]; G.phase='ready'; arena();
 }
+/* ===== Historique des matchs (par catégorie, gardé sur l'appareil) ===== */
+const HKEY='arene_hist';
+function hLoad(){ try{ return JSON.parse(localStorage.getItem(HKEY)||'[]'); }catch(e){ return []; } }
+function hSave(a){ try{ localStorage.setItem(HKEY,JSON.stringify(a.slice(0,300))); }catch(e){} }
+function histAdd(){
+  try{
+    const names=[0,1].map(p=>(G.tour?G.used[p]:[G.cur[p]]).map(sl=>resolve(G.M.p[p][sl]).name));
+    const rec={id:Date.now(),cat:G.tour?'tournoi':'simple',n:[G.M.names[0],G.M.names[1]],b:names,s:[G.score[0],G.score[1]],tg:G.M.target,r:G.hist.length,w:G.score[0]>G.score[1]?0:G.score[1]>G.score[0]?1:-1};
+    const a=hLoad(); a.unshift(rec); hSave(a); G.hid=rec.id;
+  }catch(e){}
+}
+function histDel(id){ hSave(hLoad().filter(r=>r.id!==id)); }
+function histClear(cat){ if(confirm('Vider l\'historique de cette catégorie ?')){ hSave(hLoad().filter(r=>r.cat!==cat)); drawMatch(); } }
+function histUI(cat){
+  const L=hLoad().filter(r=>r.cat===cat),title=cat==='tournoi'?'Match 3v3':'Match simple';
+  const when=id=>{ const d=new Date(id); return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); };
+  const rows=L.slice(0,40).map(r=>{
+    const w=r.w,nm=i=>`<span class="hn ${w===i?'hw':''}" style="color:${i?'var(--pink)':'var(--pa)'}">${esc(r.n[i])}</span>`;
+    return `<div class="hr"><div class="hd mut">${when(r.id)} · ${r.r} round${r.r>1?'s':''} · à ${r.tg}</div><div class="hm">${nm(0)}<b class="hsc">${r.s[0]} – ${r.s[1]}</b>${nm(1)}</div><div class="hs mut">${r.b[0].map(esc).join(' · ')} <i>vs</i> ${r.b[1].map(esc).join(' · ')}</div>${w<0?'<div class="mut">Égalité</div>':''}</div>`;
+  }).join('');
+  return `<div class="pcard hist"><div class="hh"><div class="sl">Historique · ${title}</div>${L.length?`<button class="chip" onclick="histClear('${cat}')">Vider</button>`:''}</div>${L.length?`<div class="mut">${L.length} match${L.length>1?'s':''} terminé${L.length>1?'s':''}</div>${rows}`:'<div class="mut">Aucun match pour l\'instant. Termine un match pour le retrouver ici.</div>'}</div>`;
+}
 function endRound(){
   stopTimer(); G.t=Date.now()-G.t0;
   const t=G.M.target;
   G.phase=(G.score[0]>=t||G.score[1]>=t||(G.max&&G.round>=G.max))?'over':'scored';
-  if(G.phase==='over'){ [784,988,1319].forEach((f,i)=>setTimeout(()=>beep(f,.4,.35),i*220)); buzz([120,60,120,60,300]); }
+  if(G.phase==='over'){ histAdd(); [784,988,1319].forEach((f,i)=>setTimeout(()=>beep(f,.4,.35),i*220)); buzz([120,60,120,60,300]); }
   arena();
 }
 function score(p,pts,k){
@@ -954,6 +986,7 @@ function score(p,pts,k){
 function nul(){ if(!G||G.phase!=='fight') return; playSnd('nul'); G.hist.push({p:-1,pts:0,t:Date.now()-G.t0}); endRound(); }
 function undo(){
   if(!G||G.phase==='fight'||!G.hist.length) return;
+  if(G.hid){ histDel(G.hid); G.hid=null; }
   const h=G.hist.pop(); if(h.p>=0) G.score[h.p]-=h.pts;
   G.phase='fight'; G.t0=Date.now()-h.t; arena(); startTimer();
 }
