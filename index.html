@@ -545,7 +545,38 @@ const T=ALL.map((o,i)=>{
 if(ERR.length) fatal('Il y a une erreur dans data.js',[...ERR,'Corrige ça dans <b>data.js</b>, puis recharge la page.']);
 T.forEach(x=>x.n=(x.b+' '+(x.r||'')+x.bt).replace('  ',' ').trim());
 const IM={},PH={};
-T.forEach(x=>{ PH[x.n]={}; for(const k of ['blade','ratchet','bit']){ const p=x._p[k]; if(p){ PH[x.n][k]=p; IM[p]=p; } } });
+T.forEach(x=>{ PH[x.n]={}; for(const k of ['blade','ratchet','bit']){ const p=x._p[k]; if(p){ PH[x.n][k]=p; if(!isMk(p)) IM[p]=p; } } });
+/* ---- Photos des toupies ajoutées : stockées dans IndexedDB (pas de limite de 5 Mo), le texte reste dans localStorage ---- */
+function isMk(v){ return typeof v==='string'&&v.indexOf('idb:')===0; }
+const PHF=[['photoBlade','blade'],['photoRatchet','ratchet'],['photoBit','bit']];
+const IDB={p:null};
+function idbDb(){ if(!IDB.p) IDB.p=new Promise(res=>{ try{ const r=indexedDB.open('beybey',1);
+  r.onupgradeneeded=()=>{ const d=r.result; if(!d.objectStoreNames.contains('photos')) d.createObjectStore('photos'); if(!d.objectStoreNames.contains('bak')) d.createObjectStore('bak'); };
+  r.onsuccess=()=>res(r.result); r.onerror=()=>res(null); r.onblocked=()=>res(null); }catch(e){ res(null); } }); return IDB.p; }
+function idbTx(store,mode,fn){ return idbDb().then(db=>{ if(!db) throw 0; return new Promise((res,rej)=>{ const tx=db.transaction(store,mode); let out; try{ out=fn(tx.objectStore(store)); }catch(e){ rej(e); return; } tx.oncomplete=()=>res(out&&out.result!==undefined?out.result:undefined); tx.onerror=tx.onabort=()=>rej(tx.error); }); }); }
+const idbPut=(s,k,v)=>idbTx(s,'readwrite',o=>o.put(v,k));
+const idbDel=(s,k)=>idbTx(s,'readwrite',o=>o.delete(k));
+const idbGet=(s,k)=>idbTx(s,'readonly',o=>o.get(k));
+function idbAll(s){ return idbDb().then(db=>{ if(!db) throw 0; return new Promise((res,rej)=>{ const out=[],c=db.transaction(s,'readonly').objectStore(s).openCursor(); c.onsuccess=()=>{ const x=c.result; if(x){ out.push([x.key,x.value]); x.continue(); } else res(out); }; c.onerror=()=>rej(c.error); }); }); }
+function pStore(id,k,data){ const key=id+'_'+k; return idbPut('photos',key,data).then(()=>idbGet('photos',key)).then(v=>{ if(v!==data) throw 0; IM['idb:'+key]=data; return 'idb:'+key; }).catch(()=>data); }
+const phRes=v=>isMk(v)?(IM[v]||''):(v||'');
+async function photosBoot(){
+  try{ navigator.storage&&navigator.storage.persist&&navigator.storage.persist(); }catch(e){}
+  const db=await idbDb(); if(!db) return;
+  let n=0; try{ (await idbAll('photos')).forEach(([k,v])=>{ IM['idb:'+k]=v; n++; }); }catch(e){}
+  const raw=localStorage.getItem(CKEY),arr=cLoad();
+  const isLeg=v=>typeof v==='string'&&v.indexOf('data:')===0;
+  if(arr.some(o=>o&&PHF.some(([f])=>isLeg(o[f])))){
+    try{ await idbPut('bak','arene_custom_'+Date.now(),raw); }catch(e){ return; }
+    let ch=false;
+    for(const o of arr){ if(!o) continue; for(const [f,k] of PHF){ if(isLeg(o[f])){ const m=await pStore(o.id,k,o[f]); if(isMk(m)){ o[f]=m; ch=true; } } } }
+    if(ch&&!cSave(arr)){ /* échec : l'ancienne version reste intacte */ }
+  }
+  try{ const used=new Set(); cLoad().forEach(o=>o&&PHF.forEach(([f])=>{ if(isMk(o[f])) used.add(o[f].slice(4)); }));
+    if(used.size) for(const [k] of await idbAll('photos')) if(!used.has(k)) await idbDel('photos',k); }catch(e){}
+  if(n) draw();
+}
+
 const num=v=>parseFloat(String(v));
 
 const LINE_ORDER=['BX','UX','CX'],TYPE_ORDER=['Attack','Déf','Stamina','Balance'];
@@ -607,7 +638,7 @@ function fmField(id,lab,val,mode,ph){ return `<label class="ff3"><span>${lab}</s
 function fmStats(pre,a){ a=a||[]; return `<div class="fst"><span>Stats au dos de la boîte</span>${['Att','Déf','End'].map((l,i)=>`<label><input class="nm ff" id="${pre}${i}" value="${a[i]===undefined?'':a[i]}" inputmode="numeric" placeholder="${l}" aria-label="${l}"></label>`).join('')}</div>`; }
 function fmPhoto(k,lab){ const v=FM.ph[k]; return `<div class="fph"><div class="pimg sm" id="phv_${k}">${v?`<img src="${v}" alt="">`:''}</div><div><label class="chip phb"><input type="file" accept="image/*" hidden onchange="fmPick('${k}',this)">${lab}</label><button type="button" class="chip" id="phc_${k}" onclick="fmCrop('${k}')" ${v?'':'hidden'}>Recadrer</button><button type="button" class="chip" id="phx_${k}" onclick="fmRm('${k}')" ${v?'':'hidden'}>Retirer</button></div></div>`; }
 function tpForm(id){
-  const o=id?CUSTOM.find(x=>x.id===id):null; FM.id=o?o.id:0; FM.ph={blade:o&&o.photoBlade||'',ratchet:o&&o.photoRatchet||'',bit:o&&o.photoBit||''};
+  const o=id?CUSTOM.find(x=>x.id===id):null; FM.id=o?o.id:0; FM.ph={blade:phRes(o&&o.photoBlade),ratchet:phRes(o&&o.photoRatchet),bit:phRes(o&&o.photoBit)}; FM.rm={}; FM.orig=o?{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit}:{};
   o&&0;
   const h=`<div class="fwrap"><div class="fh"><h2>${o?'Modifier la toupie':'Nouvelle toupie'}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
   <div class="fhelp"><b>Où trouver les stats ?</b> Au dos de la boîte, chaque pièce (Blade, Ratchet, Bit) a ses barres : <b>Attack</b>, <b>Defense</b> et <b>Stamina</b>, avec un chiffre à côté. Recopie-les dans Att, Déf et End. Le ratchet a aussi une <b>Height</b> (hauteur), le bit un <b>Dash</b> et un <b>Burst</b>. Tout est facultatif, mais pour les stats remplis les 3 chiffres d'une pièce ou aucun.</div>
@@ -624,7 +655,7 @@ function tpForm(id){
   f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
 }
 function fmClose(){ const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
-function fmRm(k){ FM.ph[k]=''; fmPhShow(k); }
+function fmRm(k){ FM.ph[k]=''; FM.rm[k]=true; fmPhShow(k); }
 function fmPhShow(k){ const v=FM.ph[k],e=document.getElementById('phv_'+k),x=document.getElementById('phx_'+k); if(e) e.innerHTML=v?`<img src="${v}" alt="">`:''; if(x) x.hidden=!v; const cc=document.getElementById('phc_'+k); if(cc) cc.hidden=!v; }
 var CR=null;
 function crOpen(k,src){
@@ -650,41 +681,41 @@ function crClamp(){ const a=CR.w*CR.s,b=CR.h*CR.s,V=CR.V;
   CR.y=b>=V?Math.min(0,Math.max(V-b,CR.y)):Math.min(V-b,Math.max(0,CR.y)); }
 function crZoom(n){ const V=CR.V,cx=(V/2-CR.x)/CR.s,cy=(V/2-CR.y)/CR.s; n=Math.max(CR.mn,Math.min(CR.mn*0+n,CR.mn*0+document.getElementById('crz').max*1)); CR.s=n; CR.x=V/2-cx*n; CR.y=V/2-cy*n; document.getElementById('crz').value=n; crDraw(); }
 function crDraw(){ crClamp(); const c=document.getElementById('crc'),x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,CR.V,CR.V); x.drawImage(CR.im,CR.x,CR.y,CR.w*CR.s,CR.h*CR.s); }
-function crOk(){ const S=480,f=S/CR.V,c=document.createElement('canvas'); c.width=c.height=S; const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,S,S); x.drawImage(CR.im,CR.x*f,CR.y*f,CR.w*CR.s*f,CR.h*CR.s*f); const k=CR.k; FM.ph[k]=c.toDataURL('image/jpeg',.78); crClose(); fmPhShow(k); }
+function crOk(){ const S=480,f=S/CR.V,c=document.createElement('canvas'); c.width=c.height=S; const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,S,S); x.drawImage(CR.im,CR.x*f,CR.y*f,CR.w*CR.s*f,CR.h*CR.s*f); const k=CR.k; FM.ph[k]=c.toDataURL('image/jpeg',.78); FM.rm[k]=false; crClose(); fmPhShow(k); }
 function crClose(){ const e=document.getElementById('cr'); if(e){ e.classList.remove('show'); e.innerHTML=''; } CR=null; }
 function fmCrop(k){ if(FM.ph[k]) crOpen(k,FM.ph[k]); }
 function fmPick(k,inp){
   const f=inp.files&&inp.files[0]; if(!f) return; const u=URL.createObjectURL(f);
   crOpen(k,u); setTimeout(()=>URL.revokeObjectURL(u),60000); inp.value=''; }
-function fmSave(){
+async function fmSave(){
   const arr=pre=>{ const v=[0,1,2].map(i=>gv(pre+i)); return v.every(x=>x!=='')?v.map(x=>+String(x).replace(',','.')):undefined; };
   const o={id:FM.id||Date.now(),blade:gv('f_blade'),ligne:gv('f_ligne'),typeBlade:gv('f_bty'),typeToupie:gv('f_t'),ratchet:gv('f_ratchet'),bit:gv('f_bit'),poidsBlade:gv('f_wb').replace(',','.'),poidsRatchet:gv('f_wr').replace(',','.'),poidsBit:gv('f_wbt').replace(',','.')};
   const h=gv('f_h'),da=gv('f_dash'),bu=gv('f_burst'); if(h) o.hauteurRatchet=+h; if(da) o.dashBit=+da; if(bu) o.burstBit=+bu;
   const sb=arr('f_sb'),sr=arr('f_sr'),sbt=arr('f_sbt'); if(sb) o.statsBlade=sb; if(sr) o.statsRatchet=sr; if(sbt) o.statsBit=sbt;
-  if(FM.ph.blade) o.photoBlade=FM.ph.blade; if(FM.ph.ratchet) o.photoRatchet=FM.ph.ratchet; if(FM.ph.bit) o.photoBit=FM.ph.bit;
   const er=cErr(o),nm=(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim();
   if(!er.length&&T.some(x=>x.n===nm&&x._c!==FM.id)) er.push('Une toupie « '+nm+' » existe déjà.');
   const box=document.getElementById('f_err'); if(er.length){ box.innerHTML=er.map(esc).join('<br>'); box.scrollIntoView({block:'center'}); return; }
+  for(const [f,k] of PHF){ const v=FM.ph[k]; if(v){ o[f]=await pStore(o.id,k,v); } else if(!FM.rm[k]&&FM.orig[k]) o[f]=FM.orig[k]; else if(FM.rm[k]&&isMk(FM.orig[k])) idbDel('photos',FM.orig[k].slice(4)).catch(()=>{}); }
   const all=cLoad(),ix=all.findIndex(x=>x.id===o.id); ix>=0?all[ix]=o:all.push(o);
   if(!cSave(all)){ box.textContent='Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.'; return; }
   location.reload();
 }
-function fmDel(){ const b=document.getElementById('f_del'); if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent='Confirmer la suppression'; return; }
-  cSave(cLoad().filter(x=>x.id!==FM.id)); location.reload(); }
+async function fmDel(){ const b=document.getElementById('f_del'); if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent='Confirmer la suppression'; return; }
+  cSave(cLoad().filter(x=>x.id!==FM.id)); for(const [,k] of PHF) { try{ await idbDel('photos',FM.id+'_'+k); }catch(e){} } location.reload(); }
 function bkMsg(t){ const e=document.getElementById('bkmsg'); if(e) e.textContent=t; }
-function backupExport(){
+async function backupExport(){ try{ await PBOOT; }catch(e){}
   const d=new Date(),pad=n=>String(n).padStart(2,'0'),name='beybey-sauvegarde-'+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'.json';
-  const data={app:'arene-beyblade',v:1,date:d.toISOString(),toupies:cLoad(),historique:hLoad()};
+  const data={app:'arene-beyblade',v:1,date:d.toISOString(),toupies:cLoad().map(o=>{ const c=Object.assign({},o); PHF.forEach(([f])=>{ if(isMk(c[f])){ const v=IM[c[f]]; if(v) c[f]=v; else delete c[f]; } }); return c; }),historique:hLoad()};
   const file=new File([JSON.stringify(data)],name,{type:'application/json'});
   if(navigator.canShare&&navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Sauvegarde Beybey'}).then(()=>bkMsg('Sauvegarde exportée.')).catch(()=>{}); return; }
   try{ const a=document.createElement('a'); a.href=URL.createObjectURL(file); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); bkMsg('Sauvegarde téléchargée : '+name); }catch(e){ bkMsg('Impossible de créer le fichier sur cet appareil.'); }
 }
 function backupImport(inp){
   const f=inp.files&&inp.files[0]; if(!f) return; const r=new FileReader();
-  r.onload=()=>{ try{
+  r.onload=async()=>{ try{
       const d=JSON.parse(r.result); if(!d||d.app!=='arene-beyblade') throw 0;
       const have=cLoad(),names=new Set(T.map(x=>x.n)); let addT=0,addH=0;
-      (d.toupies||[]).forEach(o=>{ if(!o||cErr(o).length) return; const nm=(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim(); if(have.some(x=>x.id===o.id)||names.has(nm)) return; have.push(o); names.add(nm); addT++; });
+      for(const o of (d.toupies||[])){ if(!o||cErr(o).length) continue; const nm=(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim(); if(have.some(x=>x.id===o.id)||names.has(nm)) continue; for(const [f,k] of PHF){ if(typeof o[f]==='string'&&o[f].indexOf('data:')===0) o[f]=await pStore(o.id,k,o[f]); else delete o[f]; } have.push(o); names.add(nm); addT++; }
       const hs=hLoad(); (d.historique||[]).forEach(h=>{ if(h&&h.id&&!hs.some(x=>x.id===h.id)){ hs.push(h); addH++; } }); hs.sort((a,b)=>b.id-a.id);
       if(!cSave(have)) { bkMsg('Pas assez de place pour tout importer.'); return; } hSave(hs);
       bkMsg('Importé : '+addT+' toupie'+(addT>1?'s':'')+' et '+addH+' match'+(addH>1?'s':'')+' en plus.'); if(addT) setTimeout(()=>location.reload(),900);
@@ -699,7 +730,7 @@ function partItems(){
   if(st.cat==='bits') return T.map(x=>({n:x.bt,w:x.wbt,img:P(x).bit,ty:x.t,l:'',s:x.sbt,dash:x.dash,burst:x.burst,ex:(x.dash!==''?`Dash <b>${x.dash}</b> · `:'')+(x.burst!==''?`Burst <b>${x.burst}</b>`:'')}));
   return T.map(x=>({n:x.b,w:x.wb,img:P(x).blade,ty:x.bty,l:x.l,s:x.sb,ex:''}));
 }
-function img(p,cls){ return p?`<div class="pimg ${cls||''}"><img loading="lazy" onerror="this.remove()" src="${IM[p]}" alt=""></div>`:`<div class="pimg ${cls||''}"></div>`; }
+function img(p,cls){ return p&&IM[p]?`<div class="pimg ${cls||''}"><img loading="lazy" onerror="this.remove()" src="${IM[p]}" alt=""></div>`:`<div class="pimg ${cls||''}"></div>`; }
 function typ(t){ return t?`<span class="tp"><span class="dot" style="background:${TYPE[t]}"></span>${t}</span>`:''; }
 const SC={A:'var(--stat-a)',D:'var(--stat-d)',S:'var(--stat-s)'};
 function bars(a,mx){ if(!a) return ''; mx=mx||70; return '<div class="sb">'+['A','D','S'].map((k,i)=>`<i><span>${k}</span><u style="--w:${Math.min(100,a[i]/mx*100)}%;--c:${SC[k]}"></u><b>${a[i]}</b></i>`).join('')+'</div>'; }
@@ -1288,10 +1319,11 @@ function csEnhance(root){
   });
 }
 document.addEventListener('click',e=>{ if(csOpen&&!csOpen.list.contains(e.target)&&!csOpen.btn.contains(e.target)) csClose(); },true);
-addEventListener('resize',csClose); addEventListener('scroll',csClose,true);
+let csW=innerWidth; addEventListener('resize',()=>{ if(innerWidth!==csW){ csW=innerWidth; csClose(); } }); addEventListener('scroll',e=>{ if(csOpen&&e.target&&e.target.nodeType===1&&csOpen.list.contains(e.target)) return; if(csOpen&&e.target===csOpen.list) return; csClose(); },true);
 new MutationObserver(()=>csEnhance(document.body)).observe(document.body,{childList:true,subtree:true});
 csEnhance(document.body);
 draw();
+const PBOOT=photosBoot().catch(()=>{});
 </script>
 </body>
 </html>
