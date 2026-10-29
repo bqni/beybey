@@ -69,3 +69,6 @@ Installer sur le téléphone
   Le nom de l'icône vient de la ligne apple-mobile-web-app-title dans index.html (iPhone) et de manifest.json
   (Android). Après un changement de nom ou d'icône, supprime le raccourci et rajoute-le.
   Joue toujours depuis l'icône : le navigateur et l'icône ne partagent pas leurs données.
+  
+
+© 2026 bqni, usage non commercial uniquement
