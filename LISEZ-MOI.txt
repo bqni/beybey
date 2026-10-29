@@ -1,0 +1,32 @@
+ARÈNE BEYBLADE — mode d'emploi
+==============================
+
+Contenu du dossier
+  index.html   la page (ne pas toucher)
+  data.js      TES TOUPIES : le seul fichier à modifier
+  photos/      les photos (une par pièce)
+
+Ouvrir la page
+  Double-clic sur index.html (marche sans internet ni compte), ou via GitHub Pages (voir plus bas).
+
+Ajouter une toupie
+  1. Ouvre data.js dans un éditeur de texte (Bloc-notes, VS Code, ou l'éditeur de GitHub).
+  2. Copie un bloc { ... }, colle-le avant le ]; final, change les valeurs.
+  3. Enregistre, recharge la page. Si tu as fait une erreur, la page affiche laquelle.
+
+Ajouter une photo
+  1. Prends la photo, réduis-la à ~600 px de large (voir plus bas) — une photo brute de téléphone pèse 3 à 5 Mo et ralentirait la page.
+  2. Mets-la dans le dossier photos/ avec un nom simple, sans espaces ni accents : blade-nom.jpg, ratchet-2-60.jpg, bit-hn.jpg.
+  3. Écris son chemin dans data.js, par exemple : photoBlade: 'photos/blade-nom.jpg'
+  Une même photo peut servir à plusieurs toupies (écris le même chemin).
+
+Réduire une photo : squoosh.app (gratuit, dans le navigateur), largeur 600, JPEG qualité 75.
+Les noms de fichiers sont sensibles aux majuscules sur GitHub : écris-les exactement pareil dans data.js.
+
+Héberger gratuitement avec GitHub Pages
+  1. Crée un compte sur github.com et un nouveau dépôt public (ex. beyblade).
+  2. "Add file" > "Upload files" : glisse index.html, data.js et le dossier photos.
+  3. Settings > Pages > Source : "Deploy from a branch", branche main, dossier /(root), Save.
+  4. Après ~1 minute, ton lien est : https://TON-PSEUDO.github.io/beyblade/
+  Pour modifier ensuite : ouvre data.js sur github.com, clique sur le crayon, modifie, "Commit changes". Pour une photo : "Add file" > "Upload files" dans le dossier photos.
+  Le dépôt est public, donc la page et les photos aussi : n'y mets rien de privé.
