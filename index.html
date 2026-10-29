@@ -908,14 +908,16 @@ function startMatch(){
   stopTimer(); run++;
   G={M,tour,round:1,score:[0,0],hist:[],used:[[],[]],cur:[0,0],pick:[null,null],t:0,t0:0,
      max:tour?Math.min(3,M.rounds||3):M.rounds,phase:tour?'pick':'ready',ready:[false,false]};
-  lsOff=false; document.getElementById('ov').classList.add('show'); lsApply(); arena(); goLandscape();
+  lsOff=false; lsPort=isPort(); document.getElementById('ov').classList.add('show'); lsApply(); arena(); goLandscape();
 }
 
-let lsOff=false;
-function lsApply(){ const ov=document.getElementById('ov'); if(!ov) return false; const on=!!G&&!lsOff&&innerHeight>innerWidth&&ov.classList.contains('show'); const was=ov.classList.contains('ls'); ov.classList.toggle('ls',on); return on!==was; }
-function rotBtn(){ const ov=document.getElementById('ov'); const on=ov&&ov.classList.contains('ls'); if(!on&&innerHeight<=innerWidth) return ''; return `<button class="chip" onclick="lsToggle()" aria-label="${on?'Revenir en portrait':'Passer en paysage'}">${on?'Portrait':'Paysage'}</button>`; }
+let lsOff=false,lsPort=null;
+const isPort=()=>matchMedia('(orientation:portrait)').matches;
+function lsApply(){ const ov=document.getElementById('ov'); if(!ov) return false; const on=!!G&&!lsOff&&isPort()&&ov.classList.contains('show'); const was=ov.classList.contains('ls'); ov.classList.toggle('ls',on); return on!==was; }
+function rotBtn(){ const ov=document.getElementById('ov'); const on=ov&&ov.classList.contains('ls'); if(!on&&!isPort()) return ''; return `<button class="chip" onclick="lsToggle()" aria-label="${on?'Revenir en portrait':'Passer en paysage'}">${on?'Portrait':'Paysage'}</button>`; }
 function lsToggle(){ const ov=document.getElementById('ov'); lsOff=ov.classList.contains('ls'); if(lsOff){ try{ screen.orientation.unlock(); }catch(e){} } else goLandscape(); lsApply(); arena(); }
-addEventListener('resize',()=>{ if(G&&lsApply()) arena(); });
+function lsSync(){ if(!G) return; const ch=lsApply(),pt=isPort(); if(ch||pt!==lsPort){ lsPort=pt; arena(); } }
+['resize','orientationchange'].forEach(ev=>addEventListener(ev,()=>{ lsSync(); setTimeout(lsSync,200); setTimeout(lsSync,600); }));
 function goLandscape(){
   try{
     const d=document.documentElement, f=d.requestFullscreen||d.webkitRequestFullscreen;
