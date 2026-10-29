@@ -421,6 +421,13 @@ html[data-bg="hex"] #bgc,html[data-bg="sparks"] #bgc{display:block}
 :is([data-theme="futur"],[data-theme="futurl"]):is([data-theme="futur"],[data-theme="futurl"]) .nm.ff{color:var(--text);font-weight:400;text-transform:none;letter-spacing:0;font-size:var(--fs-md)}
 .nm.ff{color:var(--text)}
 .fst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);align-items:end}.fst>span{grid-column:1/-1}
+#cr{position:fixed;inset:0;z-index:60;display:none;background:rgba(0,0,0,.8);align-items:center;justify-content:center;padding:var(--sp-4)}
+#cr.show{display:flex}
+.crb{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg,14px);padding:var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-3);align-items:center;max-width:100%}
+.crb canvas{touch-action:none;cursor:grab;border-radius:10px;border:1px solid var(--border);display:block}
+.crb input[type=range]{width:100%}
+.crb p{margin:0;font-size:13px;color:var(--text-2);text-align:center}
+.crb .fact{display:flex;gap:var(--sp-2)}
 .fph{display:flex;align-items:center;gap:var(--sp-3)}.fph>div:last-child{display:flex;gap:var(--sp-2);flex-wrap:wrap}.fph img{width:100%;height:100%;object-fit:cover;display:block}
 .phb{cursor:pointer;display:inline-flex;align-items:center;height:var(--ctl-h);padding:0 var(--sp-3)}
 .fph .pimg{background:var(--surface-2);border:1px solid var(--border)}
@@ -578,7 +585,7 @@ function setCat(c){ st.cat=c; draw(); }
 function setQ(v){ st.q=v; renderList(); }
 const NOTICE=[
  ['Installer l\'appli (iPhone et Android)','<p><b>iPhone</b> : ouvre le site dans <b>Safari</b>, touche le bouton Partager, puis <b>Sur l\'écran d\'accueil</b>.</p><p><b>Android</b> : ouvre le site dans <b>Chrome</b>, touche le menu (les 3 points), puis <b>Installer l\'application</b> ou <b>Ajouter à l\'écran d\'accueil</b>.</p><p>L\'icône s\'ouvre ensuite en plein écran, comme une vraie appli. Si l\'ancien nom ou l\'ancienne icône reste affiché après une mise à jour, supprime le raccourci et rajoute-le. Joue toujours depuis l\'icône : le navigateur et l\'icône ne partagent pas leurs données.</p>'],
- ['Ajouter une toupie','<p>Onglet <b>Toupies</b>, bouton <b>+ Ajouter une toupie</b>.</p><ul><li>Remplis la ligne (BX, UX ou CX), les types, les noms et les poids en grammes.</li><li>Pas de ratchet (ratchet intégré à la blade) : laisse la partie Ratchet vide.</li><li>Les stats sont au dos de la boîte : chaque pièce (blade, ratchet, bit) a 3 barres Attack, Defense et Stamina avec un chiffre à côté. Recopie-les dans Att, Déf et End, les 3 ou aucun. Le ratchet a aussi une Height, le bit un Dash et un Burst.</li><li>3 photos : une pour la blade (elle sert aussi pour la toupie), une pour le ratchet, une pour le bit. Elles sont recadrées et allégées toutes seules.</li></ul><p>Pour changer ou supprimer une toupie ajoutée, ouvre sa fiche et touche <b>Modifier</b>.</p>'],
+ ['Ajouter une toupie','<p>Onglet <b>Toupies</b>, bouton <b>+ Ajouter une toupie</b>.</p><ul><li>Remplis la ligne (BX, UX ou CX), les types, les noms et les poids en grammes.</li><li>Pas de ratchet (ratchet intégré à la blade) : laisse la partie Ratchet vide.</li><li>Les stats sont au dos de la boîte : chaque pièce (blade, ratchet, bit) a 3 barres Attack, Defense et Stamina avec un chiffre à côté. Recopie-les dans Att, Déf et End, les 3 ou aucun. Le ratchet a aussi une Height, le bit un Dash et un Burst.</li><li>3 photos : une pour la blade (elle sert aussi pour la toupie), une pour le ratchet, une pour le bit. Après le choix de la photo, tu la déplaces et la zoomes pour la centrer (bouton Recadrer pour la reprendre ensuite). Elle est ensuite allégée toute seule.</li></ul><p>Pour changer ou supprimer une toupie ajoutée, ouvre sa fiche et touche <b>Modifier</b>.</p>'],
  ['Sauvegarde et autre appareil','<p>Tes toupies ajoutées, ton historique et tes réglages sont gardés <b>uniquement sur cet appareil</b>. Sur iPhone, Safari et l\'icône de l\'écran d\'accueil ne partagent rien : joue toujours depuis l\'icône.</p><ul><li><b>Exporter</b> crée un fichier de sauvegarde (sur iPhone : « Enregistrer dans Fichiers »).</li><li><b>Importer</b> ajoute le contenu d\'un fichier à ce que tu as déjà, sans rien écraser.</li></ul><p>Pense à exporter de temps en temps, surtout avant de vider les données du navigateur.</p>'],
  ['Match et historique','<ul><li><b>Match simple</b> : une toupie par joueur.</li><li><b>Match 3v3</b> : trois toupies par joueur, une par round, chacune une seule fois.</li><li><b>Tournoi</b> : arrive plus tard.</li><li>Points : Spin Finish 1, Over Finish 2, Burst Finish 2, Xtreme Finish 3. Premier à 4 par défaut.</li><li>La croix ✕ quitte le match en cours (avec confirmation). Un match quitté n\'est pas enregistré.</li></ul><p>L\'historique des matchs terminés apparaît sous le bouton Lancer le match, séparé par catégorie. Annuler le dernier point d\'un match fini le retire de l\'historique.</p>'],
  ['Build et comparatif','<p>Compose deux builds (blade, ratchet, bit) et compare-les. Sur chaque ligne, le gagnant prend la couleur de son camp : vert pour A, rose pour B. Les égalités sont grisées. Pour le poids, la toupie la plus lourde gagne.</p>']
@@ -598,7 +605,7 @@ const gv=id=>{ const e=document.getElementById(id); return e?e.value.trim():''; 
 function fmOpts(list,sel){ return list.map(([v,l])=>`<option value="${v}" ${v===sel?'selected':''}>${l}</option>`).join(''); }
 function fmField(id,lab,val,mode,ph){ return `<label class="ff3"><span>${lab}</span><input class="nm ff" id="${id}" value="${esc(val===undefined||val===null?'':val)}" inputmode="${mode||'text'}" placeholder="${ph||''}" autocomplete="off" autocapitalize="${mode?'off':'words'}"></label>`; }
 function fmStats(pre,a){ a=a||[]; return `<div class="fst"><span>Stats au dos de la boîte</span>${['Att','Déf','End'].map((l,i)=>`<label><input class="nm ff" id="${pre}${i}" value="${a[i]===undefined?'':a[i]}" inputmode="numeric" placeholder="${l}" aria-label="${l}"></label>`).join('')}</div>`; }
-function fmPhoto(k,lab){ const v=FM.ph[k]; return `<div class="fph"><div class="pimg sm" id="phv_${k}">${v?`<img src="${v}" alt="">`:''}</div><div><label class="chip phb"><input type="file" accept="image/*" hidden onchange="fmPick('${k}',this)">${lab}</label><button type="button" class="chip" id="phx_${k}" onclick="fmRm('${k}')" ${v?'':'hidden'}>Retirer</button></div></div>`; }
+function fmPhoto(k,lab){ const v=FM.ph[k]; return `<div class="fph"><div class="pimg sm" id="phv_${k}">${v?`<img src="${v}" alt="">`:''}</div><div><label class="chip phb"><input type="file" accept="image/*" hidden onchange="fmPick('${k}',this)">${lab}</label><button type="button" class="chip" id="phc_${k}" onclick="fmCrop('${k}')" ${v?'':'hidden'}>Recadrer</button><button type="button" class="chip" id="phx_${k}" onclick="fmRm('${k}')" ${v?'':'hidden'}>Retirer</button></div></div>`; }
 function tpForm(id){
   const o=id?CUSTOM.find(x=>x.id===id):null; FM.id=o?o.id:0; FM.ph={blade:o&&o.photoBlade||'',ratchet:o&&o.photoRatchet||'',bit:o&&o.photoBit||''};
   o&&0;
@@ -618,13 +625,37 @@ function tpForm(id){
 }
 function fmClose(){ const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
 function fmRm(k){ FM.ph[k]=''; fmPhShow(k); }
-function fmPhShow(k){ const v=FM.ph[k],e=document.getElementById('phv_'+k),x=document.getElementById('phx_'+k); if(e) e.innerHTML=v?`<img src="${v}" alt="">`:''; if(x) x.hidden=!v; }
+function fmPhShow(k){ const v=FM.ph[k],e=document.getElementById('phv_'+k),x=document.getElementById('phx_'+k); if(e) e.innerHTML=v?`<img src="${v}" alt="">`:''; if(x) x.hidden=!v; const cc=document.getElementById('phc_'+k); if(cc) cc.hidden=!v; }
+var CR=null;
+function crOpen(k,src){
+  const im=new Image(); im.onload=()=>{
+    let e=document.getElementById('cr'); if(!e){ e=document.createElement('div'); e.id='cr'; document.body.appendChild(e); }
+    const V=Math.max(200,Math.min(320,innerWidth-80)),w=im.naturalWidth,h=im.naturalHeight,mn=V/Math.max(w,h),cv=V/Math.min(w,h);
+    CR={k,im,V,w,h,mn,s:cv,x:0,y:0};
+    CR.x=(V-w*CR.s)/2; CR.y=(V-h*CR.s)/2;
+    e.innerHTML=`<div class="crb"><p>Glisse la photo pour la centrer, zoome avec le curseur.</p><canvas id="crc" width="${V}" height="${V}" style="width:${V}px;height:${V}px"></canvas><input type="range" id="crz" min="${mn}" max="${cv*4}" step="any" value="${CR.s}" aria-label="Zoom"><div class="fact"><button class="go sm" onclick="crOk()">Valider</button><button class="chip" onclick="crClose()">Annuler</button></div></div>`;
+    e.classList.add('show'); const c=document.getElementById('crc'); let d=null;
+    c.onpointerdown=ev=>{ d={px:ev.clientX,py:ev.clientY,x:CR.x,y:CR.y}; c.setPointerCapture(ev.pointerId); c.style.cursor='grabbing'; };
+    c.onpointermove=ev=>{ if(!d) return; CR.x=d.x+(ev.clientX-d.px); CR.y=d.y+(ev.clientY-d.py); crDraw(); };
+    c.onpointerup=c.onpointercancel=()=>{ d=null; c.style.cursor='grab'; };
+    c.onwheel=ev=>{ ev.preventDefault(); crZoom(CR.s*(ev.deltaY<0?1.08:1/1.08)); };
+    document.getElementById('crz').oninput=ev=>crZoom(+ev.target.value);
+    crDraw();
+  };
+  im.onerror=()=>{ const r=document.getElementById('f_err'); if(r) r.textContent='Cette photo ne peut pas être lue. Essaie une autre image.'; };
+  im.src=src;
+}
+function crClamp(){ const a=CR.w*CR.s,b=CR.h*CR.s,V=CR.V;
+  CR.x=a>=V?Math.min(0,Math.max(V-a,CR.x)):Math.min(V-a,Math.max(0,CR.x));
+  CR.y=b>=V?Math.min(0,Math.max(V-b,CR.y)):Math.min(V-b,Math.max(0,CR.y)); }
+function crZoom(n){ const V=CR.V,cx=(V/2-CR.x)/CR.s,cy=(V/2-CR.y)/CR.s; n=Math.max(CR.mn,Math.min(CR.mn*0+n,CR.mn*0+document.getElementById('crz').max*1)); CR.s=n; CR.x=V/2-cx*n; CR.y=V/2-cy*n; document.getElementById('crz').value=n; crDraw(); }
+function crDraw(){ crClamp(); const c=document.getElementById('crc'),x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,CR.V,CR.V); x.drawImage(CR.im,CR.x,CR.y,CR.w*CR.s,CR.h*CR.s); }
+function crOk(){ const S=480,f=S/CR.V,c=document.createElement('canvas'); c.width=c.height=S; const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,S,S); x.drawImage(CR.im,CR.x*f,CR.y*f,CR.w*CR.s*f,CR.h*CR.s*f); const k=CR.k; FM.ph[k]=c.toDataURL('image/jpeg',.78); crClose(); fmPhShow(k); }
+function crClose(){ const e=document.getElementById('cr'); if(e){ e.classList.remove('show'); e.innerHTML=''; } CR=null; }
+function fmCrop(k){ if(FM.ph[k]) crOpen(k,FM.ph[k]); }
 function fmPick(k,inp){
-  const f=inp.files&&inp.files[0]; if(!f) return; const u=URL.createObjectURL(f),im=new Image();
-  im.onload=()=>{ const S=480,c=document.createElement('canvas');c.width=c.height=S;const x=c.getContext('2d'),m=Math.min(im.naturalWidth,im.naturalHeight),sx=(im.naturalWidth-m)/2,sy=(im.naturalHeight-m)/2;
-    x.fillStyle='#fff';x.fillRect(0,0,S,S);x.drawImage(im,sx,sy,m,m,0,0,S,S); FM.ph[k]=c.toDataURL('image/jpeg',.78); URL.revokeObjectURL(u); fmPhShow(k); inp.value=''; };
-  im.onerror=()=>{ URL.revokeObjectURL(u); const e=document.getElementById('f_err'); if(e) e.textContent='Cette photo ne peut pas être lue. Essaie une autre image.'; };
-  im.src=u; }
+  const f=inp.files&&inp.files[0]; if(!f) return; const u=URL.createObjectURL(f);
+  crOpen(k,u); setTimeout(()=>URL.revokeObjectURL(u),60000); inp.value=''; }
 function fmSave(){
   const arr=pre=>{ const v=[0,1,2].map(i=>gv(pre+i)); return v.every(x=>x!=='')?v.map(x=>+String(x).replace(',','.')):undefined; };
   const o={id:FM.id||Date.now(),blade:gv('f_blade'),ligne:gv('f_ligne'),typeBlade:gv('f_bty'),typeToupie:gv('f_t'),ratchet:gv('f_ratchet'),bit:gv('f_bit'),poidsBlade:gv('f_wb').replace(',','.'),poidsRatchet:gv('f_wr').replace(',','.'),poidsBit:gv('f_wbt').replace(',','.')};
