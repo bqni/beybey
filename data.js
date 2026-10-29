@@ -9,6 +9,7 @@
 //
 //  Règles :
 //   - ligne : 'BX', 'UX' ou 'CX'
+//   - edition : 'hasbro' ou 'tt' (Takara Tomy)
 //   - typeBlade : type de la blade seule — 'Attack', 'Déf', 'Stamina' ou 'Balance'
 //   - typeToupie : type de la toupie stock d'origine (mêmes valeurs)
 //   - Pas de ratchet : écris ratchet: '' et poidsRatchet: ''
@@ -23,6 +24,7 @@ const TOUPIES = [
   {
     blade: 'Antler Stag B',
     ligne: 'CX',
+    edition: 'hasbro',
     typeBlade: 'Stamina',
     typeToupie: 'Déf',
     ratchet: '2-60',
@@ -43,6 +45,7 @@ const TOUPIES = [
   {
     blade: 'Stun Medusa',
     ligne: 'UX',
+    edition: 'hasbro',
     typeBlade: 'Déf',
     typeToupie: 'Stamina',
     ratchet: '9-60',
@@ -63,6 +66,7 @@ const TOUPIES = [
   {
     blade: 'Cutter Shinobi',
     ligne: 'UX',
+    edition: 'hasbro',
     typeBlade: 'Balance',
     typeToupie: 'Attack',
     ratchet: '',
@@ -82,6 +86,7 @@ const TOUPIES = [
   {
     blade: 'Rampart Aegis',
     ligne: 'UX',
+    edition: 'hasbro',
     typeBlade: 'Déf',
     typeToupie: 'Stamina',
     ratchet: '',
@@ -101,6 +106,7 @@ const TOUPIES = [
   {
     blade: 'Saber Samurai',
     ligne: 'UX',
+    edition: 'hasbro',
     typeBlade: 'Attack',
     typeToupie: 'Attack',
     ratchet: '2-70',
@@ -121,6 +127,7 @@ const TOUPIES = [
   {
     blade: 'Buster Dran',
     ligne: 'UX',
+    edition: 'hasbro',
     typeBlade: 'Attack',
     typeToupie: 'Stamina',
     ratchet: '5-70',
@@ -141,6 +148,7 @@ const TOUPIES = [
   {
     blade: 'Tide Whale',
     ligne: 'BX',
+    edition: 'hasbro',
     typeBlade: 'Balance',
     typeToupie: 'Balance',
     ratchet: '5-80',
@@ -161,6 +169,7 @@ const TOUPIES = [
   {
     blade: 'Delta Unicorn PO',
     ligne: 'CX',
+    edition: 'hasbro',
     typeBlade: 'Balance',
     typeToupie: 'Balance',
     ratchet: '3-60',
@@ -181,6 +190,7 @@ const TOUPIES = [
   {
     blade: 'Hurricane Enlil IS',
     ligne: 'CX',
+    edition: 'hasbro',
     typeBlade: 'Balance',
     typeToupie: 'Balance',
     ratchet: '7-55',

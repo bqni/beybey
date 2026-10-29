@@ -462,6 +462,65 @@ button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-
 
 <script src="data.js"></script>
 <script>
+/* ===== Langue : français (par défaut pour les navigateurs en français) ou anglais ===== */
+var LANG=(function(){ try{ var l=localStorage.getItem('lang'); if(l==='fr'||l==='en') return l; }catch(e){} return /^fr/i.test(navigator.language||'')?'fr':'en'; })();
+var LOC=LANG==='fr'?'fr-FR':'en-GB';
+document.documentElement.lang=LANG;
+var I18N={"HTML": {"<p><b>iPhone</b> : ouvre le site dans <b>Safari</b>, touche le bouton Partager, puis <b>Sur l'écran d'accueil</b>.</p><p><b>Android</b> : ouvre le site dans <b>Chrome</b>, touche le menu (les 3 points), puis <b>Installer l'application</b> ou <b>Ajouter à l'écran d'accueil</b>.</p><p>L'icône s'ouvre ensuite en plein écran, comme une vraie appli. Si l'ancien nom ou l'ancienne icône reste affiché après une mise à jour, supprime le raccourci et rajoute-le. Joue toujours depuis l'icône : le navigateur et l'icône ne partagent pas leurs données.</p>": "<p><b>iPhone</b>: open the site in <b>Safari</b>, tap the Share button, then <b>Add to Home Screen</b>.</p><p><b>Android</b>: open the site in <b>Chrome</b>, tap the menu (the 3 dots), then <b>Install app</b> or <b>Add to Home screen</b>.</p><p>The icon then opens full screen, like a real app. If the old name or icon is still shown after an update, delete the shortcut and add it again. Always play from the icon: the browser and the icon don't share their data.</p>", "<p>Onglet <b>Toupies</b>, bouton <b>+ Ajouter une toupie</b>.</p><ul><li>Remplis la ligne (BX, UX ou CX), les types, les noms et les poids en grammes.</li><li>Pas de ratchet (ratchet intégré à la blade) : laisse la partie Ratchet vide.</li><li>Les stats sont au dos de la boîte : chaque pièce (blade, ratchet, bit) a 3 barres Attack, Defense et Stamina avec un chiffre à côté. Recopie-les dans Att, Déf et End, les 3 ou aucun. Le ratchet a aussi une Height, le bit un Dash et un Burst.</li><li><b>Après chaque ajout (ou modification), pense à sauvegarder</b> : Options, puis Exporter. Tes toupies et tes photos sont gardées dans le navigateur, elles peuvent disparaître s'il nettoie ses données.</li><li>3 photos : une pour la blade (elle sert aussi pour la toupie), une pour le ratchet, une pour le bit. Après le choix de la photo, tu la déplaces et la zoomes pour la centrer (bouton Recadrer pour la reprendre ensuite). Elle est ensuite allégée toute seule.</li></ul><p>Pour changer ou supprimer une toupie ajoutée, ouvre sa fiche et touche <b>Modifier</b>.</p>": "<p>Go to the <b>Beys</b> tab and tap <b>+ Add a bey</b>.</p><ul><li>Fill in the line (BX, UX or CX), the types, the names and the weights in grams.</li><li>No ratchet (ratchet built into the blade): leave the Ratchet part empty.</li><li>The stats are on the back of the box: each part (blade, ratchet, bit) has 3 bars, Attack, Defense and Stamina, with a number next to them. Copy them into Att, Def and Sta, all 3 or none. The ratchet also has a Height, the bit a Dash and a Burst.</li><li><b>After every addition (or edit), remember to back up</b>: Options, then Export. Your beys and photos are kept in the browser and can disappear if it clears its data.</li><li>3 photos: one for the blade (it is also used for the whole bey), one for the ratchet, one for the bit. After choosing the photo, move and zoom it to center it (use Crop to redo it later). It is then compressed automatically.</li></ul><p>To edit or delete an added bey, open its card and tap <b>Edit</b>.</p>", "<p>Tes toupies ajoutées, ton historique et tes réglages sont gardés <b>uniquement sur cet appareil</b>. Sur iPhone, Safari et l'icône de l'écran d'accueil ne partagent rien : joue toujours depuis l'icône.</p><ul><li><b>Exporter</b> crée un fichier de sauvegarde (sur iPhone : « Enregistrer dans Fichiers »).</li><li><b>Importer</b> ajoute le contenu d'un fichier à ce que tu as déjà, sans rien écraser.</li></ul><p>Pense à exporter de temps en temps, surtout avant de vider les données du navigateur.</p>": "<p>Your added beys, your history and your settings are kept <b>only on this device</b>. On iPhone, Safari and the Home Screen icon share nothing: always play from the icon.</p><ul><li><b>Export</b> creates a backup file (on iPhone: “Save to Files”).</li><li><b>Import</b> adds the content of a file to what you already have, without overwriting anything.</li></ul><p>Remember to export from time to time, especially before clearing browser data.</p>", "<ul><li><b>Match simple</b> : une toupie par joueur.</li><li><b>Match 3v3</b> : trois toupies par joueur, une par round, chacune une seule fois.</li><li><b>Tournoi</b> : arrive plus tard.</li><li>Points : Spin Finish 1, Over Finish 2, Burst Finish 2, Xtreme Finish 3. Premier à 4 par défaut.</li><li>La croix ✕ quitte le match en cours (avec confirmation). Un match quitté n'est pas enregistré.</li></ul><p>L'historique des matchs terminés apparaît sous le bouton Lancer le match, séparé par catégorie. Annuler le dernier point d'un match fini le retire de l'historique.</p>": "<ul><li><b>Single match</b>: one bey per player.</li><li><b>3v3 Match</b>: three beys per player, one per round, each used only once.</li><li><b>Tournament</b>: coming later.</li><li>Points: Spin Finish 1, Over Finish 2, Burst Finish 2, Xtreme Finish 3. First to 4 by default.</li><li>The ✕ quits the current match (with confirmation). A match you quit is not saved.</li></ul><p>The history of finished matches appears under the Start match button, split by category. Undoing the last point of a finished match removes it from the history.</p>", "<p>Compose deux builds (blade, ratchet, bit) et compare-les. Sur chaque ligne, le gagnant prend la couleur de son camp : vert pour A, rose pour B. Les égalités sont grisées. Pour le poids, la toupie la plus lourde gagne.</p>": "<p>Build two combos (blade, ratchet, bit) and compare them. On each line, the winner takes the color of its side: green for A, pink for B. Ties are greyed out. For weight, the heavier bey wins.</p>", "<b>Où trouver les stats ?</b> Au dos de la boîte, chaque pièce (Blade, Ratchet, Bit) a ses barres : <b>Attack</b>, <b>Defense</b> et <b>Stamina</b>, avec un chiffre à côté. Recopie-les dans Att, Déf et End. Le ratchet a aussi une <b>Height</b> (hauteur), le bit un <b>Dash</b> et un <b>Burst</b>. Tout est facultatif, mais pour les stats remplis les 3 chiffres d'une pièce ou aucun.": "<b>Where to find the stats?</b> On the back of the box, each part (Blade, Ratchet, Bit) has its bars: <b>Attack</b>, <b>Defense</b> and <b>Stamina</b>, with a number next to them. Copy them into Att, Def and Sta. The ratchet also has a <b>Height</b>, the bit a <b>Dash</b> and a <b>Burst</b>. Everything is optional, but for stats fill in all 3 numbers of a part or none.", "<b>Toupie enregistrée.</b> Pense à faire une sauvegarde : Options, puis Exporter. Sans ça, tu peux tout perdre si le navigateur nettoie ses données.": "<b>Bey saved.</b> Remember to make a backup: Options, then Export. Otherwise you could lose everything if the browser clears its data.", "Quand vous êtes prêts, appuyez chacun sur <b>Prêt</b> : le 3, 2, 1 part tout seul": "When you are both ready, each of you taps <b>Ready</b>: the 3, 2, 1 starts by itself"}, "TXT": {"Notice": "Guide", "Installer l'appli (iPhone et Android)": "Install the app (iPhone and Android)", "Ajouter une toupie": "Add a bey", "Sauvegarde et autre appareil": "Backup and other devices", "Match et historique": "Match and history", "Build et comparatif": "Build and comparison", "Toupies": "Beys", "Mes toupies": "My beys", "Mes pièces": "My parts", "Collection": "Collection", "Parts": "Parts", "+ Ajouter une toupie": "+ Add a bey", "Compose deux builds et compare-les": "Build two combos and compare them", "Choisis deux toupies et lance le combat": "Pick two beys and start the battle", "Thème, fond et sauvegarde": "Theme, background and backup", "Thème": "Theme", "Fond": "Background", "Sombre": "Dark", "Clair": "Light", "Grille": "Grid", "Hexagones": "Hexagons", "Particules": "Particles", "Mes données": "My data", "Exporter": "Export", "Importer": "Import", "Les réglages et les données sont gardés sur cet appareil.": "Settings and data are stored on this device.", "Aucun résultat": "No results", "Attaque": "Attack", "Défense": "Defense", "Déf": "Defense", "Poids": "Weight", "Hauteur": "Height", "Nom": "Name", "Comparatif": "Comparison", "Ratchet intégré à la blade.": "Ratchet built into the blade.", "Aller à la sauvegarde": "Go to backup", "Plus tard": "Later", "Fermer": "Close", "Quitter": "Quit", "Modifier": "Edit", "Supprimer": "Delete", "Confirmer la suppression": "Confirm deletion", "Retirer": "Remove", "Recadrer": "Crop", "Valider": "Confirm", "Enregistrer": "Save", "Vider": "Clear", "Modifier la toupie": "Edit bey", "Nouvelle toupie": "New bey", "Général": "General", "Ligne": "Line", "Type de la toupie": "Bey type", "Type de la blade": "Blade type", "(facultatif)": "(optional)", "(sa photo sert aussi pour la toupie)": "(its photo is also used for the whole bey)", "Poids (g)": "Weight (g)", "Photo de la blade": "Blade photo", "Photo du ratchet": "Ratchet photo", "Photo du bit": "Bit photo", "Stats au dos de la boîte": "Stats on the back of the box", "Choisir…": "Choose…", "Il manque le nom de la blade.": "The blade name is missing.", "Il manque le nom du bit.": "The bit name is missing.", "Choisis la ligne (BX, UX ou CX).": "Choose the line (BX, UX or CX).", "Choisis le type de la blade.": "Choose the blade type.", "Choisis le type de la toupie.": "Choose the bey type.", "Le poids de la blade doit être un nombre.": "The blade weight must be a number.", "Le poids du bit doit être un nombre.": "The bit weight must be a number.", "Le poids du ratchet doit être un nombre.": "The ratchet weight must be a number.", "Cette photo ne peut pas être lue. Essaie une autre image.": "This photo can't be read. Try another image.", "Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.": "Not enough space to save. Remove a photo or a bey and try again.", "Pas assez de place pour tout importer.": "Not enough space to import everything.", "Sauvegarde exportée.": "Backup exported.", "Impossible de créer le fichier sur cet appareil.": "Can't create the file on this device.", "Ce fichier n'est pas une sauvegarde Beybey.": "This file is not a Beybey backup.", "Glisse la photo pour la centrer, zoome avec le curseur.": "Drag the photo to center it, zoom with the slider.", "Toupie stock": "Stock bey", "Pièces perso": "Custom parts", "Déjà utilisée": "Already used", "Match simple": "Single match", "Match 3v3": "3v3 Match", "Tournoi": "Tournament", "Arrive bientôt": "Coming soon", "Un tableau à élimination directe : tu ajoutes les joueurs, chacun enregistre ses toupies, et c'est parti.": "A knockout bracket: add the players, each one registers their beys, and off you go.", "3 toupies par joueur, une par round, chacune une seule fois. Fin après 3 rounds ou au score.": "3 beys per player, one per round, each used only once. Ends after 3 rounds or on score.", "Premier à": "First to", "Illimités": "Unlimited", "Son": "Sound", "Lancer le match": "Start match", "Prêt": "Ready", "Round nul": "Draw round", "Round suivant": "Next round", "Rejouer": "Play again", "Égalité": "Tie", "Chaque joueur choisit sa toupie pour ce round": "Each player picks a bey for this round", "Hyper vitesse": "Hyper Speed", "Aucun match pour l'instant. Termine un match pour le retrouver ici.": "No matches yet. Finish a match to see it here.", "Inverser l'ordre": "Reverse order", "Trier par": "Sort by", "Chercher…": "Search…", "Annuler": "Cancel", "Quitter le match en cours ? Il ne sera pas enregistré.": "Quit the current match? It won't be saved.", "Vider l'historique de cette catégorie ?": "Clear the history of this category?"}, "ATTR": {"Att": "Att", "Déf": "Def", "End": "Sta"}};
+Object.assign(I18N.TXT,{"Tous":"All","Édition":"Edition","Choisis l'édition : Hasbro ou Takara Tomy.":"Pick the edition: Hasbro or Takara Tomy."});
+function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
+function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
+(function(){
+  if(LANG==='fr') return;
+  var TX=I18N.TXT,HT=I18N.HTML,AT=I18N.ATTR;
+  var pl=function(n,s,p){ return n+' '+(n==1?s:p); };
+  var RX=[
+    [/^Round (\d+) sur (\d+)$/,function(m){ return 'Round '+m[1]+' of '+m[2]; }],
+    [/^Premier à (\d+)$/,function(m){ return 'First to '+m[1]; }],
+    [/^(.+) pour B$/,function(m){ return m[1]+' for B'; }],
+    [/^Joueur (\d)$/,function(m){ return 'Player '+m[1]; }],
+    [/^Nom du joueur (\d)$/,function(m){ return 'Player '+m[1]+' name'; }],
+    [/^Toupie (\d)$/,function(m){ return 'Bey '+m[1]; }],
+    [/^(\d+) toupies? ajoutées? · (\d+) matchs? dans l'historique\. Exporte pour sauvegarder ou changer d'appareil\.$/,function(m){ return pl(+m[1],'bey','beys')+' added · '+pl(+m[2],'match','matches')+' in history. Export to back up or switch devices.'; }],
+    [/^(\d+) matchs? terminés?$/,function(m){ return pl(+m[1],'match','matches')+' finished'; }],
+    [/^Historique · (.+)$/,function(m){ return 'History · '+tr(m[1]); }],
+    [/^(.+) gagne (\d+) à (\d+)$/,function(m){ return tr(m[1])+' wins '+m[2]+' to '+m[3]; }],
+    [/^Égalité (.+)$/,function(m){ return 'Tie '+m[1]; }],
+    [/^(.+ · \d\d:\d\d · \d+ rounds?) · à (\d+)$/,function(m){ return m[1]+' · to '+m[2]; }],
+    [/^(.+) \+(\d+) · (.+)$/,function(m){ return tr(m[1])+' +'+m[2]+' · '+m[3]; }],
+    [/^Sauvegarde téléchargée : (.+)$/,function(m){ return 'Backup downloaded: '+m[1]; }],
+    [/^Importé : (\d+) toupies? et (\d+) matchs? en plus\.$/,function(m){ return 'Imported: '+pl(+m[1],'bey','beys')+' and '+pl(+m[2],'match','matches')+' added.'; }],
+    [/^Une toupie « (.+) » existe déjà\.$/,function(m){ return 'A bey \u201c'+m[1]+'\u201d already exists.'; }],
+    [/^Ex\. (.+)$/,function(m){ return 'E.g. '+m[1]; }]
+  ];
+  function tr(t,el){
+    if(t==='Annuler'&&el&&/undo/.test(el.getAttribute&&el.getAttribute('onclick')||'')) return 'Undo';
+    if(Object.prototype.hasOwnProperty.call(TX,t)) return TX[t];
+    for(var i=0;i<RX.length;i++){ var m=RX[i][0].exec(t); if(m) return RX[i][1](m); }
+    return t;
+  }
+  window.LTR=tr;
+  function trAttr(e){ ['placeholder','aria-label','title','alt'].forEach(function(a){ var v=e.getAttribute(a); if(!v) return; var r=Object.prototype.hasOwnProperty.call(AT,v)?AT[v]:tr(v); if(r!==v) e.setAttribute(a,r); }); }
+  function run(root){
+    if(!root) return;
+    if(root.nodeType===3){ one(root); return; }
+    if(root.nodeType!==1||/^(SCRIPT|STYLE|CANVAS)$/.test(root.tagName)) return;
+    var blocks=[]; if(root.matches&&root.matches('.ntb,.fhelp,#rm>div,.mut')) blocks.push(root);
+    root.querySelectorAll('.ntb,.fhelp,#rm>div,.mut').forEach(function(e){ blocks.push(e); });
+    blocks.forEach(function(e){ if(!e.children.length) return; var k=e.innerHTML.trim(); if(Object.prototype.hasOwnProperty.call(HT,k)) e.innerHTML=HT[k]; });
+    var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),n,list=[]; while(n=w.nextNode()) list.push(n);
+    list.forEach(one);
+    if(root.matches&&root.matches('[placeholder],[aria-label],[title],[alt]')) trAttr(root);
+    root.querySelectorAll('[placeholder],[aria-label],[title],[alt]').forEach(trAttr);
+  }
+  function one(n){ var p=n.parentElement; if(!p||/^(SCRIPT|STYLE|TEXTAREA)$/.test(p.tagName)) return; var v=n.nodeValue; if(!/[A-Za-zÀ-ÿ]/.test(v)) return; var t=v.trim(),r=tr(t,p); if(r!==t) n.nodeValue=v.replace(t,r); }
+  var mo=new MutationObserver(function(ms){ ms.forEach(function(m){ m.addedNodes.forEach(function(x){ run(x); }); }); });
+  mo.observe(document.body||document.documentElement,{childList:true,subtree:true});
+  document.addEventListener('DOMContentLoaded',function(){ run(document.body); });
+  window.addEventListener('load',function(){ run(document.body); });
+})();
+</script>
+<script>
 const TYPE={'Stamina':'var(--t-stamina)','Déf':'var(--t-def)','Attack':'var(--t-attack)','Balance':'var(--t-balance)'};
 const THEMES=[['futur','Sombre'],['futurl','Clair']];
 function setTheme(t){ document.documentElement.dataset.theme=t; try{ localStorage.setItem('theme',t); }catch(e){}
@@ -546,7 +605,7 @@ const T=ALL.map((o,i)=>{
   const hasTot=o.total!==undefined&&o.total!==null&&o.total!=='';
   const tot=hasTot?pw(o.total):Math.round((avg(wb)+(wr===''?0:avg(wr))+avg(wbt))*10)/10;
   const ar=v=>Array.isArray(v)&&v.length===3?v.map(Number):null;
-  return {b:o.blade||'?',bty,l,t,r:o.ratchet||'',bt:o.bit||'?',wb,wr,wbt,tot,sb:ar(o.statsBlade),sr:ar(o.statsRatchet),sbt:ar(o.statsBit),h:o.hauteurRatchet||'',dash:o.dashBit||'',burst:o.burstBit||'',_p:{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit},_c:i>=NB?o.id:0};
+  return {b:o.blade||'?',bty,l,t,r:o.ratchet||'',bt:o.bit||'?',wb,wr,wbt,tot,sb:ar(o.statsBlade),sr:ar(o.statsRatchet),sbt:ar(o.statsBit),h:o.hauteurRatchet||'',dash:o.dashBit||'',burst:o.burstBit||'',_p:{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit},ed:o.edition==='tt'?'tt':'hasbro',_c:i>=NB?o.id:0};
 });
 if(ERR.length) fatal('Il y a une erreur dans data.js',[...ERR,'Corrige ça dans <b>data.js</b>, puis recharge la page.']);
 T.forEach(x=>x.n=(x.b+' '+(x.r||'')+x.bt).replace('  ',' ').trim());
@@ -589,7 +648,8 @@ const LINE_ORDER=['BX','UX','CX'],TYPE_ORDER=['Attack','Déf','Stamina','Balance
 const LINE_COL={BX:'var(--l-bx)',UX:'var(--l-ux)',CX:'var(--l-cx)'};
 const DEF_DESC={nom:false,poids:true,ligne:false,type:false,att:true,def:true,end:true,haut:false,dash:true,burst:true};
 const SI={att:0,def:1,end:2};
-const st={tab:'toupies',view:'collection',cat:'blades',key:'nom',desc:false,q:'',a:0,b:1,son:true,voix:false};
+let EDV='all'; try{ const e=localStorage.getItem('ed'); if(e==='hasbro'||e==='tt') EDV=e; }catch(e){}
+const st={tab:'toupies',view:'collection',cat:'blades',ed:EDV,key:'nom',desc:false,q:'',a:0,b:1,son:true,voix:false};
 let AC=null,run=0;
 const sv=(p)=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 const IC={grid:sv('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
@@ -619,6 +679,8 @@ function setKey(k){ st.key=k; st.desc=DEF_DESC[k]; const f=document.getElementBy
 function flip(){ st.desc=!st.desc; draw(); }
 function setView(v){ st.view=v; draw(); }
 function setCat(c){ st.cat=c; draw(); }
+function setEd(e){ st.ed=e; try{ localStorage.setItem('ed',e); }catch(x){} draw(); }
+const TF=()=>st.ed==='all'?T:T.filter(x=>x.ed===st.ed);
 function setQ(v){ st.q=v; renderList(); }
 const NOTICE=[
  ['Installer l\'appli (iPhone et Android)','<p><b>iPhone</b> : ouvre le site dans <b>Safari</b>, touche le bouton Partager, puis <b>Sur l\'écran d\'accueil</b>.</p><p><b>Android</b> : ouvre le site dans <b>Chrome</b>, touche le menu (les 3 points), puis <b>Installer l\'application</b> ou <b>Ajouter à l\'écran d\'accueil</b>.</p><p>L\'icône s\'ouvre ensuite en plein écran, comme une vraie appli. Si l\'ancien nom ou l\'ancienne icône reste affiché après une mise à jour, supprime le raccourci et rajoute-le. Joue toujours depuis l\'icône : le navigateur et l\'icône ne partagent pas leurs données.</p>'],
@@ -629,11 +691,11 @@ const NOTICE=[
 ];
 function ntToggle(i){ const e=document.getElementById('nt'+i); if(!e) return; const o=e.classList.toggle('open'); e.querySelector('.nth').setAttribute('aria-expanded',o); }
 function noticeUI(){ return '<div class="optl">Notice</div><div class="nts">'+NOTICE.map(([t,b],i)=>`<div class="ntc" id="nt${i}"><button class="nth" onclick="ntToggle(${i})" aria-expanded="false"><span>${t}</span><i aria-hidden="true">+</i></button><div class="ntb">${b}</div></div>`).join('')+'</div>'; }
-function optSet(k,v){ if(k==='theme') setTheme(v); else setBg(v); draw(); }
+function optSet(k,v){ if(k==='lang'){ setLang(v); return; } if(k==='theme') setTheme(v); else setBg(v); draw(); }
 function optsUI(){
   const th=document.documentElement.dataset.theme||'futur';
   const seg=(k,list,cur,f3)=>'<div class="frame'+(f3?' f3':'')+'">'+list.map(([v,l])=>`<button class="${cur===v?'on':''}" onclick="optSet('${k}','${v}')"><span>${l}</span></button>`).join('')+'</div>';
-  return '<div class="optl">Thème</div>'+seg('theme',THEMES,th,false)+'<div class="optl">Fond</div>'+seg('bg',[['actuel','Grille'],['hex','Hexagones'],['sparks','Particules']],bgMode,true)+'<div class="optl">Mes données</div><div class="frame"><button onclick="backupExport()"><span>Exporter</span></button><button onclick="document.getElementById(\'imp\').click()"><span>Importer</span></button></div><input type="file" id="imp" accept="application/json,.json" hidden onchange="backupImport(this)"><div class="mut note" id="bkmsg" aria-live="polite">'+CUSTOM.length+' toupie'+(CUSTOM.length>1?'s':'')+' ajoutée'+(CUSTOM.length>1?'s':'')+' · '+hLoad().length+' match'+(hLoad().length>1?'s':'')+' dans l\'historique. Exporte pour sauvegarder ou changer d\'appareil.</div><div class="mut note">Les réglages et les données sont gardés sur cet appareil.</div>'+noticeUI();
+  return '<div class="optl">Thème</div>'+seg('theme',THEMES,th,false)+'<div class="optl">Langue · Language</div>'+seg('lang',[['fr','Français'],['en','English']],LANG,false)+'<div class="optl">Fond</div>'+seg('bg',[['actuel','Grille'],['hex','Hexagones'],['sparks','Particules']],bgMode,true)+'<div class="optl">Mes données</div><div class="frame"><button onclick="backupExport()"><span>Exporter</span></button><button onclick="document.getElementById(\'imp\').click()"><span>Importer</span></button></div><input type="file" id="imp" accept="application/json,.json" hidden onchange="backupImport(this)"><div class="mut note" id="bkmsg" aria-live="polite">'+CUSTOM.length+' toupie'+(CUSTOM.length>1?'s':'')+' ajoutée'+(CUSTOM.length>1?'s':'')+' · '+hLoad().length+' match'+(hLoad().length>1?'s':'')+' dans l\'historique. Exporte pour sauvegarder ou changer d\'appareil.</div><div class="mut note">Les réglages et les données sont gardés sur cet appareil.</div>'+noticeUI();
 }
 /* ===== Ajout / modification de toupies + sauvegarde ===== */
 const FM={id:0,ph:{}};
@@ -648,7 +710,7 @@ function tpForm(id){
   o&&0;
   const h=`<div class="fwrap"><div class="fh"><h2>${o?'Modifier la toupie':'Nouvelle toupie'}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
   <div class="fhelp"><b>Où trouver les stats ?</b> Au dos de la boîte, chaque pièce (Blade, Ratchet, Bit) a ses barres : <b>Attack</b>, <b>Defense</b> et <b>Stamina</b>, avec un chiffre à côté. Recopie-les dans Att, Déf et End. Le ratchet a aussi une <b>Height</b> (hauteur), le bit un <b>Dash</b> et un <b>Burst</b>. Tout est facultatif, mais pour les stats remplis les 3 chiffres d'une pièce ou aucun.</div>
-  <div class="fs">Général</div><div class="fg2"><label class="ff3"><span>Ligne</span><select id="f_ligne">${fmOpts([['','Choisir…'],['BX','BX'],['UX','UX'],['CX','CX']],o&&String(o.ligne).toUpperCase()||'')}</select></label><label class="ff3"><span>Type de la toupie</span><select id="f_t">${fmOpts(TYPES4,o?normT(o.typeToupie):'')}</select></label></div>
+  <div class="fs">Général</div><div class="fg2"><label class="ff3"><span>Édition</span><select id="f_ed">${fmOpts([['','Choisir…'],['hasbro','Hasbro'],['tt','Takara Tomy']],o?(o.edition==='tt'?'tt':'hasbro'):'')}</select></label></div><div class="fg2"><label class="ff3"><span>Ligne</span><select id="f_ligne">${fmOpts([['','Choisir…'],['BX','BX'],['UX','UX'],['CX','CX']],o&&String(o.ligne).toUpperCase()||'')}</select></label><label class="ff3"><span>Type de la toupie</span><select id="f_t">${fmOpts(TYPES4,o?normT(o.typeToupie):'')}</select></label></div>
   <div class="fs">Blade <small>(sa photo sert aussi pour la toupie)</small></div>
   ${fmField('f_blade','Nom',o&&o.blade,'','Ex. Delta Unicorn')}<div class="fg2"><label class="ff3"><span>Type de la blade</span><select id="f_bty">${fmOpts(TYPES4,o?normT(o.typeBlade):'')}</select></label>${fmField('f_wb','Poids (g)',o&&o.poidsBlade,'decimal','Ex. 33')}</div>${fmStats('f_sb',o&&o.statsBlade)}${fmPhoto('blade','Photo de la blade')}
   <div class="fs">Ratchet <small>(facultatif)</small></div>
@@ -695,10 +757,10 @@ function fmPick(k,inp){
   crOpen(k,u); setTimeout(()=>URL.revokeObjectURL(u),60000); inp.value=''; }
 async function fmSave(){
   const arr=pre=>{ const v=[0,1,2].map(i=>gv(pre+i)); return v.every(x=>x!=='')?v.map(x=>+String(x).replace(',','.')):undefined; };
-  const o={id:FM.id||Date.now(),blade:gv('f_blade'),ligne:gv('f_ligne'),typeBlade:gv('f_bty'),typeToupie:gv('f_t'),ratchet:gv('f_ratchet'),bit:gv('f_bit'),poidsBlade:gv('f_wb').replace(',','.'),poidsRatchet:gv('f_wr').replace(',','.'),poidsBit:gv('f_wbt').replace(',','.')};
+  const o={id:FM.id||Date.now(),blade:gv('f_blade'),ligne:gv('f_ligne'),typeBlade:gv('f_bty'),typeToupie:gv('f_t'),edition:gv('f_ed'),ratchet:gv('f_ratchet'),bit:gv('f_bit'),poidsBlade:gv('f_wb').replace(',','.'),poidsRatchet:gv('f_wr').replace(',','.'),poidsBit:gv('f_wbt').replace(',','.')};
   const h=gv('f_h'),da=gv('f_dash'),bu=gv('f_burst'); if(h) o.hauteurRatchet=+h; if(da) o.dashBit=+da; if(bu) o.burstBit=+bu;
   const sb=arr('f_sb'),sr=arr('f_sr'),sbt=arr('f_sbt'); if(sb) o.statsBlade=sb; if(sr) o.statsRatchet=sr; if(sbt) o.statsBit=sbt;
-  const er=cErr(o),nm=(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim();
+  const er=cErr(o); if(!o.edition) er.unshift('Choisis l\'édition : Hasbro ou Takara Tomy.'); const nm=(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim();
   if(!er.length&&T.some(x=>x.n===nm&&x._c!==FM.id)) er.push('Une toupie « '+nm+' » existe déjà.');
   const box=document.getElementById('f_err'); if(er.length){ box.innerHTML=er.map(esc).join('<br>'); box.scrollIntoView({block:'center'}); return; }
   for(const [f,k] of PHF){ const v=FM.ph[k]; if(v){ o[f]=await pStore(o.id,k,v); } else if(!FM.rm[k]&&FM.orig[k]) o[f]=FM.orig[k]; else if(FM.rm[k]&&isMk(FM.orig[k])) idbDel('photos',FM.orig[k].slice(4)).catch(()=>{}); }
@@ -733,9 +795,10 @@ function setTab(t){ st.tab=t; draw(); window.scrollTo(0,0); }
 
 function partItems(){
   const P=x=>PH[x.n]||{};
-  if(st.cat==='ratchets') return T.filter(x=>x.r).map(x=>({n:x.r,w:x.wr,img:P(x).ratchet,ty:'',l:'',s:x.sr,h:x.h,ex:x.h?`Hauteur <b>${x.h}</b>`:''}));
-  if(st.cat==='bits') return T.map(x=>({n:x.bt,w:x.wbt,img:P(x).bit,ty:x.t,l:'',s:x.sbt,dash:x.dash,burst:x.burst,ex:(x.dash!==''?`Dash <b>${x.dash}</b> · `:'')+(x.burst!==''?`Burst <b>${x.burst}</b>`:'')}));
-  return T.map(x=>({n:x.b,w:x.wb,img:P(x).blade,ty:x.bty,l:x.l,s:x.sb,ex:''}));
+  const TT=TF();
+  if(st.cat==='ratchets') return TT.filter(x=>x.r).map(x=>({n:x.r,w:x.wr,img:P(x).ratchet,ty:'',l:'',s:x.sr,h:x.h,ex:x.h?`Hauteur <b>${x.h}</b>`:''}));
+  if(st.cat==='bits') return TT.map(x=>({n:x.bt,w:x.wbt,img:P(x).bit,ty:x.t,l:'',s:x.sbt,dash:x.dash,burst:x.burst,ex:(x.dash!==''?`Dash <b>${x.dash}</b> · `:'')+(x.burst!==''?`Burst <b>${x.burst}</b>`:'')}));
+  return TT.map(x=>({n:x.b,w:x.wb,img:P(x).blade,ty:x.bty,l:x.l,s:x.sb,ex:''}));
 }
 function img(p,cls){ return p&&IM[p]?`<div class="pimg ${cls||''}"><img loading="lazy" onerror="this.remove()" src="${IM[p]}" alt=""></div>`:`<div class="pimg ${cls||''}"></div>`; }
 function typ(t){ return t?`<span class="tp"><span class="dot" style="background:${TYPE[t]}"></span>${t}</span>`:''; }
@@ -747,7 +810,7 @@ function card(x){
   const q=PH[x.n]||{}, g=v=>v===''?'—':v+' g';
   const pc=(lab,p,w,t,sa)=>`<div class="pc">${img(p,'xs')}<span>${lab}</span><b>${g(w)}</b>${t?typ(t):'<span class="tp">&nbsp;</span>'}${bars(sa)}</div>`;
   const T3=totSt(x), ex=[x.h?`Hauteur <b>${x.h}</b>`:'',x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
-  return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.n}</div><div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}</div></div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr)}${pc('Bit',q.bit,x.wbt,x.t,x.sbt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip" onclick="tpForm(${x._c})">Modifier</button></div>`:''}</div></details>`;
+  return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.n}</div><div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div></div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr)}${pc('Bit',q.bit,x.wbt,x.t,x.sbt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip" onclick="tpForm(${x._c})">Modifier</button></div>`:''}</div></details>`;
 }
 function partCard(i){
   const bd=i.l?`<span class="badge" style="--bc:${LINE_COL[i.l]}">${i.l}</span>`:'';
@@ -755,7 +818,7 @@ function partCard(i){
 }
 function group(key,g){ return `<div class="gh">${key==='type'?`<span class="dot" style="background:${TYPE[g]}"></span>`:''}${g}</div>`; }
 function collection(key){
-  const L=sortList(T.filter(x=>hit(x.n+' '+x.l+' '+x.t)),key,st.desc,(x,k)=>k==='nom'?x.n:k==='poids'?x.tot:k==='ligne'?LINE_ORDER.indexOf(x.l):k==='type'?TYPE_ORDER.indexOf(x.t):((totSt(x)||[0,0,0])[SI[k]]));
+  const L=sortList(TF().filter(x=>hit(x.n+' '+x.l+' '+x.t)),key,st.desc,(x,k)=>k==='nom'?x.n:k==='poids'?x.tot:k==='ligne'?LINE_ORDER.indexOf(x.l):k==='type'?TYPE_ORDER.indexOf(x.t):((totSt(x)||[0,0,0])[SI[k]]));
   let last=null,html='';
   for(const x of L){
     if(key==='ligne'||key==='type'){ const g=key==='ligne'?x.l:x.t; if(g!==last){ html+=group(key,g); last=g; } }
@@ -827,13 +890,14 @@ function draw(){
     h.textContent='Match'; sub.textContent='Choisis deux toupies et lance le combat';
     c.innerHTML=''; m.innerHTML=matchUI();
   }else{
-    const col=st.view==='collection', nR=T.filter(x=>x.r).length;
+    const col=st.view==='collection', TT=TF(), nR=TT.filter(x=>x.r).length;
     h.textContent=col?'Mes toupies':'Mes pièces';
-    const frame='<div class="frame">'+[['collection','Collection',T.length],['parts','Parts',T.length*2+nR]].map(([k,l,n])=>`<button class="${st.view===k?'on':''}" onclick="setView('${k}')"><span>${l}</span><small>${n}</small></button>`).join('')+'</div>';
+    const frame='<div class="frame">'+[['collection','Collection',TT.length],['parts','Parts',TT.length*2+nR]].map(([k,l,n])=>`<button class="${st.view===k?'on':''}" onclick="setView('${k}')"><span>${l}</span><small>${n}</small></button>`).join('')+'</div>';
     const key=curKey();
     const bar=`<div class="bar"><label class="search">${IC.search}<input id="q" type="search" placeholder="Chercher…" value="${esc(st.q)}" oninput="setQ(this.value)" autocomplete="off"></label><select id="k" aria-label="Trier par" onchange="setKey(this.value)">${keysFor().map(([k,l])=>`<option value="${k}" ${k===key?'selected':''}>${l}</option>`).join('')}</select><button id="fl" class="chip fl" onclick="flip()" aria-label="Inverser l’ordre">${flipLbl()}</button></div>`;
-    const chips=col?'':'<div class="chips">'+[['blades','Blades',T.length],['ratchets','Ratchets',nR],['bits','Bits',T.length]].map(([k,l,n])=>`<button class="chip ${st.cat===k?'on':''}" onclick="setCat('${k}')">${l} · ${n}</button>`).join('')+'</div>';
-    c.innerHTML=frame+bar+chips+(col?'<button class="addb" onclick="tpForm()">+ Ajouter une toupie</button>':'');
+    const chips=col?'':'<div class="chips">'+[['blades','Blades',TT.length],['ratchets','Ratchets',nR],['bits','Bits',TT.length]].map(([k,l,n])=>`<button class="chip ${st.cat===k?'on':''}" onclick="setCat('${k}')"><span>${l}</span><small> · ${n}</small></button>`).join('')+'</div>';
+    const eds='<div class="chips">'+[['all','Tous',T.length],['hasbro','Hasbro',T.filter(x=>x.ed==='hasbro').length],['tt','Takara Tomy',T.filter(x=>x.ed==='tt').length]].map(([k,l,n])=>`<button class="chip ${st.ed===k?'on':''}" onclick="setEd('${k}')"><span>${l}</span><small> · ${n}</small></button>`).join('')+'</div>';
+    c.innerHTML=frame+bar+eds+chips+(col?'<button class="addb" onclick="tpForm()">+ Ajouter une toupie</button>':'');
     renderList();
   }
   document.getElementById('tabs').innerHTML=[['toupies','Toupies',IC.grid],['build','Build',IC.build],['match','Match',IC.bolt],['opts','Options',IC.opts]].map(([k,l,i])=>`<button class="${st.tab===k?'on':''}" onclick="setTab('${k}')">${i}<span>${l}</span></button>`).join('');
@@ -841,7 +905,7 @@ function draw(){
 const wnum=v=>(typeof v==='string'&&v.includes('-'))?v.split('-').reduce((a,b)=>a+ +b,0)/2:num(v);
 const RA=T.map((x,i)=>x.r?i:-1).filter(i=>i>=0);
 const mk=i=>{i%=T.length;return {mode:'stock',stock:i,blade:i,ratchet:T[i].r?i:-1,bit:i};};
-st.m={mode:'simple',target:4,rounds:0,names:['Joueur 1','Joueur 2'],p:[[mk(0),mk(1),mk(2)],[mk(3),mk(4),mk(5)]]};
+st.m={mode:'simple',target:4,rounds:0,names:[LT('Joueur 1'),LT('Joueur 2')],p:[[mk(0),mk(1),mk(2)],[mk(3),mk(4),mk(5)]]};
 const PCOL=['var(--pa)','var(--pink)'];
 let G=null,tmr=null;
 
@@ -902,7 +966,7 @@ function leaveLandscape(){
   try{ screen.orientation.unlock(); }catch(e){}
   try{ if(document.fullscreenElement) document.exitFullscreen(); }catch(e){}
 }
-function askQuit(){ if(!G||G.phase==='pick'||G.phase==='over'||confirm('Quitter le match en cours ? Il ne sera pas enregistré.')) stopMatch(); }
+function askQuit(){ if(!G||G.phase==='pick'||G.phase==='over'||confirm(LT('Quitter le match en cours ? Il ne sera pas enregistré.'))) stopMatch(); }
 function stopMatch(){ leaveLandscape(); run++; stopTimer(); try{ speechSynthesis.cancel(); }catch(e){} document.getElementById('ov').classList.remove('show'); G=null; if(st.tab==='match') draw(); }
 function pickSlot(p,s){ G.pick[p]=s; arena(); }
 function confirmPick(){ G.cur=[G.pick[0],G.pick[1]]; G.ready=[false,false]; G.phase='ready'; arena(); }
@@ -1200,7 +1264,7 @@ async function launch(){
   setOv('<div class="cd" id="cd" onclick="cancelCount()"><div class="rays"></div><div class="flash"></div><div class="ringw"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="rd" cx="50" cy="50" r="49.5"/><circle class="rt" cx="50" cy="50" r="46"/><circle class="rg" id="rg" cx="50" cy="50" r="46" pathLength="100"/></svg><div id="big"></div></div><div class="lines"><i></i><i></i></div><div id="duel"></div></div>');
   const big=document.getElementById('big'), cd=document.getElementById('cd'), rg=document.getElementById('rg');
   document.getElementById('duel').textContent=cur(0).blade+'  ×  '+cur(1).blade;
-  const words=['','un','deux','trois'];
+  const words=LANG==='fr'?['','un','deux','trois']:['','one','two','three'],SL=LANG==='fr'?'fr-FR':'en-US';
   const show=n=>{ big.className=''; big.textContent=n; cd.classList.remove('fl'); void cd.offsetWidth; cd.classList.add('fl'); buzz(60); };
   const hyper=()=>{ big.className='txt'; big.textContent='Hyper vitesse'; cd.classList.remove('fl'); void cd.offsetWidth; cd.classList.add('hv'); buzz([200,60,200]); };
   if(st.son&&SND.cd){
@@ -1214,11 +1278,11 @@ async function launch(){
   }else{
     for(const n of [3,2,1]){
       if(id!==run) return;
-      show(n); beep(660,.25); say(words[n],'fr-FR');
+      show(n); beep(660,.25); say(words[n],SL);
       await wait(1000);
     }
     if(id!==run) return;
-    hyper(); beep(1100,.8,.4); say('Hyper vitesse','fr-FR');
+    hyper(); beep(1100,.8,.4); say(LT('Hyper vitesse'),SL);
     await wait(900);
   }
   if(id!==run||!G) return;
@@ -1242,10 +1306,10 @@ function histAdd(){
   }catch(e){}
 }
 function histDel(id){ hSave(hLoad().filter(r=>r.id!==id)); }
-function histClear(cat){ if(confirm('Vider l\'historique de cette catégorie ?')){ hSave(hLoad().filter(r=>r.cat!==cat)); drawMatch(); } }
+function histClear(cat){ if(confirm(LT('Vider l\'historique de cette catégorie ?'))){ hSave(hLoad().filter(r=>r.cat!==cat)); drawMatch(); } }
 function histUI(cat){
   const L=hLoad().filter(r=>r.cat===cat),title=cat==='tournoi'?'Match 3v3':'Match simple';
-  const when=id=>{ const d=new Date(id); return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); };
+  const when=id=>{ const d=new Date(id); return d.toLocaleDateString(LOC,{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString(LOC,{hour:'2-digit',minute:'2-digit'}); };
   const rows=L.slice(0,40).map(r=>{
     const w=r.w,nm=i=>`<span class="hn ${w===i?'hw':''}" style="color:${i?'var(--pink)':'var(--pa)'}">${esc(r.n[i])}</span>`;
     return `<div class="hr"><div class="hd mut">${when(r.id)} · ${r.r} round${r.r>1?'s':''} · à ${r.tg}</div><div class="hm">${nm(0)}<b class="hsc">${r.s[0]} – ${r.s[1]}</b>${nm(1)}</div><div class="hs mut">${r.b[0].map(esc).join(' · ')} <i>vs</i> ${r.b[1].map(esc).join(' · ')}</div>${w<0?'<div class="mut">Égalité</div>':''}</div>`;
