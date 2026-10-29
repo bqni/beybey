@@ -421,6 +421,8 @@ html[data-bg="hex"] #bgc,html[data-bg="sparks"] #bgc{display:block}
 :is([data-theme="futur"],[data-theme="futurl"]):is([data-theme="futur"],[data-theme="futurl"]) .nm.ff{color:var(--text);font-weight:400;text-transform:none;letter-spacing:0;font-size:var(--fs-md)}
 .nm.ff{color:var(--text)}
 .fst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);align-items:end}.fst>span{grid-column:1/-1}
+#rm{position:fixed;left:var(--sp-3);right:var(--sp-3);bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;flex-direction:column;gap:var(--sp-2);background:var(--surface);border:1px solid var(--accent);border-radius:var(--r-lg,12px);padding:var(--sp-3) var(--sp-4);box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:var(--fs-md)}
+#rm .fact{display:flex;gap:var(--sp-2);flex-wrap:wrap}
 #cr{position:fixed;inset:0;z-index:60;display:none;background:rgba(0,0,0,.8);align-items:center;justify-content:center;padding:var(--sp-4)}
 #cr.show{display:flex}
 .crb{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg,14px);padding:var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-3);align-items:center;max-width:100%}
@@ -616,7 +618,7 @@ function setCat(c){ st.cat=c; draw(); }
 function setQ(v){ st.q=v; renderList(); }
 const NOTICE=[
  ['Installer l\'appli (iPhone et Android)','<p><b>iPhone</b> : ouvre le site dans <b>Safari</b>, touche le bouton Partager, puis <b>Sur l\'écran d\'accueil</b>.</p><p><b>Android</b> : ouvre le site dans <b>Chrome</b>, touche le menu (les 3 points), puis <b>Installer l\'application</b> ou <b>Ajouter à l\'écran d\'accueil</b>.</p><p>L\'icône s\'ouvre ensuite en plein écran, comme une vraie appli. Si l\'ancien nom ou l\'ancienne icône reste affiché après une mise à jour, supprime le raccourci et rajoute-le. Joue toujours depuis l\'icône : le navigateur et l\'icône ne partagent pas leurs données.</p>'],
- ['Ajouter une toupie','<p>Onglet <b>Toupies</b>, bouton <b>+ Ajouter une toupie</b>.</p><ul><li>Remplis la ligne (BX, UX ou CX), les types, les noms et les poids en grammes.</li><li>Pas de ratchet (ratchet intégré à la blade) : laisse la partie Ratchet vide.</li><li>Les stats sont au dos de la boîte : chaque pièce (blade, ratchet, bit) a 3 barres Attack, Defense et Stamina avec un chiffre à côté. Recopie-les dans Att, Déf et End, les 3 ou aucun. Le ratchet a aussi une Height, le bit un Dash et un Burst.</li><li>3 photos : une pour la blade (elle sert aussi pour la toupie), une pour le ratchet, une pour le bit. Après le choix de la photo, tu la déplaces et la zoomes pour la centrer (bouton Recadrer pour la reprendre ensuite). Elle est ensuite allégée toute seule.</li></ul><p>Pour changer ou supprimer une toupie ajoutée, ouvre sa fiche et touche <b>Modifier</b>.</p>'],
+ ['Ajouter une toupie','<p>Onglet <b>Toupies</b>, bouton <b>+ Ajouter une toupie</b>.</p><ul><li>Remplis la ligne (BX, UX ou CX), les types, les noms et les poids en grammes.</li><li>Pas de ratchet (ratchet intégré à la blade) : laisse la partie Ratchet vide.</li><li>Les stats sont au dos de la boîte : chaque pièce (blade, ratchet, bit) a 3 barres Attack, Defense et Stamina avec un chiffre à côté. Recopie-les dans Att, Déf et End, les 3 ou aucun. Le ratchet a aussi une Height, le bit un Dash et un Burst.</li><li><b>Après chaque ajout (ou modification), pense à sauvegarder</b> : Options, puis Exporter. Tes toupies et tes photos sont gardées dans le navigateur, elles peuvent disparaître s\'il nettoie ses données.</li><li>3 photos : une pour la blade (elle sert aussi pour la toupie), une pour le ratchet, une pour le bit. Après le choix de la photo, tu la déplaces et la zoomes pour la centrer (bouton Recadrer pour la reprendre ensuite). Elle est ensuite allégée toute seule.</li></ul><p>Pour changer ou supprimer une toupie ajoutée, ouvre sa fiche et touche <b>Modifier</b>.</p>'],
  ['Sauvegarde et autre appareil','<p>Tes toupies ajoutées, ton historique et tes réglages sont gardés <b>uniquement sur cet appareil</b>. Sur iPhone, Safari et l\'icône de l\'écran d\'accueil ne partagent rien : joue toujours depuis l\'icône.</p><ul><li><b>Exporter</b> crée un fichier de sauvegarde (sur iPhone : « Enregistrer dans Fichiers »).</li><li><b>Importer</b> ajoute le contenu d\'un fichier à ce que tu as déjà, sans rien écraser.</li></ul><p>Pense à exporter de temps en temps, surtout avant de vider les données du navigateur.</p>'],
  ['Match et historique','<ul><li><b>Match simple</b> : une toupie par joueur.</li><li><b>Match 3v3</b> : trois toupies par joueur, une par round, chacune une seule fois.</li><li><b>Tournoi</b> : arrive plus tard.</li><li>Points : Spin Finish 1, Over Finish 2, Burst Finish 2, Xtreme Finish 3. Premier à 4 par défaut.</li><li>La croix ✕ quitte le match en cours (avec confirmation). Un match quitté n\'est pas enregistré.</li></ul><p>L\'historique des matchs terminés apparaît sous le bouton Lancer le match, séparé par catégorie. Annuler le dernier point d\'un match fini le retire de l\'historique.</p>'],
  ['Build et comparatif','<p>Compose deux builds (blade, ratchet, bit) et compare-les. Sur chaque ligne, le gagnant prend la couleur de son camp : vert pour A, rose pour B. Les égalités sont grisées. Pour le poids, la toupie la plus lourde gagne.</p>']
@@ -698,6 +700,7 @@ async function fmSave(){
   for(const [f,k] of PHF){ const v=FM.ph[k]; if(v){ o[f]=await pStore(o.id,k,v); } else if(!FM.rm[k]&&FM.orig[k]) o[f]=FM.orig[k]; else if(FM.rm[k]&&isMk(FM.orig[k])) idbDel('photos',FM.orig[k].slice(4)).catch(()=>{}); }
   const all=cLoad(),ix=all.findIndex(x=>x.id===o.id); ix>=0?all[ix]=o:all.push(o);
   if(!cSave(all)){ box.textContent='Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.'; return; }
+  try{ sessionStorage.setItem('bb_rm','1'); }catch(e){}
   location.reload();
 }
 async function fmDel(){ const b=document.getElementById('f_del'); if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent='Confirmer la suppression'; return; }
@@ -1323,6 +1326,11 @@ let csW=innerWidth; addEventListener('resize',()=>{ if(innerWidth!==csW){ csW=in
 new MutationObserver(()=>csEnhance(document.body)).observe(document.body,{childList:true,subtree:true});
 csEnhance(document.body);
 draw();
+
+function rmShow(){ if(document.getElementById('rm')) return; const e=document.createElement('div'); e.id='rm'; e.setAttribute('role','status');
+  e.innerHTML='<div><b>Toupie enregistrée.</b> Pense à faire une sauvegarde : Options, puis Exporter. Sans ça, tu peux tout perdre si le navigateur nettoie ses données.</div><div class="fact"><button class="go sm" onclick="rmClose();setTab(\'opts\')">Aller à la sauvegarde</button><button class="chip" onclick="rmClose()">Plus tard</button></div>'; document.body.appendChild(e); }
+function rmClose(){ const e=document.getElementById('rm'); if(e) e.remove(); }
+try{ if(sessionStorage.getItem('bb_rm')){ sessionStorage.removeItem('bb_rm'); setTimeout(rmShow,400); } }catch(e){}
 const PBOOT=photosBoot().catch(()=>{});
 </script>
 </body>
