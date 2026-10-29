@@ -2,7 +2,7 @@
 <html lang="fr">
 <head><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Beybey"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="#05080A">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Beybey · Arène Beyblade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script>var t="futur";try{t=localStorage.getItem("theme")||"futur"}catch(e){}if(t!=="futurl")t="futur";document.documentElement.dataset.theme=t</script>
@@ -421,6 +421,9 @@ html[data-bg="hex"] #bgc,html[data-bg="sparks"] #bgc{display:block}
 :is([data-theme="futur"],[data-theme="futurl"]):is([data-theme="futur"],[data-theme="futurl"]) .nm.ff{color:var(--text);font-weight:400;text-transform:none;letter-spacing:0;font-size:var(--fs-md)}
 .nm.ff{color:var(--text)}
 .fst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);align-items:end}.fst>span{grid-column:1/-1}
+html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media (pointer:coarse){input,textarea,select,.nm,.nm.ff,.search input{font-size:16px!important}}
 #rm{position:fixed;left:var(--sp-3);right:var(--sp-3);bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:50;display:flex;flex-direction:column;gap:var(--sp-2);background:var(--surface);border:1px solid var(--accent);border-radius:var(--r-lg,12px);padding:var(--sp-3) var(--sp-4);box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:var(--fs-md)}
 #rm .fact{display:flex;gap:var(--sp-2);flex-wrap:wrap}
 #cr{position:fixed;inset:0;z-index:60;display:none;background:rgba(0,0,0,.8);align-items:center;justify-content:center;padding:var(--sp-4)}
@@ -477,6 +480,7 @@ function bgHexLayer(P){ const S=28,hh=S*Math.sqrt(3),o=document.createElement('c
 function bgFrame(t,id){
   if(id!==bgRun) return; requestAnimationFrame(tt=>bgFrame(tt,id));
   if(document.hidden||!BG.cv) return;
+  if(t-(BG.last||0)<32) return; BG.last=t; const fm=document.getElementById('fm'); if(fm&&fm.classList.contains('show')) return;
   const c=BG.cv.getContext('2d'),P=bgPal(); c.setTransform(1,0,0,1,0,0); c.clearRect(0,0,BG.cv.width,BG.cv.height); c.setTransform(BG.d,0,0,BG.d,0,0);
   if(bgMode==='hex'){
     if(!BG.hex||BG.hexTheme!==document.documentElement.dataset.theme) bgHexLayer(P);
@@ -1316,7 +1320,7 @@ function csEnhance(root){
     const b=document.createElement('button'); b.type='button'; b.className='csb'; b.setAttribute('aria-haspopup','listbox'); b.setAttribute('aria-expanded','false');
     if(sel.id==='k') w.classList.add('cs-auto');
     const lab=()=>{ const o=sel.options[sel.selectedIndex]; b.textContent=o?o.textContent:''; };
-    lab(); b.disabled=sel.disabled; b.onclick=e=>{ e.preventDefault(); if(csOpen&&csOpen.btn===b) csClose(); else csShow(sel,b); };
+    sel.addEventListener('change',lab); lab(); b.disabled=sel.disabled; b.onclick=e=>{ e.preventDefault(); if(csOpen&&csOpen.btn===b) csClose(); else csShow(sel,b); };
     b.onkeydown=e=>{ if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); csShow(sel,b); const f=csOpen&&csOpen.list.querySelector('.on')||csOpen.list.firstChild; f&&f.focus(); } };
     sel.parentNode.insertBefore(w,sel); w.appendChild(b); w.appendChild(sel); sel.classList.add('csn');
   });
@@ -1331,6 +1335,7 @@ function rmShow(){ if(document.getElementById('rm')) return; const e=document.cr
   e.innerHTML='<div><b>Toupie enregistrée.</b> Pense à faire une sauvegarde : Options, puis Exporter. Sans ça, tu peux tout perdre si le navigateur nettoie ses données.</div><div class="fact"><button class="go sm" onclick="rmClose();setTab(\'opts\')">Aller à la sauvegarde</button><button class="chip" onclick="rmClose()">Plus tard</button></div>'; document.body.appendChild(e); }
 function rmClose(){ const e=document.getElementById('rm'); if(e) e.remove(); }
 try{ if(sessionStorage.getItem('bb_rm')){ sessionStorage.removeItem('bb_rm'); setTimeout(rmShow,400); } }catch(e){}
+['gesturestart','gesturechange','gestureend'].forEach(g=>document.addEventListener(g,e=>e.preventDefault()));
 const PBOOT=photosBoot().catch(()=>{});
 </script>
 </body>
