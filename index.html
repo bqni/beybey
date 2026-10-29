@@ -232,6 +232,25 @@ details[open] summary{background:var(--accent-soft)}
  .arena:not(.pickv) .mid .go{font-size:var(--fs-md);height:var(--ctl-h)}
 }
 
+/* ===== Paysage simulé (iPhone : rotation CSS, car Safari interdit le verrouillage) ===== */
+:root{--uvh:1vh;--uvw:1vw}
+#ov.ls{inset:auto;top:0;left:100vw;left:100dvw;width:100vh;width:100dvh;height:100vw;height:100dvw;transform-origin:0 0;transform:rotate(90deg);--uvh:1vw;--uvh:1dvw;--uvw:1vh;--uvw:1dvh;padding:6px calc(10px + env(safe-area-inset-bottom,0px)) 6px calc(10px + env(safe-area-inset-top,0px))}
+.axl{display:flex;gap:6px;align-items:center}.axl .chip{height:36px;padding:0 10px;font-size:var(--fs-sm)}
+ #ov.ls .arena:not(.pickv){height:100%;min-height:0;grid-template-columns:1fr minmax(96px,calc(20*var(--uvw))) 1fr;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"h h h" "a m b";gap:var(--sp-2);align-content:stretch}
+#ov.ls .arena:not(.pickv) .ahd{font-size:var(--fs-sm)}#ov.ls .arena:not(.pickv) .ahd .x{width:30px;height:30px}
+#ov.ls .arena:not(.pickv) .side{grid-template-columns:1fr 112px;grid-template-rows:minmax(0,1fr);align-content:stretch;align-items:stretch;gap:var(--sp-2);padding:var(--sp-2);min-height:0}
+#ov.ls .arena:not(.pickv) .s0{grid-template-columns:112px 1fr}#ov.ls .arena:not(.pickv) .s0 .pts,#ov.ls .arena:not(.pickv) .s0 .rdy{order:-1}
+#ov.ls .arena:not(.pickv) .si{gap:3px;align-content:center}
+#ov.ls .arena:not(.pickv) .side .pimg{width:min(calc(22*var(--uvh)),76px);height:min(calc(22*var(--uvh)),76px)}
+#ov.ls .arena:not(.pickv) .bn{font-size:var(--fs-md);min-height:0}#ov.ls .arena:not(.pickv) .bs{font-size:10px;min-height:0}
+#ov.ls .arena:not(.pickv) .sc{font-size:40px}
+#ov.ls .arena:not(.pickv) .pts{grid-template-columns:1fr;grid-auto-rows:1fr;height:100%}
+#ov.ls .arena:not(.pickv) .pts button{height:auto;flex-direction:row;align-items:center;justify-content:space-between}
+#ov.ls .arena:not(.pickv) .pts button b{font-size:var(--fs-xl)}
+#ov.ls .arena:not(.pickv) .rdy{height:100%;font-size:var(--fs-lg)}#ov.ls .arena:not(.pickv) .rdy i{display:none}
+#ov.ls .arena:not(.pickv) .mid{min-width:0;gap:6px;font-size:var(--fs-sm)}#ov.ls #stg{width:min(100%,calc(38*var(--uvh)))}#ov.ls .arena:not(.pickv) .tm{font-size:34px}
+#ov.ls .arena:not(.pickv) .mid .go{font-size:var(--fs-md);height:var(--ctl-h)}
+
 /* ===== Tablette / ordinateur ===== */
 @media (min-width:700px){
  .hdr,.sub,#ctl,#main{max-width:760px;margin-left:auto;margin-right:auto}
@@ -889,8 +908,14 @@ function startMatch(){
   stopTimer(); run++;
   G={M,tour,round:1,score:[0,0],hist:[],used:[[],[]],cur:[0,0],pick:[null,null],t:0,t0:0,
      max:tour?Math.min(3,M.rounds||3):M.rounds,phase:tour?'pick':'ready',ready:[false,false]};
-  document.getElementById('ov').classList.add('show'); arena(); goLandscape();
+  lsOff=false; document.getElementById('ov').classList.add('show'); lsApply(); arena(); goLandscape();
 }
+
+let lsOff=false;
+function lsApply(){ const ov=document.getElementById('ov'); if(!ov) return false; const on=!!G&&!lsOff&&innerHeight>innerWidth&&ov.classList.contains('show'); const was=ov.classList.contains('ls'); ov.classList.toggle('ls',on); return on!==was; }
+function rotBtn(){ const ov=document.getElementById('ov'); const on=ov&&ov.classList.contains('ls'); if(!on&&innerHeight<=innerWidth) return ''; return `<button class="chip" onclick="lsToggle()" aria-label="${on?'Revenir en portrait':'Passer en paysage'}">${on?'Portrait':'Paysage'}</button>`; }
+function lsToggle(){ const ov=document.getElementById('ov'); lsOff=ov.classList.contains('ls'); if(lsOff){ try{ screen.orientation.unlock(); }catch(e){} } else goLandscape(); lsApply(); arena(); }
+addEventListener('resize',()=>{ if(G&&lsApply()) arena(); });
 function goLandscape(){
   try{
     const d=document.documentElement, f=d.requestFullscreen||d.webkitRequestFullscreen;
@@ -903,7 +928,7 @@ function leaveLandscape(){
   try{ if(document.fullscreenElement) document.exitFullscreen(); }catch(e){}
 }
 function askQuit(){ if(!G||G.phase==='pick'||G.phase==='over'||confirm('Quitter le match en cours ? Il ne sera pas enregistré.')) stopMatch(); }
-function stopMatch(){ leaveLandscape(); run++; stopTimer(); try{ speechSynthesis.cancel(); }catch(e){} document.getElementById('ov').classList.remove('show'); G=null; if(st.tab==='match') draw(); }
+function stopMatch(){ leaveLandscape(); document.getElementById('ov').classList.remove('ls'); run++; stopTimer(); try{ speechSynthesis.cancel(); }catch(e){} document.getElementById('ov').classList.remove('show'); G=null; if(st.tab==='match') draw(); }
 function pickSlot(p,s){ G.pick[p]=s; arena(); }
 function confirmPick(){ G.cur=[G.pick[0],G.pick[1]]; G.ready=[false,false]; G.phase='ready'; arena(); }
 
@@ -914,7 +939,7 @@ function pickUI(){
     return `<button class="pks ${G.pick[p]===s?'on':''}" ${u?'disabled':''} onclick="pickSlot(${p},${s})">${imgp(r)}<span><b>${r.blade}</b><small>${u?'Déjà utilisée':r.name}</small></span></button>`;
   }).join('')+'</div>';
   const ok=G.pick[0]!==null&&G.pick[1]!==null;
-  setOv(`<div class="arena pickv"><div class="ahd">${xbtn}<span>Round ${G.round}</span><span></span></div><div class="mid mut">Chaque joueur choisit sa toupie pour ce round</div>${col(0)}${col(1)}<div class="foot"><button class="go" ${ok?'':'disabled'} onclick="confirmPick()">Valider</button></div></div>`);
+  setOv(`<div class="arena pickv"><div class="ahd"><span class="axl">${xbtn}${rotBtn()}</span><span>Round ${G.round}</span><span></span></div><div class="mid mut">Chaque joueur choisit sa toupie pour ce round</div>${col(0)}${col(1)}<div class="foot"><button class="go" ${ok?'':'disabled'} onclick="confirmPick()">Valider</button></div></div>`);
 }
 const FIN=[['Spin',1],['Over',2],['Burst',2],['Xtreme',3]];
 const FL=k=>k?k+' Finish':'';
@@ -1190,7 +1215,7 @@ function arena(){
     scored:`<div class="tm">${fmt(G.t)}</div><canvas id="stg"></canvas><div class="bn2">${last}</div><div class="row2"><button class="chip" onclick="undo()">Annuler</button><button class="go sm" onclick="nextRound()">Round suivant</button></div>`,
     over:`<div class="win">${winText()}</div><canvas id="stg"></canvas><div class="row2"><button class="chip" onclick="undo()">Annuler</button><button class="chip" onclick="stopMatch()">Fermer</button><button class="go sm" onclick="startMatch()">Rejouer</button></div>`
   }[G.phase];
-  setOv(`<div class="arena"><div class="ahd">${xbtn}<span>Round ${G.round}${G.max?' sur '+G.max:''}</span><span>Premier à ${G.M.target}</span></div><div class="mid">${mid}</div>${side(0)}${side(1)}</div>`);
+  setOv(`<div class="arena"><div class="ahd"><span class="axl">${xbtn}${rotBtn()}</span><span>Round ${G.round}${G.max?' sur '+G.max:''}</span><span>Premier à ${G.M.target}</span></div><div class="mid">${mid}</div>${side(0)}${side(1)}</div>`);
   mountStage();
 }
 async function launch(){
