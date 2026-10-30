@@ -652,6 +652,8 @@ function cErr(o){ const E=[],n=v=>{ const x=String(v===undefined||v===null?'':v)
 const NB=(typeof TOUPIES!=='undefined'&&Array.isArray(TOUPIES))?TOUPIES.length:0;
 if(typeof TOUPIES==='undefined'||!Array.isArray(TOUPIES))
   fatal('data.js ne se charge pas',['Le fichier <b>data.js</b> est absent, vide ou contient une erreur : une virgule, une apostrophe ou une accolade oubliée. Compare avec un bloc qui marchait.']);
+const hNom=n=>{ const m=String(n||'').match(/-(\d{2,3})$/); return m?+m[1]:''; };
+document.addEventListener('change',e=>{ if(e.target&&e.target.id==='f_ratchet'){ const h=document.getElementById('f_h'); if(h&&!h.value){ const v=hNom(e.target.value); if(v) h.value=v; } } });
 const NORM_T={attack:'Attack',attaque:'Attack',def:'Déf','déf':'Déf',defense:'Déf','défense':'Déf',stamina:'Stamina',endurance:'Stamina',balance:'Balance',equilibre:'Balance','équilibre':'Balance'};
 const normT=v=>NORM_T[String(v||'').trim().toLowerCase()]||'';
 const pw=v=>{ if(v===undefined||v===null||v==='') return ''; if(typeof v==='number') return v; const s=String(v).replace(/g/gi,'').replace(',','.').trim(); return /^[0-9.]+$/.test(s)?parseFloat(s):s; };
@@ -679,7 +681,7 @@ const T=ALL.map((o,i)=>{
   const hasTot=o.total!==undefined&&o.total!==null&&o.total!=='';
   const tot=hasTot?pw(o.total):Math.round((avg(wb)+(wr===''?0:avg(wr))+avg(wbt))*10)/10;
   const ar=v=>Array.isArray(v)&&v.length===3?v.map(Number):null;
-  return {b:o.blade||'?',bty,l,t,r:o.ratchet||'',bt:o.bit||'?',wb,wr,wbt,tot,sb:ar(o.statsBlade),sr:ar(o.statsRatchet),sbt:ar(o.statsBit),h:o.hauteurRatchet||'',dash:o.dashBit||'',burst:o.burstBit||'',_p:{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit},ed:o.edition==='tt'?'tt':'hasbro',_c:i>=NBV?o.id:0,_k:i<NBV?bkey(o):''};
+  return {b:o.blade||'?',bty,l,t,r:o.ratchet||'',bt:o.bit||'?',wb,wr,wbt,tot,sb:ar(o.statsBlade),sr:ar(o.statsRatchet),sbt:ar(o.statsBit),h:o.hauteurRatchet||hNom(o.ratchet),dash:o.dashBit||'',burst:o.burstBit||'',_p:{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit},ed:o.edition==='tt'?'tt':'hasbro',_c:i>=NBV?o.id:0,_k:i<NBV?bkey(o):''};
 });
 if(ERR.length) fatal('Il y a une erreur dans data.js',[...ERR,'Corrige ça dans <b>data.js</b>, puis recharge la page.']);
 T.forEach(x=>x.n=(x.b+' '+(x.r||'')+x.bt).replace('  ',' ').trim());
@@ -889,7 +891,7 @@ function fmPick(k,inp){
 async function fmSave(){
   const arr=pre=>{ const v=[0,1,2].map(i=>gv(pre+i)); return v.every(x=>x!=='')?v.map(x=>+String(x).replace(',','.')):undefined; };
   const o={id:FM.id||Date.now(),blade:gv('f_blade'),ligne:gv('f_ligne'),typeBlade:gv('f_bty'),typeToupie:gv('f_t'),edition:gv('f_ed'),ratchet:gv('f_ratchet'),bit:gv('f_bit'),poidsBlade:gv('f_wb').replace(',','.'),poidsRatchet:gv('f_wr').replace(',','.'),poidsBit:gv('f_wbt').replace(',','.')};
-  const h=gv('f_h'),da=gv('f_dash'),bu=gv('f_burst'); if(h) o.hauteurRatchet=+h; if(da) o.dashBit=+da; if(bu) o.burstBit=+bu;
+  const h=gv('f_h'),da=gv('f_dash'),bu=gv('f_burst'); if(!h&&o.ratchet&&hNom(o.ratchet)) o.hauteurRatchet=hNom(o.ratchet); if(h) o.hauteurRatchet=+h; if(da) o.dashBit=+da; if(bu) o.burstBit=+bu;
   const sb=arr('f_sb'),sr=arr('f_sr'),sbt=arr('f_sbt'); if(sb) o.statsBlade=sb; if(sr) o.statsRatchet=sr; if(sbt) o.statsBit=sbt;
   const er=cErr(o); if(!o.edition) er.unshift('Choisis l\'édition : Hasbro ou Takara Tomy.'); const nm=(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim();
   if(!er.length&&T.some(x=>x.n===nm&&x._c!==FM.id)) er.push('Une toupie « '+nm+' » existe déjà.');
