@@ -50,6 +50,7 @@ h1{font:var(--fw-semi) var(--fs-xl)/1.2 var(--font);letter-spacing:-.01em;margin
 .frame{margin:0 var(--sp-4) var(--sp-3)}
 .frame button,.mseg button{height:var(--ctl-h);background:none;border:0;color:var(--text-2);font:var(--fw-medium) var(--fs-md)/1 var(--font);display:flex;gap:var(--sp-2);justify-content:center;align-items:center}
 .mseg button{height:34px;font-size:var(--fs-sm)}
+.mseg:has(button:nth-child(3)){grid-template-columns:repeat(3,minmax(0,1fr))}.mseg:has(button:nth-child(3)) button{padding:0 4px;font-size:11px;letter-spacing:.04em}
 .frame button small{font-size:var(--fs-sm);opacity:.8}
 .frame button.on,.mseg button.on{background:var(--accent-soft);color:var(--accent);font-weight:var(--fw-semi);box-shadow:inset 0 0 0 1px var(--accent)}
 .bar{display:flex;gap:var(--sp-2);padding:0 var(--sp-4) var(--sp-3)}
@@ -504,6 +505,7 @@ button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-
 .cat-top{display:grid;gap:var(--sp-2);margin-bottom:var(--sp-3)}
 #catlist{padding-bottom:var(--sp-6)}
 .addb{display:block;width:calc(100% - 2*var(--sp-4));margin:var(--sp-3) var(--sp-4);height:var(--btn-h);border:1px dashed var(--accent);background:none;color:var(--accent);font:var(--fw-semi) var(--fs-md) var(--font);letter-spacing:.1em;text-transform:uppercase}
+.gnm{width:100%;box-sizing:border-box;margin-top:var(--sp-2);padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2);color:var(--text);font:16px var(--font)}
 .eact{grid-column:1/-1;display:flex;justify-content:flex-end;gap:var(--sp-2);padding-top:var(--sp-2)}.eact .chip.dng{margin-left:0}
 
 .nts{margin:0 var(--sp-4);display:grid;gap:6px}
@@ -539,6 +541,7 @@ Object.assign(I18N.TXT,{"Rechercher…":"Search…"});
 Object.assign(I18N.TXT,{"Cherche ta toupie pour avoir son build d'origine, puis change les pièces si tu veux. Poids et photos se remplissent tout seuls, tu pourras tout corriger. Données et images de la communauté (Beydex), poids indicatifs.": "Search your bey to get its original build, then change parts if you want. Weights and photos fill in by themselves, and you can fix everything. Community data and images (Beydex), weights are approximate.", "Toupie (build d'origine)": "Bey (original build)"});
 Object.assign(I18N.TXT,{"Tu n'as pas encore de toupie.": "You don't have any bey yet.", "Aller ajouter une toupie": "Go add a bey"});
 Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec le bouton ci-dessus.": "No bey yet. Add your first one with the button above."});
+Object.assign(I18N.TXT,{"Invitée": "Guest", "Toupie invitée": "Guest bey", "Choisir dans le catalogue…": "Pick from the catalog…", "Ou écris son nom…": "Or type its name…", "Nom de la toupie": "Bey name", "Toupie invitée : elle n'est pas ajoutée à ta collection.": "Guest bey: it is not added to your collection."});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
 function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
 (function(){
@@ -1054,6 +1057,9 @@ const PCOL=['var(--pa)','var(--pink)'];
 let G=null,tmr=null;
 
 function resolve(c){
+  if(c.mode==='guest'){ const x=(typeof CAT!=='undefined'&&c.guest>=0)?CAT[c.guest]:null;
+    if(x){ if(x.ib) IM[x.ib]=x.ib; return {name:x.n,blade:x.b,img:x.ib||'',w:Math.round(((+x.wb||0)+(+x.wr||0)+(+x.wbt||0))*10)/10,ty:x.t}; }
+    const n=String(c.gname||'').trim()||LT('Toupie invitée'); return {name:n,blade:n,img:'',w:'',ty:''}; }
   if(c.mode==='stock'){ const x=T[c.stock],ph=PH[x.n]||{}; return {name:x.n,blade:x.b,img:ph.blade,w:x.tot,ty:x.t}; }
   const bl=T[c.blade],ra=c.ratchet>=0?T[c.ratchet]:null,bi=T[c.bit],ph=PH[bl.n]||{};
   const w=wnum(bl.wb)+(ra?wnum(ra.wr):0)+wnum(bi.wbt);
@@ -1063,15 +1069,18 @@ function opt(list,sel){ return list.map(([v,l])=>`<option value="${v}" ${v==sel?
 function drawMatch(){ document.getElementById('main').innerHTML=T.length?matchUI():emptyUI(); }
 function emptyUI(){ return '<div class="empty">Tu n\'as pas encore de toupie.</div><button class="addb" onclick="setTab(\'toupies\')">Aller ajouter une toupie</button>'; }
 function mSet(k,v){ st.m[k]=v; drawMatch(); }
-function slotSet(p,s,f,v){ st.m.p[p][s][f]=f==='mode'?v:+v; drawMatch(); }
+function slotSet(p,s,f,v){ st.m.p[p][s][f]=(f==='mode'||f==='gname')?v:+v; drawMatch(); }
 
 function slotUI(p,s){
   const c=st.m.p[p][s],r=resolve(c);
-  const sw='<div class="mseg">'+[['stock','Toupie stock'],['custom','Pièces perso']].map(([k,l])=>`<button class="${c.mode===k?'on':''}" onclick="slotSet(${p},${s},'mode','${k}')">${l}</button>`).join('')+'</div>';
-  const body=c.mode==='stock'
+  const sw='<div class="mseg">'+[['stock','Toupie stock'],['custom','Pièces perso']].concat(CAT.length?[['guest','Invitée']]:[]).map(([k,l])=>`<button class="${c.mode===k?'on':''}" onclick="slotSet(${p},${s},'mode','${k}')">${l}</button>`).join('')+'</div>';
+  const gl=CAT.map((x,i)=>[i,x.n+' · '+(x.e==='tt'?'Takara Tomy':'Hasbro')]).sort((a,b)=>a[1].localeCompare(b[1],undefined,{numeric:true,sensitivity:'base'}));
+  const body=c.mode==='guest'
+    ?`<select onchange="slotSet(${p},${s},'guest',this.value)">${opt([[-1,LT('Choisir dans le catalogue…')]].concat(gl),c.guest>=0?c.guest:-1)}</select>${c.guest>=0?'':`<input class="gnm" type="text" maxlength="40" value="${esc(c.gname||'')}" placeholder="${LT('Ou écris son nom…')}" onchange="slotSet(${p},${s},'gname',this.value)" aria-label="${LT('Nom de la toupie')}">`}<div class="mut note">${LT("Toupie invitée : elle n'est pas ajoutée à ta collection.")}</div>`
+    :c.mode==='stock'
     ?`<select onchange="slotSet(${p},${s},'stock',this.value)">${opt(T.map((x,i)=>[i,x.n]),c.stock)}</select>`
     :`<div class="g3"><label>Blade<select onchange="slotSet(${p},${s},'blade',this.value)">${opt(T.map((x,i)=>[i,x.l+' '+x.b]),c.blade)}</select></label><label>Ratchet<select onchange="slotSet(${p},${s},'ratchet',this.value)">${opt([[-1,'Aucun'],...RA.map(i=>[i,T[i].r])],c.ratchet)}</select></label><label>Bit<select onchange="slotSet(${p},${s},'bit',this.value)">${opt(T.map((x,i)=>[i,x.bt]),c.bit)}</select></label></div>`;
-  return `<div class="slot">${st.m.mode==='tournoi'?`<div class="sl">Toupie ${s+1}</div>`:''}${sw}${body}<div class="prv">${img(r.img,'sm')}<div><b>${r.name}</b><div class="mut prm">${typ(r.ty)}<span>${r.w} g</span></div></div></div></div>`;
+  return `<div class="slot">${st.m.mode==='tournoi'?`<div class="sl">Toupie ${s+1}</div>`:''}${sw}${body}<div class="prv">${img(r.img,'sm')}<div><b>${r.name}</b><div class="mut prm">${typ(r.ty)}<span>${r.w?r.w+' g':''}</span></div></div></div></div>`;
 }
 function matchUI(){
   const M=st.m;
@@ -1137,7 +1146,7 @@ function side(p){
   const r=cur(p),on=G.phase==='fight',rd=G.phase==='ready';
   const ctl=rd?`<button class="rdy ${G.ready[p]?'on':''}" onclick="setReady(${p})">Prêt<i>${G.ready[p]?' ✓':''}</i></button>`
     :`<div class="pts">${FIN.map(([k,n])=>`<button ${on?'':'disabled'} onclick="score(${p},${n},'${k}')"><span>${FL(k)}</span><b>+${n}</b></button>`).join('')}</div>`;
-  return `<div class="side s${p} p${p}" style="--pc:${PCOL[p]}"><div class="si"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}<div class="bn">${r.blade}</div><div class="bs">${r.name}</div><div class="sc">${G.score[p]}</div></div>${ctl}</div>`;
+  return `<div class="side s${p} p${p}" style="--pc:${PCOL[p]}"><div class="si"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}<div class="bn">${r.blade}</div><div class="bs">${r.name===r.blade?'':r.name}</div><div class="sc">${G.score[p]}</div></div>${ctl}</div>`;
 }
 const SND={};
 function loadSnd(){ ['p1','p2','sc','nul','next','cd'].forEach(k=>{ try{ const a=new Audio('sons/'+(k==='cd'&&LANG!=='fr'?'cd_en':k)+'.mp3'); a.preload='auto'; SND[k]=a; }catch(e){} }); }
@@ -1408,7 +1417,7 @@ function arena(){
   setOv(`<div class="arena"><div class="ahd">${xbtn}<span>Round ${G.round}${G.max?' sur '+G.max:''}</span><span>Premier à ${G.M.target}</span></div><div class="mid">${mid}</div>${side(0)}${side(1)}</div>`);
   mountStage();
 }
-const cdc=p=>{ const r=cur(p); return `<div class="cdc p${p}" style="--pc:${PCOL[p]}"><div class="cdp"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}</div><div class="cdn"><div class="bn">${r.blade}</div><div class="bs">${r.name}</div></div></div>`; };
+const cdc=p=>{ const r=cur(p); return `<div class="cdc p${p}" style="--pc:${PCOL[p]}"><div class="cdp"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}</div><div class="cdn"><div class="bn">${r.blade}</div><div class="bs">${r.name===r.blade?'':r.name}</div></div></div>`; };
 async function launch(){
   if(!G||G.phase!=='ready') return;
   const id=++run; G.phase='count';
