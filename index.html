@@ -507,6 +507,7 @@ button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-
 .addb{display:block;width:calc(100% - 2*var(--sp-4));margin:var(--sp-3) var(--sp-4);height:var(--btn-h);border:1px dashed var(--accent);background:none;color:var(--accent);font:var(--fw-semi) var(--fs-md) var(--font);letter-spacing:.1em;text-transform:uppercase}
 .gnm{width:100%;box-sizing:border-box;margin-top:var(--sp-2);padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2);color:var(--text);font:16px var(--font)}
 .pc .tp b{font:inherit;font-weight:var(--fw-semi);color:var(--text)}
+.bfw{margin:var(--sp-3) var(--sp-4) var(--sp-6)}.bfw .go{width:100%}.bfw .note{text-align:center;margin-top:var(--sp-2)}
 .eact{grid-column:1/-1;display:flex;justify-content:flex-end;gap:var(--sp-2);padding-top:var(--sp-2)}.eact .chip.dng{margin-left:0}
 
 .nts{margin:0 var(--sp-4);display:grid;gap:6px}
@@ -544,6 +545,7 @@ Object.assign(I18N.TXT,{"Tu n'as pas encore de toupie.": "You don't have any bey
 Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec le bouton ci-dessus.": "No bey yet. Add your first one with the button above."});
 Object.assign(I18N.TXT,{"Invitée": "Guest", "Toupie invitée": "Guest bey", "Choisir dans le catalogue…": "Pick from the catalog…", "Ou écris son nom…": "Or type its name…", "Nom de la toupie": "Bey name", "Toupie invitée : elle n'est pas ajoutée à ta collection.": "Guest bey: it is not added to your collection."});
 Object.assign(I18N.TXT,{"Toupie custom": "Custom bey", "Ma collection": "My collection", "Catalogue : rien n'est ajouté à ta collection.": "Catalog: nothing is added to your collection."});
+Object.assign(I18N.TXT,{"Lancer un combat A contre B": "Start a battle A vs B", "Les règles (points, rounds) se règlent dans l'onglet Match.": "Rules (points, rounds) are set in the Match tab."});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
 function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
 (function(){
@@ -1024,7 +1026,14 @@ function buildUI(){
     return `<div class="cr"><b class="${ca}">${f(x)}</b><span>${lab}${d?`<small>${d>0?'+':''}${d} pour B</small>`:''}</span><b class="${cb}">${f(y)}</b></div>`;
   };
   const rows=[row('Poids',a.w,b.w,true,' g'),row('Attaque',a.S[0],b.S[0],true),row('Défense',a.S[1],b.S[1],true),row('Stamina',a.S[2],b.S[2],true),row('Hauteur',a.h,b.h,false),row('Dash',a.dash,b.dash,true),row('Burst',a.burst,b.burst,true)].join('');
-  return a.html+b.html+`<div class="pcard cmp"><div class="sl">Comparatif</div><div class="ch"><span style="color:var(--pa)">A</span><span style="color:var(--pink)">B</span></div>${rows}</div>`;
+  return a.html+b.html+`<div class="pcard cmp"><div class="sl">Comparatif</div><div class="ch"><span style="color:var(--pa)">A</span><span style="color:var(--pink)">B</span></div>${rows}</div>`
+    +`<div class="bfw"><button class="go" onclick="buildFight()">Lancer un combat A contre B</button><div class="mut note">Les règles (points, rounds) se règlent dans l'onglet Match.</div></div>`;
+}
+function buildFight(){
+  const L=bdLists(), biT=[], seen={}; T.forEach((x,i)=>{ if(seen[x.bt]) return; seen[x.bt]=1; biT.push(i); });
+  const slot=n=>{ const B=BD[n], integ=!!(L.bl[B[0]]&&L.bl[B[0]].integ); const r=integ?-1:(RA[B[1]]===undefined?-1:RA[B[1]]); return {mode:'custom',src:'own',stock:0,blade:B[0],ratchet:r,bit:biT[B[2]]===undefined?0:biT[B[2]]}; };
+  st.m.mode='simple'; st.m.p[0][0]=slot(0); st.m.p[1][0]=slot(1);
+  startMatch();
 }
 function draw(){
   const h=document.getElementById('h'),sub=document.getElementById('sub'),c=document.getElementById('ctl'),m=document.getElementById('main');
