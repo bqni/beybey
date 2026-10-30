@@ -3,8 +3,8 @@ BEYBEY (Arène Beyblade) — mode d'emploi — build 0.51
 
 Contenu du dossier
   index.html        la page (ne pas toucher)
-  data.js           TES TOUPIES de départ (facultatif, voir plus bas)
-  photos/           les photos des toupies de data.js
+  data.js           toupies de départ (vide, facultatif)
+  photos/           les photos du catalogue (photos/cat) et tes éventuelles photos de data.js
   sons/             les sons du match (ne pas toucher)
   manifest.json, icon-192.png, icon-512.png, apple-touch-icon.png
                     pour installer l'appli sur l'écran d'accueil (ne pas toucher)
@@ -41,7 +41,7 @@ Ajouter une toupie dans data.js (autre méthode, pour tout le monde)
   4. Enregistre, recharge la page. Si tu as fait une erreur, la page affiche laquelle.
   Une même photo peut servir à plusieurs toupies. Les noms de fichiers sont sensibles aux majuscules sur GitHub.
   Réduire une photo : squoosh.app (gratuit), largeur 600, JPEG qualité 75.
-  Pour donner une appli vierge à un ami : garde un seul bloc d'exemple dans data.js et vide le dossier photos.
+  L'appli est déjà vierge : data.js est vide.
   Il ajoutera ensuite ses toupies avec le formulaire.
 
 Sauvegarde (Options > Mes données)

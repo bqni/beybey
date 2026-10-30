@@ -19,7 +19,7 @@ Appli web de fan pour **Beyblade X** : collection de toupies, calculateur de bui
 
 ## Modifier ou héberger
 
-Les toupies de base sont dans `data.js`. Le catalogue (environ 390 toupies Hasbro et Takara Tomy) est dans `catalogue.js`. Pour héberger ta version : GitHub *Settings > Pages* > branche `main`. Détails dans `LISEZ-MOI.txt`.
+L'appli démarre sans aucune toupie : chacun ajoute les siennes (à la main ou depuis le catalogue). `data.js` est vide et facultatif. Le catalogue (environ 390 toupies Hasbro et Takara Tomy) est dans `catalogue.js`. Pour héberger ta version : GitHub *Settings > Pages* > branche `main`. Détails dans `LISEZ-MOI.txt`.
 
 ## Contribuer
 

@@ -504,7 +504,7 @@ button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-
 .cat-top{display:grid;gap:var(--sp-2);margin-bottom:var(--sp-3)}
 #catlist{padding-bottom:var(--sp-6)}
 .addb{display:block;width:calc(100% - 2*var(--sp-4));margin:var(--sp-3) var(--sp-4);height:var(--btn-h);border:1px dashed var(--accent);background:none;color:var(--accent);font:var(--fw-semi) var(--fs-md) var(--font);letter-spacing:.1em;text-transform:uppercase}
-.eact{grid-column:1/-1;display:flex;justify-content:flex-end;padding-top:var(--sp-2)}
+.eact{grid-column:1/-1;display:flex;justify-content:flex-end;gap:var(--sp-2);padding-top:var(--sp-2)}.eact .chip.dng{margin-left:0}
 
 .nts{margin:0 var(--sp-4);display:grid;gap:6px}
 .ntc{border:1px solid var(--border);background:var(--surface)}
@@ -537,6 +537,8 @@ Object.assign(I18N.TXT,{"Beybey 1.0 · Catalogue des toupies : Beydex (données 
 Object.assign(I18N.TXT,{"Ajouter une toupie": "Add a bey", "Comment veux-tu l'ajouter ?": "How do you want to add it?", "Manuellement": "Manually", "Formulaire vide : tu remplis tout toi-même.": "Empty form: you fill everything in yourself.", "Depuis le catalogue": "From the catalog", "Tu choisis chaque pièce dans une liste, les poids et les photos se remplissent tout seuls.": "Pick each part from a list, weights and photos fill in by themselves.", "Cherche ta toupie pour avoir son build d'origine, puis change les pièces si tu veux. Poids et photos se remplissent tout seuls, tu pourras tout corriger. Données et images de la communauté (Beydex), poids indicatifs.": "Pick each part: the form fills itself in (weights, photos), and you can fix everything. Community data and images (Beydex), weights are approximate.", "Blade": "Blade", "Ratchet": "Ratchet", "Bit": "Bit", "Continuer": "Continue", "Pré-rempli depuis le catalogue (Beydex). Vérifie les poids avec ta balance, et ajoute les stats et les photos si tu veux.": "Pre-filled from the catalog (Beydex). Check the weights with your scale, and add stats and photos if you like.", "Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.": "Beybey 1.0 · Bey catalog: Beydex (community data and images, github.com/catgamer109/Beydex-Public-Resources). Fan project, not affiliated with Takara Tomy or Hasbro."});
 Object.assign(I18N.TXT,{"Rechercher…":"Search…"});
 Object.assign(I18N.TXT,{"Cherche ta toupie pour avoir son build d'origine, puis change les pièces si tu veux. Poids et photos se remplissent tout seuls, tu pourras tout corriger. Données et images de la communauté (Beydex), poids indicatifs.": "Search your bey to get its original build, then change parts if you want. Weights and photos fill in by themselves, and you can fix everything. Community data and images (Beydex), weights are approximate.", "Toupie (build d'origine)": "Bey (original build)"});
+Object.assign(I18N.TXT,{"Tu n'as pas encore de toupie.": "You don't have any bey yet.", "Aller ajouter une toupie": "Go add a bey"});
+Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec le bouton ci-dessus.": "No bey yet. Add your first one with the button above."});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
 function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
 (function(){
@@ -661,7 +663,6 @@ function hdLoad(){ try{ const a=JSON.parse(localStorage.getItem('arene_hide')||'
 function hdSave(a){ try{ localStorage.setItem('arene_hide',JSON.stringify(a)); return true; }catch(e){ return false; } }
 const HID=hdLoad(), BASE=TOUPIES.filter(o=>!(o&&HID.includes(bkey(o)))), NBV=BASE.length;
 const ALL=BASE.concat(CUSTOM);
-if(!ALL.length) fatal('data.js ne se charge pas',['Le fichier <b>data.js</b> est vide. Ajoute au moins une toupie.']);
 const T=ALL.map((o,i)=>{
   const ERRX=ERR, ERR2={push:m=>{ if(i<NBV) ERRX.push(m); }}; 
   const nm=o.blade||('toupie n°'+(i+1));
@@ -904,8 +905,12 @@ function bsDel(b,k){
   if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent=LT('Confirmer ?'); setTimeout(()=>{ if(b.isConnected){ b.dataset.ok=''; b.textContent=LT('Supprimer'); } },3500); return; }
   const a=hdLoad(); k=decodeURIComponent(k); if(!a.includes(k)) a.push(k); hdSave(a); location.reload();
 }
+async function cuDel(b,id){
+  if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent=LT('Confirmer ?'); setTimeout(()=>{ if(b.isConnected){ b.dataset.ok=''; b.textContent=LT('Supprimer'); } },3500); return; }
+  cSave(cLoad().filter(x=>x.id!==id)); for(const [,k] of PHF){ try{ await idbDel('photos',id+'_'+k); }catch(e){} } location.reload();
+}
 function bsRestore(){ hdSave([]); location.reload(); }
-async function fmDel(){ if(T.length<=1){ const e=document.getElementById('f_err'); if(e) e.textContent=LT('Garde au moins une toupie'); return; } const b=document.getElementById('f_del'); if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent='Confirmer la suppression'; return; }
+async function fmDel(){ const b=document.getElementById('f_del'); if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent='Confirmer la suppression'; return; }
   cSave(cLoad().filter(x=>x.id!==FM.id)); for(const [,k] of PHF) { try{ await idbDel('photos',FM.id+'_'+k); }catch(e){} } location.reload(); }
 function bkMsg(t){ const e=document.getElementById('bkmsg'); if(e) e.textContent=t; }
 async function backupExport(){ try{ await PBOOT; }catch(e){}
@@ -947,7 +952,7 @@ function card(x){
   const q=PH[x.n]||{}, g=v=>v===''?'—':v+' g';
   const pc=(lab,p,w,t,sa)=>`<div class="pc">${img(p,'xs')}<span>${lab}</span><b>${g(w)}</b>${t?typ(t):'<span class="tp">&nbsp;</span>'}${bars(sa)}</div>`;
   const T3=totSt(x), ex=[x.h?`Hauteur <b>${x.h}</b>`:'',x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
-  return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.n}</div><div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div></div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr)}${pc('Bit',q.bit,x.wbt,x.t,x.sbt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip" onclick="tpForm(${x._c})">Modifier</button></div>`:x._k?`<div class="eact"><button class="chip dng" onclick="bsDel(this,'${encodeURIComponent(x._k)}')">Supprimer</button></div>`:''}</div></details>`;
+  return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.n}</div><div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div></div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr)}${pc('Bit',q.bit,x.wbt,x.t,x.sbt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip dng" onclick="cuDel(this,${x._c})">Supprimer</button><button class="chip" onclick="tpForm(${x._c})">Modifier</button></div>`:x._k?`<div class="eact"><button class="chip dng" onclick="bsDel(this,'${encodeURIComponent(x._k)}')">Supprimer</button></div>`:''}</div></details>`;
 }
 function partCard(i){
   const bd=i.l?`<span class="badge" style="--bc:${LINE_COL[i.l]}">${i.l}</span>`:'';
@@ -961,7 +966,7 @@ function collection(key){
     if(key==='ligne'||key==='type'){ const g=key==='ligne'?x.l:x.t; if(g!==last){ html+=group(key,g); last=g; } }
     html+=card(x);
   }
-  return '<div class="list">'+(html||'<div class="empty">Aucun résultat</div>')+'</div>';
+  return '<div class="list">'+(html||'<div class="empty">'+(T.length?'Aucun résultat':'Aucune toupie pour l\'instant. Ajoute la première avec le bouton ci-dessus.')+'</div>')+'</div>';
 }
 function parts(key){
   const L=sortList(partItems().filter(i=>hit(i.n)),key,st.desc,(x,k)=>k==='nom'?x.n:k==='type'?TYPE_ORDER.indexOf(x.ty):k==='haut'?(+x.h||0):k==='dash'?(+x.dash||0):k==='burst'?(+x.burst||0):k in SI?((x.s||[0,0,0])[SI[k]]):num(x.w));
@@ -970,7 +975,7 @@ function parts(key){
     if(key==='type'&&i.ty!==last){ html+=group(key,i.ty); last=i.ty; }
     html+=partCard(i);
   }
-  return '<div class="list">'+(html||'<div class="empty">Aucun résultat</div>')+'</div>';
+  return '<div class="list">'+(html||'<div class="empty">'+(T.length?'Aucun résultat':'Aucune toupie pour l\'instant. Ajoute la première avec le bouton ci-dessus.')+'</div>')+'</div>';
 }
 function renderList(){
   if(st.tab!=='toupies') return;
@@ -1019,13 +1024,13 @@ function draw(){
   sub.textContent='';
   if(st.tab==='build'){
     h.textContent='Build'; sub.textContent='Compose deux builds et compare-les';
-    c.innerHTML=''; m.innerHTML=buildUI();
+    c.innerHTML=''; m.innerHTML=T.length?buildUI():emptyUI();
   }else if(st.tab==='opts'){
     h.textContent='Options'; sub.textContent='Thème, fond et sauvegarde';
     c.innerHTML=''; m.innerHTML=optsUI();
   }else if(st.tab==='match'){
     h.textContent='Match'; sub.textContent='Choisis deux toupies et lance le combat';
-    c.innerHTML=''; m.innerHTML=matchUI();
+    c.innerHTML=''; m.innerHTML=T.length?matchUI():emptyUI();
   }else{
     const col=st.view==='collection', TT=TF(), nR=TT.filter(x=>x.r).length;
     h.textContent=col?'Mes toupies':'Mes pièces';
@@ -1041,7 +1046,7 @@ function draw(){
 }
 const wnum=v=>(typeof v==='string'&&v.includes('-'))?v.split('-').reduce((a,b)=>a+ +b,0)/2:num(v);
 const RA=T.map((x,i)=>x.r?i:-1).filter(i=>i>=0);
-const mk=i=>{i%=T.length;return {mode:'stock',stock:i,blade:i,ratchet:T[i].r?i:-1,bit:i};};
+const mk=i=>{ if(!T.length) return {mode:'stock',stock:0,blade:0,ratchet:-1,bit:0}; i%=T.length;return {mode:'stock',stock:i,blade:i,ratchet:T[i].r?i:-1,bit:i};};
 st.m={mode:'simple',target:4,rounds:0,names:[LT('Joueur 1'),LT('Joueur 2')],p:[[mk(0),mk(1),mk(2)],[mk(3),mk(4),mk(5)]]};
 const PCOL=['var(--pa)','var(--pink)'];
 let G=null,tmr=null;
@@ -1053,7 +1058,8 @@ function resolve(c){
   return {name:bl.b+' '+(ra?ra.r:'')+bi.bt,blade:bl.b,img:ph.blade,w:Math.round(w*10)/10,ty:bl.bty};
 }
 function opt(list,sel){ return list.map(([v,l])=>`<option value="${v}" ${v==sel?'selected':''}>${l}</option>`).join(''); }
-function drawMatch(){ document.getElementById('main').innerHTML=matchUI(); }
+function drawMatch(){ document.getElementById('main').innerHTML=T.length?matchUI():emptyUI(); }
+function emptyUI(){ return '<div class="empty">Tu n\'as pas encore de toupie.</div><button class="addb" onclick="setTab(\'toupies\')">Aller ajouter une toupie</button>'; }
 function mSet(k,v){ st.m[k]=v; drawMatch(); }
 function slotSet(p,s,f,v){ st.m.p[p][s][f]=f==='mode'?v:+v; drawMatch(); }
 
