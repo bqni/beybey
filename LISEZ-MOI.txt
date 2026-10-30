@@ -69,6 +69,9 @@ Installer sur le téléphone
   Le nom de l'icône vient de la ligne apple-mobile-web-app-title dans index.html (iPhone) et de manifest.json
   (Android). Après un changement de nom ou d'icône, supprime le raccourci et rajoute-le.
   Joue toujours depuis l'icône : le navigateur et l'icône ne partagent pas leurs données.
-  
 
-© 2026 bqni, usage non commercial uniquement
+
+CATALOGUE
+Le fichier catalogue.js contient la liste des toupies Beyblade X (Hasbro et Takara Tomy) utilisée par le bouton « Depuis le catalogue ».
+Source : Beydex Public Resources (github.com/catgamer109/Beydex-Public-Resources). Merci à l'équipe Beydex.
+Si tu retires catalogue.js, l'appli marche toujours : seul le bouton du catalogue disparaît.
