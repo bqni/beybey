@@ -864,8 +864,9 @@ function cpSel(){
   const it=[['cp_b',CPT.B[g('cp_b')]],['cp_r',CPT.R[g('cp_r')]],['cp_i',CPT.I[g('cp_i')]]];
   const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, bb=it[0][1], rr=it[1][1], ii=it[2][1];
   const sm=c=>bb&&ii&&c.e===bb.e&&c.b===bb.n&&(c.r||'')===(rr?rr.n:'')&&c.bi===ii.n, own=pk&&sm(pk)?pk:(bb&&ii?(CAT.find(c=>sm(c)&&!c.mc)||CAT.find(sm)||null):null);
-  const ow={cp_b:own&&{im:own.ib,w:own.wb},cp_r:own&&{im:own.ir,w:own.wr},cp_i:own&&{im:own.it,w:own.wbt}};
-  it.forEach(([id,x])=>{ const p=document.getElementById(id+'_p'); if(!p) return; const y=(own&&x&&ow[id]&&ow[id].im)?ow[id]:x;
+  const bo=pk&&pk.bo&&bb&&pk.e===bb.e&&pk.b===bb.n?pk:null;
+  const ow={cp_b:bo?{im:bo.ib,w:bo.wb}:own&&{im:own.ib,w:own.wb},cp_r:own&&{im:own.ir,w:own.wr},cp_i:own&&{im:own.it,w:own.wbt}};
+  it.forEach(([id,x])=>{ const p=document.getElementById(id+'_p'); if(!p) return; const y=((own||(bo&&id==='cp_b'))&&x&&ow[id]&&ow[id].im)?ow[id]:x;
     p.innerHTML=x?((y.im?`<img src="${y.im}" alt="" loading="lazy">`:'<span class="cpn"></span>')+(y.w?`<small>${y.w} g</small>`:'')):''; });
   const go=document.getElementById('cp_go'); if(go) go.disabled=!(it[0][1]&&it[2][1]);
 }
@@ -873,11 +874,12 @@ function cpGo(){
   const b=CPT.B[document.getElementById('cp_b').value], r=CPT.R[document.getElementById('cp_r').value], i=CPT.I[document.getElementById('cp_i').value];
   if(!b||!i) return;
   const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, same=c=>c.e===b.e&&c.b===b.n&&(c.r||'')===(r?r.n:'')&&c.bi===i.n;
-  const m=(pk&&same(pk))?pk:(CAT.find(c=>same(c)&&!c.mc)||CAT.find(same));
+  const bpk=!!(pk&&pk.bo&&pk.e===b.e&&pk.b===b.n), m=bpk?null:((pk&&same(pk))?pk:(CAT.find(c=>same(c)&&!c.mc)||CAT.find(same)));
   if(m) return cpSave(catPre(m));
   const o={blade:b.n,ligne:b.l,typeBlade:b.bt,edition:b.e,ratchet:r?r.n:'',bit:i.n};
   if(b.w) o.poidsBlade=b.w; if(r&&r.w) o.poidsRatchet=r.w; if(i.w) o.poidsBit=i.w; if(r&&r.h) o.hauteurRatchet=r.h;
   if(b.im) o.photoBlade=b.im; if(r&&r.im) o.photoRatchet=r.im; if(i.im) o.photoBit=i.im;
+  if(pk&&pk.bo&&pk.e===b.e&&pk.b===b.n){ o.metalCoat=pk.mc; if(pk.ib) o.photoBlade=pk.ib; if(pk.wb) o.poidsBlade=pk.wb; }
   cpSave(o);
 }
 function cpSave(o){
