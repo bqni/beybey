@@ -506,6 +506,7 @@ button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-
 #catlist{padding-bottom:var(--sp-6)}
 .addb{display:block;width:calc(100% - 2*var(--sp-4));margin:var(--sp-3) var(--sp-4);height:var(--btn-h);border:1px dashed var(--accent);background:none;color:var(--accent);font:var(--fw-semi) var(--fs-md) var(--font);letter-spacing:.1em;text-transform:uppercase}
 .gnm{width:100%;box-sizing:border-box;margin-top:var(--sp-2);padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2);color:var(--text);font:16px var(--font)}
+.pc .tp b{font:inherit;font-weight:var(--fw-semi);color:var(--text)}
 .eact{grid-column:1/-1;display:flex;justify-content:flex-end;gap:var(--sp-2);padding-top:var(--sp-2)}.eact .chip.dng{margin-left:0}
 
 .nts{margin:0 var(--sp-4);display:grid;gap:6px}
@@ -956,13 +957,13 @@ const sum3=(...L)=>{ const v=L.filter(Boolean); return v.length?[0,1,2].map(i=>M
 const totSt=x=>sum3(x.sb,x.sr,x.sbt);
 function card(x){
   const q=PH[x.n]||{}, g=v=>v===''?'—':v+' g';
-  const pc=(lab,p,w,t,sa)=>`<div class="pc">${img(p,'xs')}<span>${lab}</span><b>${g(w)}</b>${t?typ(t):'<span class="tp">&nbsp;</span>'}${bars(sa)}</div>`;
-  const T3=totSt(x), ex=[x.h?`Hauteur <b>${x.h}</b>`:'',x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
-  return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.n}</div><div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div></div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr)}${pc('Bit',q.bit,x.wbt,x.t,x.sbt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip dng" onclick="cuDel(this,${x._c})">Supprimer</button><button class="chip" onclick="tpForm(${x._c})">Modifier</button></div>`:x._k?`<div class="eact"><button class="chip dng" onclick="bsDel(this,'${encodeURIComponent(x._k)}')">Supprimer</button></div>`:''}</div></details>`;
+  const pc=(lab,p,w,t,sa,xt)=>`<div class="pc">${img(p,'xs')}<span>${lab}</span><b>${g(w)}</b>${t?typ(t):(xt||'<span class="tp">&nbsp;</span>')}${bars(sa)}</div>`;
+  const T3=totSt(x), ex=[x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
+  return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.n}</div><div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div></div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr,x.h?`<span class="tp">Hauteur <b>${x.h}</b></span>`:'')}${pc('Bit',q.bit,x.wbt,x.t,x.sbt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip dng" onclick="cuDel(this,${x._c})">Supprimer</button><button class="chip" onclick="tpForm(${x._c})">Modifier</button></div>`:x._k?`<div class="eact"><button class="chip dng" onclick="bsDel(this,'${encodeURIComponent(x._k)}')">Supprimer</button></div>`:''}</div></details>`;
 }
 function partCard(i){
   const bd=i.l?`<span class="badge" style="--bc:${LINE_COL[i.l]}">${i.l}</span>`:'';
-  return `<div class="rw">${img(i.img)}<div class="rm"><div class="pname">${i.n}</div><div class="meta">${bd}${typ(i.ty)}</div>${i.s?`<div class="stl">A <b>${i.s[0]}</b> · D <b>${i.s[1]}</b> · S <b>${i.s[2]}</b>${i.ex?' · '+i.ex:''}</div>`:''}</div><div class="tot">${i.w}<small>g</small></div></div>`;
+  return `<div class="rw">${img(i.img)}<div class="rm"><div class="pname">${i.n}</div><div class="meta">${bd}${typ(i.ty)}</div>${(i.s||i.ex)?`<div class="stl">${i.s?`A <b>${i.s[0]}</b> · D <b>${i.s[1]}</b> · S <b>${i.s[2]}</b>`:''}${i.s&&i.ex?' · ':''}${i.ex||''}</div>`:''}</div><div class="tot">${i.w}<small>g</small></div></div>`;
 }
 function group(key,g){ return `<div class="gh">${key==='type'?`<span class="dot" style="background:${TYPE[g]}"></span>`:''}${g}</div>`; }
 function collection(key){
