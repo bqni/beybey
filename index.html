@@ -863,7 +863,7 @@ function cpSel(){
   const g=id=>{ const s=document.getElementById(id); return s?s.value:''; };
   const it=[['cp_b',CPT.B[g('cp_b')]],['cp_r',CPT.R[g('cp_r')]],['cp_i',CPT.I[g('cp_i')]]];
   const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, bb=it[0][1], rr=it[1][1], ii=it[2][1];
-  const own=pk&&bb&&ii&&pk.e===bb.e&&pk.b===bb.n&&(pk.r||'')===(rr?rr.n:'')&&pk.bi===ii.n?pk:null;
+  const sm=c=>bb&&ii&&c.e===bb.e&&c.b===bb.n&&(c.r||'')===(rr?rr.n:'')&&c.bi===ii.n, own=pk&&sm(pk)?pk:(bb&&ii?(CAT.find(c=>sm(c)&&!c.mc)||CAT.find(sm)||null):null);
   const ow={cp_b:own&&{im:own.ib,w:own.wb},cp_r:own&&{im:own.ir,w:own.wr},cp_i:own&&{im:own.it,w:own.wbt}};
   it.forEach(([id,x])=>{ const p=document.getElementById(id+'_p'); if(!p) return; const y=(own&&x&&ow[id]&&ow[id].im)?ow[id]:x;
     p.innerHTML=x?((y.im?`<img src="${y.im}" alt="" loading="lazy">`:'<span class="cpn"></span>')+(y.w?`<small>${y.w} g</small>`:'')):''; });
