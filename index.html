@@ -62,6 +62,7 @@ select:focus,.nm:focus{border-color:var(--accent);outline:0}
 select:disabled{opacity:.4}
 .bar select{width:auto;flex:none;max-width:120px}
 .chips{display:flex;gap:var(--sp-2);padding:0 var(--sp-4) var(--sp-3);overflow-x:auto}
+.chips.ed{gap:4px;padding-right:var(--sp-2)}.chips.ed .chip{height:30px;padding:0 7px;font-size:12px}.chips.ed .chip small{font-size:10px}
 .chip{flex:none;height:32px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-2);border-radius:var(--r-2);padding:0 var(--sp-3);font:var(--fw-medium) var(--fs-sm) var(--font)}
 .chip.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
 .chip.fl{height:var(--ctl-h);padding:0 var(--sp-3);white-space:nowrap;color:var(--text)}
@@ -88,6 +89,7 @@ details[open] summary{background:var(--accent-soft)}
 .meta{display:flex;gap:var(--sp-2);align-items:center;margin-top:var(--sp-1);font-size:var(--fs-sm);color:var(--text-2)}
 .badge{border:1px solid var(--border);color:var(--bc);border-radius:var(--r-1);padding:1px 6px;font:var(--fw-semi) var(--fs-xs)/1.3 var(--font);letter-spacing:.04em}
 .tp{display:inline-flex;gap:var(--sp-1);align-items:center}
+.mcb{white-space:nowrap;display:inline-flex;gap:var(--sp-1);align-items:center;border:1px solid var(--border);border-radius:var(--r-1);padding:1px 6px;font:var(--fw-semi) var(--fs-xs)/1.3 var(--font)}.mcb i{width:9px;height:9px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(128,128,128,.45)}
 .dot{width:8px;height:8px;border-radius:50%;flex:none;display:inline-block}
 .tot{font:var(--fw-semi) var(--fs-lg)/1 var(--font);color:var(--text);text-align:right}.tot small{font-size:var(--fs-sm);margin-left:2px;color:var(--text-2);font-weight:var(--fw-regular)}
 .exp{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);padding:var(--sp-2) var(--sp-3) var(--sp-3);background:var(--surface-2)}
@@ -472,7 +474,7 @@ html[data-bg="hex"] #bgc,html[data-bg="sparks"] #bgc{display:block}
 .ff3{display:grid;gap:4px;min-width:0}.ff3>span,.fst>span{color:var(--text-2);font-size:var(--fs-sm)}
 :is([data-theme="futur"],[data-theme="futurl"]):is([data-theme="futur"],[data-theme="futurl"]) .nm.ff{color:var(--text);font-weight:400;text-transform:none;letter-spacing:0;font-size:var(--fs-md)}
 .nm.ff{color:var(--text)}
-.fst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);align-items:end}.fst>span{grid-column:1/-1}
+.qty{margin-left:6px;font:var(--fw-semi) var(--fs-sm) var(--font);color:var(--accent)}.qst{display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-3) 0 0;color:var(--text-2);font-size:var(--fs-sm)}.qst span{flex:1}.qst b{min-width:24px;text-align:center;color:var(--text)}.fwrap:not(.adv) .fadv{display:none}.fadvt{display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-3) 0;color:var(--text-2);font-size:var(--fs-sm)}.fadvt input{width:20px;height:20px;accent-color:var(--accent)}.fst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);align-items:end}.fst>span{grid-column:1/-1}
 html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
 button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 @media (pointer:coarse){input,textarea,select,.nm,.nm.ff,.search input{font-size:16px!important}}
@@ -507,7 +509,7 @@ button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-
 .addb{display:block;width:calc(100% - 2*var(--sp-4));margin:var(--sp-3) var(--sp-4);height:var(--btn-h);border:1px dashed var(--accent);background:none;color:var(--accent);font:var(--fw-semi) var(--fs-md) var(--font);letter-spacing:.1em;text-transform:uppercase}
 .gnm{width:100%;box-sizing:border-box;margin-top:var(--sp-2);padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2);color:var(--text);font:16px var(--font)}
 .pc .tp b{font:inherit;font-weight:var(--fw-semi);color:var(--text)}
-.bfw{margin:var(--sp-3) var(--sp-4) var(--sp-6)}.bfw .go{width:100%;margin:0}.bfw .note{text-align:center;margin-top:var(--sp-2)}
+.bfw{margin:var(--sp-3) var(--sp-4) var(--sp-6)}.bfw .go{width:100%;margin:0}.bfw .note{text-align:center;margin-top:var(--sp-2)}.bfl a{color:var(--text-2);text-decoration:underline}
 .eact{grid-column:1/-1;display:flex;justify-content:flex-end;gap:var(--sp-2);padding-top:var(--sp-2)}.eact .chip.dng{margin-left:0}
 
 .nts{margin:0 var(--sp-4);display:grid;gap:6px}
@@ -540,6 +542,7 @@ var I18N={"HTML": {"<p><b>iPhone</b> : ouvre le site dans <b>Safari</b>, touche 
 Object.assign(I18N.TXT,{"Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.":"Beybey 1.0 · Bey catalog: Beydex (community data, github.com/catgamer109/Beydex-Public-Resources). Fan project, not affiliated with Takara Tomy or Hasbro.","+ Depuis le catalogue":"+ From the catalog","Catalogue":"Catalog","Chercher dans le catalogue…":"Search the catalog…","Seulement celles que je n'ai pas":"Only the ones I don't have","dans ta collection":"in your collection","Dans ta collection":"In your collection","Affine ta recherche pour voir la suite.":"Refine your search to see more.","Choisis une toupie : le formulaire se remplit tout seul, tu pourras corriger les poids et ajouter les stats et les photos. Données de la communauté (Beydex), poids indicatifs.":"Pick a bey: the form fills itself in, then you can fix the weights and add stats and photos. Community data (Beydex), weights are approximate.","Pré-rempli depuis le catalogue (Beydex). Vérifie les poids avec ta balance, et ajoute les stats et les photos si tu veux.":"Pre-filled from the catalog (Beydex). Check the weights with your scale, and add stats and photos if you like.","Garde au moins une toupie":"Keep at least one bey","Confirmer ?":"Confirm?","Remettre les toupies de base":"Restore default beys","Toupies de base":"Default beys","Supprimer":"Delete","Quitter ?":"Quit?","Tous":"All","Édition":"Edition","Choisis l'édition : Hasbro ou Takara Tomy.":"Pick the edition: Hasbro or Takara Tomy."});
 Object.assign(I18N.TXT,{"Ajouter une toupie": "Add a bey", "Comment veux-tu l'ajouter ?": "How do you want to add it?", "Manuellement": "Manually", "Formulaire vide : tu remplis tout toi-même.": "Empty form: you fill everything in yourself.", "Depuis le catalogue": "From the catalog", "Tu choisis chaque pièce dans une liste, les poids et les photos se remplissent tout seuls.": "Pick each part from a list, weights and photos fill in by themselves.", "Cherche ta toupie pour avoir son build d'origine, puis change les pièces si tu veux. Poids et photos se remplissent tout seuls, tu pourras tout corriger. Données et images de la communauté (Beydex), poids indicatifs.": "Pick each part: the form fills itself in (weights, photos), and you can fix everything. Community data and images (Beydex), weights are approximate.", "Blade": "Blade", "Ratchet": "Ratchet", "Bit": "Bit", "Continuer": "Continue", "Pré-rempli depuis le catalogue (Beydex). Vérifie les poids avec ta balance, et ajoute les stats et les photos si tu veux.": "Pre-filled from the catalog (Beydex). Check the weights with your scale, and add stats and photos if you like.", "Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.": "Beybey 1.0 · Bey catalog: Beydex (community data and images, github.com/catgamer109/Beydex-Public-Resources). Fan project, not affiliated with Takara Tomy or Hasbro."});
 Object.assign(I18N.TXT,{"Rechercher…":"Search…"});
+Object.assign(I18N.TXT,{"Attaque, Défense et Stamina n'apparaissent que si tu les as saisies : elles sont au dos des boîtes, à recopier à la main dans la fiche de la toupie (Modifier). ":"Attack, Defense and Stamina only show up if you entered them: they are on the back of the boxes, to copy by hand in the bey's sheet (Edit). ","Aller à mes toupies":"Go to my beys","Exemplaires":"Copies","Tu as déjà cette toupie":"You already have this bey","Ajouter un exemplaire":"Add another copy","Moins":"Less","Plus":"More","Stats avancées (Att / Déf / End, Dash, Burst)":"Advanced stats (Att / Def / Sta, Dash, Burst)"});
 Object.assign(I18N.TXT,{"Cherche ta toupie pour avoir son build d'origine, puis change les pièces si tu veux. Poids et photos se remplissent tout seuls, tu pourras tout corriger. Données et images de la communauté (Beydex), poids indicatifs.": "Search your bey to get its original build, then change parts if you want. Weights and photos fill in by themselves, and you can fix everything. Community data and images (Beydex), weights are approximate.", "Toupie (build d'origine)": "Bey (original build)"});
 Object.assign(I18N.TXT,{"Tu n'as pas encore de toupie.": "You don't have any bey yet.", "Aller ajouter une toupie": "Go add a bey"});
 Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec le bouton ci-dessus.": "No bey yet. Add your first one with the button above."});
@@ -547,6 +550,7 @@ Object.assign(I18N.TXT,{"Invitée": "Guest", "Toupie invitée": "Guest bey", "Ch
 Object.assign(I18N.TXT,{"Toupie custom": "Custom bey", "Ma collection": "My collection", "Catalogue : rien n'est ajouté à ta collection.": "Catalog: nothing is added to your collection."});
 Object.assign(I18N.TXT,{"Lancer un combat A contre B": "Start a battle A vs B", "Les règles (points, rounds) se règlent dans l'onglet Match.": "Rules (points, rounds) are set in the Match tab."});
 Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat": "Start the battle"});
+Object.assign(I18N.TXT,{"Aucun":"None"});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
 function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
 (function(){
@@ -673,6 +677,12 @@ function hdLoad(){ try{ const a=JSON.parse(localStorage.getItem('arene_hide')||'
 function hdSave(a){ try{ localStorage.setItem('arene_hide',JSON.stringify(a)); return true; }catch(e){ return false; } }
 const HID=hdLoad(), BASE=TOUPIES.filter(o=>!(o&&HID.includes(bkey(o)))), NBV=BASE.length;
 const ALL=BASE.concat(CUSTOM);
+/* Metal Coat : finition métallisée d'une toupie (couleur) */
+const MCC=['Black','Blue','Blue/Green','Bronze','Gold','Green','Gunmetal','Magenta','Navy','Orange','Pink','Red','Silver','Violet','White','Yellow'];
+const MCH={Black:'#2b2b2f',Blue:'#2f6bff','Blue/Green':'#1fb5a8',Bronze:'#b4793c',Gold:'#e0b52a',Green:'#2fb457',Gunmetal:'#6b717c',Magenta:'#d6389a',Navy:'#1b2f72',Orange:'#f08a24',Pink:'#f08ab4',Red:'#e0343a',Silver:'#b9c0c9',Violet:'#8a4fd8',White:'#f2f2f2',Yellow:'#f2d625'};
+const MCF={Black:'Noir',Blue:'Bleu','Blue/Green':'Bleu/Vert',Bronze:'Bronze',Gold:'Or',Green:'Vert',Gunmetal:'Gunmetal',Magenta:'Magenta',Navy:'Bleu marine',Orange:'Orange',Pink:'Rose',Red:'Rouge',Silver:'Argent',Violet:'Violet',White:'Blanc',Yellow:'Jaune'};
+const mcL=c=>LANG==='fr'?(MCF[c]||c):c;
+const nmOf=o=>(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim()+(o.metalCoat?' (Metal Coat: '+o.metalCoat+')':'');
 const T=ALL.map((o,i)=>{
   const ERRX=ERR, ERR2={push:m=>{ if(i<NBV) ERRX.push(m); }}; 
   const nm=o.blade||('toupie n°'+(i+1));
@@ -689,10 +699,10 @@ const T=ALL.map((o,i)=>{
   const hasTot=o.total!==undefined&&o.total!==null&&o.total!=='';
   const tot=hasTot?pw(o.total):Math.round((avg(wb)+(wr===''?0:avg(wr))+avg(wbt))*10)/10;
   const ar=v=>Array.isArray(v)&&v.length===3?v.map(Number):null;
-  return {b:o.blade||'?',bty,l,t,r:o.ratchet||'',bt:o.bit||'?',wb,wr,wbt,tot,sb:ar(o.statsBlade),sr:ar(o.statsRatchet),sbt:ar(o.statsBit),h:o.hauteurRatchet||hNom(o.ratchet),dash:o.dashBit||'',burst:o.burstBit||'',_p:{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit},ed:o.edition==='tt'?'tt':'hasbro',_c:i>=NBV?o.id:0,_k:i<NBV?bkey(o):''};
+  return {b:o.blade||'?',bty,l,t,r:o.ratchet||'',bt:o.bit||'?',wb,wr,wbt,tot,sb:ar(o.statsBlade),sr:ar(o.statsRatchet),sbt:ar(o.statsBit),h:o.hauteurRatchet||hNom(o.ratchet),dash:o.dashBit||'',burst:o.burstBit||'',_p:{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit},ed:o.edition==='tt'?'tt':'hasbro',mc:o.metalCoat||'',tg:o.tag||'',q:(+o.qty>1?Math.min(99,Math.floor(+o.qty)):1),_c:i>=NBV?o.id:0,_k:i<NBV?bkey(o):''};
 });
 if(ERR.length) fatal('Il y a une erreur dans data.js',[...ERR,'Corrige ça dans <b>data.js</b>, puis recharge la page.']);
-T.forEach(x=>x.n=(x.b+' '+(x.r||'')+x.bt).replace('  ',' ').trim());
+T.forEach(x=>{ x.dn=(x.b+' '+(x.r||'')+x.bt).replace('  ',' ').trim(); x.n=x.dn+(x.mc?' (Metal Coat: '+x.mc+')':''); });
 const IM={},PH={};
 T.forEach(x=>{ PH[x.n]={}; for(const k of ['blade','ratchet','bit']){ const p=x._p[k]; if(p){ PH[x.n][k]=p; if(!isMk(p)) IM[p]=p; } } });
 /* ---- Photos des toupies ajoutées : stockées dans IndexedDB (pas de limite de 5 Mo), le texte reste dans localStorage ---- */
@@ -763,6 +773,7 @@ function setKey(k){ st.key=k; st.desc=DEF_DESC[k]; const f=document.getElementBy
 function flip(){ st.desc=!st.desc; draw(); }
 function setView(v){ st.view=v; draw(); }
 function setCat(c){ st.cat=c; draw(); }
+function setMc(){ st.mc=!st.mc; draw(); }
 function setEd(e){ st.ed=e; try{ localStorage.setItem('ed',e); }catch(x){} draw(); }
 const TF=()=>st.ed==='all'?T:T.filter(x=>x.ed===st.ed);
 function setQ(v){ st.q=v; renderList(); }
@@ -787,20 +798,22 @@ const TYPES4=[['','Choisir…'],['Attack','Attack'],['Déf','Déf'],['Stamina','
 const gv=id=>{ const e=document.getElementById(id); return e?e.value.trim():''; };
 function fmOpts(list,sel){ return list.map(([v,l])=>`<option value="${v}" ${v===sel?'selected':''}>${l}</option>`).join(''); }
 function fmField(id,lab,val,mode,ph){ return `<label class="ff3"><span>${lab}</span><input class="nm ff" id="${id}" value="${esc(val===undefined||val===null?'':val)}" inputmode="${mode||'text'}" placeholder="${ph||''}" autocomplete="off" autocapitalize="${mode?'off':'words'}"></label>`; }
-function fmStats(pre,a){ a=a||[]; return `<div class="fst"><span>Stats au dos de la boîte</span>${['Att','Déf','End'].map((l,i)=>`<label><input class="nm ff" id="${pre}${i}" value="${a[i]===undefined?'':a[i]}" inputmode="numeric" placeholder="${l}" aria-label="${l}"></label>`).join('')}</div>`; }
+function fmStats(pre,a){ a=a||[]; return `<div class="fst fadv"><span>Stats au dos de la boîte</span>${['Att','Déf','End'].map((l,i)=>`<label><input class="nm ff" id="${pre}${i}" value="${a[i]===undefined?'':a[i]}" inputmode="numeric" placeholder="${l}" aria-label="${l}"></label>`).join('')}</div>`; }
 function fmPhoto(k,lab){ const v=FM.ph[k]; return `<div class="fph"><div class="pimg sm" id="phv_${k}">${v?`<img src="${v}" alt="">`:''}</div><div><label class="chip phb"><input type="file" accept="image/*" hidden onchange="fmPick('${k}',this)">${lab}</label><button type="button" class="chip" id="phc_${k}" onclick="fmCrop('${k}')" ${v?'':'hidden'}>Recadrer</button><button type="button" class="chip" id="phx_${k}" onclick="fmRm('${k}')" ${v?'':'hidden'}>Retirer</button></div></div>`; }
 function tpForm(id,pre,fromCat){
-  const o=id?CUSTOM.find(x=>x.id===id):null, src=o||pre||null; FM.id=o?o.id:0; FM.ph={blade:phRes(src&&src.photoBlade),ratchet:phRes(src&&src.photoRatchet),bit:phRes(src&&src.photoBit)}; FM.rm={}; FM.orig=o?{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit}:{};
+  const o=id?CUSTOM.find(x=>x.id===id):null, src=o||pre||null; FM.id=o?o.id:0; FM.tag=(src&&src.tag)||''; FM.ph={blade:phRes(src&&src.photoBlade),ratchet:phRes(src&&src.photoRatchet),bit:phRes(src&&src.photoBit)}; FM.rm={}; FM.orig=o?{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit}:{};
   o&&0;
-  const h=`<div class="fwrap"><div class="fh"><h2>${o?'Modifier la toupie':'Nouvelle toupie'}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
-  ${fromCat?'<div class="fhelp">Pré-rempli depuis le catalogue (Beydex). Vérifie les poids avec ta balance, et ajoute les stats et les photos si tu veux.</div>':''}<div class="fhelp"><b>Où trouver les stats ?</b> Au dos de la boîte, chaque pièce (Blade, Ratchet, Bit) a ses barres : <b>Attack</b>, <b>Defense</b> et <b>Stamina</b>, avec un chiffre à côté. Recopie-les dans Att, Déf et End. Le ratchet a aussi une <b>Height</b> (hauteur), le bit un <b>Dash</b> et un <b>Burst</b>. Tout est facultatif, mais pour les stats remplis les 3 chiffres d'une pièce ou aucun.</div>
-  <div class="fs">Général</div><div class="fg2"><label class="ff3"><span>Édition</span><select id="f_ed">${fmOpts([['','Choisir…'],['hasbro','Hasbro'],['tt','Takara Tomy']],src?(src.edition==='tt'?'tt':'hasbro'):'')}</select></label></div><div class="fg2"><label class="ff3"><span>Ligne</span><select id="f_ligne">${fmOpts([['','Choisir…'],['BX','BX'],['UX','UX'],['CX','CX']],src&&String(src.ligne).toUpperCase()||'')}</select></label><label class="ff3"><span>Type de la toupie</span><select id="f_t">${fmOpts(TYPES4,src?normT(src.typeToupie):'')}</select></label></div>
+  const adv=!!o||!!(src&&(src.statsBlade||src.statsRatchet||src.statsBit||src.dashBit||src.burstBit));
+  const h=`<div class="fwrap${adv?' adv':''}"><div class="fh"><h2>${o?'Modifier la toupie':'Nouvelle toupie'}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  ${fromCat?'<div class="fhelp">Pré-rempli depuis le catalogue (Beydex). Vérifie les poids avec ta balance, et ajoute les stats et les photos si tu veux.</div>':''}<div class="fhelp fadv"><b>Où trouver les stats ?</b> Au dos de la boîte, chaque pièce (Blade, Ratchet, Bit) a ses barres : <b>Attack</b>, <b>Defense</b> et <b>Stamina</b>, avec un chiffre à côté. Recopie-les dans Att, Déf et End. Le ratchet a aussi une <b>Height</b> (hauteur), le bit un <b>Dash</b> et un <b>Burst</b>. Tout est facultatif, mais pour les stats remplis les 3 chiffres d'une pièce ou aucun.</div>
+  ${o?'':`<label class="fadvt"><input type="checkbox" id="f_adv" ${adv?'checked':''} onchange="this.closest('.fwrap').classList.toggle('adv',this.checked)"><span>Stats avancées (Att / Déf / End, Dash, Burst)</span></label>`}
+  <div class="fs">Général</div><div class="fg2"><label class="ff3"><span>Édition</span><select id="f_ed">${fmOpts([['','Choisir…'],['hasbro','Hasbro'],['tt','Takara Tomy']],src?(src.edition==='tt'?'tt':'hasbro'):'')}</select></label></div><div class="fg2"><label class="ff3"><span>Metal Coat</span><select id="f_mc">${fmOpts([['','Aucun']].concat(MCC.map(c=>[c,mcL(c)])),src&&src.metalCoat||'')}</select></label></div><div class="fg2"><label class="ff3"><span>Ligne</span><select id="f_ligne">${fmOpts([['','Choisir…'],['BX','BX'],['UX','UX'],['CX','CX']],src&&String(src.ligne).toUpperCase()||'')}</select></label><label class="ff3"><span>Type de la toupie</span><select id="f_t">${fmOpts(TYPES4,src?normT(src.typeToupie):'')}</select></label></div>
   <div class="fs">Blade <small>(sa photo sert aussi pour la toupie)</small></div>
   ${fmField('f_blade','Nom',src&&src.blade,'','Ex. Delta Unicorn')}<div class="fg2"><label class="ff3"><span>Type de la blade</span><select id="f_bty">${fmOpts(TYPES4,src?normT(src.typeBlade):'')}</select></label>${fmField('f_wb','Poids (g)',src&&src.poidsBlade,'decimal','Ex. 33')}</div>${fmStats('f_sb',src&&src.statsBlade)}${fmPhoto('blade','Photo de la blade')}
   <div class="fs">Ratchet <small>(facultatif)</small></div>
   <div class="fg2">${fmField('f_ratchet','Nom',src&&src.ratchet,'','Ex. 3-60')}${fmField('f_wr','Poids (g)',src&&src.poidsRatchet,'decimal','Ex. 6.2')}</div>${fmField('f_h','Hauteur',src&&src.hauteurRatchet,'numeric','Ex. 60')}${fmStats('f_sr',src&&src.statsRatchet)}${fmPhoto('ratchet','Photo du ratchet')}
   <div class="fs">Bit</div>
-  <div class="fg2">${fmField('f_bit','Nom',src&&src.bit,'','Ex. GU')}${fmField('f_wbt','Poids (g)',src&&src.poidsBit,'decimal','Ex. 2.1')}</div><div class="fg2">${fmField('f_dash','Dash',src&&src.dashBit,'numeric','Ex. 30')}${fmField('f_burst','Burst',src&&src.burstBit,'numeric','Ex. 30')}</div>${fmStats('f_sbt',src&&src.statsBit)}${fmPhoto('bit','Photo du bit')}
+  <div class="fg2">${fmField('f_bit','Nom',src&&src.bit,'','Ex. GU')}${fmField('f_wbt','Poids (g)',src&&src.poidsBit,'decimal','Ex. 2.1')}</div><div class="fg2 fadv">${fmField('f_dash','Dash',src&&src.dashBit,'numeric','Ex. 30')}${fmField('f_burst','Burst',src&&src.burstBit,'numeric','Ex. 30')}</div>${fmStats('f_sbt',src&&src.statsBit)}${fmPhoto('bit','Photo du bit')}
   <div class="ferr" id="f_err" role="alert"></div>
   <div class="fact"><button class="go sm" onclick="fmSave()">Enregistrer</button><button class="chip" onclick="fmClose()">Annuler</button>${o?'<button class="chip dng" id="f_del" onclick="fmDel()">Supprimer</button>':''}</div></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
@@ -808,7 +821,7 @@ function tpForm(id,pre,fromCat){
 }
 
 const CAT=(typeof CATALOGUE!=='undefined'&&Array.isArray(CATALOGUE))?CATALOGUE:[];
-function catPre(c){ const o={blade:c.b,ligne:c.l,typeBlade:c.bt,typeToupie:c.t,edition:c.e,ratchet:c.r,bit:c.bi}; if(c.wb) o.poidsBlade=c.wb; if(c.wr) o.poidsRatchet=c.wr; if(c.wbt) o.poidsBit=c.wbt; if(c.h) o.hauteurRatchet=c.h; if(c.ib) o.photoBlade=c.ib; if(c.ir) o.photoRatchet=c.ir; if(c.it) o.photoBit=c.it; return o; }
+function catPre(c){ const o={blade:c.b,ligne:c.l,typeBlade:c.bt,typeToupie:c.t,edition:c.e,ratchet:c.r,bit:c.bi}; if(c.wb) o.poidsBlade=c.wb; if(c.wr) o.poidsRatchet=c.wr; if(c.wbt) o.poidsBit=c.wbt; if(c.h) o.hauteurRatchet=c.h; if(c.ib) o.photoBlade=c.ib; if(c.ir) o.photoRatchet=c.ir; if(c.it) o.photoBit=c.it; if(c.mc) o.metalCoat=c.mc; if(c.tg) o.tag=c.tg; return o; }
 let CPT=null,CPS={e:'hasbro'};
 function cptBuild(){ if(CPT) return CPT; const B={},R={},I={};
   CAT.forEach(c=>{ if(c.b){ const k=c.e+'|'+c.b, x=B[k]||(B[k]={k:k,e:c.e,n:c.b,l:c.l,bt:c.bt}); if(!x.w&&c.wb) x.w=c.wb; if(!x.im&&c.ib) x.im=c.ib; }
@@ -833,11 +846,11 @@ function catOpen(){
   <div class="fs">Édition</div><label class="ff3"><select id="cp_e" onchange="cpEd(this.value)">${fmOpts([['hasbro','Hasbro'],['tt','Takara Tomy']],CPS.e)}</select></label>
   <div class="fs">Toupie (build d'origine)</div><label class="ff3"><select id="cp_n" onchange="cpBey()"></select></label>
   ${row('cp_b','Blade')}${row('cp_r','Ratchet')}${row('cp_i','Bit')}
-  <button class="addb cat" id="cp_go" onclick="cpGo()" disabled>Continuer</button></div>`;
+  <div class="ferr" id="f_err" role="alert"></div><div class="fact"><button class="go sm" id="cp_go" onclick="cpGo()" disabled>Enregistrer</button><button class="chip" onclick="fmClose()">Annuler</button></div></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
   f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
   const P=CPT, ph=[['','Choisir…']];
-  document.getElementById('cp_r').innerHTML=fmOpts(ph.concat(Object.values(P.R).sort(cpSort).map(x=>[x.n,esc(x.n)])),'');
+  document.getElementById('cp_r').innerHTML=fmOpts([['','Aucun']].concat(Object.values(P.R).sort(cpSort).map(x=>[x.n,esc(x.n)])),'');
   document.getElementById('cp_i').innerHTML=fmOpts(ph.concat(Object.values(P.I).sort(cpSort).map(x=>[x.n,esc(x.n)])),'');
   cpEd(CPS.e);
 }
@@ -849,19 +862,35 @@ function cpEd(e){ CPS.e=e; const nn=document.getElementById('cp_n'); if(nn){ nn.
 function cpSel(){
   const g=id=>{ const s=document.getElementById(id); return s?s.value:''; };
   const it=[['cp_b',CPT.B[g('cp_b')]],['cp_r',CPT.R[g('cp_r')]],['cp_i',CPT.I[g('cp_i')]]];
-  it.forEach(([id,x])=>{ const p=document.getElementById(id+'_p'); if(!p) return;
-    p.innerHTML=x?((x.im?`<img src="${x.im}" alt="" loading="lazy">`:'<span class="cpn"></span>')+(x.w?`<small>${x.w} g</small>`:'')):''; });
-  const go=document.getElementById('cp_go'); if(go) go.disabled=!(it[0][1]&&it[1][1]&&it[2][1]);
+  const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, bb=it[0][1], rr=it[1][1], ii=it[2][1];
+  const own=pk&&bb&&ii&&pk.e===bb.e&&pk.b===bb.n&&(pk.r||'')===(rr?rr.n:'')&&pk.bi===ii.n?pk:null;
+  const ow={cp_b:own&&{im:own.ib,w:own.wb},cp_r:own&&{im:own.ir,w:own.wr},cp_i:own&&{im:own.it,w:own.wbt}};
+  it.forEach(([id,x])=>{ const p=document.getElementById(id+'_p'); if(!p) return; const y=(own&&own.mc&&x&&ow[id])?ow[id]:x;
+    p.innerHTML=x?((y.im?`<img src="${y.im}" alt="" loading="lazy">`:'<span class="cpn"></span>')+(y.w?`<small>${y.w} g</small>`:'')):''; });
+  const go=document.getElementById('cp_go'); if(go) go.disabled=!(it[0][1]&&it[2][1]);
 }
 function cpGo(){
   const b=CPT.B[document.getElementById('cp_b').value], r=CPT.R[document.getElementById('cp_r').value], i=CPT.I[document.getElementById('cp_i').value];
-  if(!b||!r||!i) return;
-  const m=CAT.find(c=>c.e===b.e&&c.b===b.n&&c.r===r.n&&c.bi===i.n);
-  if(m) return tpForm(0,catPre(m),true);
-  const o={blade:b.n,ligne:b.l,typeBlade:b.bt,edition:b.e,ratchet:r.n,bit:i.n};
-  if(b.w) o.poidsBlade=b.w; if(r.w) o.poidsRatchet=r.w; if(i.w) o.poidsBit=i.w; if(r.h) o.hauteurRatchet=r.h;
-  if(b.im) o.photoBlade=b.im; if(r.im) o.photoRatchet=r.im; if(i.im) o.photoBit=i.im;
-  tpForm(0,o,true);
+  if(!b||!i) return;
+  const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, same=c=>c.e===b.e&&c.b===b.n&&(c.r||'')===(r?r.n:'')&&c.bi===i.n;
+  const m=(pk&&same(pk))?pk:(CAT.find(c=>same(c)&&!c.mc)||CAT.find(same));
+  if(m) return cpSave(catPre(m));
+  const o={blade:b.n,ligne:b.l,typeBlade:b.bt,edition:b.e,ratchet:r?r.n:'',bit:i.n};
+  if(b.w) o.poidsBlade=b.w; if(r&&r.w) o.poidsRatchet=r.w; if(i.w) o.poidsBit=i.w; if(r&&r.h) o.hauteurRatchet=r.h;
+  if(b.im) o.photoBlade=b.im; if(r&&r.im) o.photoRatchet=r.im; if(i.im) o.photoBit=i.im;
+  cpSave(o);
+}
+function cpSave(o){
+  const box=document.getElementById('f_err'); if(!o.ratchet) o.ratchet='';
+  if(!o.hauteurRatchet&&o.ratchet&&hNom(o.ratchet)) o.hauteurRatchet=hNom(o.ratchet);
+  const er=cErr(o);
+  if(er.length) return tpForm(0,o,true); // données incomplètes (combo perso) : on ouvre le formulaire pour compléter
+  const nm=nmOf(o);
+  const dp=T.find(x=>x.n===nm); if(dp){ if(dp._c) return dupMsg(dp); box.textContent='Une toupie « '+nm+' » existe déjà.'; box.scrollIntoView({block:'center'}); return; }
+  o.id=Date.now(); const all=cLoad(); all.push(o);
+  if(!cSave(all)){ box.textContent='Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.'; return; }
+  try{ sessionStorage.setItem('bb_rm','1'); }catch(e){}
+  location.reload();
 }
 function fmClose(){ const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
 function fmRm(k){ FM.ph[k]=''; FM.rm[k]=true; fmPhShow(k); }
@@ -899,10 +928,10 @@ function fmPick(k,inp){
 async function fmSave(){
   const arr=pre=>{ const v=[0,1,2].map(i=>gv(pre+i)); return v.every(x=>x!=='')?v.map(x=>+String(x).replace(',','.')):undefined; };
   const o={id:FM.id||Date.now(),blade:gv('f_blade'),ligne:gv('f_ligne'),typeBlade:gv('f_bty'),typeToupie:gv('f_t'),edition:gv('f_ed'),ratchet:gv('f_ratchet'),bit:gv('f_bit'),poidsBlade:gv('f_wb').replace(',','.'),poidsRatchet:gv('f_wr').replace(',','.'),poidsBit:gv('f_wbt').replace(',','.')};
-  const h=gv('f_h'),da=gv('f_dash'),bu=gv('f_burst'); if(!h&&o.ratchet&&hNom(o.ratchet)) o.hauteurRatchet=hNom(o.ratchet); if(h) o.hauteurRatchet=+h; if(da) o.dashBit=+da; if(bu) o.burstBit=+bu;
+  const mcv=gv('f_mc'); if(mcv) o.metalCoat=mcv; if(FM.tag) o.tag=FM.tag; const h=gv('f_h'),da=gv('f_dash'),bu=gv('f_burst'); if(!h&&o.ratchet&&hNom(o.ratchet)) o.hauteurRatchet=hNom(o.ratchet); if(h) o.hauteurRatchet=+h; if(da) o.dashBit=+da; if(bu) o.burstBit=+bu;
   const sb=arr('f_sb'),sr=arr('f_sr'),sbt=arr('f_sbt'); if(sb) o.statsBlade=sb; if(sr) o.statsRatchet=sr; if(sbt) o.statsBit=sbt;
-  const er=cErr(o); if(!o.edition) er.unshift('Choisis l\'édition : Hasbro ou Takara Tomy.'); const nm=(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim();
-  if(!er.length&&T.some(x=>x.n===nm&&x._c!==FM.id)) er.push('Une toupie « '+nm+' » existe déjà.');
+  const er=cErr(o); if(!o.edition) er.unshift('Choisis l\'édition : Hasbro ou Takara Tomy.'); const nm=nmOf(o);
+  if(!er.length){ const dp=T.find(x=>x.n===nm&&x._c!==FM.id); if(dp){ if(dp._c&&!FM.id) return dupMsg(dp); er.push('Une toupie « '+nm+' » existe déjà.'); } }
   const box=document.getElementById('f_err'); if(er.length){ box.innerHTML=er.map(esc).join('<br>'); box.scrollIntoView({block:'center'}); return; }
   for(const [f,k] of PHF){ const v=FM.ph[k]; if(v){ o[f]=(typeof v==='string'&&v.indexOf('photos/')===0)?v:await pStore(o.id,k,v); } else if(!FM.rm[k]&&FM.orig[k]) o[f]=FM.orig[k]; else if(FM.rm[k]&&isMk(FM.orig[k])) idbDel('photos',FM.orig[k].slice(4)).catch(()=>{}); }
   const all=cLoad(),ix=all.findIndex(x=>x.id===o.id); ix>=0?all[ix]=o:all.push(o);
@@ -915,6 +944,16 @@ function bsDel(b,k){
   if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent=LT('Confirmer ?'); setTimeout(()=>{ if(b.isConnected){ b.dataset.ok=''; b.textContent=LT('Supprimer'); } },3500); return; }
   const a=hdLoad(); k=decodeURIComponent(k); if(!a.includes(k)) a.push(k); hdSave(a); location.reload();
 }
+function cuQty(id,d,rl){
+  const all=cLoad(), o=all.find(x=>x.id===id); if(!o) return;
+  o.qty=Math.max(1,Math.min(99,(+o.qty||1)+d)); if(!cSave(all)) return;
+  const x=T.find(t=>t._c===id); if(x) x.q=o.qty;
+  if(rl){ try{ sessionStorage.setItem('bb_rm','1'); }catch(e){} location.reload(); return; }
+  document.querySelectorAll('[data-q="'+id+'"]').forEach(e=>{ e.textContent=o.qty; });
+  document.querySelectorAll('[data-qb="'+id+'"]').forEach(e=>{ e.textContent='×'+o.qty; e.hidden=o.qty<2; });
+}
+function dupMsg(x){ const b=document.getElementById('f_err'); if(!b) return; const q=x.q||1;
+  b.innerHTML=esc(LT('Tu as déjà cette toupie'))+' ('+q+'). <button type="button" class="chip" onclick="cuQty('+x._c+',1,1)">'+esc(LT('Ajouter un exemplaire'))+'</button>'; b.scrollIntoView({block:'center'}); }
 async function cuDel(b,id){
   if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent=LT('Confirmer ?'); setTimeout(()=>{ if(b.isConnected){ b.dataset.ok=''; b.textContent=LT('Supprimer'); } },3500); return; }
   cSave(cLoad().filter(x=>x.id!==id)); for(const [,k] of PHF){ try{ await idbDel('photos',id+'_'+k); }catch(e){} } location.reload();
@@ -935,7 +974,7 @@ function backupImport(inp){
   r.onload=async()=>{ try{
       const d=JSON.parse(r.result); if(!d||d.app!=='arene-beyblade') throw 0;
       const have=cLoad(),names=new Set(T.map(x=>x.n)); let addT=0,addH=0;
-      for(const o of (d.toupies||[])){ if(!o||cErr(o).length) continue; const nm=(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim(); if(have.some(x=>x.id===o.id)||names.has(nm)) continue; for(const [f,k] of PHF){ if(typeof o[f]==='string'&&o[f].indexOf('data:')===0) o[f]=await pStore(o.id,k,o[f]); else if(!(typeof o[f]==='string'&&o[f].indexOf('photos/')===0)) delete o[f]; } have.push(o); names.add(nm); addT++; }
+      for(const o of (d.toupies||[])){ if(!o||cErr(o).length) continue; const nm=nmOf(o); if(have.some(x=>x.id===o.id)||names.has(nm)) continue; for(const [f,k] of PHF){ if(typeof o[f]==='string'&&o[f].indexOf('data:')===0) o[f]=await pStore(o.id,k,o[f]); else if(!(typeof o[f]==='string'&&o[f].indexOf('photos/')===0)) delete o[f]; } have.push(o); names.add(nm); addT++; }
       if(Array.isArray(d.masquees)){ const hd=hdLoad(); d.masquees.forEach(k=>{ if(typeof k==='string'&&!hd.includes(k)) hd.push(k); }); hdSave(hd); }
       const hs=hLoad(); (d.historique||[]).forEach(h=>{ if(h&&h.id&&!hs.some(x=>x.id===h.id)){ hs.push(h); addH++; } }); hs.sort((a,b)=>b.id-a.id);
       if(!cSave(have)) { bkMsg('Pas assez de place pour tout importer.'); return; } hSave(hs);
@@ -948,9 +987,9 @@ function setTab(t){ st.tab=t; draw(); window.scrollTo(0,0); }
 function partItems(){
   const P=x=>PH[x.n]||{};
   const TT=TF();
-  if(st.cat==='ratchets') return TT.filter(x=>x.r).map(x=>({n:x.r,w:x.wr,img:P(x).ratchet,ty:'',l:'',s:x.sr,h:x.h,ex:x.h?`Hauteur <b>${x.h}</b>`:''}));
-  if(st.cat==='bits') return TT.map(x=>({n:x.bt,w:x.wbt,img:P(x).bit,ty:x.t,l:'',s:x.sbt,dash:x.dash,burst:x.burst,ex:(x.dash!==''?`Dash <b>${x.dash}</b> · `:'')+(x.burst!==''?`Burst <b>${x.burst}</b>`:'')}));
-  return TT.map(x=>({n:x.b,w:x.wb,img:P(x).blade,ty:x.bty,l:x.l,s:x.sb,ex:''}));
+  if(st.cat==='ratchets') return TT.filter(x=>x.r).map(x=>({n:x.r+(x.mc?' · '+mcL(x.mc):''),w:x.wr,img:P(x).ratchet,ty:'',l:'',s:x.sr,h:x.h,ex:x.h?`Hauteur <b>${x.h}</b>`:''}));
+  if(st.cat==='bits') return TT.map(x=>({n:x.bt+(x.mc?' · '+mcL(x.mc):''),w:x.wbt,img:P(x).bit,ty:x.t,l:'',s:x.sbt,dash:x.dash,burst:x.burst,ex:(x.dash!==''?`Dash <b>${x.dash}</b> · `:'')+(x.burst!==''?`Burst <b>${x.burst}</b>`:'')}));
+  return TT.map(x=>({n:x.b+(x.mc?' · '+mcL(x.mc):''),w:x.wb,img:P(x).blade,ty:x.bty,l:x.l,s:x.sb,ex:''}));
 }
 function img(p,cls){ return p&&IM[p]?`<div class="pimg ${cls||''}"><img loading="lazy" onerror="this.remove()" src="${IM[p]}" alt=""></div>`:`<div class="pimg ${cls||''}"></div>`; }
 function typ(t){ return t?`<span class="tp"><span class="dot" style="background:${TYPE[t]}"></span>${t}</span>`:''; }
@@ -962,7 +1001,7 @@ function card(x){
   const q=PH[x.n]||{}, g=v=>v===''?'—':v+' g';
   const pc=(lab,p,w,t,sa,xt)=>`<div class="pc">${img(p,'xs')}<span>${lab}</span><b>${g(w)}</b>${t?typ(t):(xt||'<span class="tp">&nbsp;</span>')}${bars(sa)}</div>`;
   const T3=totSt(x), ex=[x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
-  return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.n}</div><div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div></div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr,x.h?`<span class="tp">Hauteur <b>${x.h}</b></span>`:'')}${pc('Bit',q.bit,x.wbt,x.t,x.sbt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip dng" onclick="cuDel(this,${x._c})">Supprimer</button><button class="chip" onclick="tpForm(${x._c})">Modifier</button></div>`:x._k?`<div class="eact"><button class="chip dng" onclick="bsDel(this,'${encodeURIComponent(x._k)}')">Supprimer</button></div>`:''}</div></details>`;
+  return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.dn}${x._c?`<span class="qty" data-qb="${x._c}" ${x.q>1?'':'hidden'}>×${x.q}</span>`:''}</div><div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div>${x.mc?`<div class="meta"><span class="mcb"><i style="background:${MCH[x.mc]||'var(--text)'}"></i>Metal Coat · ${mcL(x.mc)}${x.tg?' · '+x.tg.split(' ')[0]:''}</span></div>`:''}</div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr,x.h?`<span class="tp">Hauteur <b>${x.h}</b></span>`:'')}${pc('Bit',q.bit,x.wbt,x.t,x.sbt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="qst"><span>Exemplaires</span><button class="chip sq" onclick="cuQty(${x._c},-1)" aria-label="Moins">−</button><b data-q="${x._c}">${x.q}</b><button class="chip sq" onclick="cuQty(${x._c},1)" aria-label="Plus">+</button></div>`:''}${x._c?`<div class="eact"><button class="chip dng" onclick="cuDel(this,${x._c})">Supprimer</button><button class="chip" onclick="tpForm(${x._c})">Modifier</button></div>`:x._k?`<div class="eact"><button class="chip dng" onclick="bsDel(this,'${encodeURIComponent(x._k)}')">Supprimer</button></div>`:''}</div></details>`;
 }
 function partCard(i){
   const bd=i.l?`<span class="badge" style="--bc:${LINE_COL[i.l]}">${i.l}</span>`:'';
@@ -970,7 +1009,7 @@ function partCard(i){
 }
 function group(key,g){ return `<div class="gh">${key==='type'?`<span class="dot" style="background:${TYPE[g]}"></span>`:''}${g}</div>`; }
 function collection(key){
-  const L=sortList(TF().filter(x=>hit(x.n+' '+x.l+' '+x.t)),key,st.desc,(x,k)=>k==='nom'?x.n:k==='poids'?x.tot:k==='ligne'?LINE_ORDER.indexOf(x.l):k==='type'?TYPE_ORDER.indexOf(x.t):((totSt(x)||[0,0,0])[SI[k]]));
+  const L=sortList(TF().filter(x=>(!st.mc||x.mc)&&hit(x.n+' '+x.l+' '+x.t+' '+x.tg)),key,st.desc,(x,k)=>k==='nom'?x.n:k==='poids'?x.tot:k==='ligne'?LINE_ORDER.indexOf(x.l):k==='type'?TYPE_ORDER.indexOf(x.t):((totSt(x)||[0,0,0])[SI[k]]));
   let last=null,html='';
   for(const x of L){
     if(key==='ligne'||key==='type'){ const g=key==='ligne'?x.l:x.t; if(g!==last){ html+=group(key,g); last=g; } }
@@ -1026,9 +1065,9 @@ function buildUI(){
     const ca=win&&d!==null&&d<0?' cw a':win&&d===0?' tie':'', cb=win&&d!==null&&d>0?' cw b':win&&d===0?' tie':'';
     return `<div class="cr"><b class="${ca}">${f(x)}</b><span>${lab}${d?`<small>${d>0?'+':''}${d} pour B</small>`:''}</span><b class="${cb}">${f(y)}</b></div>`;
   };
-  const rows=[row('Poids',a.w,b.w,true,' g'),row('Attaque',a.S[0],b.S[0],true),row('Défense',a.S[1],b.S[1],true),row('Stamina',a.S[2],b.S[2],true),row('Hauteur',a.h,b.h,false),row('Dash',a.dash,b.dash,true),row('Burst',a.burst,b.burst,true)].join('');
+  const rows=[row('Poids',a.w,b.w,true,' g'),...(a.S[0]+a.S[1]+a.S[2]+b.S[0]+b.S[1]+b.S[2]>0?[row('Attaque',a.S[0],b.S[0],true),row('Défense',a.S[1],b.S[1],true),row('Stamina',a.S[2],b.S[2],true)]:[]),row('Hauteur',a.h,b.h,false),row('Dash',a.dash,b.dash,true),row('Burst',a.burst,b.burst,true)].join('');
   return a.html+b.html+`<div class="pcard cmp"><div class="sl">Comparatif</div><div class="ch"><span style="color:var(--pa)">A</span><span style="color:var(--pink)">B</span></div>${rows}</div>`
-    +`<div class="bfw"><button class="go" onclick="bfAsk()">Lancer un combat A contre B</button></div>`;
+    +`<div class="bfw"><button class="go" onclick="bfAsk()">Lancer un combat A contre B</button><div class="mut note bfl">Attaque, Défense et Stamina n'apparaissent que si tu les as saisies : elles sont au dos des boîtes, à recopier à la main dans la fiche de la toupie (Modifier). <a href="#" onclick="st.view='collection';setTab('toupies');return false">Aller à mes toupies</a></div></div>`;
 }
 function bfAsk(){
   const h=`<div class="fwrap"><div class="fh"><h2>Combat A contre B</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
@@ -1064,7 +1103,7 @@ function draw(){
     const key=curKey();
     const bar=`<div class="bar"><label class="search">${IC.search}<input id="q" type="search" placeholder="Chercher…" value="${esc(st.q)}" oninput="setQ(this.value)" autocomplete="off"></label><select id="k" aria-label="Trier par" onchange="setKey(this.value)">${keysFor().map(([k,l])=>`<option value="${k}" ${k===key?'selected':''}>${l}</option>`).join('')}</select><button id="fl" class="chip fl" onclick="flip()" aria-label="Inverser l’ordre">${flipLbl()}</button></div>`;
     const chips=col?'':'<div class="chips">'+[['blades','Blades',TT.length],['ratchets','Ratchets',nR],['bits','Bits',TT.length]].map(([k,l,n])=>`<button class="chip ${st.cat===k?'on':''}" onclick="setCat('${k}')"><span>${l}</span><small> · ${n}</small></button>`).join('')+'</div>';
-    const eds='<div class="chips">'+[['all','Tous',T.length],['hasbro','Hasbro',T.filter(x=>x.ed==='hasbro').length],['tt','Takara Tomy',T.filter(x=>x.ed==='tt').length]].map(([k,l,n])=>`<button class="chip ${st.ed===k?'on':''}" onclick="setEd('${k}')"><span>${l}</span><small> · ${n}</small></button>`).join('')+'</div>';
+    const eds='<div class="chips ed">'+[['all','Tous',T.length],['hasbro','Hasbro',T.filter(x=>x.ed==='hasbro').length],['tt','Takara Tomy',T.filter(x=>x.ed==='tt').length]].map(([k,l,n])=>`<button class="chip ${st.ed===k?'on':''}" onclick="setEd('${k}')"><span>${l}</span><small> · ${n}</small></button>`).join('')+(T.some(x=>x.mc)?`<button class="chip ${st.mc?'on':''}" onclick="setMc()"><span>Metal Coat</span><small> · ${T.filter(x=>x.mc).length}</small></button>`:'')+'</div>';
     c.innerHTML=frame+bar+eds+chips+(col?'<button class="addb" onclick="addOpen()">+ Ajouter une toupie</button>':'');
     renderList();
   }
