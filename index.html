@@ -865,7 +865,7 @@ function cpSel(){
   const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, bb=it[0][1], rr=it[1][1], ii=it[2][1];
   const own=pk&&bb&&ii&&pk.e===bb.e&&pk.b===bb.n&&(pk.r||'')===(rr?rr.n:'')&&pk.bi===ii.n?pk:null;
   const ow={cp_b:own&&{im:own.ib,w:own.wb},cp_r:own&&{im:own.ir,w:own.wr},cp_i:own&&{im:own.it,w:own.wbt}};
-  it.forEach(([id,x])=>{ const p=document.getElementById(id+'_p'); if(!p) return; const y=(own&&own.mc&&x&&ow[id])?ow[id]:x;
+  it.forEach(([id,x])=>{ const p=document.getElementById(id+'_p'); if(!p) return; const y=(own&&x&&ow[id]&&ow[id].im)?ow[id]:x;
     p.innerHTML=x?((y.im?`<img src="${y.im}" alt="" loading="lazy">`:'<span class="cpn"></span>')+(y.w?`<small>${y.w} g</small>`:'')):''; });
   const go=document.getElementById('cp_go'); if(go) go.disabled=!(it[0][1]&&it[2][1]);
 }
