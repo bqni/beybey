@@ -546,6 +546,7 @@ Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec 
 Object.assign(I18N.TXT,{"Invitée": "Guest", "Toupie invitée": "Guest bey", "Choisir dans le catalogue…": "Pick from the catalog…", "Ou écris son nom…": "Or type its name…", "Nom de la toupie": "Bey name", "Toupie invitée : elle n'est pas ajoutée à ta collection.": "Guest bey: it is not added to your collection."});
 Object.assign(I18N.TXT,{"Toupie custom": "Custom bey", "Ma collection": "My collection", "Catalogue : rien n'est ajouté à ta collection.": "Catalog: nothing is added to your collection."});
 Object.assign(I18N.TXT,{"Lancer un combat A contre B": "Start a battle A vs B", "Les règles (points, rounds) se règlent dans l'onglet Match.": "Rules (points, rounds) are set in the Match tab."});
+Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat": "Start the battle"});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
 function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
 (function(){
@@ -1027,8 +1028,17 @@ function buildUI(){
   };
   const rows=[row('Poids',a.w,b.w,true,' g'),row('Attaque',a.S[0],b.S[0],true),row('Défense',a.S[1],b.S[1],true),row('Stamina',a.S[2],b.S[2],true),row('Hauteur',a.h,b.h,false),row('Dash',a.dash,b.dash,true),row('Burst',a.burst,b.burst,true)].join('');
   return a.html+b.html+`<div class="pcard cmp"><div class="sl">Comparatif</div><div class="ch"><span style="color:var(--pa)">A</span><span style="color:var(--pink)">B</span></div>${rows}</div>`
-    +`<div class="bfw"><button class="go" onclick="buildFight()">Lancer un combat A contre B</button><div class="mut note">Les règles (points, rounds) se règlent dans l'onglet Match.</div></div>`;
+    +`<div class="bfw"><button class="go" onclick="bfAsk()">Lancer un combat A contre B</button></div>`;
 }
+function bfAsk(){
+  const h=`<div class="fwrap"><div class="fh"><h2>Combat A contre B</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  <div class="fs">Premier à</div><div class="chips" id="bfp">${[3,4,5,7,10].map(v=>`<button class="chip ${st.m.target===v?'on':''}" onclick="bfPick(${v})">${v} points</button>`).join('')}</div>
+  <button class="addb cat" onclick="bfGo()">Lancer le combat</button></div>`;
+  let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
+}
+function bfPick(v){ st.m.target=v; document.querySelectorAll('#bfp .chip').forEach(b=>b.classList.toggle('on',b.textContent.trim().indexOf(v+' ')===0)); }
+function bfGo(){ st.m.rounds=0; fmClose(); buildFight(); }
 function buildFight(){
   const L=bdLists(), biT=[], seen={}; T.forEach((x,i)=>{ if(seen[x.bt]) return; seen[x.bt]=1; biT.push(i); });
   const slot=n=>{ const B=BD[n], integ=!!(L.bl[B[0]]&&L.bl[B[0]].integ); const r=integ?-1:(RA[B[1]]===undefined?-1:RA[B[1]]); return {mode:'custom',src:'own',stock:0,blade:B[0],ratchet:r,bit:biT[B[2]]===undefined?0:biT[B[2]]}; };
