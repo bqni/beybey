@@ -2,9 +2,11 @@
 
 Appli web de fan pour **Beyblade X** : collection de toupies, calculateur de build, matchs 3v3 avec historique.
 
+**Volontairement minimaliste : tu ouvres, tu rentres tes toupies, tu joues, c'est tout.** Pas de compte, pas de shop, pas de news, pas de pub.
+
 **▶ https://bqni.github.io/beybey/**
 
-*🇬🇧 Fan-made web app for Beyblade X: collection, build calculator, matches. Open the link, works on phone and desktop. The app is available in **French and English** (Options > Langue / Language).*
+*🇬🇧 Fan-made web app for Beyblade X: collection, build calculator, matches. Deliberately minimal: open it, add your beys, play, that's it. No account, no shop, no news, no ads. Works on phone and desktop. The app is available in **French and English** (Options > Langue / Language).*
 
 ## Bêta, à savoir
 
