@@ -1565,6 +1565,7 @@ function rmClose(){ const e=document.getElementById('rm'); if(e) e.remove(); }
 try{ if(sessionStorage.getItem('bb_rm')){ sessionStorage.removeItem('bb_rm'); setTimeout(rmShow,400); } }catch(e){}
 ['gesturestart','gesturechange','gestureend'].forEach(g=>document.addEventListener(g,e=>e.preventDefault()));
 const PBOOT=photosBoot().catch(()=>{});
+try{ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }catch(e){}
 </script>
 </body>
 </html>
