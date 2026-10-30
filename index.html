@@ -121,7 +121,7 @@ details[open] summary{background:var(--accent-soft)}
 .cr b{font:var(--fw-semi) var(--fs-lg) var(--font);color:var(--text)}.cr b.cw.a{color:var(--pa)}.cr b.cw.b{color:var(--pink)}.cr b.tie{color:var(--text-2);opacity:.5}
 
 /* ===== Match : préparation ===== */
-.rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);padding:0 var(--sp-4) var(--sp-3)}
+.rules{display:grid;grid-template-columns:1fr;gap:var(--sp-2);padding:0 var(--sp-4) var(--sp-3)}
 .rules label,.g3 label{font-size:var(--fs-xs);color:var(--text-2);display:block}
 .rules select,.g3 select{margin-top:var(--sp-1)}
 .note{padding:0 var(--sp-4) var(--sp-3)}
@@ -1124,7 +1124,7 @@ function matchUI(){
     +'<div class="pcard soon"><div class="sl">Tournoi</div><b>Arrive bientôt</b><div class="mut">Un tableau à élimination directe : tu ajoutes les joueurs, chacun enregistre ses toupies, et c\'est parti.</div></div>';
   const n=M.mode==='tournoi'?3:1;
   const modes='<div class="frame f3">'+[['simple','Match simple'],['tournoi','Match 3v3'],['bracket','Tournoi']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div>';
-  const rules=`<div class="rules"><label>Premier à<select onchange="mSet('target',+this.value)">${opt([3,4,5,7,10].map(v=>[v,v+' points']),M.target)}</select></label><label>Rounds<select onchange="mSet('rounds',+this.value)">${opt([[0,'Illimités'],...[1,3,5,7,9].map(v=>[v,v])],M.rounds)}</select></label></div>`;
+  const rules=`<div class="rules"><label>Premier à<select onchange="mSet('target',+this.value)">${opt([3,4,5,7,10].map(v=>[v,v+' points']),M.target)}</select></label></div>`;
   const note=M.mode==='tournoi'?'<div class="mut note">3 toupies par joueur, une par round, chacune une seule fois. Fin après 3 rounds ou au score.</div>':'';
   const players=[0,1].map(p=>`<div class="pcard p${p}" style="--pc:${PCOL[p]}"><input class="nm" value="${esc(M.names[p])}" oninput="st.m.names[${p}]=this.value" aria-label="Nom du joueur ${p+1}">${Array.from({length:n},(_,s)=>slotUI(p,s)).join('')}</div>`).join('');
   return '<div class="top">'+modes+rules+'</div>'+note+'<div class="pls">'+players+'</div>'+`<div class="act"><div class="opts"><label><input type="checkbox" ${st.son?'checked':''} onchange="st.son=this.checked"> Son</label></div><button class="go" onclick="startMatch()">Lancer le match</button></div>`+histUI(M.mode);
