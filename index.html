@@ -34,6 +34,7 @@ body.ishome .hdr,body.ishome .sub,body.ishome #ctl{display:none}
 .hmb small{font-size:10px;letter-spacing:.02em;text-transform:none;color:var(--muted,var(--text));opacity:.7;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hmb:active,.hm-ic:active,.hm-pill:active,.hm-go:active{transform:scale(.97);filter:brightness(1.25)}
 @media (max-height:700px){.hm-go{height:52px}.hmb{height:50px}}
+@media (orientation:portrait) and (min-height:600px){html.hmp,html.hmp body{overflow:hidden;overscroll-behavior:none;height:100%}}
 .hm-cl,.hm-cr{display:contents}
 @media (orientation:landscape) and (max-height:520px){
 .hmx{display:grid;grid-template-columns:1fr auto 1fr;grid-template-rows:auto auto auto;column-gap:var(--sp-4);row-gap:6px;align-items:center;max-width:none;padding:6px max(var(--sp-4),env(safe-area-inset-right,0px)) 0 max(var(--sp-4),env(safe-area-inset-left,0px))}
@@ -1300,7 +1301,7 @@ function buildFight(){
 function draw(){
   const h=document.getElementById('h'),sub=document.getElementById('sub'),c=document.getElementById('ctl'),m=document.getElementById('main');
   sub.textContent='';
-  document.body.classList.toggle('ishome',st.tab==='home');
+  document.body.classList.toggle('ishome',st.tab==='home'); document.documentElement.classList.toggle('hmp',st.tab==='home');
   if(st.tab!=='home'&&HM.iv){ clearInterval(HM.iv); HM.iv=0; }
   if(st.tab==='home'){
     c.innerHTML=''; m.innerHTML=homeUI(); homeStart();
@@ -2330,14 +2331,6 @@ try{ const vv=window.visualViewport; let tm; const fixVp=()=>{ clearTimeout(tm);
     if(vv&&(Math.abs(vv.height-innerHeight)>1||vv.offsetTop>1||vv.pageTop>scrollY+1)){ scrollTo(scrollX,scrollY); const tb=document.getElementById('tabs'); if(tb){ tb.style.display='none'; void tb.offsetHeight; tb.style.display=''; } } },150); };
   if(vv){ vv.addEventListener('resize',fixVp); vv.addEventListener('scroll',fixVp); }
   document.addEventListener('focusout',fixVp); addEventListener('orientationchange',fixVp); addEventListener('pageshow',fixVp);
-}catch(e){}
-// iPhone (appli installée) : avec le temps, iOS peut raccourcir la zone de page, et la barre du bas se retrouve au-dessus d'une bande vide.
-// On mesure l'écart entre la hauteur réelle de l'écran et celle de la page, et on redescend la barre d'autant.
-try{ const sa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
-  const fixBar=()=>{ const tb=document.getElementById('tabs'); if(!tb) return; let d=0;
-    if(sa&&innerHeight>innerWidth){ d=Math.max(screen.width,screen.height)-innerHeight; if(d<6||d>200) d=0; }
-    tb.style.bottom=d?(-d)+'px':''; document.documentElement.style.setProperty('--bar-gap',d+'px'); };
-  if(sa){ ['resize','pageshow','focus','orientationchange'].forEach(e=>addEventListener(e,fixBar)); document.addEventListener('visibilitychange',()=>{ if(!document.hidden) fixBar(); }); setInterval(fixBar,2000); fixBar(); }
 }catch(e){}
 </script>
 </body>
