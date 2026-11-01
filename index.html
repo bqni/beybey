@@ -699,7 +699,30 @@ function fatal(titre,lignes){
   throw new Error(titre);
 }
 const CKEY='arene_custom';
-function cLoad(){ try{ const a=JSON.parse(localStorage.getItem(CKEY)||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+/* ===== Nettoyage des données reçues (QR, import, stockage) : tout est forcé en nombres ou en texte court ===== */
+const nn=(v,d)=>{ v=typeof v==='number'||typeof v==='string'?Number(v):NaN; return isFinite(v)?Math.max(-1e9,Math.min(1e9,Math.round(v))):(d===undefined?0:d); };
+const ss=(v,n)=>typeof v==='string'||typeof v==='number'?String(v).slice(0,n||40):'';
+const sid=v=>ss(v,200).replace(/[^A-Za-z0-9_-]/g,'').slice(0,20);
+const sl=(v,n)=>Array.isArray(v)?v.slice(0,n||6).map(x=>ss(x,60)):[];
+const stClean=s=>{ if(!Array.isArray(s)) return null; const t=(Array.isArray(s[0])||Array.isArray(s[1])||Array.isArray(s[2]))?s:[s,null,null];
+  return [0,1,2].map(i=>{ const a=t[i]; return Array.isArray(a)?[Math.max(0,nn(a[0])),Math.max(0,nn(a[1])),Math.max(0,nn(a[2])),ss(a[3],60),Math.max(0,nn(a[4]))]:null; }); };
+const hClean=r=>{ if(!r||typeof r!=='object'||Array.isArray(r)) return null; const o={id:nn(r.id),from:ss(r.from,20),cat:r.cat==='tournoi'?'tournoi':'simple',tg:nn(r.tg),bo:nn(r.bo),mn:nn(r.mn),r:nn(r.r),w:(r.w===0||r.w===1)?r.w:-1,
+  s:[nn(r.s&&r.s[0]),nn(r.s&&r.s[1])],n:[ss(r.n&&r.n[0],20),ss(r.n&&r.n[1],20)],ids:[sid(r.ids&&r.ids[0]),sid(r.ids&&r.ids[1])],me:r.me?1:0,b:[sl(r.b&&r.b[0]),sl(r.b&&r.b[1])]};
+  if(r.oid!==undefined&&r.oid!==null) o.oid=nn(r.oid); if(Array.isArray(r.pc)) o.pc=[sl(r.pc[0]),sl(r.pc[1])]; return o; };
+const fClean=(f,id)=>{ if(!f||typeof f!=='object'||Array.isArray(f)) return null; const o={id,n:ss(f.n,20),note:ss(f.note,60),at:nn(f.at)}; const st=stClean(f.st); if(st) o.st=st; return o; };
+const tx=(v,n)=>ss(v,n||60).replace(/[<>"`\\]/g,'').replace(/'/g,'\u2019');
+const pOk=v=>typeof v==='string'&&(/^idb:[\w-]{1,80}$/.test(v)||/^photos\/[\w\-./]{1,120}$/.test(v)||/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+\/=]+$/.test(v));
+const stn=v=>Array.isArray(v)?v.slice(0,3).map(x=>(typeof x==='number'||(typeof x==='string'&&/^[0-9.,]{0,8}$/.test(x)))?x:''):undefined;
+const cClean=o=>{ if(!o||typeof o!=='object'||Array.isArray(o)) return null;
+  const c={id:nn(o.id)}; for(const k of ['nom','blade','ligne','typeBlade','typeToupie','edition','ratchet','bit','tag']) if(o[k]!==undefined&&o[k]!==null) c[k]=tx(o[k]);
+  for(const k of ['poidsBlade','poidsRatchet','poidsBit']) if(o[k]!==undefined&&o[k]!==null) c[k]=typeof o[k]==='number'?(isFinite(o[k])?o[k]:''):(typeof o[k]==='string'?ss(o[k],12).replace(/[^0-9.,-]/g,''):'');
+  if(o.hauteurRatchet!==undefined&&o.hauteurRatchet!==null&&o.hauteurRatchet!=='') c.hauteurRatchet=nn(o.hauteurRatchet);
+  if(o.metalCoat!==undefined&&o.metalCoat!==null&&o.metalCoat!=='') c.metalCoat=tx(o.metalCoat,20); if(o.qty!==undefined) c.qty=Math.max(1,Math.min(99,nn(o.qty,1)));
+  for(const k of ['dashBit','burstBit']) if(o[k]!==undefined&&o[k]!==null&&o[k]!=='') c[k]=nn(o[k]);
+  for(const k of ['statsBlade','statsRatchet','statsBit']){ const v=stn(o[k]); if(v) c[k]=v; }
+  for(const [k] of [['photoBlade'],['photoRatchet'],['photoBit']]) if(pOk(o[k])) c[k]=o[k];
+  return c; };
+function cLoad(){ try{ const a=JSON.parse(localStorage.getItem(CKEY)||'[]'); return Array.isArray(a)?a.map(cClean).filter(Boolean):[]; }catch(e){ return []; } }
 function cSave(a){ try{ localStorage.setItem(CKEY,JSON.stringify(a)); return true; }catch(e){ return false; } }
 function cErr(o){ const E=[],n=v=>{ const x=String(v===undefined||v===null?'':v).replace(',','.').trim(); return x!==''&&/^[0-9.]+(-[0-9.]+)?$/.test(x); };
   if(!o.blade) E.push('Il manque le nom de la blade.'); if(!o.bit) E.push('Il manque le nom du bit.');
@@ -1028,11 +1051,11 @@ function backupImport(inp){
   r.onload=async()=>{ try{
       const d=JSON.parse(r.result); if(!d||d.app!=='arene-beyblade') throw 0;
       const have=cLoad(),names=new Set(T.map(x=>x.n)); let addT=0,addH=0;
-      for(const o of (d.toupies||[])){ if(!o||cErr(o).length) continue; const nm=nmOf(o); if(have.some(x=>x.id===o.id)||names.has(nm)) continue; for(const [f,k] of PHF){ if(typeof o[f]==='string'&&o[f].indexOf('data:')===0) o[f]=await pStore(o.id,k,o[f]); else if(!(typeof o[f]==='string'&&o[f].indexOf('photos/')===0)) delete o[f]; } have.push(o); names.add(nm); addT++; }
-      if(Array.isArray(d.masquees)){ const hd=hdLoad(); d.masquees.forEach(k=>{ if(typeof k==='string'&&!hd.includes(k)) hd.push(k); }); hdSave(hd); }
-      if(d.profil&&d.profil.n&&!PRF.n){ PRF.n=String(d.profil.n).slice(0,20); if(d.profil.id) PRF.id=d.profil.id; PRF.hn=PRF.n; pfSave(); }
-      if(d.amis&&typeof d.amis==='object'){ const F=fLoad(); Object.keys(d.amis).forEach(k=>{ if(!F[k]) F[k]=d.amis[k]; }); fSave(F); }
-      const hs=hLoad(); (d.historique||[]).forEach(h=>{ if(h&&h.id&&!hs.some(x=>x.id===h.id)){ hs.push(h); addH++; } }); hs.sort((a,b)=>b.id-a.id);
+      for(const o0 of (Array.isArray(d.toupies)?d.toupies:[])){ const o=cClean(o0); if(!o||cErr(o).length) continue; const nm=nmOf(o); if(have.some(x=>x.id===o.id)||names.has(nm)) continue; for(const [f,k] of PHF){ if(typeof o[f]==='string'&&o[f].indexOf('data:')===0) o[f]=await pStore(o.id,k,o[f]); else if(!(typeof o[f]==='string'&&o[f].indexOf('photos/')===0)) delete o[f]; } have.push(o); names.add(nm); addT++; }
+      if(Array.isArray(d.masquees)){ const hd=hdLoad(); d.masquees.slice(0,2000).forEach(k=>{ if(typeof k==='string'&&k.length<80&&!hd.includes(k)) hd.push(k); }); hdSave(hd); }
+      if(d.profil&&typeof d.profil==='object'&&ss(d.profil.n,20)&&!PRF.n){ PRF.n=ss(d.profil.n,20); if(sid(d.profil.id)) PRF.id=sid(d.profil.id); PRF.hn=PRF.n; pfSave(); }
+      if(d.amis&&typeof d.amis==='object'&&!Array.isArray(d.amis)){ const F=fLoad(); Object.keys(d.amis).forEach(k=>{ const i=sid(k), f=i&&i===k?fClean(d.amis[k],i):null; if(f&&!F[i]) F[i]=f; }); fSave(F); }
+      const hs=hLoad(); (Array.isArray(d.historique)?d.historique:[]).forEach(h0=>{ const h=hClean(h0); if(h&&h.id&&!hs.some(x=>x.id===h.id)){ hs.push(h); addH++; } }); hs.sort((a,b)=>b.id-a.id);
       if(!cSave(have)) { bkMsg('Pas assez de place pour tout importer.'); return; } hSave(hs);
       bkMsg('Importé : '+addT+' toupie'+(addT>1?'s':'')+' et '+addH+' match'+(addH>1?'s':'')+' en plus.'); if(addT) setTimeout(()=>location.reload(),900);
     }catch(e){ bkMsg('Ce fichier n\'est pas une sauvegarde Beybey.'); } inp.value=''; };
@@ -1241,7 +1264,7 @@ const RA=T.map((x,i)=>x.r?i:-1).filter(i=>i>=0);
 const mk=()=>({mode:'none'});
 /* ===== Profil du joueur (propriétaire de l'appareil) ===== */
 const PKEY='arene_profil';
-let PRF=(()=>{ try{ return JSON.parse(localStorage.getItem(PKEY)||'{}')||{}; }catch(e){ return {}; } })();
+let PRF=(()=>{ let r={}; try{ r=JSON.parse(localStorage.getItem(PKEY)||'{}')||{}; }catch(e){} if(typeof r!=='object'||Array.isArray(r)) r={}; return {n:ss(r.n,20),hn:ss(r.hn,20),id:sid(r.id),al:Array.isArray(r.al)?r.al.slice(0,20).map(x=>ss(x,20)).filter(Boolean):[],rst:nn(r.rst)}; })();
 function pfSave(){ try{ localStorage.setItem(PKEY,JSON.stringify(PRF)); }catch(e){} }
 if(!PRF.id){ try{ PRF.id=Array.from(crypto.getRandomValues(new Uint8Array(7))).map(b=>b.toString(36).padStart(2,'0')).join(''); }catch(e){ PRF.id=Math.random().toString(36).slice(2,12); } pfSave(); }
 const nz=s=>String(s||'').trim().toLowerCase();
@@ -1374,10 +1397,11 @@ async function scOpen(p){
 let RC=null;
 function rcOpen(code,p){
   let d; try{ d=JSON.parse(b64d(code)); }catch(e){ return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.')); }
-  const slots=((d&&d.t)||[]).slice(0,3).map(descSlot);
-  if(d&&sid(d.i)&&(p===-1||!(d.t&&d.t.length))) return frRecv(d);
+  if(!d||typeof d!=='object') return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.'));
+  if(sid(d.i)&&(p===-1||!(Array.isArray(d.t)&&d.t.length))) return frRecv(d);
+  let slots; try{ slots=(Array.isArray(d.t)?d.t:[]).slice(0,3).map(descSlot); }catch(e){ slots=[]; }
   if(!slots.length||slots.some(x=>!x)) return shMsg(LT('QR non reconnu'),LT('Une pièce de cette toupie est absente de ton catalogue.'));
-  const from=String((d&&d.n)||'').trim().slice(0,20)||LT('Invité'); RC={from,slots,p,id:sid(d&&d.i),st:Array.isArray(d&&d.st)?d.st:null};
+  const from=ss(d.n,20).trim()||LT('Invité'); RC={from,slots,p,id:sid(d.i),st:stClean(d.st)};
   const rows=slots.map(sl=>{ const r=resolve(sl); return `<div class="rcr">${img(r.img,'sm')}<div><b>${esc(r.name)}</b><div class="mut">${r.w} g</div></div></div>`; }).join('');
   shOpen(`<div class="fwrap"><div class="fh"><h2>${slots.length>1?LT('Deck reçu'):LT('Toupie reçue')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
     <div class="fhelp">${LT('De')} <b>${esc(from)}</b></div><div class="rcl">${rows}</div>
@@ -1385,7 +1409,7 @@ function rcOpen(code,p){
     <div class="fact"><button class="go sm" onclick="rcPlay()">${LT('Jouer avec')}</button><button class="chip" onclick="rcAdd(this)">${LT('Ajouter à ma collection')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
 }
 function frRecv(d){
-  const id=sid(d.i), nm=String(d.n||'').trim().slice(0,20)||LT('Invité'), S=Array.isArray(d.st)?d.st:null, g=S&&Array.isArray(S[0])?S[0]:S;
+  const id=sid(d.i), nm=ss(d.n,20).trim()||LT('Invité'), S=stClean(d.st), g=S&&S[0];
   if(id===PRF.id) return shMsg(LT('Ma fiche ami'),LT('C\'est ta propre fiche.'));
   const had=!!fLoad()[id]; fUpsert(id,nm,S);
   shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Ami ajouté')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
@@ -1416,10 +1440,9 @@ function rcAdd(btn){
 window.addEventListener('load',()=>{ const k=location.hash.slice(1,3); if(k==='s='||k==='r='){ const c=location.hash.slice(3); try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} setTimeout(()=>k==='r='?rrOpen(c):rcOpen(c),400); } });
 /* ===== Amis ===== */
 const FKEY='arene_amis';
-const sid=v=>String(v==null?'':v).replace(/[^A-Za-z0-9_-]/g,'').slice(0,20);
-function fLoad(){ try{ const F=JSON.parse(localStorage.getItem(FKEY)||'{}')||{}, O={}; for(const k in F){ const i=sid(k); if(i&&i===k&&F[k]&&typeof F[k]==='object'){ F[k].id=i; O[i]=F[k]; } } return O; }catch(e){ return {}; } }
+function fLoad(){ try{ const F=JSON.parse(localStorage.getItem(FKEY)||'{}')||{}, O={}; if(typeof F!=='object'||Array.isArray(F)) return {}; for(const k in F){ const i=sid(k); if(i&&i===k){ const f=fClean(F[k],i); if(f) O[i]=f; } } return O; }catch(e){ return {}; } }
 function fSave(o){ try{ localStorage.setItem(FKEY,JSON.stringify(o)); }catch(e){} }
-function fUpsert(id,n,sts){ id=sid(id); if(!id||id===PRF.id) return; const F=fLoad(), f=F[id]||{id,n:'',note:''}; if(n) f.n=String(n).slice(0,20); if(Array.isArray(sts)){ f.st=Array.isArray(sts[0])?sts.slice(0,3):[sts.slice(0,5),null,null]; f.at=Date.now(); } F[id]=f; fSave(F); }
+function fUpsert(id,n,sts){ id=sid(id); if(!id||id===PRF.id) return; const F=fLoad(), f=F[id]||{id,n:'',note:''}; if(ss(n,20)) f.n=ss(n,20); const c=stClean(sts); if(c){ f.st=c; f.at=Date.now(); } F[id]=f; fSave(F); }
 function friendsUI(){
   const n=Object.keys(fLoad()).length;
   return '<div class="optl">Amis</div>'+(n?'<div class="frame one"><button onclick="frList()"><span>Liste d\'amis</span><small>'+n+'</small></button></div>':'')+'<div class="frame"><button onclick="scOpen(-1)"><span>'+LT('Scanner')+'</span></button><button onclick="qrShow([])"><span>'+LT('Mon QR')+'</span></button></div>'+(n?'':'<div class="mut note">'+LT('Scanne le QR d\'un pote pour l\'ajouter ici.')+'</div>');
@@ -1483,8 +1506,10 @@ async function rsShow(){
 let RR=null;
 function rrMe(){ const P=RR.d.p; let i=P.findIndex(p=>p[0]&&p[0]===PRF.id); if(i<0&&PRF.n) i=P.findIndex(p=>nz(p[1])===nz(PRF.n)); if(i<0) i=P.findIndex(p=>(PRF.al||[]).includes(nz(p[1]))); return i; }
 async function rrOpen(code){
-  const d=await unpackJ(code); if(!d||d.v!==2||!Array.isArray(d.m)||!Array.isArray(d.p)) return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.'));
-  RR={d,from:String(d.n||'').trim().slice(0,20)||LT('Invité'),me:undefined}; rrRender();
+  let d=await unpackJ(code); if(!d||typeof d!=='object'||d.v!==2||!Array.isArray(d.m)||!Array.isArray(d.p)) return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.'));
+  const P=d.p.slice(0,12).map(p=>[sid(Array.isArray(p)&&p[0]),ss(Array.isArray(p)&&p[1],20)]);
+  d={v:2,n:ss(d.n,20),i:sid(d.i),st:stClean(d.st),p:P,m:d.m.slice(0,60).filter(Array.isArray).map(x=>[nn(x[0]),x[1]?1:0,nn(x[2]),nn(x[3]),nn(x[4]),nn(x[5]),nn(x[6]),nn(x[7]),nn(x[8]),nn(x[9],-1),nn(x[10],-1),sl(x[11]),sl(x[12])]).filter(x=>P[x[9]]&&P[x[10]])};
+  RR={d,from:d.n.trim()||LT('Invité'),me:undefined}; rrRender();
 }
 function rrRender(){
   const d=RR.d,P=d.p; if(RR.me===undefined||RR.me<0) RR.me=rrMe(); const me=RR.me;
@@ -2003,7 +2028,7 @@ function cancelCount(){
 }
 /* ===== Historique des matchs (par catégorie, gardé sur l'appareil) ===== */
 const HKEY='arene_hist';
-function hLoad(){ try{ return JSON.parse(localStorage.getItem(HKEY)||'[]'); }catch(e){ return []; } }
+function hLoad(){ try{ const a=JSON.parse(localStorage.getItem(HKEY)||'[]'); return Array.isArray(a)?a.map(hClean).filter(Boolean):[]; }catch(e){ return []; } }
 function hSave(a){ try{ localStorage.setItem(HKEY,JSON.stringify(a.slice(0,300))); }catch(e){} }
 function histAdd(){
   try{
