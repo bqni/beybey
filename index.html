@@ -1101,7 +1101,7 @@ async function backupExport(){ try{ await PBOOT; }catch(e){}
   if(navigator.canShare&&navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Sauvegarde Beybey'}).then(()=>{ bkDone(); bkMsg('Sauvegarde exportée.'); }).catch(()=>{}); return; }
   try{ const a=document.createElement('a'); a.href=URL.createObjectURL(file); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); bkDone(); bkMsg('Sauvegarde téléchargée : '+name); }catch(e){ bkMsg('Impossible de créer le fichier sur cet appareil.'); }
 }
-function backupImport(inp){
+function backupImport(inp,done){
   const f=inp.files&&inp.files[0]; if(!f) return; if(f.size>100e6){ bkMsg('Fichier trop gros pour une sauvegarde Beybey.'); inp.value=''; return; } const r=new FileReader();
   r.onload=async()=>{ try{
       const d=JSON.parse(r.result); if(!d||d.app!=='arene-beyblade') throw 0;
@@ -1113,7 +1113,7 @@ function backupImport(inp){
       if(d.amis&&typeof d.amis==='object'&&!Array.isArray(d.amis)){ const F=fLoad(); Object.keys(d.amis).slice(0,500).forEach(k=>{ const i=sid(k), f=i&&i===k?fClean(d.amis[k],i):null; if(f&&!F[i]) F[i]=f; }); fSave(F); }
       const hs=hLoad(); (Array.isArray(d.historique)?d.historique.slice(0,300):[]).forEach(h0=>{ const h=hClean(h0); if(h&&h.id&&!hs.some(x=>x.id===h.id)){ hs.push(h); addH++; } }); hs.sort((a,b)=>b.id-a.id);
       if(!cSave(have)) { bkMsg('Pas assez de place pour tout importer.'); return; } hSave(hs);
-      bkMsg('Importé : '+addT+' toupie'+(addT>1?'s':'')+' et '+addH+' match'+(addH>1?'s':'')+' en plus.'); if(addT) setTimeout(()=>location.reload(),900);
+      bkMsg('Importé : '+addT+' toupie'+(addT>1?'s':'')+' et '+addH+' match'+(addH>1?'s':'')+' en plus.'); if(done) setTimeout(done,900); else if(addT) setTimeout(()=>location.reload(),900);
     }catch(e){ bkMsg('Ce fichier n\'est pas une sauvegarde Beybey.'); } inp.value=''; };
   r.readAsText(f);
 }
@@ -2279,7 +2279,7 @@ function hmMe(){
   return `<button class="hm-me" onclick="homeGo('pf')" aria-label="${esc(nm||LT('Profil'))}"><span class="hm-av"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5" fill="none" stroke="var(--frame)" stroke-width="2"/><circle cx="22" cy="22" r="20.5" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="${C*p/100} ${C}" transform="rotate(-90 22 22)"/></svg><i>${PRF.av?'<img src="'+avSrc(PRF.av)+'" alt="">':esc((nm[0]||'?').toUpperCase())}</i>${S.n?'<em>'+p+'%</em>':''}</span><span class="hm-nm">${esc(nm||LT('Profil'))}</span><span class="hm-w"><small>V :</small><b>${String(S.w).padStart(2,'0')}</b></span></button>`;
 }
 function homeUI(){
-  const nT=T.length+(typeof cLoad==='function'?cLoad().length:0), nH=hLoad().length, nF=Object.keys(fLoad()).length, dark=(document.documentElement.dataset.theme||'futur')!=='futurl';
+  const nT=T.length, nH=hLoad().length, nF=Object.keys(fLoad()).length, dark=(document.documentElement.dataset.theme||'futur')!=='futurl';
   const b=(k,l,s)=>`<button class="hmb" onclick="homeGo('${k}')"><span>${l}</span><small>${s}</small></button>`;
   return `<div class="hmx"><div class="hm-top">${hmMe()}<div class="hm-r"><button class="hm-ic" onclick="homeTheme()" aria-label="${dark?'Passer en thème clair':'Passer en thème sombre'}">${dark?IC_MOON:IC_SUN}</button></div></div>
     <div class="hm-logo" role="heading" aria-level="1">BEYBEY</div>
@@ -2292,7 +2292,7 @@ function homeUI(){
 const WKEY='arene_welcome';
 function wlDone(){ try{ localStorage.setItem(WKEY,'1'); }catch(e){} const e=document.getElementById('wlc'); if(e) e.remove(); draw(); }
 function wlGo(){ const v=document.getElementById('wln').value; if(v.trim()) pfSet(v); wlDone(); }
-function wlImp(inp){ try{ localStorage.setItem(WKEY,'1'); }catch(e){} backupImport(inp); setTimeout(()=>location.reload(),1600); }
+function wlImp(inp){ try{ localStorage.setItem(WKEY,'1'); }catch(e){} backupImport(inp,()=>location.reload()); }
 function wlInit(){
   let seen=true; try{ const L=localStorage; seen=L.getItem(WKEY)!==null; if(!seen&&(PRF.n||L.getItem('arene_hist')||L.getItem('arene_custom')||L.getItem('arene_amis'))){ L.setItem(WKEY,'1'); seen=true; } }catch(e){}
   if(seen) return;
