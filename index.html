@@ -137,6 +137,7 @@ details[open] summary{background:var(--accent-soft)}
 .pkr{display:flex;align-items:center;gap:var(--sp-3);width:100%;text-align:left;padding:var(--sp-2);margin:0 0 6px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-2);color:var(--text);font:var(--fw-medium) var(--fs-md) var(--font)}
 .pkr .pkn{flex:1;min-width:0;display:grid;gap:2px}.pkr b{font-weight:var(--fw-semi);overflow-wrap:anywhere}.pkr small{color:var(--text-2);font-size:var(--fs-xs)}.pkr small i{font-style:normal;margin-left:6px}.pkr em{font-style:normal;font-size:var(--fs-xs);color:var(--text-2);border:1px solid var(--border);border-radius:var(--r-2);padding:2px 6px;white-space:nowrap}
 .hpc{display:grid;gap:2px}
+.pkg,.pkpics{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr)}.pkpics{margin-top:var(--sp-2);margin-bottom:-2px}.pkpc{display:grid;justify-items:center;gap:4px}.pkpc small{color:var(--text-2);font-size:var(--fs-xs)}.pimg.pk{width:min(26vw,96px);height:min(26vw,96px)}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
 .g3 select{height:36px;font-size:var(--fs-sm)}
 .prv{display:flex;gap:var(--sp-3);align-items:center}.prv b{font:var(--fw-semi) var(--fs-md) var(--font)}
@@ -1208,10 +1209,17 @@ function pkStep2(who){
   if(t.src==='cat'){
     const P=cptBuild(), ed=x=>x.e==='tt'?'Takara Tomy':'Hasbro';
     const bl=Object.values(P.B).sort(cpSort).map(x=>[x.k,x.n+' · '+ed(x)]), rl=Object.values(P.R).sort(cpSort).map(x=>[x.n,x.n]), il=Object.values(P.I).sort(cpSort).map(x=>[x.n,x.n]);
-    sel=`<div class="g3"><label>Blade<select onchange="pkPartSel(0,this.value)">${opt([['',LT('Choisir…')]].concat(bl),t.cb||'')}</select></label><label>Ratchet<select onchange="pkPartSel(1,this.value)">${opt([['','Aucun']].concat(rl),t.cr||'')}</select></label><label>Bit<select onchange="pkPartSel(2,this.value)">${opt([['',LT('Choisir…')]].concat(il),t.ci||'')}</select></label></div><div class="mut note">${LT("Catalogue : rien n'est ajouté à ta collection.")}</div>`;
+    sel=`<div class="g3 pkg"><label>Blade<select onchange="pkPartSel(0,this.value)">${opt([['',LT('Choisir…')]].concat(bl),t.cb||'')}</select></label><label>Ratchet<select onchange="pkPartSel(1,this.value)">${opt([['','Aucun']].concat(rl),t.cr||'')}</select></label><label>Bit<select onchange="pkPartSel(2,this.value)">${opt([['',LT('Choisir…')]].concat(il),t.ci||'')}</select></label></div><div class="mut note">${LT("Catalogue : rien n'est ajouté à ta collection.")}</div>`;
   }else{
-    sel=`<div class="g3"><label>Blade<select onchange="pkPartSel(0,this.value)">${opt(T.map((x,i)=>[i,x.l+' '+x.b]),t.blade)}</select></label><label>Ratchet<select onchange="pkPartSel(1,this.value)">${opt([[-1,'Aucun'],...RA.map(i=>[i,T[i].r])],t.ratchet)}</select></label><label>Bit<select onchange="pkPartSel(2,this.value)">${opt(T.map((x,i)=>[i,x.bt]),t.bit)}</select></label></div>`;
+    sel=`<div class="g3 pkg"><label>Blade<select onchange="pkPartSel(0,this.value)">${opt(T.map((x,i)=>[i,x.l+' '+x.b]),t.blade)}</select></label><label>Ratchet<select onchange="pkPartSel(1,this.value)">${opt([[-1,'Aucun'],...RA.map(i=>[i,T[i].r])],t.ratchet)}</select></label><label>Bit<select onchange="pkPartSel(2,this.value)">${opt(T.map((x,i)=>[i,x.bt]),t.bit)}</select></label></div>`;
   }
+  const pic=(im,w)=>{ if(im&&!IM[im]) IM[im]=im; return `<div class="pkpc">${img(im,'pk')}<small>${w?w+' g':'&nbsp;'}</small></div>`; };
+  let pics;
+  if(t.src==='cat'){ const P=cptBuild(), b=P.B[t.cb], rr=P.R[t.cr], ii=P.I[t.ci]; pics=pic(b&&b.im,b&&b.w)+pic(rr&&rr.im,rr&&rr.w)+pic(ii&&ii.im,ii&&ii.w); }
+  else{ const B=T[t.blade], R=t.ratchet>=0?T[t.ratchet]:null, I=T[t.bit], P=CAT.length?cptBuild():null;
+    const fb=(k,n)=>{ if(!P||!n) return ''; if(k==='b'){ const x=P.B[(B&&B.ed||'hasbro')+'|'+n]||Object.values(P.B).find(y=>y.n===n); return x&&x.im||''; } const x=(k==='r'?P.R:P.I)[n]; return x&&x.im||''; };
+    pics=pic(B&&((PH[B.n]||{}).blade||fb('b',B.b)),B&&B.wb)+pic(R&&((PH[R.n]||{}).ratchet||fb('r',R.r)),R&&R.wr)+pic(I&&((PH[I.n]||{}).bit||fb('i',I.bt)),I&&I.wbt); }
+  sel=`<div class="g3 pkpics">${pics}</div>`+sel;
   const r=resolve(t), ok=t.src==='cat'?(t.mode==='stock'||!!(t.cb&&t.ci)):true;
   return `<div class="fwrap pkw"><div class="fh"><h2>Choisir une toupie</h2><button class="chip sq" onclick="pkClose()" aria-label="Fermer">✕</button></div>
     <div class="mut pkwho">${who}</div>
