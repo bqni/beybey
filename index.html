@@ -140,7 +140,7 @@ details[open] summary{background:var(--accent-soft)}
 .pcard input.bnm{margin-top:var(--sp-2);height:40px;font-size:var(--fs-md);text-transform:none;letter-spacing:normal;font-weight:var(--fw-medium)}.bmsg:empty{display:none}.bsv{margin-top:var(--sp-2);justify-self:start}.bmsg{margin-top:var(--sp-1)}
 .bh{display:flex;justify-content:space-between;align-items:center;gap:var(--sp-2)}.bh .sl{min-width:0;overflow-wrap:anywhere}.bh .bsv{margin:0;flex:none}
 .bsb{display:grid;justify-items:center;align-content:start;gap:4px;width:100%;min-height:92px;padding:var(--sp-2) var(--sp-1);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-2);color:var(--text);font:inherit;text-align:center;min-width:0}
-.bsb b{font-size:var(--fs-sm);font-weight:var(--fw-semi);line-height:1.15;overflow-wrap:anywhere}.bsb:disabled{opacity:.5}
+.bsb b{font-size:var(--fs-sm);font-weight:var(--fw-semi);line-height:1.15;overflow-wrap:anywhere}.bsb{transition:transform .12s,background .12s,border-color .12s}.bsb:active:not(:disabled){transform:scale(.95);background:var(--accent-soft);border-color:var(--accent)}.bsb.flash{animation:bflash .65s ease-out}@keyframes bflash{0%{box-shadow:0 0 0 0 var(--accent);border-color:var(--accent);background:var(--accent-soft)}100%{box-shadow:0 0 0 10px transparent}}.bsb i{font-style:normal;color:var(--text-2);font-size:var(--fs-xs)}.bsb:disabled{opacity:.5}
 .pkr.cur{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .bft{margin-top:var(--sp-2);margin-bottom:var(--sp-2)}.bfw.bft .go{width:100%}
 .frame button:disabled{opacity:.4}
@@ -565,7 +565,7 @@ Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec 
 Object.assign(I18N.TXT,{"Invitée": "Guest", "Toupie invitée": "Guest bey", "Choisir dans le catalogue…": "Pick from the catalog…", "Ou écris son nom…": "Or type its name…", "Nom de la toupie": "Bey name", "Toupie invitée : elle n'est pas ajoutée à ta collection.": "Guest bey: it is not added to your collection."});
 Object.assign(I18N.TXT,{"Toupie custom": "Custom bey", "Ma collection": "My collection", "Catalogue : rien n'est ajouté à ta collection.": "Catalog: nothing is added to your collection."});
 Object.assign(I18N.TXT,{"Lancer un combat A contre B": "Start a battle A vs B", "Les règles (points, rounds) se règlent dans l'onglet Match.": "Rules (points, rounds) are set in the Match tab."});
-Object.assign(I18N.TXT,{"Nom du build (optionnel)":"Build name (optional)","Activé":"On","Désactivé":"Off","Intégré":"Built-in","Blade":"Blade","Ratchet":"Ratchet","Bit":"Bit","Nom du build":"Build name","Donne un nom à ton build pour l'enregistrer.":"Give your build a name to save it.","Ma collection":"My collection","Enregistrer dans Mes toupies":"Save to My beys","Il manque une pièce.":"A part is missing.","Nom perso (optionnel)":"Custom name (optional)","Choisir une toupie":"Choose a bey","Ajouter une toupie":"Add a bey","Changer":"Change","Retour":"Back","Choisir cette toupie":"Choose this bey","Toupie":"Bey","Catalogue":"Catalogue","Tape un nom pour chercher dans le catalogue.":"Type a name to search the catalogue.","Affine ta recherche pour voir les autres.":"Refine your search to see the others.","Rien dans le catalogue.":"Nothing in the catalogue.","Rien trouvé.":"Nothing found.","Tu peux changer les pièces ou garder celles-ci.":"You can change the parts or keep these.","Ajoute une toupie à chaque emplacement pour lancer le match.":"Add a bey to every slot to start the match.","Série":"Series","Match unique":"Single match","Match suivant":"Next match"});
+Object.assign(I18N.TXT,{"Nom du build (optionnel)":"Build name (optional)","Touche une pièce pour la changer.":"Tap a part to change it.","Aucun":"None","Activé":"On","Désactivé":"Off","Intégré":"Built-in","Blade":"Blade","Ratchet":"Ratchet","Bit":"Bit","Nom du build":"Build name","Donne un nom à ton build pour l'enregistrer.":"Give your build a name to save it.","Ma collection":"My collection","Enregistrer dans Mes toupies":"Save to My beys","Il manque une pièce.":"A part is missing.","Nom perso (optionnel)":"Custom name (optional)","Choisir une toupie":"Choose a bey","Ajouter une toupie":"Add a bey","Changer":"Change","Retour":"Back","Choisir cette toupie":"Choose this bey","Toupie":"Bey","Catalogue":"Catalogue","Tape un nom pour chercher dans le catalogue.":"Type a name to search the catalogue.","Affine ta recherche pour voir les autres.":"Refine your search to see the others.","Rien dans le catalogue.":"Nothing in the catalogue.","Rien trouvé.":"Nothing found.","Tu peux changer les pièces ou garder celles-ci.":"You can change the parts or keep these.","Ajoute une toupie à chaque emplacement pour lancer le match.":"Add a bey to every slot to start the match.","Série":"Series","Match unique":"Single match","Match suivant":"Next match"});
 Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat": "Start the battle"});
 Object.assign(I18N.TXT,{"Aucun":"None"});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
@@ -1077,7 +1077,8 @@ function bpList(){
   if(c.length) h+=(a.length?`<div class="fs">${LT('Catalogue')}</div>`:'')+c.map(x=>row(x[0],x[1])).join('');
   return h||`<div class="mut note">${LT('Rien trouvé.')}</div>`;
 }
-function bpPick(i){ if(!BP) return; BD[BP.n][BP.k]=i; bpClose(); draw(); }
+var BFL=null;
+function bpPick(i){ if(!BP) return; BD[BP.n][BP.k]=i; BFL=[BP.n,BP.k]; bpClose(); draw(); setTimeout(()=>{ BFL=null; },700); }
 function bdAsk(n){
   const h=`<div class="fwrap"><div class="fh"><h2>${LT('Nom du build')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
   <input class="nm" id="bdq" value="${esc(BN[n]||'')}" placeholder="${LT('Nom du build')}" aria-label="${LT('Nom du build')}" autocomplete="off" maxlength="40" onkeydown="if(event.key==='Enter'){event.preventDefault();bdSave(${n},document.getElementById('bdq_b'));}">
@@ -1137,7 +1138,7 @@ function bdOne(n,L){
   const {bl,ra,bi}=L, B=BD[n];
   B[0]=Math.min(B[0],bl.length-1); B[1]=Math.min(B[1],ra.length-1); B[2]=Math.min(B[2],bi.length-1);
   const b=bl[B[0]], integ=b.integ, r=integ?null:ra[B[1]], t=bi[B[2]];
-  const slot=(lab,o,k,dis)=>`<div class="bslot"><span class="sl">${lab}</span><button class="bsb" ${dis?'disabled':''} onclick="bpOpen(${n},${k})" aria-label="${lab} : ${o?esc(o.n):''}">${o?img(o.img,'sm'):'<div class="pimg sm"></div>'}<b>${dis?LT('Intégré'):esc(o.n)}</b></button></div>`;
+  const slot=(lab,o,k,dis)=>`<div class="bslot"><span class="sl">${lab}</span><button class="bsb${BFL&&BFL[0]===n&&BFL[1]===k?' flash':''}" ${dis?'disabled':''} onclick="bpOpen(${n},${k})" aria-label="${lab} : ${o?esc(o.n):''}">${o?img(o.img,'sm'):'<div class="pimg sm"></div>'}<b>${dis?LT('Intégré'):esc(o.n)}</b></button></div>`;
   const parts=[b,r,t].filter(Boolean);
   const S3=sum3(b.s,r&&r.s,t.s);
   const w=Math.round(parts.reduce((a,o)=>a+wnum(o.w),0)*10)/10;
@@ -1158,8 +1159,8 @@ function buildUI(){
     return `<div class="cr"><b class="${ca}">${f(x)}</b><span>${lab}${d?`<small>${d>0?'+':''}${d} pour ${esc(b.nm)}</small>`:''}</span><b class="${cb}">${f(y)}</b></div>`;
   };
   const rows=[row('Poids',a.w,b.w,true,' g'),...(a.S[0]+a.S[1]+a.S[2]+b.S[0]+b.S[1]+b.S[2]>0?[row('Attaque',a.S[0],b.S[0],true),row('Défense',a.S[1],b.S[1],true),row('Stamina',a.S[2],b.S[2],true)]:[]),row('Hauteur',a.h,b.h,false),row('Dash',a.dash,b.dash,true),row('Burst',a.burst,b.burst,true)].join('');
-  return `<div class="bfw bft"><button class="go" onclick="bfAsk()">Lancer un combat : ${esc(a.nm)} contre ${esc(b.nm)}</button></div>`+a.html+b.html+`<div class="pcard cmp"><div class="sl">Comparatif</div><div class="ch"><span style="color:var(--pa)">${esc(a.nm)}</span><span style="color:var(--pink)">${esc(b.nm)}</span></div>${rows}</div>`
-    +`<div class="bfw"><div class="mut note bfl">Attaque, Défense et Stamina n'apparaissent que si tu les as saisies : elles sont au dos des boîtes, à recopier à la main dans la fiche de la toupie (Modifier). <a href="#" onclick="st.view='collection';setTab('toupies');return false">Aller à mes toupies</a></div></div>`;
+  return a.html+b.html+`<div class="pcard cmp"><div class="sl">Comparatif</div><div class="ch"><span style="color:var(--pa)">${esc(a.nm)}</span><span style="color:var(--pink)">${esc(b.nm)}</span></div>${rows}</div>`
+    +`<div class="bfw"><button class="go" onclick="bfAsk()">Lancer un combat : ${esc(a.nm)} contre ${esc(b.nm)}</button><div class="mut note bfl">Attaque, Défense et Stamina n'apparaissent que si tu les as saisies : elles sont au dos des boîtes, à recopier à la main dans la fiche de la toupie (Modifier). <a href="#" onclick="st.view='collection';setTab('toupies');return false">Aller à mes toupies</a></div></div>`;
 }
 function bfAsk(){
   const L=bdLists(), na=bdOne(0,L).nm, nb=bdOne(1,L).nm;
@@ -1281,27 +1282,52 @@ function pkPick(kind,i){
 }
 function pkPartSel(k,v){ const t=PK.t; if(!t) return; if(t.src==='cat'){ t[['cb','cr','ci'][k]]=v; } else { t[['blade','ratchet','bit'][k]]=+v; } t.mode='custom'; pkDraw(); }
 function pkChanged(t){ const b=t._b; if(!b) return true; const cur=t.src==='cat'?[t.cb,t.cr,t.ci]:[t.blade,t.ratchet,t.bit]; return cur.some((v,k)=>v!==b[k]); }
+function ppItems(k){
+  const t=PK.t, ed=x=>x.e==='tt'?'Takara Tomy':'Hasbro', out=[];
+  if(t.src==='cat'){ const P=cptBuild();
+    if(k===0) Object.values(P.B).sort(cpSort).forEach(x=>out.push({v:x.k,n:x.n,img:x.im,ty:x.bt,w:x.w,tag:ed(x)}));
+    if(k===1){ out.push({v:'',n:LT('Aucun')}); Object.values(P.R).sort(cpSort).forEach(x=>out.push({v:x.n,n:x.n,img:x.im,w:x.w})); }
+    if(k===2) Object.values(P.I).sort(cpSort).forEach(x=>out.push({v:x.n,n:x.n,img:x.im,w:x.w}));
+    return {out,cur:[t.cb,t.cr,t.ci][k]}; }
+  const seen={}, add=(v,n,img,ty,w)=>{ if(seen[n]) return; seen[n]=1; out.push({v,n,img,ty,w}); };
+  const cur=[t.blade,t.ratchet,t.bit][k], cn=cur>=0&&T[cur]?[T[cur].b,T[cur].r,T[cur].bt][k]:null;
+  if(k===1) out.push({v:-1,n:LT('Aucun')});
+  T.forEach((x,i)=>{ const P=PH[x.n]||{}; if(k===0) add(i,x.b,P.blade,x.bty,x.wb); else if(k===1&&x.r) add(i,x.r,P.ratchet,'',x.wr); else if(k===2) add(i,x.bt,P.bit,x.t,x.wbt); });
+  out.forEach(o=>{ if(o.img&&!IM[o.img]) IM[o.img]=o.img; });
+  return {out,cur,cn};
+}
+function ppOpen(k){ PP={k,q:''}; ppDraw(); }
+function ppDraw(){ const f=document.getElementById('fm'); if(!f||!PK||!PP) return; const nm=[LT('Blade'),LT('Ratchet'),LT('Bit')][PP.k];
+  f.innerHTML=`<div class="fwrap pkw"><div class="fh"><h2>${nm}</h2><button class="chip sq" onclick="ppClose()" aria-label="Fermer">✕</button></div>
+    <label class="search pks">${IC.search}<input id="pp_q" type="search" placeholder="${LT('Chercher…')}" value="${esc(PP.q)}" oninput="ppQ(this.value)" autocomplete="off"></label>
+    <div id="pp_l">${ppList()}</div></div>`;
+  const e=document.getElementById('pp_q'); if(e&&!PP.q) setTimeout(()=>{ try{ e.focus({preventScroll:true}); }catch(x){} },60); }
+function ppQ(v){ PP.q=v; const l=document.getElementById('pp_l'); if(l) l.innerHTML=ppList(); }
+function ppClose(){ PP=null; pkDraw(); }
+function ppList(){
+  const {out,cur,cn}=ppItems(PP.k), q=PP.q.trim(), t=PK.t;
+  const h=out.map((o,i)=>[o,i]).filter(x=>!q||pkOk(x[0].n,q)||x[0].v===-1&&false).map(([o,i])=>{ const on=t.src==='cat'?o.v===cur:(o.v===-1?cur===-1:o.n===cn);
+    return `<button class="pkr${on?' cur':''}" onclick="ppPick(${i})">${img(o.img,'sm')}<span class="pkn"><b>${esc(o.n)}</b><small>${o.ty?typ(o.ty):''}${o.w?' <i>'+o.w+' g</i>':''}</small></span>${o.tag?`<em>${esc(o.tag)}</em>`:''}</button>`; }).join('');
+  return h||`<div class="mut note">${LT('Rien trouvé.')}</div>`;
+}
+function ppPick(i){ if(!PK||!PP) return; const o=ppItems(PP.k).out[i]; if(!o) return; const k=PP.k; PP=null; pkPartSel(k,o.v); }
+var PP=null;
 function pkStep2(who){
-  const t=PK.t; let sel;
-  if(t.src==='cat'){
-    const P=cptBuild(), ed=x=>x.e==='tt'?'Takara Tomy':'Hasbro';
-    const bl=Object.values(P.B).sort(cpSort).map(x=>[x.k,x.n+' · '+ed(x)]), rl=Object.values(P.R).sort(cpSort).map(x=>[x.n,x.n]), il=Object.values(P.I).sort(cpSort).map(x=>[x.n,x.n]);
-    sel=`<div class="g3 pkg"><label>Blade<select onchange="pkPartSel(0,this.value)">${opt([['',LT('Choisir…')]].concat(bl),t.cb||'')}</select></label><label>Ratchet<select onchange="pkPartSel(1,this.value)">${opt([['','Aucun']].concat(rl),t.cr||'')}</select></label><label>Bit<select onchange="pkPartSel(2,this.value)">${opt([['',LT('Choisir…')]].concat(il),t.ci||'')}</select></label></div><div class="mut note">${LT("Catalogue : rien n'est ajouté à ta collection.")}</div>`;
-  }else{
-    sel=`<div class="g3 pkg"><label>Blade<select onchange="pkPartSel(0,this.value)">${opt(T.map((x,i)=>[i,x.l+' '+x.b]),t.blade)}</select></label><label>Ratchet<select onchange="pkPartSel(1,this.value)">${opt([[-1,'Aucun'],...RA.map(i=>[i,T[i].r])],t.ratchet)}</select></label><label>Bit<select onchange="pkPartSel(2,this.value)">${opt(T.map((x,i)=>[i,x.bt]),t.bit)}</select></label></div>`;
-  }
-  const pic=(im,w)=>{ if(im&&!IM[im]) IM[im]=im; return `<div class="pkpc">${img(im,'pk')}<small>${w?w+' g':'&nbsp;'}</small></div>`; };
-  let pics;
-  if(t.src==='cat'){ const P=cptBuild(), b=P.B[t.cb], rr=P.R[t.cr], ii=P.I[t.ci]; pics=pic(b&&b.im,b&&b.w)+pic(rr&&rr.im,rr&&rr.w)+pic(ii&&ii.im,ii&&ii.w); }
+  const t=PK.t, cat=t.src==='cat';
+  const pic=(im)=>{ if(im&&!IM[im]) IM[im]=im; return im; };
+  let parts;
+  if(cat){ const P=cptBuild(), b=P.B[t.cb], rr=P.R[t.cr], ii=P.I[t.ci];
+    parts=[[b&&b.n||LT('Choisir…'),b&&b.im,b&&b.w],[rr?rr.n:LT('Aucun'),rr&&rr.im,rr&&rr.w],[ii&&ii.n||LT('Choisir…'),ii&&ii.im,ii&&ii.w]]; }
   else{ const B=T[t.blade], R=t.ratchet>=0?T[t.ratchet]:null, I=T[t.bit], P=CAT.length?cptBuild():null;
     const fb=(k,n)=>{ if(!P||!n) return ''; if(k==='b'){ const x=P.B[(B&&B.ed||'hasbro')+'|'+n]||Object.values(P.B).find(y=>y.n===n); return x&&x.im||''; } const x=(k==='r'?P.R:P.I)[n]; return x&&x.im||''; };
-    pics=pic(B&&((PH[B.n]||{}).blade||fb('b',B.b)),B&&B.wb)+pic(R&&((PH[R.n]||{}).ratchet||fb('r',R.r)),R&&R.wr)+pic(I&&((PH[I.n]||{}).bit||fb('i',I.bt)),I&&I.wbt); }
-  sel=`<div class="g3 pkpics">${pics}</div>`+sel;
-  const r=resolve(t), ok=t.src==='cat'?(t.mode==='stock'||!!(t.cb&&t.ci)):true;
+    parts=[[B?B.b:'',B&&((PH[B.n]||{}).blade||fb('b',B.b)),B&&B.wb],[R?R.r:LT('Aucun'),R&&((PH[R.n]||{}).ratchet||fb('r',R.r)),R&&R.wr],[I?I.bt:'',I&&((PH[I.n]||{}).bit||fb('i',I.bt)),I&&I.wbt]]; }
+  const labs=['Blade','Ratchet','Bit'];
+  const sel=`<div class="g3 pkpics">${parts.map((x,k)=>`<div class="bslot"><span class="sl">${labs[k]}</span><button class="bsb" onclick="ppOpen(${k})" aria-label="${labs[k]} : ${esc(x[0])}">${img(pic(x[1]),'sm')}<b>${esc(x[0])}</b><i>${x[2]?x[2]+' g':'&nbsp;'}</i></button></div>`).join('')}</div>`+(cat?`<div class="mut note">${LT("Catalogue : rien n'est ajouté à ta collection.")}</div>`:'');
+  const r=resolve(t), ok=cat?(t.mode==='stock'||!!(t.cb&&t.ci)):true;
   return `<div class="fwrap pkw"><div class="fh"><h2>Choisir une toupie</h2><button class="chip sq" onclick="pkClose()" aria-label="Fermer">✕</button></div>
     <div class="mut pkwho">${who}</div>
     <div class="prv pkprv">${img(r.img,'sm')}<div class="grow"><b>${esc(r.name)}</b><div class="mut prm">${typ(r.ty)}<span>${r.w?r.w+' g':''}</span></div></div></div>
-    <div class="fhelp">${LT('Tu peux changer les pièces ou garder celles-ci.')}</div>${sel}
+    <div class="fhelp">${LT('Touche une pièce pour la changer.')}</div>${sel}
     <div class="fact"><button class="go sm" onclick="pkSave()" ${ok?'':'disabled'}>${LT('Choisir cette toupie')}</button><button class="chip" onclick="pkBack()">${LT('Retour')}</button></div></div>`;
 }
 function pkBack(){ if(PK){ PK.t=null; pkDraw(); } }
@@ -1311,7 +1337,7 @@ function pkSave(){
   t.mode=(t._b&&!pkChanged(t))?'stock':'custom';
   delete t._b; st.m.p[PK.p][PK.s]=t; pkClose(); drawMatch();
 }
-function pkClose(){ PK=null; const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
+function pkClose(){ PK=null; PP=null; const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
 function matchUI(){
   const M=st.m;
   if(M.mode==='bracket') return '<div class="top">'+'<div class="frame f3">'+[['simple','Match simple'],['tournoi','Match 3v3'],['bracket','Tournoi']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" ${k==='bracket'?'disabled':''} onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div></div>'
