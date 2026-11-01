@@ -7,6 +7,7 @@ Contenu du dossier
   catalogue.js      la liste des toupies Hasbro et Takara Tomy (voir CATALOGUE plus bas)
   lib/              deux petites bibliothèques pour les QR codes (création et lecture caméra)
   sw.js             le mode hors ligne (le site s'ouvre sans internet après une première visite)
+  avatars/          les 16 avatars de profil
   photos/           les photos du catalogue (photos/cat) et tes éventuelles photos de data.js
   sons/             les sons du match (ne pas toucher)
   manifest.json, icon-192.png, icon-512.png, apple-touch-icon.png
@@ -16,6 +17,9 @@ Ouvrir la page
   Via GitHub Pages (voir "Héberger" plus bas). Sur ordinateur, double-clic sur index.html marche aussi.
 
 Les onglets
+  Accueil   l'arène animée, le bouton MATCH et six raccourcis : Collection, Build, Historique, Profil, Amis et
+            Options. En haut : ton profil (avatar, victoires et réussite), le logo, et le bouton soleil/lune
+            qui change le thème.
   Toupies   ta collection et les pièces (blades, ratchets, bits). Recherche, tri A→Z / 1→9, fiche détaillée.
   Build     compose deux builds et compare-les. Le gagnant de chaque ligne prend la couleur de son camp
             (vert A, rose B), les égalités sont grisées, la toupie la plus lourde gagne sur le poids.
@@ -27,10 +31,10 @@ Les onglets
             la page complète : onglets Global, Simple et 3v3, stats, liste défilante, boutons Scanner,
             Partager la session et Vider (avec confirmation). 300 matchs maximum sont gardés.
             L'onglet Tournoi arrive plus tard.
-  Options   ton profil et tes amis, sauvegarde, langue, son, thème (Sombre / Clair), fond d'écran, notice.
+  Options   sauvegarde, langue, son, thème (Sombre / Clair), fond d'écran, zoom, notice.
 
-Profil et stats (Options > Mon profil)
-  Entre ton nom : il devient le joueur 1 de tous tes matchs. Tes stats (matchs, victoires, défaites, réussite,
+Profil et stats (Accueil > Profil)
+  Entre ton nom (16 caractères maximum) et choisis ton avatar avec "Changer l'avatar" : ton nom devient le joueur 1 de tous tes matchs. Tes stats (matchs, victoires, défaites, réussite,
   toupie la plus jouée) se calculent depuis l'historique, au choix Tout, Simple ou 3v3.
   Si tu changes le nom du joueur 1 dans l'onglet Match, le match passe en "invité" : il ne compte pas dans tes stats.
   Un bouton te ramène à ton profil. "Remettre mes stats à zéro" garde l'historique mais ne compte plus les matchs passés.
@@ -45,11 +49,11 @@ Partage par QR code (sans compte, sans serveur)
     plusieurs joueurs. Chacun le scanne, Beybey le reconnaît (par identifiant, puis par nom, puis par anciens
     pseudos) et n'ajoute que SES matchs, vus de son côté, avec ses stats. Scanner deux fois ne crée pas de doublons.
     Si Beybey ne te reconnaît pas, l'écran "Qui es-tu ?" te laisse choisir ton nom dans le QR.
-  - Ta fiche ami : Options > Amis > Mon QR. Ton ami la scanne et te retrouve dans sa liste.
+  - Ta fiche ami : Accueil > Amis > Code. Ton ami la scanne et te retrouve dans sa liste.
   Le QR de session est limité en taille pour rester lisible à la caméra : il garde les matchs les plus récents.
 
-Amis (Options > Amis)
-  Liste d'amis avec recherche, et pour chacun une fiche : une note (ex. "Kevin du lycée"), tes résultats contre lui
+Amis (Accueil > Amis)
+  Page dédiée avec les boutons Code (ton QR) et Scanner. Liste d'amis avec recherche, et pour chacun une fiche : une note (ex. "Kevin du lycée"), tes résultats contre lui
   (Tout, Simple, 3v3) et ses stats au moment du dernier scan. Retirer un ami demande une confirmation.
 
 Ajouter une toupie dans l'appli (le plus simple)
