@@ -594,6 +594,7 @@ Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat"
 Object.assign(I18N.TXT,{"Aucun":"None"});
 Object.assign(I18N.TXT,{"Partager": "Share", "Choisis d'abord une toupie complète.": "Pick a complete Bey first.", "Cette toupie contient une pièce absente du catalogue : elle ne peut pas encore être partagée par QR.": "This Bey has a part that is not in the catalog: it can't be shared by QR yet.", "Impossible de créer le QR sur cet appareil.": "Can't create the QR on this device.", "Partager mon deck": "Share my deck", "Partager ma toupie": "Share my Bey", "Ton ami ouvre Beybey, va dans Match et touche Scanner.": "Your friend opens Beybey, goes to Match and taps Scan.", "Ajoute ton nom dans Options pour qu'il s'affiche chez lui.": "Add your name in Options so it shows up on their phone.", "Envoyer le lien": "Send the link", "Fermer": "Close", "Lien copié": "Link copied", "Colle-le dans un message.": "Paste it in a message.", "Scanner un QR": "Scan a QR", "Vise le QR de ton ami.": "Aim at your friend's QR.", "Impossible de charger le lecteur de QR (connexion ?).": "Can't load the QR reader (connection?).", "La caméra n'est pas disponible ici.": "The camera isn't available here.", "Caméra refusée. Autorise-la dans les réglages de l'iPhone pour scanner.": "Camera denied. Allow it in the iPhone settings to scan.", "QR non reconnu": "QR not recognised", "Ce QR ne vient pas de Beybey.": "This QR doesn't come from Beybey.", "Une pièce de cette toupie est absente de ton catalogue.": "A part of this Bey is missing from your catalog.", "Invité": "Guest", "Deck reçu": "Deck received", "Toupie reçue": "Bey received", "De": "From", "« Jouer avec » ne touche pas à ta collection ni à tes stats.": "“Play with” doesn't touch your collection or your stats.", "Jouer avec": "Play with", "Ajouter à ma collection": "Add to my collection", "Tu as déjà tout ça dans ta collection.": "You already have all of this in your collection.", "Pas assez de place pour enregistrer.": "Not enough space to save.", "Ajouté à ta collection.": "Added to your collection.", "Scanner": "Scan"});
 Object.assign(I18N.TXT,{"Mon profil":"My profile","Ton nom":"Your name","Matchs":"Matches","Victoires":"Wins","Défaites":"Losses","Réussite":"Win rate","Toupie la plus jouée":"Most played Bey","Apparence":"Appearance","Fond d'écran":"Wallpaper","Historique":"History","Les stats comptent seulement tes matchs (pas ceux joués en invité).":"Stats only count your own matches (not guest games).","Entre ton nom dans Options pour compter tes stats.":"Enter your name in Options to count your stats.","Toupie la plus jouée ici :":"Most played Bey here:","Tout voir":"See all","Chercher un ami…":"Search a friend…","Chercher":"Search","Remettre mes stats à zéro":"Reset my stats","Liste d'amis":"Friends list","Note (ex. : Kevin du lycée)":"Note (e.g. Kevin from school)","Note":"Note","Toi contre":"You vs","Ses stats":"Their stats","au scan du":"at scan of","Scanne sa toupie pour voir ses stats.":"Scan their Bey to see their stats.","Amis":"Friends","Scanne la toupie d'un pote pour l'ajouter ici.":"Scan a friend's Bey to add them here.","les plus récents":"most recent","Chaque joueur ouvre Beybey, va dans Match, touche Scanner et vise ce QR. Il récupère seulement ses matchs.":"Each player opens Beybey, goes to Match, taps Scan and aims at this QR. They only get their own matches.","Qui es-tu ?":"Who are you?","Ton nom ne figure pas dans ce QR. Touche le tien :":"Your name isn't in this QR. Tap yours:","avec toi":"with you","Aucun match avec toi.":"No match with you.","Ce n'est pas moi":"That's not me","Aucun match à partager.": "No match to share.", "Partager la session": "Share the session", "contre": "vs", "Ton adversaire ouvre Beybey, va dans Match, touche Scanner et vise ce QR.": "Your opponent opens Beybey, goes to Match, taps Scan and aims at this QR.", "Page": "Page", "il doit scanner chaque page.": "they must scan every page.", "Page suivante": "Next page", "Résultats reçus": "Results received", "Ils seront ajoutés à ton historique, de ton point de vue, et comptés dans tes stats.": "They will be added to your history, from your point of view, and counted in your stats.", "Ajouter à mon historique": "Add to my history", "Ajouté à ton historique.": "Added to your history.", "Déjà dans ton historique.": "Already in your history.","Vider cet historique":"Clear this history","Entre ton nom : tu seras le joueur 1 par défaut et tes stats seront comptées.":"Enter your name: you will be player 1 by default and your stats will be counted.","Tu es toujours le joueur 1 par défaut.":"You are always player 1 by default.","Aucun match compté pour l'instant. Tu es toujours le joueur 1 par défaut.":"No match counted yet. You are always player 1 by default.","Tes stats sont comptées.":"Your stats are counted.","Stats non comptées (invité).":"Stats not counted (guest).","Revenir à ":"Back to "});
+Object.assign(I18N.TXT,{"Ouvrir":"Open","Mon QR":"My QR","Ma fiche ami":"My friend card","Ami ajouté":"Friend added","Voir la fiche":"View card","Sa fiche est mise à jour.":"Their card was updated.","Il est dans ta liste d'amis. Tu peux lui ajouter une note.":"They are in your friends list. You can add a note.","C'est ta propre fiche.":"That is your own card.","Ajoute ton nom dans Options pour partager ta fiche.":"Add your name in Options to share your card.","Ton ami ouvre Beybey, va dans Options, Amis, et touche Scanner. Il reçoit ton nom et tes stats.":"Your friend opens Beybey, goes to Options, Friends, and taps Scan. They get your name and stats.","Scanne le QR d'un pote pour l'ajouter ici.":"Scan a friend's QR to add them here.","matchs":"matches","victoires":"wins"});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
 function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
 (function(){
@@ -1328,6 +1329,7 @@ function shOpen(h){ let f=document.getElementById('fm'); if(!f){ f=document.crea
 function shMsg(t,m){ shOpen(`<div class="fwrap"><div class="fh"><h2>${t}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div><div class="fhelp">${m}</div><div class="fact"><button class="go sm" onclick="fmClose()">OK</button></div></div>`); }
 let QRU='';
 async function qrShow(list){
+  if(!list.length&&!PRF.n) return shMsg(LT('Mon QR'),LT('Ajoute ton nom dans Options pour partager ta fiche.'));
   if(list.some(d=>!d)) return shMsg(LT('Partager'),LT('Choisis d\'abord une toupie complète.'));
   if(list.some(d=>!descSlot(d))) return shMsg(LT('Partager'),LT('Cette toupie contient une pièce absente du catalogue : elle ne peut pas encore être partagée par QR.'));
   await libLoad('lib/qrcode.js',()=>typeof qrcode==='function');
@@ -1335,9 +1337,9 @@ async function qrShow(list){
   let svg=''; try{ const q=qrcode(0,'L'); q.addData(QRU); q.make(); svg=q.createSvgTag({cellSize:4,margin:0,scalable:true}); }catch(e){ svg=''; }
   if(!svg) return shMsg(LT('Partager'),LT('Impossible de créer le QR sur cet appareil.'));
   const rows=list.map(d=>{ const r=resolve(descSlot(d)); return `<div class="rcr">${img(r.img,'sm')}<div><b>${esc(r.name)}</b><div class="mut">${r.w} g</div></div></div>`; }).join('');
-  shOpen(`<div class="fwrap"><div class="fh"><h2>${list.length>1?LT('Partager mon deck'):LT('Partager ma toupie')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${!list.length?LT('Ma fiche ami'):list.length>1?LT('Partager mon deck'):LT('Partager ma toupie')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
     <div class="qrbox" role="img" aria-label="QR code">${svg}</div>
-    <div class="mut note qrn">${LT('Ton ami ouvre Beybey, va dans Match et touche Scanner.')}${PRF.n?'':' '+LT('Ajoute ton nom dans Options pour qu\'il s\'affiche chez lui.')}</div>
+    <div class="mut note qrn">${!list.length?LT('Ton ami ouvre Beybey, va dans Options, Amis, et touche Scanner. Il reçoit ton nom et tes stats.'):LT('Ton ami ouvre Beybey, va dans Match et touche Scanner.')}${PRF.n?'':' '+LT('Ajoute ton nom dans Options pour qu\'il s\'affiche chez lui.')}</div>
     <div class="rcl">${rows}</div>
     <div class="fact"><button class="chip" onclick="qrSend()">${LT('Envoyer le lien')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div></div>`);
 }
@@ -1373,13 +1375,24 @@ let RC=null;
 function rcOpen(code,p){
   let d; try{ d=JSON.parse(b64d(code)); }catch(e){ return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.')); }
   const slots=((d&&d.t)||[]).slice(0,3).map(descSlot);
+  if(d&&sid(d.i)&&(p===-1||!(d.t&&d.t.length))) return frRecv(d);
   if(!slots.length||slots.some(x=>!x)) return shMsg(LT('QR non reconnu'),LT('Une pièce de cette toupie est absente de ton catalogue.'));
-  const from=String((d&&d.n)||'').trim().slice(0,20)||LT('Invité'); RC={from,slots,p,id:String((d&&d.i)||'').slice(0,20),st:Array.isArray(d&&d.st)?d.st:null};
+  const from=String((d&&d.n)||'').trim().slice(0,20)||LT('Invité'); RC={from,slots,p,id:sid(d&&d.i),st:Array.isArray(d&&d.st)?d.st:null};
   const rows=slots.map(sl=>{ const r=resolve(sl); return `<div class="rcr">${img(r.img,'sm')}<div><b>${esc(r.name)}</b><div class="mut">${r.w} g</div></div></div>`; }).join('');
   shOpen(`<div class="fwrap"><div class="fh"><h2>${slots.length>1?LT('Deck reçu'):LT('Toupie reçue')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
     <div class="fhelp">${LT('De')} <b>${esc(from)}</b></div><div class="rcl">${rows}</div>
     <div class="mut note">${LT('« Jouer avec » ne touche pas à ta collection ni à tes stats.')}</div>
     <div class="fact"><button class="go sm" onclick="rcPlay()">${LT('Jouer avec')}</button><button class="chip" onclick="rcAdd(this)">${LT('Ajouter à ma collection')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
+}
+function frRecv(d){
+  const id=sid(d.i), nm=String(d.n||'').trim().slice(0,20)||LT('Invité'), S=Array.isArray(d.st)?d.st:null, g=S&&Array.isArray(S[0])?S[0]:S;
+  if(id===PRF.id) return shMsg(LT('Ma fiche ami'),LT('C\'est ta propre fiche.'));
+  const had=!!fLoad()[id]; fUpsert(id,nm,S);
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Ami ajouté')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="fhelp"><b>${esc(nm)}</b>${g?' · '+(g[0]||0)+' '+LT('matchs')+', '+(g[1]||0)+' '+LT('victoires'):''}</div>
+    <div class="mut note">${had?LT('Sa fiche est mise à jour.'):LT('Il est dans ta liste d\'amis. Tu peux lui ajouter une note.')}</div>
+    <div class="fact"><button class="go sm" onclick="frOpen('${id}')">${LT('Voir la fiche')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div></div>`);
+  if(st.tab==='opts') draw(); else if(st.tab==='match') drawMatch();
 }
 function rcPlay(){
   const p=RC.p===undefined?1:RC.p, M=st.m; if(RC.slots.length>1) M.mode='tournoi';
@@ -1403,18 +1416,20 @@ function rcAdd(btn){
 window.addEventListener('load',()=>{ const k=location.hash.slice(1,3); if(k==='s='||k==='r='){ const c=location.hash.slice(3); try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} setTimeout(()=>k==='r='?rrOpen(c):rcOpen(c),400); } });
 /* ===== Amis ===== */
 const FKEY='arene_amis';
-function fLoad(){ try{ return JSON.parse(localStorage.getItem(FKEY)||'{}')||{}; }catch(e){ return {}; } }
+const sid=v=>String(v==null?'':v).replace(/[^A-Za-z0-9_-]/g,'').slice(0,20);
+function fLoad(){ try{ const F=JSON.parse(localStorage.getItem(FKEY)||'{}')||{}, O={}; for(const k in F){ const i=sid(k); if(i&&i===k&&F[k]&&typeof F[k]==='object'){ F[k].id=i; O[i]=F[k]; } } return O; }catch(e){ return {}; } }
 function fSave(o){ try{ localStorage.setItem(FKEY,JSON.stringify(o)); }catch(e){} }
-function fUpsert(id,n,sts){ if(!id||id===PRF.id) return; const F=fLoad(), f=F[id]||{id,n:'',note:''}; if(n) f.n=String(n).slice(0,20); if(Array.isArray(sts)){ f.st=Array.isArray(sts[0])?sts.slice(0,3):[sts.slice(0,5),null,null]; f.at=Date.now(); } F[id]=f; fSave(F); }
+function fUpsert(id,n,sts){ id=sid(id); if(!id||id===PRF.id) return; const F=fLoad(), f=F[id]||{id,n:'',note:''}; if(n) f.n=String(n).slice(0,20); if(Array.isArray(sts)){ f.st=Array.isArray(sts[0])?sts.slice(0,3):[sts.slice(0,5),null,null]; f.at=Date.now(); } F[id]=f; fSave(F); }
 function friendsUI(){
   const n=Object.keys(fLoad()).length;
-  return '<div class="optl">Amis</div>'+(n?'<div class="frame one"><button onclick="frList()"><span>Liste d\'amis</span><small>'+n+'</small></button></div>':'<div class="mut note">Scanne la toupie d\'un pote pour l\'ajouter ici.</div>');
+  return '<div class="optl">Amis</div>'+(n?'<div class="frame one"><button onclick="frList()"><span>Liste d\'amis</span><small>'+n+'</small></button></div>':'')+'<div class="frame"><button onclick="scOpen(-1)"><span>'+LT('Scanner')+'</span></button><button onclick="qrShow([])"><span>'+LT('Mon QR')+'</span></button></div>'+(n?'':'<div class="mut note">'+LT('Scanne le QR d\'un pote pour l\'ajouter ici.')+'</div>');
 }
 let FRL=false;
 function frList(q){
   FRL=true; q=q||''; const F=Object.values(fLoad()).sort((a,b)=>String(a.n).localeCompare(b.n)), all=F.length;
   const L=q?F.filter(f=>nz(f.n+' '+(f.note||'')).includes(nz(q))):F;
   shOpen(`<div class="fwrap hall"><div class="fh"><h2>${LT('Amis')} (${all})</h2><button class="chip sq" onclick="FRL=false;fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="frame"><button onclick="scOpen(-1)"><span>${LT('Scanner')}</span></button><button onclick="qrShow([])"><span>${LT('Mon QR')}</span></button></div>
     ${all>6?`<input class="nm frn" id="frq" value="${esc(q)}" placeholder="${LT('Chercher un ami…')}" oninput="frList(this.value)" aria-label="${LT('Chercher')}">`:''}
     <div class="hscroll"><div class="flist pcard">${L.map(f=>`<button class="frow" onclick="frOpen('${f.id}')"><b>${esc(f.n)}</b>${f.note?`<span class="mut">${esc(f.note)}</span>`:''}</button>`).join('')||`<div class="mut note">${LT('Aucun résultat')}</div>`}</div></div></div>`);
   if(q){ const e=document.getElementById('frq'); if(e){ e.focus(); e.setSelectionRange(q.length,q.length); } }
@@ -1454,7 +1469,7 @@ async function rsShow(){
   const all=sessAll(); if(!all.length) return shMsg(LT('Partager'),LT('Aucun match à partager.'));
   await libLoad('lib/qrcode.js',()=>typeof qrcode==='function');
   let list=all, code='';
-  while(list.length){ code=await packJ(sessPack(list)); if((QRB+'#r='+code).length<=1700||list.length===1) break; list=list.slice(0,Math.max(1,list.length-3)); }
+  while(list.length){ code=await packJ(sessPack(list)); if((QRB+'#r='+code).length<=900||list.length===1) break; list=list.slice(0,Math.max(1,list.length-2)); }
   QRU=QRB+'#r='+code;
   let svg=''; try{ const q=qrcode(0,'L'); q.addData(QRU); q.make(); svg=q.createSvgTag({cellSize:4,margin:0,scalable:true}); }catch(e){}
   if(!svg) return shMsg(LT('Partager'),LT('Impossible de créer le QR sur cet appareil.'));
@@ -1480,22 +1495,22 @@ function rrRender(){
   }
   const mine=d.m.filter(x=>x[9]===me||x[10]===me);
   const rows=mine.map(x=>{ const fl=x[10]===me&&x[9]!==me, a=fl?x[10]:x[9], b=fl?x[9]:x[10], sa=fl?x[8]:x[7], sb=fl?x[7]:x[8]; return `<div class="hr"><div class="hm"><span class="hn" style="color:var(--pa)">${esc(P[a][1])}</span><b class="hsc">${sa} – ${sb}</b><span class="hn" style="color:var(--pink)">${esc(P[b][1])}</span></div></div>`; }).join('');
-  shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Résultats reçus')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
-    <div class="fhelp">${LT('De')} <b>${esc(RR.from)}</b> · ${mine.length} match${mine.length>1?'s':''} ${LT('avec toi')} (${esc(P[me][1])})</div>${rows||`<div class="mut">${LT('Aucun match avec toi.')}</div>`}
-    <div class="mut note">${LT('Ils seront ajoutés à ton historique, de ton point de vue, et comptés dans tes stats.')}</div>
+  shOpen(`<div class="fwrap hall"><div class="fh"><h2>${LT('Résultats reçus')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="fhelp">${LT('De')} <b>${esc(RR.from)}</b> · ${mine.length} match${mine.length>1?'s':''} ${LT('avec toi')} (${esc(P[me][1])})</div><div class="hscroll">${rows||`<div class="mut">${LT('Aucun match avec toi.')}</div>`}
+    <div class="mut note">${LT('Ils seront ajoutés à ton historique, de ton point de vue, et comptés dans tes stats.')}</div></div>
     <div class="fact">${mine.length?`<button class="go sm" onclick="rrAdd(this)">${LT('Ajouter à mon historique')}</button>`:''}<button class="chip" onclick="rrWho()">${LT('Ce n\'est pas moi')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
 }
 function rrWho(){ RR.me=-2; const d=RR.d; shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Qui es-tu ?')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div><div class="flist pcard">${d.p.map((p,i)=>`<button class="frow" onclick="rrPick(${i})"><b>${esc(p[1])}</b></button>`).join('')}</div></div>`); }
 function rrPick(i){ RR.me=i; RR.picked=true; rrRender(); }
 function rrAdd(btn){
-  const d=RR.d,P=d.p,me=RR.me,L=hLoad(),from=d.i||d.n||'?'; let add=0;
+  const d=RR.d,P=d.p,me=RR.me,L=hLoad(),from=sid(d.i)||String(d.n||'?').slice(0,20); let add=0;
   if(RR.picked){ const nm=nz(P[me][1]); if(nm&&nm!==nz(PRF.n)){ PRF.al=PRF.al||[]; if(!PRF.al.includes(nm)) PRF.al.push(nm); pfSave(); } }
   d.m.forEach(x=>{ if(x[9]!==me&&x[10]!==me) return; if(L.some(r=>r.oid===x[0]&&r.from===from)) return;
     const fl=x[10]===me&&x[9]!==me, o=fl?x[9]:x[10], sa=fl?x[8]:x[7], sb=fl?x[7]:x[8], w=x[6]<0?-1:(fl?1-x[6]:x[6]), pa=fl?x[12]:x[11], pb=fl?x[11]:x[12];
     let id=x[0]; while(L.some(r=>r.id===id)) id++;
-    L.push({id,oid:x[0],from,cat:x[1]?'tournoi':'simple',tg:x[2],bo:x[3],mn:x[4],r:x[5],w,s:[sa,sb],n:[PRF.n||P[me][1],P[o][1]],ids:[PRF.id,P[o][0]||''],pc:[pa,pb],b:[pa,pb],me:x[0]<(PRF.rst||0)?0:1});
-    if(P[o][0]) fUpsert(P[o][0],P[o][1],null); add++; });
-  if(d.i&&d.i!==PRF.id) fUpsert(d.i,d.n,d.st);
+    L.push({id,oid:x[0],from,cat:x[1]?'tournoi':'simple',tg:x[2],bo:x[3],mn:x[4],r:x[5],w,s:[sa,sb],n:[PRF.n||P[me][1],P[o][1]],ids:[PRF.id,sid(P[o][0])],pc:[pa,pb],b:[pa,pb],me:x[0]<(PRF.rst||0)?0:1});
+    if(sid(P[o][0])) fUpsert(P[o][0],P[o][1],null); add++; });
+  if(sid(d.i)&&sid(d.i)!==PRF.id) fUpsert(d.i,d.n,d.st);
   L.sort((a,b)=>b.id-a.id); hSave(L); btn.disabled=true;
   const e=document.getElementById('rcm'); if(e) e.textContent=add?LT('Ajouté à ton historique.'):LT('Déjà dans ton historique.');
   setTimeout(()=>{ fmClose(); if(st.tab==='match') drawMatch(); else if(st.tab==='opts') draw(); },900);
@@ -2009,7 +2024,7 @@ function histRows(L){
 }
 function histUI(cat){
   const L=hLoad().filter(r=>r.cat===cat),title=cat==='tournoi'?'Match 3v3':'Match simple';
-  return `<div class="pcard hist"><div class="hh"><div class="sl">Historique · ${title}</div>${L.length>5?`<button class="chip" onclick="histAll('${cat}')">${LT('Tout voir')} (${L.length})</button>`:L.length?`<button class="chip" onclick="histClear('${cat}')">Vider</button>`:''}</div>${L.length?`<div class="mut">${L.length} match${L.length>1?'s':''} terminé${L.length>1?'s':''}</div>${histRows(L.slice(0,5))}`:'<div class="mut">Aucun match pour l\'instant. Termine un match pour le retrouver ici.</div>'}</div>`;
+  return `<div class="pcard hist"><div class="hh"><div class="sl">Historique · ${title}</div><button class="chip" onclick="histAll('${cat}')">${L.length>5?LT('Tout voir')+' ('+L.length+')':LT('Ouvrir')}</button></div>${L.length?`<div class="mut">${L.length} match${L.length>1?'s':''} terminé${L.length>1?'s':''}</div>${histRows(L.slice(0,5))}`:'<div class="mut">Aucun match pour l\'instant. Termine un match pour le retrouver ici.</div>'}</div>`;
 }
 function histAll(cat){
   const L=hLoad().filter(r=>r.cat===cat),title=cat==='tournoi'?'Match 3v3':'Match simple',S=pfStats(L),pct=S.n?Math.round(100*S.w/S.n)+'%':'—';
@@ -2018,7 +2033,7 @@ function histAll(cat){
     <div class="frame f3 hseg">${[['simple','Match simple'],['tournoi','Match 3v3'],['bracket','Tournoi']].map(([k,l])=>`<button class="${k===cat?'on':''}" ${k==='bracket'?'disabled':''} onclick="histAll('${k}')"><span>${l}</span></button>`).join('')}</div>
     <div class="pfg">${c(L.length,'Matchs')}${c(S.w,'Victoires')}${c(S.l,'Défaites')}${c(pct,'Réussite')}</div>
     <div class="mut note">${PRF.n?LT('Les stats comptent seulement tes matchs (pas ceux joués en invité).'):LT('Entre ton nom dans Options pour compter tes stats.')}${S.top?' '+LT('Toupie la plus jouée ici :')+' <b>'+esc(S.top)+'</b> ×'+S.topn+'.':''}</div>
-    <div class="hscroll">${histRows(L)}</div>${L.length?`<div class="hbar"><button class="chip hclr" onclick="rsShow()">Partager la session</button><button class="chip dng hclr" onclick="histClear('${cat}')">Vider</button></div>`:''}</div>`);
+    <div class="hscroll">${histRows(L)}</div><div class="hbar"><button class="chip hclr" onclick="scOpen(0)">${LT('Scanner')}</button>${L.length?`<button class="chip hclr" onclick="rsShow()">Partager la session</button><button class="chip dng hclr" onclick="histClear('${cat}')">Vider</button>`:''}</div></div>`);
 }
 function serieEnd(){
   const [a,b]=G.score; G.cw=a>b?0:b>a?1:-1; G.sw=-1;
