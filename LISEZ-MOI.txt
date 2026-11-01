@@ -19,7 +19,8 @@ Ouvrir la page
 Les onglets
   Accueil   l'arène animée, le bouton MATCH et six raccourcis : Collection, Build, Historique, Profil, Amis et
             Options. En haut : ton profil (avatar, victoires et réussite), le logo, et le bouton soleil/lune
-            qui change le thème.
+            qui change le thème. En paysage (téléphone tourné), le stade passe au centre avec les boutons
+            de chaque côté, sans défilement.
   Toupies   ta collection et les pièces (blades, ratchets, bits). Recherche, tri A→Z / 1→9, fiche détaillée.
   Build     compose deux builds et compare-les. Le gagnant de chaque ligne prend la couleur de son camp
             (vert A, rose B), les égalités sont grisées, la toupie la plus lourde gagne sur le poids.
@@ -53,7 +54,7 @@ Partage par QR code (sans compte, sans serveur)
   Le QR de session est limité en taille pour rester lisible à la caméra : il garde les matchs les plus récents.
 
 Amis (Accueil > Amis)
-  Page dédiée avec les boutons Code (ton QR) et Scanner. Liste d'amis avec recherche, et pour chacun une fiche : une note (ex. "mon pote du club"), tes résultats contre lui
+  Page dédiée avec les boutons Code (ton QR) et Scanner. Liste d'amis avec recherche, et pour chacun une fiche (avec son avatar, reçu via son QR) : une note (ex. "mon pote du club"), tes résultats contre lui
   (Tout, Simple, 3v3) et ses stats au moment du dernier scan. Retirer un ami demande une confirmation.
 
 Ajouter une toupie dans l'appli (le plus simple)
