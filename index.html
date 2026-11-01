@@ -2325,7 +2325,9 @@ function rmShow(msg){ if(document.getElementById('rm')) return; const e=document
 function rmClose(){ const e=document.getElementById('rm'); if(e) e.remove(); }
 try{ const lb=+localStorage.getItem('arene_lastbk')||0, sh=+localStorage.getItem('arene_bkrem')||0, now=Date.now();
   if(lb&&now-lb>30*864e5&&now-sh>3*864e5&&(CUSTOM.length||hLoad().length)){ localStorage.setItem('arene_bkrem',String(now)); setTimeout(()=>rmShow('<b>Ça fait plus de 30 jours</b> que tu n\'as pas sauvegardé. Fais un export dans Options pour ne rien perdre.'),1200); } }catch(e){}
-try{ if(sessionStorage.getItem('bb_rm')){ sessionStorage.removeItem('bb_rm'); setTimeout(rmShow,400); } }catch(e){}
+// Rappel après un ajout : une seule fois par jour, et jamais si une sauvegarde date de moins de 24 h (pour ne pas harceler quand on ajoute plusieurs toupies d'affilée).
+try{ if(sessionStorage.getItem('bb_rm')){ sessionStorage.removeItem('bb_rm'); const now=Date.now(), lb=+localStorage.getItem('arene_lastbk')||0, la=+localStorage.getItem('arene_bkadd')||0;
+  if(now-la>864e5&&now-lb>864e5){ localStorage.setItem('arene_bkadd',String(now)); setTimeout(rmShow,400); } } }catch(e){}
 ['gesturestart','gesturechange','gestureend'].forEach(g=>document.addEventListener(g,e=>e.preventDefault()));
 const PBOOT=photosBoot().catch(()=>{});
 try{ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }catch(e){}
