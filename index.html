@@ -1229,8 +1229,8 @@ const PKEY='arene_profil';
 let PRF=(()=>{ try{ return JSON.parse(localStorage.getItem(PKEY)||'{}')||{}; }catch(e){ return {}; } })();
 function pfSave(){ try{ localStorage.setItem(PKEY,JSON.stringify(PRF)); }catch(e){} }
 function pfSet(v){ const was=st.m.me||!st.m.names[0]||st.m.names[0]===LT('Joueur 1'); PRF.n=String(v||'').trim().slice(0,20); pfSave(); if(was){ st.m.names[0]=PRF.n||LT('Joueur 1'); st.m.me=!!PRF.n; } }
-function pfStats(){
-  const L=hLoad().filter(r=>r.me); let w=0,l=0,d=0; const use={};
+function pfStats(L0){
+  const L=(L0||hLoad()).filter(r=>r.me); let w=0,l=0,d=0; const use={};
   L.forEach(r=>{ if(r.w===0) w++; else if(r.w===1) l++; else d++; (r.b&&r.b[0]||[]).forEach(n=>{ if(n) use[n]=(use[n]||0)+1; }); });
   const top=Object.entries(use).sort((a,b)=>b[1]-a[1])[0];
   return {n:L.length,w,l,d,top:top?top[0]:'',topn:top?top[1]:0};
@@ -1867,15 +1867,25 @@ function histAdd(){
   }catch(e){}
 }
 function histDel(id){ hSave(hLoad().filter(r=>r.id!==id)); }
-function histClear(cat){ if(confirm(LT('Vider l\'historique de cette catégorie ?'))){ hSave(hLoad().filter(r=>r.cat!==cat)); drawMatch(); } }
-function histUI(cat){
-  const L=hLoad().filter(r=>r.cat===cat),title=cat==='tournoi'?'Match 3v3':'Match simple';
+function histClear(cat){ if(confirm(LT('Vider l\'historique de cette catégorie ?'))){ hSave(hLoad().filter(r=>r.cat!==cat)); fmClose(); drawMatch(); } }
+function histRows(L){
   const when=id=>{ const d=new Date(id); return d.toLocaleDateString(LOC,{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString(LOC,{hour:'2-digit',minute:'2-digit'}); };
-  const rows=L.slice(0,40).map(r=>{
+  return L.map(r=>{
     const w=r.w,nm=i=>`<span class="hn ${w===i?'hw':''}" style="color:${i?'var(--pink)':'var(--pa)'}">${esc(r.n[i])}</span>`;
     return `<div class="hr"><div class="hd mut">${when(r.id)} · ${r.r} round${r.r>1?'s':''} · à ${r.tg}${r.bo?' · BO'+r.bo+' · M'+r.mn:''}</div><div class="hm">${nm(0)}<b class="hsc">${r.s[0]} – ${r.s[1]}</b>${nm(1)}</div>${r.pc?`<div class="hs mut hpc"><div style="color:var(--pa)">${r.pc[0].map(esc).join(' | ')}</div><div style="color:var(--pink)">${r.pc[1].map(esc).join(' | ')}</div></div>`:`<div class="hs mut">${r.b[0].map(esc).join(' · ')} <i>vs</i> ${r.b[1].map(esc).join(' · ')}</div>`}${w<0?'<div class="mut">Égalité</div>':''}</div>`;
   }).join('');
-  return `<div class="pcard hist"><div class="hh"><div class="sl">Historique · ${title}</div>${L.length?`<button class="chip" onclick="histClear('${cat}')">Vider</button>`:''}</div>${L.length?`<div class="mut">${L.length} match${L.length>1?'s':''} terminé${L.length>1?'s':''}</div>${rows}`:'<div class="mut">Aucun match pour l\'instant. Termine un match pour le retrouver ici.</div>'}</div>`;
+}
+function histUI(cat){
+  const L=hLoad().filter(r=>r.cat===cat),title=cat==='tournoi'?'Match 3v3':'Match simple';
+  return `<div class="pcard hist"><div class="hh"><div class="sl">Historique · ${title}</div>${L.length>5?`<button class="chip" onclick="histAll('${cat}')">Tout voir (${L.length})</button>`:L.length?`<button class="chip" onclick="histClear('${cat}')">Vider</button>`:''}</div>${L.length?`<div class="mut">${L.length} match${L.length>1?'s':''} terminé${L.length>1?'s':''}</div>${histRows(L.slice(0,5))}`:'<div class="mut">Aucun match pour l\'instant. Termine un match pour le retrouver ici.</div>'}</div>`;
+}
+function histAll(cat){
+  const L=hLoad().filter(r=>r.cat===cat),title=cat==='tournoi'?'Match 3v3':'Match simple',S=pfStats(L),pct=S.n?Math.round(100*S.w/S.n)+'%':'—';
+  const c=(v,l)=>`<div class="pfc"><b>${v}</b><span>${l}</span></div>`;
+  shOpen(`<div class="fwrap"><div class="fh"><h2>Historique · ${title}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="pfg">${c(L.length,'Matchs')}${c(S.w,'Victoires')}${c(S.l,'Défaites')}${c(pct,'Réussite')}</div>
+    <div class="mut note">${PRF.n?'Les stats comptent seulement tes matchs (pas ceux joués en invité).':'Entre ton nom dans Options pour compter tes stats.'}${S.top?' Toupie la plus jouée ici : <b>'+esc(S.top)+'</b> ×'+S.topn+'.':''}</div>
+    ${histRows(L)}<div class="fact"><button class="chip dng" onclick="histClear('${cat}')">Vider</button><button class="chip" onclick="fmClose()">Fermer</button></div></div>`);
 }
 function serieEnd(){
   const [a,b]=G.score; G.cw=a>b?0:b>a?1:-1; G.sw=-1;
