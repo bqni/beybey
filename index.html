@@ -130,6 +130,13 @@ details[open] summary{background:var(--accent-soft)}
 .note{padding:0 var(--sp-4) var(--sp-3)}
 .nm{color:var(--pc);font-weight:var(--fw-semi);font-size:var(--fs-lg);padding:0 var(--sp-3)}
 .slot{display:grid;gap:var(--sp-2)}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3)}
+.slotadd{display:flex;align-items:center;justify-content:center;gap:var(--sp-2);min-height:64px;border:1px dashed var(--accent);background:var(--accent-soft);color:var(--accent);border-radius:var(--r-2);font:var(--fw-semi) var(--fs-md) var(--font)}.slotadd span{font-size:22px;line-height:1}
+.prv .grow{flex:1;min-width:0}.pcl{font-size:var(--fs-xs);margin-top:2px;overflow-wrap:anywhere}.nsl{margin:var(--sp-2) var(--sp-4)}
+.pkw .pkwho{margin:0 0 var(--sp-2)}.pks{margin:0 0 var(--sp-2)}.pkprv{margin:var(--sp-2) 0}
+.pkr{display:flex;align-items:center;gap:var(--sp-3);width:100%;text-align:left;padding:var(--sp-2);margin:0 0 6px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-2);color:var(--text);font:var(--fw-medium) var(--fs-md) var(--font)}
+.pkr .pkn{flex:1;min-width:0;display:grid;gap:2px}.pkr b{font-weight:var(--fw-semi);overflow-wrap:anywhere}.pkr small{color:var(--text-2);font-size:var(--fs-xs)}.pkr small i{font-style:normal;margin-left:6px}.pkr em{font-style:normal;font-size:var(--fs-xs);color:var(--text-2);border:1px solid var(--border);border-radius:var(--r-2);padding:2px 6px;white-space:nowrap}
+.hpc{display:grid;gap:2px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
 .g3 select{height:36px;font-size:var(--fs-sm)}
 .prv{display:flex;gap:var(--sp-3);align-items:center}.prv b{font:var(--fw-semi) var(--fs-md) var(--font)}
@@ -550,7 +557,7 @@ Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec 
 Object.assign(I18N.TXT,{"Invitée": "Guest", "Toupie invitée": "Guest bey", "Choisir dans le catalogue…": "Pick from the catalog…", "Ou écris son nom…": "Or type its name…", "Nom de la toupie": "Bey name", "Toupie invitée : elle n'est pas ajoutée à ta collection.": "Guest bey: it is not added to your collection."});
 Object.assign(I18N.TXT,{"Toupie custom": "Custom bey", "Ma collection": "My collection", "Catalogue : rien n'est ajouté à ta collection.": "Catalog: nothing is added to your collection."});
 Object.assign(I18N.TXT,{"Lancer un combat A contre B": "Start a battle A vs B", "Les règles (points, rounds) se règlent dans l'onglet Match.": "Rules (points, rounds) are set in the Match tab."});
-Object.assign(I18N.TXT,{"Série":"Series","Match unique":"Single match","Match suivant":"Next match"});
+Object.assign(I18N.TXT,{"Choisir une toupie":"Choose a bey","Ajouter une toupie":"Add a bey","Changer":"Change","Retour":"Back","Choisir cette toupie":"Choose this bey","Toupie":"Bey","Catalogue":"Catalogue","Tape un nom pour chercher dans le catalogue.":"Type a name to search the catalogue.","Affine ta recherche pour voir les autres.":"Refine your search to see the others.","Rien dans le catalogue.":"Nothing in the catalogue.","Rien trouvé.":"Nothing found.","Tu peux changer les pièces ou garder celles-ci.":"You can change the parts or keep these.","Ajoute une toupie à chaque emplacement pour lancer le match.":"Add a bey to every slot to start the match.","Série":"Series","Match unique":"Single match","Match suivant":"Next match"});
 Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat": "Start the battle"});
 Object.assign(I18N.TXT,{"Aucun":"None"});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
@@ -1121,23 +1128,24 @@ function draw(){
 }
 const wnum=v=>(typeof v==='string'&&v.includes('-'))?v.split('-').reduce((a,b)=>a+ +b,0)/2:num(v);
 const RA=T.map((x,i)=>x.r?i:-1).filter(i=>i>=0);
-const mk=i=>{ if(!T.length) return {mode:'stock',stock:0,blade:0,ratchet:-1,bit:0}; i%=T.length;return {mode:'stock',stock:i,blade:i,ratchet:T[i].r?i:-1,bit:i};};
-st.m={mode:'simple',target:4,bo:1,rounds:0,names:[LT('Joueur 1'),LT('Joueur 2')],p:[[mk(0),mk(1),mk(2)],[mk(3),mk(4),mk(5)]]};
+const mk=()=>({mode:'none'});
+st.m={mode:'simple',target:4,bo:1,rounds:0,names:[LT('Joueur 1'),LT('Joueur 2')],p:[[mk(),mk(),mk()],[mk(),mk(),mk()]]};
 const PCOL=['var(--pa)','var(--pink)'];
 let G=null,tmr=null;
 
 function resolve(c){
+  if(!c||c.mode==='none') return {name:'',blade:'—',img:'',w:'',ty:'',pc:[]};
   if(c.src==='cat'&&typeof CAT!=='undefined'&&CAT.length){
-    const none={name:LT('Choisir dans le catalogue…'),blade:'—',img:'',w:'',ty:''};
+    const none={name:LT('Choisir dans le catalogue…'),blade:'—',img:'',w:'',ty:'',pc:[]};
     if(c.mode==='custom'){ const P=cptBuild(), b=P.B[c.cb], r=P.R[c.cr], i=P.I[c.ci]; if(!b||!i) return none;
-      if(b.im) IM[b.im]=b.im; return {name:b.n+' '+(r?r.n:'')+i.n,blade:b.n,img:b.im||'',w:Math.round(((+b.w||0)+(r?+r.w||0:0)+(+i.w||0))*10)/10,ty:normT(b.bt)}; }
+      if(b.im) IM[b.im]=b.im; return {pc:[b.n,r?r.n:'',i.n],name:b.n+' '+(r?r.n:'')+i.n,blade:b.n,img:b.im||'',w:Math.round(((+b.w||0)+(r?+r.w||0:0)+(+i.w||0))*10)/10,ty:normT(b.bt)}; }
     const x=c.cg>=0?CAT[c.cg]:null; if(!x) return none;
-    if(x.ib) IM[x.ib]=x.ib; return {name:x.n,blade:x.b,img:x.ib||'',w:Math.round(((+x.wb||0)+(+x.wr||0)+(+x.wbt||0))*10)/10,ty:x.t};
+    if(x.ib) IM[x.ib]=x.ib; return {pc:[x.b,x.r||'',x.bi||''],name:x.n,blade:x.b,img:x.ib||'',w:Math.round(((+x.wb||0)+(+x.wr||0)+(+x.wbt||0))*10)/10,ty:x.t};
   }
-  if(c.mode==='stock'){ const x=T[c.stock],ph=PH[x.n]||{}; return {name:x.n,blade:x.b,img:ph.blade,w:x.tot,ty:x.t}; }
+  if(c.mode==='stock'){ const x=T[c.stock],ph=PH[x.n]||{}; return {pc:[x.b,x.r||'',x.bt||''],name:x.n,blade:x.b,img:ph.blade,w:x.tot,ty:x.t}; }
   const bl=T[c.blade],ra=c.ratchet>=0?T[c.ratchet]:null,bi=T[c.bit],ph=PH[bl.n]||{};
   const w=wnum(bl.wb)+(ra?wnum(ra.wr):0)+wnum(bi.wbt);
-  return {name:bl.b+' '+(ra?ra.r:'')+bi.bt,blade:bl.b,img:ph.blade,w:Math.round(w*10)/10,ty:bl.bty};
+  return {pc:[bl.b,ra?ra.r:'',bi.bt],name:bl.b+' '+(ra?ra.r:'')+bi.bt,blade:bl.b,img:ph.blade,w:Math.round(w*10)/10,ty:bl.bty};
 }
 function opt(list,sel){ return list.map(([v,l])=>`<option value="${v}" ${v==sel?'selected':''}>${l}</option>`).join(''); }
 function drawMatch(){ document.getElementById('main').innerHTML=T.length?matchUI():emptyUI(); }
@@ -1146,27 +1154,79 @@ function mSet(k,v){ st.m[k]=v; drawMatch(); }
 function slotSet(p,s,f,v){ st.m.p[p][s][f]=(f==='mode'||f==='src'||f==='cb'||f==='cr'||f==='ci')?v:+v; drawMatch(); }
 
 function slotUI(p,s){
-  const c=st.m.p[p][s],r=resolve(c),cat=c.src==='cat'&&CAT.length>0;
-  const seg=(key,arr,cur)=>'<div class="mseg">'+arr.map(([k,l])=>`<button class="${cur===k?'on':''}" onclick="slotSet(${p},${s},'${key}','${k}')">${l}</button>`).join('')+'</div>';
-  const sw=seg('mode',[['stock','Toupie stock'],['custom','Toupie custom']],c.mode)+(CAT.length?seg('src',[['own','Ma collection'],['cat','Catalogue']],cat?'cat':'own'):'');
-  let body;
-  if(cat){
-    const P=cptBuild(), ed=x=>x.e==='tt'?'Takara Tomy':'Hasbro';
-    if(c.mode==='stock'){
-      const gl=CAT.map((x,i)=>[i,x.n+' · '+ed(x)]).sort((a,b)=>a[1].localeCompare(b[1],undefined,{numeric:true,sensitivity:'base'}));
-      body=`<select onchange="slotSet(${p},${s},'cg',this.value)">${opt([[-1,LT('Choisir dans le catalogue…')]].concat(gl),c.cg>=0?c.cg:-1)}</select>`;
-    }else{
-      const bl=Object.values(P.B).sort(cpSort).map(x=>[x.k,x.n+' · '+ed(x)]), rl=Object.values(P.R).sort(cpSort).map(x=>[x.n,x.n]), il=Object.values(P.I).sort(cpSort).map(x=>[x.n,x.n]);
-      body=`<div class="g3"><label>Blade<select onchange="slotSet(${p},${s},'cb',this.value)">${opt([['',LT('Choisir…')]].concat(bl),c.cb||'')}</select></label><label>Ratchet<select onchange="slotSet(${p},${s},'cr',this.value)">${opt([['','Aucun']].concat(rl),c.cr||'')}</select></label><label>Bit<select onchange="slotSet(${p},${s},'ci',this.value)">${opt([['',LT('Choisir…')]].concat(il),c.ci||'')}</select></label></div>`;
-    }
-    body+=`<div class="mut note">${LT("Catalogue : rien n'est ajouté à ta collection.")}</div>`;
-  }else if(c.mode==='stock'){
-    body=`<select onchange="slotSet(${p},${s},'stock',this.value)">${opt(T.map((x,i)=>[i,x.n]),c.stock)}</select>`;
-  }else{
-    body=`<div class="g3"><label>Blade<select onchange="slotSet(${p},${s},'blade',this.value)">${opt(T.map((x,i)=>[i,x.l+' '+x.b]),c.blade)}</select></label><label>Ratchet<select onchange="slotSet(${p},${s},'ratchet',this.value)">${opt([[-1,'Aucun'],...RA.map(i=>[i,T[i].r])],c.ratchet)}</select></label><label>Bit<select onchange="slotSet(${p},${s},'bit',this.value)">${opt(T.map((x,i)=>[i,x.bt]),c.bit)}</select></label></div>`;
-  }
-  return `<div class="slot">${st.m.mode==='tournoi'?`<div class="sl">Toupie ${s+1}</div>`:''}${sw}${body}<div class="prv">${img(r.img,'sm')}<div><b>${r.name}</b><div class="mut prm">${typ(r.ty)}<span>${r.w?r.w+' g':''}</span></div></div></div></div>`;
+  const c=st.m.p[p][s], lab=st.m.mode==='tournoi'?`<div class="sl">Toupie ${s+1}</div>`:'';
+  if(!c||c.mode==='none') return `<div class="slot">${lab}<button class="slotadd" onclick="pkOpen(${p},${s})"><span>+</span> Ajouter une toupie</button></div>`;
+  const r=resolve(c), pcs=r.pc.filter(Boolean).map(esc).join(' · ');
+  return `<div class="slot">${lab}<div class="prv">${img(r.img,'sm')}<div class="grow"><b>${esc(r.name)}</b><div class="mut prm">${typ(r.ty)}<span>${r.w?r.w+' g':''}</span></div><div class="mut pcl">${pcs}</div></div><button class="chip" onclick="pkOpen(${p},${s},1)">Changer</button></div></div>`;
 }
+/* ===== Page « Choisir une toupie » : collection + catalogue dans une seule liste ===== */
+let PK=null;
+const pkNorm=x=>String(x||'').toLowerCase();
+function pkOpen(p,s,edit){
+  PK={p,s,q:'',t:null};
+  const c=st.m.p[p][s];
+  if(edit&&c&&c.mode!=='none'){ const t=JSON.parse(JSON.stringify(c));
+    if(t.mode==='stock'){ if(t.src==='cat'){ const x=CAT[t.cg]; if(x){ t.cb=x.e+'|'+x.b; t.cr=x.r||''; t.ci=x.bi||''; t._b=[t.cb,t.cr,t.ci]; } } else { const x=T[t.stock]; if(x){ t.blade=t.stock; t.ratchet=x.r?t.stock:-1; t.bit=t.stock; t._b=[t.blade,t.ratchet,t.bit]; } } }
+    PK.t=t; }
+  let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden'; pkDraw();
+}
+function pkDraw(){
+  const f=document.getElementById('fm'); if(!f||!PK) return;
+  const who=esc(st.m.names[PK.p]||'')+(st.m.mode==='tournoi'?' · '+LT('Toupie')+' '+(PK.s+1):'');
+  if(PK.t){ f.innerHTML=pkStep2(who); return; }
+  f.innerHTML=`<div class="fwrap pkw"><div class="fh"><h2>Choisir une toupie</h2><button class="chip sq" onclick="pkClose()" aria-label="Fermer">✕</button></div>
+    <div class="mut pkwho">${who}</div>
+    <label class="search pks">${IC.search}<input id="pk_q" type="search" placeholder="Chercher…" value="${esc(PK.q)}" oninput="pkQ(this.value)" autocomplete="off"></label>
+    <div id="pk_l">${pkList()}</div></div>`;
+  const q=document.getElementById('pk_q'); if(q&&!PK.q) setTimeout(()=>{ try{ q.focus({preventScroll:true}); }catch(e){} },60);
+}
+function pkQ(v){ PK.q=v; const l=document.getElementById('pk_l'); if(l) l.innerHTML=pkList(); }
+function pkOk(txt,q){ const w=pkNorm(q).split(/\s+/).filter(Boolean), h=pkNorm(txt); return w.every(x=>h.includes(x)); }
+function pkRow(kind,i,name,im,ty,w,tag){ return `<button class="pkr" onclick="pkPick('${kind}',${i})">${img(im,'sm')}<span class="pkn"><b>${esc(name)}</b><small>${typ(ty)}${w?' <i>'+w+' g</i>':''}</small></span>${tag?`<em>${esc(tag)}</em>`:''}</button>`; }
+function pkList(){
+  const q=PK.q.trim(), own=T.map((x,i)=>({x,i})).filter(o=>!q||pkOk(o.x.n+' '+o.x.b+' '+(o.x.r||'')+' '+o.x.bt,q));
+  let h=own.length?`<div class="fs">${LT('Ma collection')}</div>`+own.map(o=>pkRow('own',o.i,o.x.n,(PH[o.x.n]||{}).blade,o.x.t,o.x.tot,'')).join(''):'';
+  if(CAT.length){
+    if(!q) h+=`<div class="fs">${LT('Catalogue')}</div><div class="mut note">${LT('Tape un nom pour chercher dans le catalogue.')}</div>`;
+    else{
+      const ed=x=>x.e==='tt'?'Takara Tomy':'Hasbro', m=CAT.map((x,i)=>({x,i})).filter(o=>pkOk(o.x.n+' '+o.x.b+' '+(o.x.r||'')+' '+o.x.bi,q));
+      h+=`<div class="fs">${LT('Catalogue')}</div>`+(m.length?m.slice(0,40).map(o=>{ if(o.x.ib) IM[o.x.ib]=o.x.ib; return pkRow('cat',o.i,o.x.n,o.x.ib,o.x.t,Math.round(((+o.x.wb||0)+(+o.x.wr||0)+(+o.x.wbt||0))*10)/10,ed(o.x)); }).join('')+(m.length>40?`<div class="mut note">${LT('Affine ta recherche pour voir les autres.')}</div>`:''):`<div class="mut note">${LT('Rien dans le catalogue.')}</div>`);
+    }
+  }
+  return h||`<div class="mut note">${LT('Rien trouvé.')}</div>`;
+}
+function pkPick(kind,i){
+  if(kind==='own'){ const x=T[i]; PK.t={mode:'stock',src:'own',stock:i,blade:i,ratchet:x.r?i:-1,bit:i,cg:-1,cb:'',cr:'',ci:'',_b:[i,x.r?i:-1,i]}; }
+  else{ const x=CAT[i]; PK.t={mode:x.bi?'stock':'custom',src:'cat',stock:0,blade:0,ratchet:-1,bit:0,cg:i,cb:x.e+'|'+x.b,cr:x.r||'',ci:x.bi||''}; if(x.bi) PK.t._b=[x.e+'|'+x.b,x.r||'',x.bi]; }
+  pkDraw();
+}
+function pkPartSel(k,v){ const t=PK.t; if(!t) return; if(t.src==='cat'){ t[['cb','cr','ci'][k]]=v; } else { t[['blade','ratchet','bit'][k]]=+v; } t.mode='custom'; pkDraw(); }
+function pkChanged(t){ const b=t._b; if(!b) return true; const cur=t.src==='cat'?[t.cb,t.cr,t.ci]:[t.blade,t.ratchet,t.bit]; return cur.some((v,k)=>v!==b[k]); }
+function pkStep2(who){
+  const t=PK.t; let sel;
+  if(t.src==='cat'){
+    const P=cptBuild(), ed=x=>x.e==='tt'?'Takara Tomy':'Hasbro';
+    const bl=Object.values(P.B).sort(cpSort).map(x=>[x.k,x.n+' · '+ed(x)]), rl=Object.values(P.R).sort(cpSort).map(x=>[x.n,x.n]), il=Object.values(P.I).sort(cpSort).map(x=>[x.n,x.n]);
+    sel=`<div class="g3"><label>Blade<select onchange="pkPartSel(0,this.value)">${opt([['',LT('Choisir…')]].concat(bl),t.cb||'')}</select></label><label>Ratchet<select onchange="pkPartSel(1,this.value)">${opt([['','Aucun']].concat(rl),t.cr||'')}</select></label><label>Bit<select onchange="pkPartSel(2,this.value)">${opt([['',LT('Choisir…')]].concat(il),t.ci||'')}</select></label></div><div class="mut note">${LT("Catalogue : rien n'est ajouté à ta collection.")}</div>`;
+  }else{
+    sel=`<div class="g3"><label>Blade<select onchange="pkPartSel(0,this.value)">${opt(T.map((x,i)=>[i,x.l+' '+x.b]),t.blade)}</select></label><label>Ratchet<select onchange="pkPartSel(1,this.value)">${opt([[-1,'Aucun'],...RA.map(i=>[i,T[i].r])],t.ratchet)}</select></label><label>Bit<select onchange="pkPartSel(2,this.value)">${opt(T.map((x,i)=>[i,x.bt]),t.bit)}</select></label></div>`;
+  }
+  const r=resolve(t), ok=t.src==='cat'?(t.mode==='stock'||!!(t.cb&&t.ci)):true;
+  return `<div class="fwrap pkw"><div class="fh"><h2>Choisir une toupie</h2><button class="chip sq" onclick="pkClose()" aria-label="Fermer">✕</button></div>
+    <div class="mut pkwho">${who}</div>
+    <div class="prv pkprv">${img(r.img,'sm')}<div class="grow"><b>${esc(r.name)}</b><div class="mut prm">${typ(r.ty)}<span>${r.w?r.w+' g':''}</span></div></div></div>
+    <div class="fhelp">${LT('Tu peux changer les pièces ou garder celles-ci.')}</div>${sel}
+    <div class="fact"><button class="go sm" onclick="pkSave()" ${ok?'':'disabled'}>${LT('Choisir cette toupie')}</button><button class="chip" onclick="pkBack()">${LT('Retour')}</button></div></div>`;
+}
+function pkBack(){ if(PK){ PK.t=null; pkDraw(); } }
+function pkSave(){
+  if(!PK||!PK.t) return; const t=JSON.parse(JSON.stringify(PK.t));
+  if(t.src==='cat'&&t.mode==='custom'&&!(t.cb&&t.ci)) return;
+  t.mode=(t._b&&!pkChanged(t))?'stock':'custom';
+  delete t._b; st.m.p[PK.p][PK.s]=t; pkClose(); drawMatch();
+}
+function pkClose(){ PK=null; const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
 function matchUI(){
   const M=st.m;
   if(M.mode==='bracket') return '<div class="top">'+'<div class="frame f3">'+[['simple','Match simple'],['tournoi','Match 3v3'],['bracket','Tournoi']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div></div>'
@@ -1176,7 +1236,7 @@ function matchUI(){
   const rules=`<div class="rules"><label>Premier à<select onchange="mSet('target',+this.value)">${opt([3,4,5,7,10].map(v=>[v,v+' points']),M.target)}</select></label><label>Série<select onchange="mSet('bo',+this.value)">${opt([[1,'Match unique'],[3,'BO3'],[5,'BO5'],[7,'BO7']],M.bo||1)}</select></label></div>`;
   const note=M.mode==='tournoi'?'<div class="mut note">3 toupies par joueur, une par round, chacune une seule fois. Fin après 3 rounds ou au score.</div>':'';
   const players=[0,1].map(p=>`<div class="pcard p${p}" style="--pc:${PCOL[p]}"><input class="nm" value="${esc(M.names[p])}" oninput="st.m.names[${p}]=this.value" aria-label="Nom du joueur ${p+1}">${Array.from({length:n},(_,s)=>slotUI(p,s)).join('')}</div>`).join('');
-  return '<div class="top">'+modes+rules+'</div>'+note+'<div class="pls">'+players+'</div>'+`<div class="act"><div class="opts"><label><input type="checkbox" ${st.son?'checked':''} onchange="st.son=this.checked"> Son</label></div><button class="go" onclick="startMatch()">Lancer le match</button></div>`+histUI(M.mode);
+  return '<div class="top">'+modes+rules+'</div>'+note+'<div class="pls">'+players+'</div>'+(slotsOk()?'':`<div class="mut note nsl">Ajoute une toupie à chaque emplacement pour lancer le match.</div>`)+`<div class="act"><div class="opts"><label><input type="checkbox" ${st.son?'checked':''} onchange="st.son=this.checked"> Son</label></div><button class="go" onclick="startMatch()" ${slotsOk()?'':'disabled'}>Lancer le match</button></div>`+histUI(M.mode);
 }
 
 const fmt=ms=>{const t=Math.floor(ms/100),s=Math.floor(t/10);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')+'.'+(t%10);};
@@ -1186,7 +1246,9 @@ const xbtn='<button class="x" onclick="askQuit()" aria-label="Quitter">✕</butt
 function stopTimer(){ clearInterval(tmr); tmr=null; }
 function startTimer(){ stopTimer(); tmr=setInterval(()=>{const e=document.getElementById('tm'); if(e&&G) e.textContent=fmt(Date.now()-G.t0);},100); }
 
+function slotsOk(){ const n=st.m.mode==='tournoi'?3:1; return [0,1].every(p=>[...Array(n).keys()].every(k=>st.m.p[p][k]&&st.m.p[p][k].mode!=='none')); }
 function startMatch(){
+  if(!slotsOk()) return;
   try{ ctx(); }catch(e){}
   const M=JSON.parse(JSON.stringify(st.m)),tour=M.mode==='tournoi';
   stopTimer(); run++;
@@ -1547,7 +1609,8 @@ function hSave(a){ try{ localStorage.setItem(HKEY,JSON.stringify(a.slice(0,300))
 function histAdd(){
   try{
     const names=[0,1].map(p=>(G.tour?G.used[p]:[G.cur[p]]).map(sl=>resolve(G.M.p[p][sl]).name));
-    const rec={id:Date.now(),cat:G.tour?'tournoi':'simple',n:[G.M.names[0],G.M.names[1]],b:names,s:[G.score[0],G.score[1]],tg:G.M.target,bo:G.bo>1?G.bo:0,mn:G.mn,r:G.hist.length,w:G.score[0]>G.score[1]?0:G.score[1]>G.score[0]?1:-1};
+    const pcs=[0,1].map(p=>(G.tour?G.used[p]:[G.cur[p]]).map(sl=>resolve(G.M.p[p][sl]).pc.filter(Boolean).join(' · ')));
+    const rec={id:Date.now(),pc:pcs,cat:G.tour?'tournoi':'simple',n:[G.M.names[0],G.M.names[1]],b:names,s:[G.score[0],G.score[1]],tg:G.M.target,bo:G.bo>1?G.bo:0,mn:G.mn,r:G.hist.length,w:G.score[0]>G.score[1]?0:G.score[1]>G.score[0]?1:-1};
     const a=hLoad(); a.unshift(rec); hSave(a); G.hid=rec.id;
   }catch(e){}
 }
@@ -1558,7 +1621,7 @@ function histUI(cat){
   const when=id=>{ const d=new Date(id); return d.toLocaleDateString(LOC,{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString(LOC,{hour:'2-digit',minute:'2-digit'}); };
   const rows=L.slice(0,40).map(r=>{
     const w=r.w,nm=i=>`<span class="hn ${w===i?'hw':''}" style="color:${i?'var(--pink)':'var(--pa)'}">${esc(r.n[i])}</span>`;
-    return `<div class="hr"><div class="hd mut">${when(r.id)} · ${r.r} round${r.r>1?'s':''} · à ${r.tg}${r.bo?' · BO'+r.bo+' · M'+r.mn:''}</div><div class="hm">${nm(0)}<b class="hsc">${r.s[0]} – ${r.s[1]}</b>${nm(1)}</div><div class="hs mut">${r.b[0].map(esc).join(' · ')} <i>vs</i> ${r.b[1].map(esc).join(' · ')}</div>${w<0?'<div class="mut">Égalité</div>':''}</div>`;
+    return `<div class="hr"><div class="hd mut">${when(r.id)} · ${r.r} round${r.r>1?'s':''} · à ${r.tg}${r.bo?' · BO'+r.bo+' · M'+r.mn:''}</div><div class="hm">${nm(0)}<b class="hsc">${r.s[0]} – ${r.s[1]}</b>${nm(1)}</div>${r.pc?`<div class="hs mut hpc"><div style="color:var(--pa)">${r.pc[0].map(esc).join(' | ')}</div><div style="color:var(--pink)">${r.pc[1].map(esc).join(' | ')}</div></div>`:`<div class="hs mut">${r.b[0].map(esc).join(' · ')} <i>vs</i> ${r.b[1].map(esc).join(' · ')}</div>`}${w<0?'<div class="mut">Égalité</div>':''}</div>`;
   }).join('');
   return `<div class="pcard hist"><div class="hh"><div class="sl">Historique · ${title}</div>${L.length?`<button class="chip" onclick="histClear('${cat}')">Vider</button>`:''}</div>${L.length?`<div class="mut">${L.length} match${L.length>1?'s':''} terminé${L.length>1?'s':''}</div>${rows}`:'<div class="mut">Aucun match pour l\'instant. Termine un match pour le retrouver ici.</div>'}</div>`;
 }
