@@ -12,7 +12,7 @@
 .wlc{backdrop-filter:blur(3px)}.wlc>div{width:min(100%,320px);display:grid;gap:var(--sp-3);text-align:center;padding:var(--sp-4);background:var(--surface);color:var(--text);border:1px solid var(--frame);border-top:3px solid var(--accent);clip-path:var(--poly-l,none)}
 .wlc h2{margin:0;font:var(--fw-bold) var(--fs-lg)/1.2 var(--font);text-transform:uppercase;letter-spacing:.1em;display:flex;align-items:center;justify-content:center;gap:10px}.wlc h2:before{content:'';width:10px;height:10px;background:var(--accent);clip-path:var(--poly-s);box-shadow:0 0 10px var(--glow)}
 .wlc .go,.wlc .nm{margin:0;width:100%;text-align:center}.wlc .lnk{background:none;border:0;color:var(--mut,var(--text));font:inherit;font-size:var(--fs-sm);text-decoration:underline;cursor:pointer;justify-content:center}.wlc #bkmsg{font-size:var(--fs-sm)}.wlc #bkmsg:empty{display:none}
-.avrow{display:flex;align-items:center;gap:var(--sp-3)}.avcur{width:52px;height:52px;border-radius:50%;overflow:hidden;flex:none;border:2px solid var(--accent);display:grid;place-items:center;background:var(--surface);color:var(--accent);font:var(--fw-bold) 20px var(--font)}.avcur img{width:100%;height:100%;display:block}.avcur i{font-style:normal}.avg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:100%}.avbox{width:min(100%,340px);max-height:90vh;overflow:auto}.wlc>.avbox{gap:var(--sp-3)}.avo{aspect-ratio:1;border:2px solid transparent;border-radius:50%;padding:0;background:var(--surface);cursor:pointer;overflow:hidden}.avo img{width:100%;height:100%;display:block;border-radius:50%}.avo.on{border-color:var(--accent);box-shadow:0 0 10px var(--glow)}
+.avrow{display:flex;align-items:center;gap:var(--sp-3)}.avcur{width:52px;height:52px;border-radius:50%;overflow:hidden;flex:none;border:2px solid var(--accent);display:grid;place-items:center;background:var(--surface);color:var(--accent);font:var(--fw-bold) 20px var(--font)}.avcur img{width:100%;height:100%;display:block}.avcur i{font-style:normal}.avg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%}.avbox{width:min(100%,340px);max-height:90vh;overflow:auto}.wlc>.avbox{gap:var(--sp-3)}.avo{aspect-ratio:1;border:2px solid transparent;border-radius:50%;padding:0;background:var(--surface);cursor:pointer;overflow:hidden}.avo img{width:100%;height:100%;display:block;border-radius:50%}.avo.on{border-color:var(--accent);box-shadow:0 0 10px var(--glow)}
 /* ===== Accueil ===== */
 body.ishome .hdr,body.ishome .sub,body.ishome #ctl{display:none}
 .hmx{display:flex;flex-direction:column;gap:var(--sp-3);padding:var(--sp-3) var(--sp-4) 0;max-width:430px;margin:0 auto}
@@ -1104,7 +1104,7 @@ function backupImport(inp){
       for(const o0 of (Array.isArray(d.toupies)?d.toupies:[])){ const o=cClean(o0); if(!o||cErr(o).length) continue; const nm=nmOf(o); if(have.some(x=>x.id===o.id)||names.has(nm)) continue; for(const [f,k] of PHF){ if(typeof o[f]==='string'&&o[f].indexOf('data:')===0) o[f]=await pStore(o.id,k,o[f]); else if(!(typeof o[f]==='string'&&o[f].indexOf('photos/')===0)) delete o[f]; } have.push(o); names.add(nm); addT++; }
       if(Array.isArray(d.masquees)){ const hd=hdLoad(); d.masquees.slice(0,2000).forEach(k=>{ if(typeof k==='string'&&k.length<80&&!hd.includes(k)) hd.push(k); }); hdSave(hd); }
       if(d.reglages&&typeof d.reglages==='object'){ const rg=d.reglages; if(rg.theme==='futur'||rg.theme==='futurl') setTheme(rg.theme); if(typeof rg.bg==='string'&&BGS[rg.bg]) setBg(rg.bg); }
-      if(d.profil&&typeof d.profil==='object'&&ss(d.profil.n,20)&&!PRF.n){ PRF.n=ss(d.profil.n,20); if(sid(d.profil.id)) PRF.id=sid(d.profil.id); PRF.hn=PRF.n; if(/^a(0[1-9]|1\d|20)$/.test(d.profil.av)) PRF.av=d.profil.av; pfSave(); }
+      if(d.profil&&typeof d.profil==='object'&&ss(d.profil.n,20)&&!PRF.n){ PRF.n=ss(d.profil.n,20); if(sid(d.profil.id)) PRF.id=sid(d.profil.id); PRF.hn=PRF.n; if(/^a(0[1-9]|1[0-6])$/.test(d.profil.av)) PRF.av=d.profil.av; pfSave(); }
       if(d.amis&&typeof d.amis==='object'&&!Array.isArray(d.amis)){ const F=fLoad(); Object.keys(d.amis).forEach(k=>{ const i=sid(k), f=i&&i===k?fClean(d.amis[k],i):null; if(f&&!F[i]) F[i]=f; }); fSave(F); }
       const hs=hLoad(); (Array.isArray(d.historique)?d.historique:[]).forEach(h0=>{ const h=hClean(h0); if(h&&h.id&&!hs.some(x=>x.id===h.id)){ hs.push(h); addH++; } }); hs.sort((a,b)=>b.id-a.id);
       if(!cSave(have)) { bkMsg('Pas assez de place pour tout importer.'); return; } hSave(hs);
@@ -1324,7 +1324,7 @@ const RA=T.map((x,i)=>x.r?i:-1).filter(i=>i>=0);
 const mk=()=>({mode:'none'});
 /* ===== Profil du joueur (propriétaire de l'appareil) ===== */
 const PKEY='arene_profil';
-let PRF=(()=>{ let r={}; try{ r=JSON.parse(localStorage.getItem(PKEY)||'{}')||{}; }catch(e){} if(typeof r!=='object'||Array.isArray(r)) r={}; return {n:ss(r.n,20),hn:ss(r.hn,20),id:sid(r.id),al:Array.isArray(r.al)?r.al.slice(0,20).map(x=>ss(x,20)).filter(Boolean):[],rst:nn(r.rst),av:/^a(0[1-9]|1\d|20)$/.test(r.av)?r.av:''}; })();
+let PRF=(()=>{ let r={}; try{ r=JSON.parse(localStorage.getItem(PKEY)||'{}')||{}; }catch(e){} if(typeof r!=='object'||Array.isArray(r)) r={}; return {n:ss(r.n,20),hn:ss(r.hn,20),id:sid(r.id),al:Array.isArray(r.al)?r.al.slice(0,20).map(x=>ss(x,20)).filter(Boolean):[],rst:nn(r.rst),av:/^a(0[1-9]|1[0-6])$/.test(r.av)?r.av:''}; })();
 function pfSave(){ try{ localStorage.setItem(PKEY,JSON.stringify(PRF)); }catch(e){} }
 if(!PRF.id){ try{ PRF.id=Array.from(crypto.getRandomValues(new Uint8Array(7))).map(b=>b.toString(36).padStart(2,'0')).join(''); }catch(e){ PRF.id=Math.random().toString(36).slice(2,12); } pfSave(); }
 const nz=s=>String(s||'').trim().toLowerCase();
@@ -1348,7 +1348,7 @@ const stShare=()=>[undefined,'simple','tournoi'].map(c=>{ const S=pfStats(null,c
 let PFC='';
 const catSeg=(cur,fn)=>'<div class="frame f3 cseg">'+[['','Tout'],['simple','Simple'],['tournoi','3v3']].map(([v,l])=>`<button class="${cur===v?'on':''}" onclick="${fn}'${v}')"><span>${l}</span></button>`).join('')+'</div>';
 function pfCat(v){ PFC=v; draw(); }
-const AVN=20, avSrc=a=>'avatars/'+a+'.webp';
+const AVN=16, avSrc=a=>'avatars/'+a+'.webp';
 function avClose(){ const e=document.getElementById('avp'); if(e) e.remove(); }
 function pfAv(a){ PRF.av=PRF.av===a?'':a; pfSave(); avClose(); draw(); }
 function avPick(){ avClose(); let o=''; for(let i=1;i<=AVN;i++){ const a='a'+String(i).padStart(2,'0'); o+=`<button class="avo${PRF.av===a?' on':''}" onclick="pfAv('${a}')" aria-pressed="${PRF.av===a}" aria-label="Avatar ${i}"><img src="${avSrc(a)}" alt=""></button>`; }
