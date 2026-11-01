@@ -1,6 +1,6 @@
 # Beybey · Arène Beyblade
 
-Appli web de fan pour **Beyblade X** : collection de toupies, calculateur de build, matchs 3v3 avec historique.
+Appli web de fan pour **Beyblade X** : collection de toupies, calculateur de build, matchs simples et 3v3 avec historique, profil et stats, partage par QR code entre amis.
 
 **Volontairement minimaliste : tu ouvres, tu rentres tes toupies, tu joues, c'est tout.** Pas de compte, pas de shop, pas de news, pas de pub.
 
@@ -12,7 +12,8 @@ Appli web de fan pour **Beyblade X** : collection de toupies, calculateur de bui
 
 - Fait avec l'IA : des bugs sont possibles.
 - Stats du dos des boîtes, poids approximatifs.
-- Tout est stocké **en local** sur ton appareil. **Sauvegarde régulièrement** : *Options > Exporter* (toupies, photos, historique), *Options > Importer* pour restaurer.
+- Tout est stocké **en local** sur ton appareil. **Sauvegarde régulièrement** : *Options > Exporter* (toupies, photos, historique, profil, amis), *Options > Importer* pour restaurer.
+- Le partage entre amis se fait par **QR code ou lien**, sans compte ni serveur : les données sont dans le QR lui-même.
 
 ## Installer sur téléphone
 

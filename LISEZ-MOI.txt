@@ -1,9 +1,12 @@
-BEYBEY (Arène Beyblade) — mode d'emploi — build 0.51
-====================================================
+BEYBEY (Arène Beyblade) — mode d'emploi — version 1.0
+=====================================================
 
 Contenu du dossier
   index.html        la page (ne pas toucher)
   data.js           toupies de départ (vide, facultatif)
+  catalogue.js      la liste des toupies Hasbro et Takara Tomy (voir CATALOGUE plus bas)
+  lib/              deux petites bibliothèques pour les QR codes (création et lecture caméra)
+  sw.js             le mode hors ligne (le site s'ouvre sans internet après une première visite)
   photos/           les photos du catalogue (photos/cat) et tes éventuelles photos de data.js
   sons/             les sons du match (ne pas toucher)
   manifest.json, icon-192.png, icon-512.png, apple-touch-icon.png
@@ -16,12 +19,38 @@ Les onglets
   Toupies   ta collection et les pièces (blades, ratchets, bits). Recherche, tri A→Z / 1→9, fiche détaillée.
   Build     compose deux builds et compare-les. Le gagnant de chaque ligne prend la couleur de son camp
             (vert A, rose B), les égalités sont grisées, la toupie la plus lourde gagne sur le poids.
-  Match     lance un match : Match simple (1 toupie par joueur) ou Match 3v3 (3 chacun, une par round).
+  Match     lance un match : Simple (1 toupie par joueur) ou 3v3 (3 chacun, une par round).
             Spin Finish 1 point, Over Finish 2, Burst Finish 2, Xtreme Finish 3. Premier à 4 par défaut.
             La croix quitte le match en cours (avec confirmation, le match n'est pas enregistré).
-            L'historique des matchs terminés est sous le bouton "Lancer le match", par catégorie.
-            La catégorie Tournoi arrive plus tard.
-  Options   thème (Sombre / Clair), fond (Grille / Hexagones / Particules), sauvegarde et notice.
+            Le bouton "Lancer le match" reste visible en bas de l'écran.
+            Sous ce bouton, la carte Historique montre les 5 derniers matchs. "Ouvrir" (ou "Tout voir") affiche
+            la page complète : onglets Global, Simple et 3v3, stats, liste défilante, boutons Scanner,
+            Partager la session et Vider (avec confirmation). 300 matchs maximum sont gardés.
+            L'onglet Tournoi arrive plus tard.
+  Options   ton profil et tes amis, sauvegarde, langue, son, thème (Sombre / Clair), fond d'écran, notice.
+
+Profil et stats (Options > Mon profil)
+  Entre ton nom : il devient le joueur 1 de tous tes matchs. Tes stats (matchs, victoires, défaites, réussite,
+  toupie la plus jouée) se calculent depuis l'historique, au choix Tout, Simple ou 3v3.
+  Si tu changes le nom du joueur 1 dans l'onglet Match, le match passe en "invité" : il ne compte pas dans tes stats.
+  Un bouton te ramène à ton profil. "Remettre mes stats à zéro" garde l'historique mais ne compte plus les matchs passés.
+  Ton profil a aussi un identifiant caché, créé tout seul : c'est lui qui te reconnaît chez tes amis, même si tu changes de pseudo.
+
+Partage par QR code (sans compte, sans serveur)
+  Tout passe par un QR code ou un lien. Il contient les données elles-mêmes : rien n'est stocké en ligne.
+  - Une toupie ou un deck : bouton Partager sous un joueur. Ton ami touche Scanner et peut "Jouer avec"
+    (sans toucher à sa collection ni à ses stats) ou l'ajouter à sa collection. Seules les toupies faites
+    avec des pièces du catalogue se partagent.
+  - Une session : après un match (bouton Partager) ou dans l'historique (Partager la session). Un seul QR pour
+    plusieurs joueurs. Chacun le scanne, Beybey le reconnaît (par identifiant, puis par nom, puis par anciens
+    pseudos) et n'ajoute que SES matchs, vus de son côté, avec ses stats. Scanner deux fois ne crée pas de doublons.
+    Si Beybey ne te reconnaît pas, l'écran "Qui es-tu ?" te laisse choisir ton nom dans le QR.
+  - Ta fiche ami : Options > Amis > Mon QR. Ton ami la scanne et te retrouve dans sa liste.
+  Le QR de session est limité en taille pour rester lisible à la caméra : il garde les matchs les plus récents.
+
+Amis (Options > Amis)
+  Liste d'amis avec recherche, et pour chacun une fiche : une note (ex. "Kevin du lycée"), tes résultats contre lui
+  (Tout, Simple, 3v3) et ses stats au moment du dernier scan. Retirer un ami demande une confirmation.
 
 Ajouter une toupie dans l'appli (le plus simple)
   1. Onglet Toupies, bouton "+ Ajouter une toupie".
@@ -45,7 +74,7 @@ Ajouter une toupie dans data.js (autre méthode, pour tout le monde)
   Il ajoutera ensuite ses toupies avec le formulaire.
 
 Sauvegarde (Options > Mes données)
-  Les toupies ajoutées dans l'appli, l'historique des matchs et les réglages sont gardés uniquement sur l'appareil
+  Les toupies ajoutées dans l'appli, l'historique des matchs, ton profil, tes amis et les réglages sont gardés uniquement sur l'appareil
   (dans le navigateur). Rien n'est envoyé en ligne.
   - Sur iPhone, Safari et l'icône de l'écran d'accueil ne partagent rien : joue toujours depuis l'icône.
   - Les données peuvent disparaître si tu vides les données du site ou si tu supprimes l'icône.
