@@ -6,7 +6,24 @@
 <title>Beybey · Arène Beyblade</title>
 <meta name="description" content="Beybey : ta collection Beyblade X, des comparaisons de builds et des matchs entre amis. Projet de fan, gratuit, tout reste sur ton appareil.">
 <meta property="og:title" content="Beybey · Arène Beyblade"><meta property="og:description" content="Collection, builds et matchs Beyblade X. Projet de fan, données gardées sur ton appareil."><meta property="og:image" content="https://bqni.github.io/beybey/icon-512.png"><meta property="og:type" content="website">
-<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/chakra-petch-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/chakra-petch-latin-500-normal.woff2) format('woff2')}@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/chakra-petch-latin-600-normal.woff2) format('woff2')}@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/chakra-petch-latin-700-normal.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-latin-500-normal.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-600-normal.woff2) format('woff2')}</style>
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/chakra-petch-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/chakra-petch-latin-500-normal.woff2) format('woff2')}@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/chakra-petch-latin-600-normal.woff2) format('woff2')}@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/chakra-petch-latin-700-normal.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-latin-500-normal.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-600-normal.woff2) format('woff2')}
+/* ===== Accueil ===== */
+body.ishome .hdr,body.ishome .sub,body.ishome #ctl{display:none}
+.hmx{display:flex;flex-direction:column;gap:var(--sp-3);padding:var(--sp-3) var(--sp-4) 0;max-width:430px;margin:0 auto}
+.hm-top{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);min-height:44px}
+.hm-logo{font:var(--fw-bold) var(--fs-lg)/1 var(--font);letter-spacing:.16em}
+.hm-r{display:flex;align-items:center;gap:var(--sp-2)}
+.hm-pill{height:40px;padding:0 var(--sp-3);border:1px solid var(--frame);background:var(--surface);color:var(--accent);font:var(--fw-semi) var(--fs-sm) var(--font);letter-spacing:.06em;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;clip-path:var(--poly-s,none)}
+.hm-ic{width:44px;height:40px;display:grid;place-items:center;border:1px solid var(--frame);background:var(--surface);color:var(--text);clip-path:var(--poly-s,none)}
+.hm-arena{display:grid;place-items:center}
+#hstg{display:block;width:min(100%,380px,46vh);aspect-ratio:1/1}
+.hm-go{width:100%;height:60px;font-size:var(--fs-xl);letter-spacing:.2em}
+.hm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2)}
+.hmb{height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid var(--frame);background:var(--surface);color:var(--text);font:var(--fw-semi) var(--fs-sm) var(--font);letter-spacing:.06em;text-transform:uppercase;clip-path:var(--poly-s,none);padding:0 4px}
+.hmb small{font-size:10px;letter-spacing:.02em;text-transform:none;color:var(--muted,var(--text));opacity:.7;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hmb:active,.hm-ic:active,.hm-pill:active,.hm-go:active{transform:scale(.97);filter:brightness(1.25)}
+@media (max-height:700px){.hm-go{height:52px}.hmb{height:50px}}
+</style>
 <script>var t="futur";try{var L=localStorage;if(L.getItem("theme")===null&&L.getItem("bg")===null&&!L.getItem("arene_hist")&&!L.getItem("arene_custom")&&!L.getItem("arene_profil")){t="futurl";L.setItem("theme","futurl");L.setItem("bg","sparks")}else t=L.getItem("theme")||"futur"}catch(e){}if(t!=="futurl")t="futur";document.documentElement.dataset.theme=t;try{if(localStorage.getItem("zoom")==="1")document.querySelector("meta[name=viewport]").content="width=device-width, initial-scale=1, viewport-fit=cover"}catch(e){}</script>
 <style>
 /* ===== Design tokens ===== */
@@ -592,6 +609,7 @@ Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat"
 Object.assign(I18N.TXT,{"Aucun":"None"});
 Object.assign(I18N.TXT,{"Partager": "Share", "Choisis d'abord une toupie complète.": "Pick a complete Bey first.", "Cette toupie contient une pièce absente du catalogue : elle ne peut pas encore être partagée par QR.": "This Bey has a part that is not in the catalog: it can't be shared by QR yet.", "Impossible de créer le QR sur cet appareil.": "Can't create the QR on this device.", "Partager mon deck": "Share my deck", "Partager ma toupie": "Share my Bey", "Ton ami ouvre Beybey, va dans Match et touche Scanner.": "Your friend opens Beybey, goes to Match and taps Scan.", "Ajoute ton nom dans Options pour qu'il s'affiche chez lui.": "Add your name in Options so it shows up on their phone.", "Envoyer le lien": "Send the link", "Fermer": "Close", "Lien copié": "Link copied", "Colle-le dans un message.": "Paste it in a message.", "Scanner un QR": "Scan a QR", "Vise le QR de ton ami.": "Aim at your friend's QR.", "Impossible de charger le lecteur de QR (connexion ?).": "Can't load the QR reader (connection?).", "La caméra n'est pas disponible ici.": "The camera isn't available here.", "Caméra refusée. Autorise-la dans les réglages de l'iPhone pour scanner.": "Camera denied. Allow it in the iPhone settings to scan.", "QR non reconnu": "QR not recognised", "Ce QR ne vient pas de Beybey.": "This QR doesn't come from Beybey.", "Une pièce de cette toupie est absente de ton catalogue.": "A part of this Bey is missing from your catalog.", "Invité": "Guest", "Deck reçu": "Deck received", "Toupie reçue": "Bey received", "De": "From", "« Jouer avec » ne touche pas à ta collection ni à tes stats.": "“Play with” doesn't touch your collection or your stats.", "Jouer avec": "Play with", "Ajouter à ma collection": "Add to my collection", "Tu as déjà tout ça dans ta collection.": "You already have all of this in your collection.", "Pas assez de place pour enregistrer.": "Not enough space to save.", "Ajouté à ta collection.": "Added to your collection.", "Scanner": "Scan"});
 Object.assign(I18N.TXT,{"Mon profil":"My profile","Ton nom":"Your name","Matchs":"Matches","Victoires":"Wins","Défaites":"Losses","Réussite":"Win rate","Toupie la plus jouée":"Most played Bey","Apparence":"Appearance","Fond d'écran":"Wallpaper","Historique":"History","Les stats comptent seulement tes matchs (pas ceux joués en invité).":"Stats only count your own matches (not guest games).","Entre ton nom dans Options pour compter tes stats.":"Enter your name in Options to count your stats.","Toupie la plus jouée ici :":"Most played Bey here:","Tout voir":"See all","Chercher un ami…":"Search a friend…","Chercher":"Search","Remettre mes stats à zéro":"Reset my stats","Liste d'amis":"Friends list","Note (ex. : Kevin du lycée)":"Note (e.g. Kevin from school)","Note":"Note","Toi contre":"You vs","Ses stats":"Their stats","au scan du":"at scan of","Scanne sa toupie pour voir ses stats.":"Scan their Bey to see their stats.","Amis":"Friends","Scanne la toupie d'un pote pour l'ajouter ici.":"Scan a friend's Bey to add them here.","les plus récents":"most recent","Chaque joueur ouvre Beybey, va dans Match, touche Scanner et vise ce QR. Il récupère seulement ses matchs.":"Each player opens Beybey, goes to Match, taps Scan and aims at this QR. They only get their own matches.","Qui es-tu ?":"Who are you?","Ton nom ne figure pas dans ce QR. Touche le tien :":"Your name isn't in this QR. Tap yours:","avec toi":"with you","Aucun match avec toi.":"No match with you.","Ce n'est pas moi":"That's not me","Aucun match à partager.": "No match to share.", "Partager la session": "Share the session", "contre": "vs", "Ton adversaire ouvre Beybey, va dans Match, touche Scanner et vise ce QR.": "Your opponent opens Beybey, goes to Match, taps Scan and aims at this QR.", "Page": "Page", "il doit scanner chaque page.": "they must scan every page.", "Page suivante": "Next page", "Résultats reçus": "Results received", "Ils seront ajoutés à ton historique, de ton point de vue, et comptés dans tes stats.": "They will be added to your history, from your point of view, and counted in your stats.", "Ajouter à mon historique": "Add to my history", "Ajouté à ton historique.": "Added to your history.", "Déjà dans ton historique.": "Already in your history.","Vider cet historique":"Clear this history","Entre ton nom : tu seras le joueur 1 par défaut et tes stats seront comptées.":"Enter your name: you will be player 1 by default and your stats will be counted.","Tu es toujours le joueur 1 par défaut.":"You are always player 1 by default.","Aucun match compté pour l'instant. Tu es toujours le joueur 1 par défaut.":"No match counted yet. You are always player 1 by default.","Tes stats sont comptées.":"Your stats are counted.","Stats non comptées (invité).":"Stats not counted (guest).","Revenir à ":"Back to "});
+Object.assign(I18N.TXT,{"Accueil":"Home","Historique":"History","Amis":"Friends","Profil":"Profile","Collection":"Collection","assembler":"compare","sauvegarde":"backup","Passer en thème clair":"Switch to light theme","Passer en thème sombre":"Switch to dark theme"});
 Object.assign(I18N.TXT,{"Simple":"Single","bientôt":"soon"});
 Object.assign(I18N.TXT,{"Global":"All","Vider tout l'historique ?":"Clear the whole history?","Date inconnue":"Unknown date","Ouvrir":"Open","Mon QR":"My QR","Ma fiche ami":"My friend card","Ami ajouté":"Friend added","Voir la fiche":"View card","Sa fiche est mise à jour.":"Their card was updated.","Il est dans ta liste d'amis. Tu peux lui ajouter une note.":"They are in your friends list. You can add a note.","C'est ta propre fiche.":"That is your own card.","Ajoute ton nom dans Options pour partager ta fiche.":"Add your name in Options to share your card.","Ton ami ouvre Beybey, va dans Options, Amis, et touche Scanner. Il reçoit ton nom et tes stats.":"Your friend opens Beybey, goes to Options, Friends, and taps Scan. They get your name and stats.","Scanne le QR d'un pote pour l'ajouter ici.":"Scan a friend's QR to add them here.","matchs":"matches","victoires":"wins"});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
@@ -818,14 +836,14 @@ const DEF_DESC={nom:false,poids:true,ligne:false,type:false,att:true,def:true,en
 /* ===== État de l'interface, icônes et tri ===== */
 const SI={att:0,def:1,end:2};
 let EDV='all'; try{ const e=localStorage.getItem('ed'); if(e==='hasbro'||e==='tt') EDV=e; }catch(e){}
-const st={tab:'toupies',view:'collection',cat:'blades',ed:EDV,key:'nom',desc:false,q:'',a:0,b:1,son:true,voix:false};
+const st={tab:'home',view:'collection',cat:'blades',ed:EDV,key:'nom',desc:false,q:'',a:0,b:1,son:true,voix:false};
 try{ if(localStorage.getItem('arene_son')==='0') st.son=false; }catch(e){}
 function zoomSet(v){ try{ localStorage.setItem('zoom',v?'1':'0'); }catch(e){} document.querySelector('meta[name=viewport]').content=v?'width=device-width, initial-scale=1, viewport-fit=cover':'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover'; draw(); }
 function zoomOn(){ try{ return localStorage.getItem('zoom')==='1'; }catch(e){ return false; } }
 function sonSet(v){ st.son=!!v; try{ localStorage.setItem('arene_son',v?'1':'0'); }catch(e){} draw(); }
 let AC=null,run=0;
 const sv=(p)=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
-const IC={grid:sv('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
+const IC={home:sv('<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h4.5v-5.5h4V20h4.5V10"/>'),grid:sv('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
   build:sv('<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/>'),
   bolt:sv('<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'),
   opts:sv('<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/>'),
@@ -872,7 +890,7 @@ function optsUI(){
   const seg=(k,list,cur,f3)=>'<div class="frame'+(f3?' f3':'')+'">'+list.map(([v,l])=>`<button class="${cur===v?'on':''}" onclick="optSet('${k}','${v}')"><span>${l}</span></button>`).join('')+'</div>';
   const son='<div class="frame"><button class="'+(st.son?'on':'')+'" onclick="sonSet(1)"><span>Activé</span></button><button class="'+(st.son?'':'on')+'" onclick="sonSet(0)"><span>Désactivé</span></button></div>';
   const bgS='<select class="bgsel" onchange="optSet(\'bg\',this.value)" aria-label="Fond d\'écran">'+[['actuel','Grille'],['hex','Hexagones'],['sparks','Particules']].map(([v,l])=>'<option value="'+v+'"'+(bgMode===v?' selected':'')+'>'+l+'</option>').join('')+'</select>';
-  return '<div class="ops">'+pfUI()+friendsUI()+'<div class="optl">Mes données</div><div class="frame bkf"><button onclick="backupExport()"><span>Exporter</span></button><button onclick="document.getElementById(\'imp\').click()"><span>Importer</span></button></div><input type="file" id="imp" accept="application/json,.json" hidden onchange="backupImport(this)"><div class="mut note" id="bkmsg" aria-live="polite">'+CUSTOM.length+' toupie'+(CUSTOM.length>1?'s':'')+' ajoutée'+(CUSTOM.length>1?'s':'')+' · '+hLoad().length+' match'+(hLoad().length>1?'s':'')+' dans l\'historique. Exporte pour sauvegarder ou changer d\'appareil.</div><div class="op2"><div><div class="optl">Langue</div>'+seg('lang',[['fr','Français'],['en','English']],LANG,false)+'</div><div><div class="optl">Son</div>'+son+'</div></div><div class="op2"><div><div class="optl">Thème</div>'+seg('theme',THEMES,th,false)+'</div><div><div class="optl">Fond d\'écran</div>'+bgS+'</div></div><div class="mut note">Les réglages et les données sont gardés sur cet appareil.</div>'+(HID.length?'<div class="optl">Toupies de base</div><div class="frame"><button onclick="bsRestore()"><span>Remettre les toupies de base</span><small>'+HID.length+'</small></button></div>':'')+'<div class="mut note">Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.</div>'+'<div class="zmo"><span class="mut">Zoom de la page (pincer pour agrandir)</span><span class="zmb"><button class="'+(zoomOn()?'':'on')+'" onclick="zoomSet(0)" aria-pressed="'+(!zoomOn())+'">Bloqué</button><button class="'+(zoomOn()?'on':'')+'" onclick="zoomSet(1)" aria-pressed="'+zoomOn()+'">Autorisé</button></span></div>'+noticeUI()+'</div>';
+  return '<div class="ops"><div id="o-pf">'+pfUI()+'</div><div id="o-fr">'+friendsUI()+'</div>'+'<div class="optl">Mes données</div><div class="frame bkf"><button onclick="backupExport()"><span>Exporter</span></button><button onclick="document.getElementById(\'imp\').click()"><span>Importer</span></button></div><input type="file" id="imp" accept="application/json,.json" hidden onchange="backupImport(this)"><div class="mut note" id="bkmsg" aria-live="polite">'+CUSTOM.length+' toupie'+(CUSTOM.length>1?'s':'')+' ajoutée'+(CUSTOM.length>1?'s':'')+' · '+hLoad().length+' match'+(hLoad().length>1?'s':'')+' dans l\'historique. Exporte pour sauvegarder ou changer d\'appareil.</div><div class="op2"><div><div class="optl">Langue</div>'+seg('lang',[['fr','Français'],['en','English']],LANG,false)+'</div><div><div class="optl">Son</div>'+son+'</div></div><div class="op2"><div><div class="optl">Thème</div>'+seg('theme',THEMES,th,false)+'</div><div><div class="optl">Fond d\'écran</div>'+bgS+'</div></div><div class="mut note">Les réglages et les données sont gardés sur cet appareil.</div>'+(HID.length?'<div class="optl">Toupies de base</div><div class="frame"><button onclick="bsRestore()"><span>Remettre les toupies de base</span><small>'+HID.length+'</small></button></div>':'')+'<div class="mut note">Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.</div>'+'<div class="zmo"><span class="mut">Zoom de la page (pincer pour agrandir)</span><span class="zmb"><button class="'+(zoomOn()?'':'on')+'" onclick="zoomSet(0)" aria-pressed="'+(!zoomOn())+'">Bloqué</button><button class="'+(zoomOn()?'on':'')+'" onclick="zoomSet(1)" aria-pressed="'+zoomOn()+'">Autorisé</button></span></div>'+noticeUI()+'</div>';
 }
 /* ===== Accessibilité : fenêtres, Échap, états des boutons ===== */
 let FMO=null;
@@ -1258,7 +1276,10 @@ function buildFight(){
 function draw(){
   const h=document.getElementById('h'),sub=document.getElementById('sub'),c=document.getElementById('ctl'),m=document.getElementById('main');
   sub.textContent='';
-  if(st.tab==='build'){
+  document.body.classList.toggle('ishome',st.tab==='home');
+  if(st.tab==='home'){
+    c.innerHTML=''; m.innerHTML=homeUI(); homeStart();
+  }else if(st.tab==='build'){
     h.textContent='Build'; sub.textContent='Compose deux builds et compare-les';
     c.innerHTML=''; m.innerHTML=T.length?buildUI():emptyUI();
   }else if(st.tab==='opts'){
@@ -1278,7 +1299,7 @@ function draw(){
     c.innerHTML=frame+bar+eds+chips+(col?'<button class="addb" onclick="addOpen()">+ Ajouter une toupie</button>':'');
     renderList();
   }
-  document.getElementById('tabs').innerHTML=[['toupies','Toupies',IC.grid],['build','Build',IC.build],['match','Match',IC.bolt],['opts','Options',IC.opts]].map(([k,l,i])=>`<button class="${st.tab===k?'on':''}" onclick="setTab('${k}')">${i}<span>${l}</span></button>`).join('');
+  document.getElementById('tabs').innerHTML=[['home','Accueil',IC.home],['toupies','Toupies',IC.grid],['build','Build',IC.build],['match','Match',IC.bolt],['opts','Options',IC.opts]].map(([k,l,i])=>`<button class="${st.tab===k?'on':''}" onclick="setTab('${k}')">${i}<span>${l}</span></button>`).join('');
   a11yPass();
 }
 const wnum=v=>(typeof v==='string'&&v.includes('-'))?v.split('-').reduce((a,b)=>a+ +b,0)/2:num(v);
@@ -1766,7 +1787,7 @@ const PF={
  'Stamina':{k:1.4,sw:1.1,vmin:.7,vmax:1.15,seek:0,rad:.5,mass:.9,w:24,dec:.8,n:2,a0:-.95,a1:.95},
  'Balance':{k:2.2,sw:.9,vmin:.9,vmax:1.7,seek:.4,rad:0,mass:1,w:26,dec:1.5,n:3,a0:-.55,a1:.38}
 };
-function stProf(p){ let r=null; try{ r=G&&cur(p); }catch(e){}
+function stProf(p){ let r=null; try{ r=G?cur(p):(ST.hp&&ST.hp[p]); }catch(e){}
   const b=PF[(r&&r.ty)||'Balance']||PF.Balance, wt=Math.min(1.25,Math.max(.8,((r&&+r.w)||38)/38));
   const XA={'Attack':3.2,'Déf':1.6,'Stamina':2.4,'Balance':2.4};
   return Object.assign({},b,{mass:b.mass*wt,rs:.92+(b.mass*wt-1)*.3,xa:XA[(r&&r.ty)||'Balance']||2.4}); }
@@ -1988,7 +2009,7 @@ function stDraw(cv){
 }
 function stLoop(id){
   if(id!==ST.loop) return;
-  const cv=document.getElementById('stg'); if(!cv){ST.loop=0;return;}
+  const cv=document.getElementById('stg')||document.getElementById('hstg'); if(!cv){ST.loop=0;return;}
   const now=performance.now(),dt=Math.min(.033,(now-ST.last)/1000||.016);ST.last=now;
   stStep(dt);stDraw(cv);requestAnimationFrame(()=>stLoop(id));
 }
@@ -2180,6 +2201,41 @@ document.addEventListener('click',e=>{ if(csOpen&&!csOpen.list.contains(e.target
 let csW=innerWidth; addEventListener('resize',()=>{ if(innerWidth!==csW){ csW=innerWidth; csClose(); } }); addEventListener('scroll',e=>{ if(Date.now()-csLk<900) return; if(csOpen&&e.target&&e.target.nodeType===1&&csOpen.list.contains(e.target)) return; if(csOpen&&e.target===csOpen.list) return; csClose(); },true);
 new MutationObserver(()=>csEnhance(document.body)).observe(document.body,{childList:true,subtree:true});
 csEnhance(document.body);
+
+/* ===== Accueil : arène animée + raccourcis ===== */
+const HM={on:0,iv:0,phase:'fight',tNext:0,hist:[],wins:[]};
+const HME=[['Spin',3],['Over',3],['Burst',2],['Xtreme',2],['nul',1]], HMT=['Attack','Déf','Stamina','Balance'];
+const hmWp=l=>{ let n=l.reduce((s,e)=>s+e[1],0)*Math.random(); for(const e of l){ if((n-=e[1])<0) return e[0]; } return l[0][0]; };
+function homeRound(){
+  ST.hp=[0,1].map(()=>({ty:HMT[Math.floor(Math.random()*4)],w:rnd(28,48)}));
+  stInit('battle'); ST.fid=-1; HM.phase='fight'; HM.tNext=performance.now()+rnd(3000,8500); }
+function homeTick(){
+  if(st.tab!=='home'||G||!document.getElementById('hstg')) return;
+  const now=performance.now(); if(now<HM.tNext) return;
+  if(HM.phase==='fight'){
+    let k,n=0; do{ k=hmWp(HME); }while(HM.hist.slice(-2).includes(k)&&++n<8); HM.hist.push(k);
+    const ra=ST.hp[0].w/(ST.hp[0].w+ST.hp[1].w); let w=Math.random()<ra?0:1;
+    if(HM.wins.length>=2&&HM.wins[HM.wins.length-1]===w&&HM.wins[HM.wins.length-2]===w) w=1-w; HM.wins.push(w);
+    stFinish({p:k==='nul'?-1:w,k}); HM.phase='after'; HM.tNext=now+(k==='Spin'||k==='nul'?5200:3600);
+  } else homeRound(); }
+function homeStart(){ if(!HM.iv) HM.iv=setInterval(homeTick,120); homeRound(); ST.loop=++stId; ST.last=performance.now(); const id=ST.loop; requestAnimationFrame(()=>stLoop(id)); }
+const IC_SUN=sv('<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>');
+const IC_MOON=sv('<path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/>');
+function homeTheme(){ setTheme(document.documentElement.dataset.theme==='futurl'?'futur':'futurl'); draw(); }
+function homeGo(k){
+  if(k==='toupies'){ st.view='collection'; setTab('toupies'); }
+  else if(k==='hist') histAll('all');
+  else if(k==='fr'||k==='pf'){ setTab('opts'); setTimeout(()=>{ const e=document.getElementById(k==='fr'?'o-fr':'o-pf'); if(e) e.scrollIntoView({block:'start'}); },40); }
+  else setTab(k); }
+function homeUI(){
+  const nT=T.length+(typeof cLoad==='function'?cLoad().length:0), nH=hLoad().length, nF=Object.keys(fLoad()).length, dark=(document.documentElement.dataset.theme||'futur')!=='futurl';
+  const b=(k,l,s)=>`<button class="hmb" onclick="homeGo('${k}')"><span>${l}</span><small>${s}</small></button>`;
+  return `<div class="hmx"><div class="hm-top"><div class="hm-logo">BEYBEY</div><div class="hm-r"><button class="hm-pill" onclick="homeGo('pf')">${esc(PRF.n||'Profil')}</button><button class="hm-ic" onclick="homeTheme()" aria-label="${dark?'Passer en thème clair':'Passer en thème sombre'}">${dark?IC_MOON:IC_SUN}</button></div></div>
+    <div class="hm-arena"><canvas id="hstg" aria-hidden="true"></canvas></div>
+    <button class="go hm-go" onclick="setTab('match')">MATCH</button>
+    <div class="hm-grid">${b('toupies','Collection',nT+' toupies')}${b('hist','Historique',nH+' matchs')}${b('fr','Amis',nF+(nF>1?' amis':' ami'))}${b('build','Build','assembler')}${b('pf','Profil',esc(PRF.n||'—'))}${b('opts','Options','sauvegarde')}</div></div>`;
+}
+
 draw();
 
 /* ===== Rappel de sauvegarde après un ajout ===== */
