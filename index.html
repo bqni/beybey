@@ -51,7 +51,7 @@ h1{font:var(--fw-semi) var(--fs-xl)/1.2 var(--font);letter-spacing:-.01em;margin
 .frame button,.mseg button{height:var(--ctl-h);background:none;border:0;color:var(--text-2);font:var(--fw-medium) var(--fs-md)/1 var(--font);display:flex;gap:var(--sp-2);justify-content:center;align-items:center}
 .mseg button{height:34px;font-size:var(--fs-sm)}
 .mseg:has(button:nth-child(3)){grid-template-columns:repeat(3,minmax(0,1fr))}.mseg:has(button:nth-child(3)) button{padding:0 4px;font-size:11px;letter-spacing:.04em}
-.frame button small{font-size:var(--fs-sm);opacity:.8}
+.fact.rrb{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);margin-top:var(--sp-3)}.fact.rrb .go,.fact.rrb .go.sm{grid-column:1/-1;margin:0;width:100%;max-width:none;flex:none}.fact.rrb .chip{height:44px;margin:0;width:100%;justify-content:center}.frame button small{font-size:var(--fs-sm);opacity:.8}
 .frame button.on,.mseg button.on{background:var(--accent-soft);color:var(--accent);font-weight:var(--fw-semi);box-shadow:inset 0 0 0 1px var(--accent)}
 .bar{display:flex;gap:var(--sp-2);padding:0 var(--sp-4) var(--sp-3)}
 .search{flex:1;min-width:0;display:flex;gap:var(--sp-2);align-items:center;height:var(--ctl-h);border:1px solid var(--border);border-radius:var(--r-2);background:var(--surface-2);padding:0 var(--sp-3);color:var(--text-2)}
@@ -1526,7 +1526,7 @@ function rrRender(){
   shOpen(`<div class="fwrap hall"><div class="fh"><h2>${LT('Résultats reçus')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
     <div class="fhelp">${LT('De')} <b>${esc(RR.from)}</b> · ${mine.length} match${mine.length>1?'s':''} ${LT('avec toi')} (${esc(P[me][1])})</div><div class="hscroll">${rows||`<div class="mut">${LT('Aucun match avec toi.')}</div>`}
     <div class="mut note">${LT('Ils seront ajoutés à ton historique, de ton point de vue, et comptés dans tes stats.')}</div></div>
-    <div class="fact">${mine.length?`<button class="go sm" onclick="rrAdd(this)">${LT('Ajouter à mon historique')}</button>`:''}<button class="chip" onclick="rrWho()">${LT('Ce n\'est pas moi')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
+    <div class="fact rrb">${mine.length?`<button class="go sm" onclick="rrAdd(this)">${LT('Ajouter à mon historique')}</button>`:''}<button class="chip" onclick="rrWho()">${LT('Ce n\'est pas moi')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
 }
 function rrWho(){ RR.me=-2; const d=RR.d; shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Qui es-tu ?')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div><div class="flist pcard">${d.p.map((p,i)=>`<button class="frow" onclick="rrPick(${i})"><b>${esc(p[1])}</b></button>`).join('')}</div></div>`); }
 function rrPick(i){ RR.me=i; RR.picked=true; rrRender(); }
