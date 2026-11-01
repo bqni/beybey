@@ -502,7 +502,7 @@ html[data-bg="hex"] #bgc,html[data-bg="sparks"] #bgc{display:block}
 .pf .nm{width:100%}.pfg{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-2);text-align:center}.pfc b{display:block;font-size:var(--fs-lg);color:var(--text)}.pft{display:flex;justify-content:space-between;align-items:baseline;gap:var(--sp-3);text-align:right;border-top:1px solid var(--border);padding-top:var(--sp-2)}.pft b{font-size:var(--fs-md)}.pft small{color:var(--text-2);font-weight:var(--fw-regular,400)}.pfc span{font-size:var(--fs-sm);color:var(--text-2)}.menote{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap;font-size:var(--fs-sm)}.menote:empty{display:none}
 .bhb{display:flex;gap:var(--sp-2);flex:none}.bhb .chip{height:44px!important}.pqr{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2)}.pqr .chip{height:44px;padding:0 4px;font-size:var(--fs-sm)}.qrbox{background:#fff;border-radius:12px;padding:14px;margin:var(--sp-3) auto;width:min(78vw,320px);box-sizing:border-box}.qrbox svg{display:block;width:100%;height:auto}.qrn{text-align:center}.rcl{display:grid;gap:var(--sp-2);margin:var(--sp-3) 0}.rcr{display:flex;align-items:center;gap:var(--sp-3)}.rcr b{color:var(--text)}.scw{background:#000;border-radius:12px;overflow:hidden;margin:var(--sp-3) 0}.scw video{display:block;width:100%;max-height:58vh;object-fit:cover}
 .ops .optl{padding:var(--sp-3) var(--sp-4) 4px}.ops .frame button{height:38px}.ops .frame{margin-bottom:var(--sp-1)}.ops .note{margin-top:var(--sp-1)}.apg .frame{margin-bottom:var(--sp-1)}.ops .bkf button{height:56px;font-size:var(--fs-lg)}
-.fwrap.hall{display:flex;flex-direction:column;height:calc(100vh - var(--sp-3) - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));height:calc(100dvh - var(--sp-3) - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}.hall .fh,.hall .pfg,.hall .note,.hall .hseg{flex:none}.hseg{margin:0!important}.hclr{flex:none;width:100%;height:48px!important;font-size:var(--fs-md)}.hscroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.hall .bhb .chip.sq{width:44px;height:44px}
+.fwrap.hall{display:flex;flex-direction:column;height:calc(100vh - var(--sp-3) - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));height:calc(100dvh - var(--sp-3) - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}.hall .fh,.hall .pfg,.hall .note,.hall .hseg{flex:none}.hseg{margin:0!important}.hbar{flex:none;display:flex;gap:var(--sp-2)}.hclr{flex:1;height:48px!important;font-size:var(--fs-md)}.hscroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.hall .bhb .chip.sq{width:44px;height:44px}
 .qty{margin-left:6px;font:var(--fw-semi) var(--fs-sm) var(--font);color:var(--accent)}.qst{grid-column:1/-1;display:flex;align-items:center;justify-content:flex-end;gap:6px;margin:var(--sp-2) 0 0;color:var(--text-2);font-size:var(--fs-sm)}.qst .chip.sq{width:30px;height:30px;font-size:var(--fs-md)}.qst b{min-width:22px;text-align:center;color:var(--text)}.fwrap:not(.adv) .fadv{display:none}.fadvt{display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-3) 0;color:var(--text-2);font-size:var(--fs-sm)}.fadvt input{width:20px;height:20px;accent-color:var(--accent)}.fst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);align-items:end}.fst>span{grid-column:1/-1}
 html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
 button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -582,7 +582,7 @@ Object.assign(I18N.TXT,{"Nom du build (optionnel)":"Build name (optional)","Touc
 Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat": "Start the battle"});
 Object.assign(I18N.TXT,{"Aucun":"None"});
 Object.assign(I18N.TXT,{"Partager": "Share", "Choisis d'abord une toupie complète.": "Pick a complete Bey first.", "Cette toupie contient une pièce absente du catalogue : elle ne peut pas encore être partagée par QR.": "This Bey has a part that is not in the catalog: it can't be shared by QR yet.", "Impossible de créer le QR sur cet appareil.": "Can't create the QR on this device.", "Partager mon deck": "Share my deck", "Partager ma toupie": "Share my Bey", "Ton ami ouvre Beybey, va dans Match et touche Scanner.": "Your friend opens Beybey, goes to Match and taps Scan.", "Ajoute ton nom dans Options pour qu'il s'affiche chez lui.": "Add your name in Options so it shows up on their phone.", "Envoyer le lien": "Send the link", "Fermer": "Close", "Lien copié": "Link copied", "Colle-le dans un message.": "Paste it in a message.", "Scanner un QR": "Scan a QR", "Vise le QR de ton ami.": "Aim at your friend's QR.", "Impossible de charger le lecteur de QR (connexion ?).": "Can't load the QR reader (connection?).", "La caméra n'est pas disponible ici.": "The camera isn't available here.", "Caméra refusée. Autorise-la dans les réglages de l'iPhone pour scanner.": "Camera denied. Allow it in the iPhone settings to scan.", "QR non reconnu": "QR not recognised", "Ce QR ne vient pas de Beybey.": "This QR doesn't come from Beybey.", "Une pièce de cette toupie est absente de ton catalogue.": "A part of this Bey is missing from your catalog.", "Invité": "Guest", "Deck reçu": "Deck received", "Toupie reçue": "Bey received", "De": "From", "« Jouer avec » ne touche pas à ta collection ni à tes stats.": "“Play with” doesn't touch your collection or your stats.", "Jouer avec": "Play with", "Ajouter à ma collection": "Add to my collection", "Tu as déjà tout ça dans ta collection.": "You already have all of this in your collection.", "Pas assez de place pour enregistrer.": "Not enough space to save.", "Ajouté à ta collection.": "Added to your collection.", "Scanner": "Scan"});
-Object.assign(I18N.TXT,{"Mon profil":"My profile","Ton nom":"Your name","Matchs":"Matches","Victoires":"Wins","Défaites":"Losses","Réussite":"Win rate","Toupie la plus jouée":"Most played Bey","Apparence":"Appearance","Historique":"History","Les stats comptent seulement tes matchs (pas ceux joués en invité).":"Stats only count your own matches (not guest games).","Entre ton nom dans Options pour compter tes stats.":"Enter your name in Options to count your stats.","Toupie la plus jouée ici :":"Most played Bey here:","Tout voir":"See all","Vider cet historique":"Clear this history","Entre ton nom : tu seras le joueur 1 par défaut et tes stats seront comptées.":"Enter your name: you will be player 1 by default and your stats will be counted.","Tu es toujours le joueur 1 par défaut.":"You are always player 1 by default.","Aucun match compté pour l'instant. Tu es toujours le joueur 1 par défaut.":"No match counted yet. You are always player 1 by default.","Tes stats sont comptées.":"Your stats are counted.","Stats non comptées (invité).":"Stats not counted (guest).","Revenir à ":"Back to "});
+Object.assign(I18N.TXT,{"Mon profil":"My profile","Ton nom":"Your name","Matchs":"Matches","Victoires":"Wins","Défaites":"Losses","Réussite":"Win rate","Toupie la plus jouée":"Most played Bey","Apparence":"Appearance","Historique":"History","Les stats comptent seulement tes matchs (pas ceux joués en invité).":"Stats only count your own matches (not guest games).","Entre ton nom dans Options pour compter tes stats.":"Enter your name in Options to count your stats.","Toupie la plus jouée ici :":"Most played Bey here:","Tout voir":"See all","Aucun match à partager.": "No match to share.", "Partager la session": "Share the session", "contre": "vs", "Ton adversaire ouvre Beybey, va dans Match, touche Scanner et vise ce QR.": "Your opponent opens Beybey, goes to Match, taps Scan and aims at this QR.", "Page": "Page", "il doit scanner chaque page.": "they must scan every page.", "Page suivante": "Next page", "Résultats reçus": "Results received", "Ils seront ajoutés à ton historique, de ton point de vue, et comptés dans tes stats.": "They will be added to your history, from your point of view, and counted in your stats.", "Ajouter à mon historique": "Add to my history", "Ajouté à ton historique.": "Added to your history.", "Déjà dans ton historique.": "Already in your history.","Vider cet historique":"Clear this history","Entre ton nom : tu seras le joueur 1 par défaut et tes stats seront comptées.":"Enter your name: you will be player 1 by default and your stats will be counted.","Tu es toujours le joueur 1 par défaut.":"You are always player 1 by default.","Aucun match compté pour l'instant. Tu es toujours le joueur 1 par défaut.":"No match counted yet. You are always player 1 by default.","Tes stats sont comptées.":"Your stats are counted.","Stats non comptées (invité).":"Stats not counted (guest).","Revenir à ":"Back to "});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
 function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
 (function(){
@@ -1331,7 +1331,8 @@ async function scOpen(p){
     const tick=()=>{ if(!SCN) return;
       if(v.videoWidth){ const k=Math.min(1,520/v.videoWidth); cv.width=Math.round(v.videoWidth*k); cv.height=Math.round(v.videoHeight*k); cx.drawImage(v,0,0,cv.width,cv.height);
         const d=cx.getImageData(0,0,cv.width,cv.height), r=jsQR(d.data,cv.width,cv.height,{inversionAttempts:'dontInvert'});
-        if(r&&r.data&&r.data.indexOf('#s=')>=0){ const p=SCN.p; scStop(); rcOpen(r.data.split('#s=')[1],p); return; } }
+        const mm=r&&r.data&&r.data.match(/#([sr])=([A-Za-z0-9_-]+)/);
+        if(mm){ const p=SCN.p; scStop(); if(mm[1]==='r') rrOpen(mm[2]); else rcOpen(mm[2],p); return; } }
       SCN.t=setTimeout(tick,120); };
     tick();
   }catch(e){ m(LT('Caméra refusée. Autorise-la dans les réglages de l\'iPhone pour scanner.')); }
@@ -1368,7 +1369,44 @@ function rcAdd(btn){
   if(!cSave(all)) return say(LT('Pas assez de place pour enregistrer.'));
   btn.disabled=true; say(LT('Ajouté à ta collection.')); setTimeout(()=>location.reload(),700);
 }
-window.addEventListener('load',()=>{ if(location.hash.indexOf('#s=')===0){ const c=location.hash.slice(3); try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} setTimeout(()=>rcOpen(c),400); } });
+window.addEventListener('load',()=>{ const k=location.hash.slice(1,3); if(k==='s='||k==='r='){ const c=location.hash.slice(3); try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} setTimeout(()=>k==='r='?rrOpen(c):rcOpen(c),400); } });
+/* ===== Partage des résultats d'une session ===== */
+function sessList(){ const L=hLoad(); if(!L.length) return []; const l0=L[0]; return L.filter(r=>r.n[0]===l0.n[0]&&r.n[1]===l0.n[1]&&l0.id-r.id<21600000).slice(0,12); }
+const pcOf=(r,i)=>r.pc?r.pc[i]:(r.b[i]||[]);
+async function rsShow(pg){
+  const all=sessList(); if(!all.length) return shMsg(LT('Partager'),LT('Aucun match à partager.'));
+  const pages=Math.ceil(all.length/4); pg=Math.max(0,Math.min(pages-1,pg||0)); const part=all.slice(pg*4,pg*4+4);
+  await libLoad('lib/qrcode.js',()=>typeof qrcode==='function');
+  QRU=QRB+'#r='+b64e(JSON.stringify({v:1,n:PRF.n||'',m:part.map(r=>[r.id,r.cat==='tournoi'?1:0,r.tg,r.bo||0,r.mn||0,r.r,r.w,r.s[0],r.s[1],r.n[0],r.n[1],pcOf(r,0),pcOf(r,1)])}));
+  let svg=''; try{ const q=qrcode(0,'L'); q.addData(QRU); q.make(); svg=q.createSvgTag({cellSize:4,margin:0,scalable:true}); }catch(e){}
+  if(!svg) return shMsg(LT('Partager'),LT('Impossible de créer le QR sur cet appareil.'));
+  const l0=all[0];
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Partager la session')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="fhelp">${esc(l0.n[0])} ${LT('contre')} <b>${esc(l0.n[1])}</b> · ${all.length} match${all.length>1?'s':''}</div>
+    <div class="qrbox" role="img" aria-label="QR code">${svg}</div>
+    <div class="mut note qrn">${LT('Ton adversaire ouvre Beybey, va dans Match, touche Scanner et vise ce QR.')}${pages>1?' '+LT('Page')+' '+(pg+1)+'/'+pages+' : '+LT('il doit scanner chaque page.'):''}</div>
+    <div class="fact">${pages>1?`<button class="chip" onclick="rsShow(${(pg+1)%pages})">${LT('Page suivante')}</button>`:''}<button class="chip" onclick="qrSend()">${LT('Envoyer le lien')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div></div>`);
+}
+let RR=null;
+function rrOpen(code){
+  let d; try{ d=JSON.parse(b64d(code)); }catch(e){ return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.')); }
+  const m=((d&&d.m)||[]).filter(x=>Array.isArray(x)&&x.length>=13); if(!m.length) return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.'));
+  RR={from:String((d&&d.n)||'').trim().slice(0,20)||LT('Invité'),m};
+  const rows=m.map(x=>`<div class="hr"><div class="hm"><span class="hn" style="color:var(--pa)">${esc(x[10])}</span><b class="hsc">${x[8]} – ${x[7]}</b><span class="hn" style="color:var(--pink)">${esc(x[9])}</span></div></div>`).join('');
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Résultats reçus')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="fhelp">${LT('De')} <b>${esc(RR.from)}</b> · ${m.length} match${m.length>1?'s':''}</div>${rows}
+    <div class="mut note">${LT('Ils seront ajoutés à ton historique, de ton point de vue, et comptés dans tes stats.')}</div>
+    <div class="fact"><button class="go sm" onclick="rrAdd(this)">${LT('Ajouter à mon historique')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
+}
+function rrAdd(btn){
+  const L=hLoad(); let add=0;
+  RR.m.forEach(x=>{ if(L.some(r=>r.oid===x[0]&&r.from===RR.from)) return;
+    let id=x[0]; while(L.some(r=>r.id===id)) id++;
+    L.push({id,oid:x[0],from:RR.from,cat:x[1]?'tournoi':'simple',tg:x[2],bo:x[3],mn:x[4],r:x[5],w:x[6]===0?1:x[6]===1?0:-1,s:[x[8],x[7]],n:[x[10],x[9]],pc:[x[12],x[11]],b:[x[12],x[11]],me:1}); add++; });
+  L.sort((a,b)=>b.id-a.id); hSave(L); btn.disabled=true;
+  const e=document.getElementById('rcm'); if(e) e.textContent=add?LT('Ajouté à ton historique.'):LT('Déjà dans ton historique.');
+  setTimeout(()=>{ fmClose(); if(st.tab==='match') drawMatch(); else if(st.tab==='opts') draw(); },900);
+}
 
 function emptyUI(){ return '<div class="empty">Tu n\'as pas encore de toupie.</div><button class="addb" onclick="setTab(\'toupies\')">Aller ajouter une toupie</button>'; }
 function mSet(k,v){ st.m[k]=v; drawMatch(); }
@@ -1887,7 +1925,7 @@ function histAll(cat){
     <div class="frame f3 hseg">${[['simple','Match simple'],['tournoi','Match 3v3'],['bracket','Tournoi']].map(([k,l])=>`<button class="${k===cat?'on':''}" ${k==='bracket'?'disabled':''} onclick="histAll('${k}')"><span>${l}</span></button>`).join('')}</div>
     <div class="pfg">${c(L.length,'Matchs')}${c(S.w,'Victoires')}${c(S.l,'Défaites')}${c(pct,'Réussite')}</div>
     <div class="mut note">${PRF.n?LT('Les stats comptent seulement tes matchs (pas ceux joués en invité).'):LT('Entre ton nom dans Options pour compter tes stats.')}${S.top?' '+LT('Toupie la plus jouée ici :')+' <b>'+esc(S.top)+'</b> ×'+S.topn+'.':''}</div>
-    <div class="hscroll">${histRows(L)}</div>${L.length?`<button class="chip dng hclr" onclick="histClear('${cat}')">Vider cet historique</button>`:''}</div>`);
+    <div class="hscroll">${histRows(L)}</div>${L.length?`<div class="hbar"><button class="chip hclr" onclick="rsShow(0)">Partager la session</button><button class="chip dng hclr" onclick="histClear('${cat}')">Vider</button></div>`:''}</div>`);
 }
 function serieEnd(){
   const [a,b]=G.score; G.cw=a>b?0:b>a?1:-1; G.sw=-1;
