@@ -53,7 +53,7 @@ Partage par QR code (sans compte, sans serveur)
   Le QR de session est limité en taille pour rester lisible à la caméra : il garde les matchs les plus récents.
 
 Amis (Accueil > Amis)
-  Page dédiée avec les boutons Code (ton QR) et Scanner. Liste d'amis avec recherche, et pour chacun une fiche : une note (ex. "Kevin du lycée"), tes résultats contre lui
+  Page dédiée avec les boutons Code (ton QR) et Scanner. Liste d'amis avec recherche, et pour chacun une fiche : une note (ex. "mon pote du club"), tes résultats contre lui
   (Tout, Simple, 3v3) et ses stats au moment du dernier scan. Retirer un ami demande une confirmation.
 
 Ajouter une toupie dans l'appli (le plus simple)
