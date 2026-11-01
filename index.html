@@ -2268,11 +2268,13 @@ function homeTick(){
 function homeFit(){
   if(st.tab!=='home') return; const c=document.getElementById('hstg'), t=document.getElementById('tabs'); if(!c||!t) return;
   const land=matchMedia('(orientation:landscape) and (max-height:520px)').matches, ref=document.querySelector(land?'.hm-go':'.hm-grid'); if(!ref) return;
-  const maxW=land?Math.min(380,innerHeight):Math.min(380,c.parentElement.clientWidth||380), base=land?100:maxW; c.style.width=base+'px';
+  const maxW=land?Math.min(380,(window.visualViewport?visualViewport.height:innerHeight)):Math.min(380,c.parentElement.clientWidth||380), base=land?100:maxW; c.style.width=base+'px';
   const slack=t.getBoundingClientRect().top-ref.getBoundingClientRect().bottom-(land?8:14);
   c.style.width=Math.max(land?100:220,Math.min(maxW,Math.floor(base+slack)))+'px';
 }
-addEventListener('resize',()=>{ if(st.tab==='home') homeFit(); });
+let hfT=[]; function homeFitLater(){ hfT.forEach(clearTimeout); hfT=[0,120,350,800].map(d=>setTimeout(()=>{ if(st.tab==='home') homeFit(); },d)); }
+addEventListener('resize',homeFitLater); addEventListener('orientationchange',homeFitLater); addEventListener('pageshow',homeFitLater);
+if(window.visualViewport) visualViewport.addEventListener('resize',homeFitLater);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>homeFit());
 function homeStart(){ if(!HM.iv) HM.iv=setInterval(homeTick,120); homeRound(); ST.loop=++stId; ST.last=performance.now(); const id=ST.loop; requestAnimationFrame(()=>stLoop(id)); }
 const IC_SUN=sv('<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>');
