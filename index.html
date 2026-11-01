@@ -500,6 +500,8 @@ html[data-bg="hex"] #bgc,html[data-bg="sparks"] #bgc{display:block}
 :is([data-theme="futur"],[data-theme="futurl"]):is([data-theme="futur"],[data-theme="futurl"]) .nm.ff{color:var(--text);font-weight:400;text-transform:none;letter-spacing:0;font-size:var(--fs-md)}
 .nm.ff{color:var(--text)}
 .pf .nm{width:100%}.pfg{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-2);text-align:center}.pfc b{display:block;font-size:var(--fs-lg);color:var(--text)}.pfc span{font-size:var(--fs-sm);color:var(--text-2)}.menote{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap;font-size:var(--fs-sm)}.menote:empty{display:none}
+.bhb{display:flex;gap:var(--sp-2);flex:none}.bhb .chip{height:44px!important}.pqr{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2)}.pqr .chip{height:44px;padding:0 4px;font-size:var(--fs-sm)}.qrbox{background:#fff;border-radius:12px;padding:14px;margin:var(--sp-3) auto;width:min(78vw,320px);box-sizing:border-box}.qrbox svg{display:block;width:100%;height:auto}.qrn{text-align:center}.rcl{display:grid;gap:var(--sp-2);margin:var(--sp-3) 0}.rcr{display:flex;align-items:center;gap:var(--sp-3)}.rcr b{color:var(--text)}.scw{background:#000;border-radius:12px;overflow:hidden;margin:var(--sp-3) 0}.scw video{display:block;width:100%;max-height:58vh;object-fit:cover}
+.ops .optl{padding:var(--sp-3) var(--sp-4) 4px}.ops .frame button{height:38px}.ops .frame{margin-bottom:var(--sp-1)}.ops .note{margin-top:var(--sp-1)}.op2{display:grid;grid-template-columns:1fr 1fr;gap:0 var(--sp-3);padding:0 var(--sp-4)}.op2 .optl{padding-left:0;padding-right:0;white-space:nowrap}.op2 .frame{margin:0 0 var(--sp-1)}.op2 .frame button{padding:0 4px;font-size:var(--fs-sm)}
 .qty{margin-left:6px;font:var(--fw-semi) var(--fs-sm) var(--font);color:var(--accent)}.qst{grid-column:1/-1;display:flex;align-items:center;justify-content:flex-end;gap:6px;margin:var(--sp-2) 0 0;color:var(--text-2);font-size:var(--fs-sm)}.qst .chip.sq{width:30px;height:30px;font-size:var(--fs-md)}.qst b{min-width:22px;text-align:center;color:var(--text)}.fwrap:not(.adv) .fadv{display:none}.fadvt{display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-3) 0;color:var(--text-2);font-size:var(--fs-sm)}.fadvt input{width:20px;height:20px;accent-color:var(--accent)}.fst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);align-items:end}.fst>span{grid-column:1/-1}
 html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
 button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -578,6 +580,7 @@ Object.assign(I18N.TXT,{"Lancer un combat A contre B": "Start a battle A vs B", 
 Object.assign(I18N.TXT,{"Nom du build (optionnel)":"Build name (optional)","Touche une pièce pour la changer.":"Tap a part to change it.","Aucun":"None","Activé":"On","Désactivé":"Off","Intégré":"Built-in","Blade":"Blade","Ratchet":"Ratchet","Bit":"Bit","Nom du build":"Build name","Donne un nom à ton build pour l'enregistrer.":"Give your build a name to save it.","Ma collection":"My collection","Enregistrer dans Mes toupies":"Save to My beys","Il manque une pièce.":"A part is missing.","Nom perso (optionnel)":"Custom name (optional)","Choisir une toupie":"Choose a bey","Ajouter une toupie":"Add a bey","Changer":"Change","Retour":"Back","Choisir cette toupie":"Choose this bey","Toupie":"Bey","Catalogue":"Catalogue","Tape un nom pour chercher dans le catalogue.":"Type a name to search the catalogue.","Affine ta recherche pour voir les autres.":"Refine your search to see the others.","Rien dans le catalogue.":"Nothing in the catalogue.","Rien trouvé.":"Nothing found.","Tu peux changer les pièces ou garder celles-ci.":"You can change the parts or keep these.","Ajoute une toupie à chaque emplacement pour lancer le match.":"Add a bey to every slot to start the match.","Série":"Series","Match unique":"Single match","Match suivant":"Next match"});
 Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat": "Start the battle"});
 Object.assign(I18N.TXT,{"Aucun":"None"});
+Object.assign(I18N.TXT,{"Partager": "Share", "Choisis d'abord une toupie complète.": "Pick a complete Bey first.", "Cette toupie contient une pièce absente du catalogue : elle ne peut pas encore être partagée par QR.": "This Bey has a part that is not in the catalog: it can't be shared by QR yet.", "Impossible de créer le QR sur cet appareil.": "Can't create the QR on this device.", "Partager mon deck": "Share my deck", "Partager ma toupie": "Share my Bey", "Ton ami ouvre Beybey, va dans Match et touche Scanner.": "Your friend opens Beybey, goes to Match and taps Scan.", "Ajoute ton nom dans Options pour qu'il s'affiche chez lui.": "Add your name in Options so it shows up on their phone.", "Envoyer le lien": "Send the link", "Fermer": "Close", "Lien copié": "Link copied", "Colle-le dans un message.": "Paste it in a message.", "Scanner un QR": "Scan a QR", "Vise le QR de ton ami.": "Aim at your friend's QR.", "Impossible de charger le lecteur de QR (connexion ?).": "Can't load the QR reader (connection?).", "La caméra n'est pas disponible ici.": "The camera isn't available here.", "Caméra refusée. Autorise-la dans les réglages de l'iPhone pour scanner.": "Camera denied. Allow it in the iPhone settings to scan.", "QR non reconnu": "QR not recognised", "Ce QR ne vient pas de Beybey.": "This QR doesn't come from Beybey.", "Une pièce de cette toupie est absente de ton catalogue.": "A part of this Bey is missing from your catalog.", "Invité": "Guest", "Deck reçu": "Deck received", "Toupie reçue": "Bey received", "De": "From", "« Jouer avec » ne touche pas à ta collection ni à tes stats.": "“Play with” doesn't touch your collection or your stats.", "Jouer avec": "Play with", "Ajouter à ma collection": "Add to my collection", "Tu as déjà tout ça dans ta collection.": "You already have all of this in your collection.", "Pas assez de place pour enregistrer.": "Not enough space to save.", "Ajouté à ta collection.": "Added to your collection.", "Scanner": "Scan"});
 Object.assign(I18N.TXT,{"Mon profil":"My profile","Ton nom":"Your name","Matchs":"Matches","Victoires":"Wins","Défaites":"Losses","Réussite":"Win rate","Toupie la plus jouée : ":"Most played Bey: ","Entre ton nom : tu seras le joueur 1 par défaut et tes stats seront comptées.":"Enter your name: you will be player 1 by default and your stats will be counted.","Tu es toujours le joueur 1 par défaut.":"You are always player 1 by default.","Aucun match compté pour l'instant. Tu es toujours le joueur 1 par défaut.":"No match counted yet. You are always player 1 by default.","Tes stats sont comptées.":"Your stats are counted.","Stats non comptées (invité).":"Stats not counted (guest).","Revenir à ":"Back to "});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
 function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
@@ -823,7 +826,7 @@ function optSet(k,v){ if(k==='lang'){ setLang(v); return; } if(k==='theme') setT
 function optsUI(){
   const th=document.documentElement.dataset.theme||'futur';
   const seg=(k,list,cur,f3)=>'<div class="frame'+(f3?' f3':'')+'">'+list.map(([v,l])=>`<button class="${cur===v?'on':''}" onclick="optSet('${k}','${v}')"><span>${l}</span></button>`).join('')+'</div>';
-  return pfUI()+'<div class="optl">Thème</div>'+seg('theme',THEMES,th,false)+'<div class="optl">Langue · Language</div>'+seg('lang',[['fr','Français'],['en','English']],LANG,false)+'<div class="optl">Fond</div>'+seg('bg',[['actuel','Grille'],['hex','Hexagones'],['sparks','Particules']],bgMode,true)+'<div class="optl">Son</div><div class="frame"><button class="'+(st.son?'on':'')+'" onclick="sonSet(1)"><span>Activé</span></button><button class="'+(st.son?'':'on')+'" onclick="sonSet(0)"><span>Désactivé</span></button></div>'+'<div class="optl">Mes données</div><div class="frame"><button onclick="backupExport()"><span>Exporter</span></button><button onclick="document.getElementById(\'imp\').click()"><span>Importer</span></button></div><input type="file" id="imp" accept="application/json,.json" hidden onchange="backupImport(this)"><div class="mut note" id="bkmsg" aria-live="polite">'+CUSTOM.length+' toupie'+(CUSTOM.length>1?'s':'')+' ajoutée'+(CUSTOM.length>1?'s':'')+' · '+hLoad().length+' match'+(hLoad().length>1?'s':'')+' dans l\'historique. Exporte pour sauvegarder ou changer d\'appareil.</div><div class="mut note">Les réglages et les données sont gardés sur cet appareil.</div>'+(HID.length?'<div class="optl">Toupies de base</div><div class="frame"><button onclick="bsRestore()"><span>Remettre les toupies de base</span><small>'+HID.length+'</small></button></div>':'')+'<div class="mut note">Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.</div>'+noticeUI();
+  return '<div class="ops">'+pfUI()+'<div class="op2"><div><div class="optl">Thème</div>'+seg('theme',THEMES,th,false)+'</div><div><div class="optl">Langue · Language</div>'+seg('lang',[['fr','Français'],['en','English']],LANG,false)+'</div></div><div class="optl">Fond</div>'+seg('bg',[['actuel','Grille'],['hex','Hexagones'],['sparks','Particules']],bgMode,true)+'<div class="op2"><div><div class="optl">Son</div><div class="frame"><button class="'+(st.son?'on':'')+'" onclick="sonSet(1)"><span>Activé</span></button><button class="'+(st.son?'':'on')+'" onclick="sonSet(0)"><span>Désactivé</span></button></div></div>'+'<div><div class="optl">Mes données</div><div class="frame"><button onclick="backupExport()"><span>Exporter</span></button><button onclick="document.getElementById(\'imp\').click()"><span>Importer</span></button></div></div></div><input type="file" id="imp" accept="application/json,.json" hidden onchange="backupImport(this)"><div class="mut note" id="bkmsg" aria-live="polite">'+CUSTOM.length+' toupie'+(CUSTOM.length>1?'s':'')+' ajoutée'+(CUSTOM.length>1?'s':'')+' · '+hLoad().length+' match'+(hLoad().length>1?'s':'')+' dans l\'historique. Exporte pour sauvegarder ou changer d\'appareil.</div><div class="mut note">Les réglages et les données sont gardés sur cet appareil.</div>'+(HID.length?'<div class="optl">Toupies de base</div><div class="frame"><button onclick="bsRestore()"><span>Remettre les toupies de base</span><small>'+HID.length+'</small></button></div>':'')+'<div class="mut note">Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.</div>'+noticeUI()+'</div>';
 }
 /* ===== Ajout / modification de toupies + sauvegarde ===== */
 const FM={id:0,ph:{}};
@@ -927,7 +930,7 @@ function cpSave(o){
   try{ sessionStorage.setItem('bb_rm','1'); }catch(e){}
   location.reload();
 }
-function fmClose(){ const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
+function fmClose(){ if(typeof scStop==='function') scStop(); const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
 function fmRm(k){ FM.ph[k]=''; FM.rm[k]=true; fmPhShow(k); }
 function fmPhShow(k){ const v=FM.ph[k],e=document.getElementById('phv_'+k),x=document.getElementById('phx_'+k); if(e) e.innerHTML=v?`<img src="${v}" alt="">`:''; if(x) x.hidden=!v; const cc=document.getElementById('phc_'+k); if(cc) cc.hidden=!v; }
 var CR=null;
@@ -1156,7 +1159,7 @@ function bdOne(n,L){
   const w=Math.round(parts.reduce((a,o)=>a+wnum(o.w),0)*10)/10;
   const own=T.find(x=>x.b===b.n&&(x.r||'')===(r?r.n:'')&&x.bt===t.n);
   const col=n?'var(--pink)':'var(--accent)';
-  const html=`<div class="pcard" style="--pc:${col}"><div class="bh"><div class="sl" style="color:${col}">${esc(b.n+' '+(r?r.n:'')+t.n)}</div><button class="chip bsv" onclick="bdAsk(${n})">${LT('Enregistrer')}</button></div>
+  const html=`<div class="pcard" style="--pc:${col}"><div class="bh"><div class="sl" style="color:${col}">${esc(b.n+' '+(r?r.n:'')+t.n)}</div><span class="bhb"><button class="chip" onclick="qrBuild(${n})">QR</button><button class="chip bsv" onclick="bdAsk(${n})">${LT('Enregistrer')}</button></span></div>
     <div class="bgrid">${slot('Blade',b,0)}${slot('Ratchet',r,1,integ)}${slot('Bit',t,2)}</div>
     <div class="mut note bmsg" id="bm${n}"></div></div>`;
   return {html,nm:b.n,w,S:S3||[0,0,0],h:r&&r.h?+r.h:null,dash:t.dash!==''?+t.dash:null,burst:t.burst!==''?+t.burst:null};
@@ -1266,6 +1269,105 @@ function resolve(c){
 }
 function opt(list,sel){ return list.map(([v,l])=>`<option value="${v}" ${v==sel?'selected':''}>${l}</option>`).join(''); }
 function drawMatch(){ document.getElementById('main').innerHTML=T.length?matchUI():emptyUI(); }
+/* ===== Partage par QR (toupie ou deck) + réception ===== */
+const QRB='https://bqni.github.io/beybey/';
+const LIBS={};
+function libLoad(src,test){ if(test()) return Promise.resolve(true); return LIBS[src]||(LIBS[src]=new Promise(res=>{ const e=document.createElement('script'); e.src=src; e.onload=()=>res(test()); e.onerror=()=>{ LIBS[src]=null; res(false); }; document.head.appendChild(e); })); }
+const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const b64d=s=>{ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4) s+='='; return decodeURIComponent(escape(atob(s))); };
+const edS=e=>e==='tt'?'t':'h';
+function slotDesc(c){
+  if(!c||c.mode==='none') return null;
+  if(c.src==='cat'){
+    if(c.mode==='custom'){ const b=cptBuild().B[c.cb]; return b&&c.ci?[edS(b.e),b.n,c.cr||'',c.ci]:null; }
+    const x=c.cg>=0?CAT[c.cg]:null; return x?[edS(x.e),x.b,x.r||'',x.bi||'']:null;
+  }
+  if(c.mode==='stock'){ const x=T[c.stock]; return x?[edS(x.ed),x.b,x.r||'',x.bt]:null; }
+  const bl=T[c.blade],ra=c.ratchet>=0?T[c.ratchet]:null,bi=T[c.bit];
+  return bl&&bi?[edS(bl.ed),bl.b,ra?ra.r:'',bi.bt]:null;
+}
+function descSlot(d){
+  if(!Array.isArray(d)||!CAT.length) return null; const P=cptBuild(), k=(d[0]==='t'?'tt':'hasbro')+'|'+d[1];
+  let b=P.B[k]; if(!b) b=Object.values(P.B).find(y=>y.n===d[1]); if(!b||!P.I[d[3]]||(d[2]&&!P.R[d[2]])) return null;
+  return {mode:'custom',src:'cat',stock:0,blade:0,ratchet:-1,bit:0,cg:-1,cb:b.k,cr:d[2]||'',ci:d[3]};
+}
+function shOpen(h){ let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); } f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden'; }
+function shMsg(t,m){ shOpen(`<div class="fwrap"><div class="fh"><h2>${t}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div><div class="fhelp">${m}</div><div class="fact"><button class="go sm" onclick="fmClose()">OK</button></div></div>`); }
+let QRU='';
+async function qrShow(list){
+  if(list.some(d=>!d)) return shMsg(LT('Partager'),LT('Choisis d\'abord une toupie complète.'));
+  if(list.some(d=>!descSlot(d))) return shMsg(LT('Partager'),LT('Cette toupie contient une pièce absente du catalogue : elle ne peut pas encore être partagée par QR.'));
+  await libLoad('lib/qrcode.js',()=>typeof qrcode==='function');
+  QRU=QRB+'#s='+b64e(JSON.stringify({v:1,n:PRF.n||'',t:list}));
+  let svg=''; try{ const q=qrcode(0,'L'); q.addData(QRU); q.make(); svg=q.createSvgTag({cellSize:4,margin:0,scalable:true}); }catch(e){ svg=''; }
+  if(!svg) return shMsg(LT('Partager'),LT('Impossible de créer le QR sur cet appareil.'));
+  const rows=list.map(d=>{ const r=resolve(descSlot(d)); return `<div class="rcr">${img(r.img,'sm')}<div><b>${esc(r.name)}</b><div class="mut">${r.w} g</div></div></div>`; }).join('');
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${list.length>1?LT('Partager mon deck'):LT('Partager ma toupie')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="qrbox" role="img" aria-label="QR code">${svg}</div>
+    <div class="mut note qrn">${LT('Ton ami ouvre Beybey, va dans Match et touche Scanner.')}${PRF.n?'':' '+LT('Ajoute ton nom dans Options pour qu\'il s\'affiche chez lui.')}</div>
+    <div class="rcl">${rows}</div>
+    <div class="fact"><button class="chip" onclick="qrSend()">${LT('Envoyer le lien')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div></div>`);
+}
+function qrSend(){ try{ if(navigator.share){ navigator.share({title:'Beybey',url:QRU}).catch(()=>{}); return; } navigator.clipboard.writeText(QRU).then(()=>shMsg(LT('Lien copié'),LT('Colle-le dans un message.'))); }catch(e){} }
+function qrSlots(p){ const n=st.m.mode==='tournoi'?3:1; qrShow([...Array(n).keys()].map(k=>slotDesc(st.m.p[p][k]))); }
+function qrBuild(n){
+  const L=bdLists(),B=BD[n],b=L.bl[B[0]],r=b&&!b.integ?L.ra[B[1]]:null,t=L.bi[B[2]]; if(!b||!t) return;
+  qrShow([[edS(b.cat?b.c.e:T[b.i].ed),b.cat?b.c.n:T[b.i].b,r?(r.cat?r.c.n:T[r.i].r):'',t.cat?t.c.n:T[t.i].bt]]);
+}
+/* scanner */
+let SCN=null;
+function scStop(){ if(!SCN) return; clearTimeout(SCN.t); try{ SCN.s&&SCN.s.getTracks().forEach(t=>t.stop()); }catch(e){} SCN=null; }
+async function scOpen(p){
+  scStop(); SCN={p};
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Scanner un QR')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="scw"><video id="scv" playsinline muted autoplay></video></div><div class="mut note" id="scm" aria-live="polite">${LT('Vise le QR de ton ami.')}</div></div>`);
+  const m=t=>{ const e=document.getElementById('scm'); if(e) e.textContent=t; };
+  if(!(await libLoad('lib/jsQR.js',()=>typeof jsQR==='function'))) return m(LT('Impossible de charger le lecteur de QR (connexion ?).'));
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) return m(LT('La caméra n\'est pas disponible ici.'));
+  try{ const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false}); if(!SCN){ s.getTracks().forEach(t=>t.stop()); return; } SCN.s=s;
+    const v=document.getElementById('scv'); v.srcObject=s; await v.play(); const cv=document.createElement('canvas'), cx=cv.getContext('2d',{willReadFrequently:true});
+    const tick=()=>{ if(!SCN) return;
+      if(v.videoWidth){ const k=Math.min(1,520/v.videoWidth); cv.width=Math.round(v.videoWidth*k); cv.height=Math.round(v.videoHeight*k); cx.drawImage(v,0,0,cv.width,cv.height);
+        const d=cx.getImageData(0,0,cv.width,cv.height), r=jsQR(d.data,cv.width,cv.height,{inversionAttempts:'dontInvert'});
+        if(r&&r.data&&r.data.indexOf('#s=')>=0){ const p=SCN.p; scStop(); rcOpen(r.data.split('#s=')[1],p); return; } }
+      SCN.t=setTimeout(tick,120); };
+    tick();
+  }catch(e){ m(LT('Caméra refusée. Autorise-la dans les réglages de l\'iPhone pour scanner.')); }
+}
+/* réception */
+let RC=null;
+function rcOpen(code,p){
+  let d; try{ d=JSON.parse(b64d(code)); }catch(e){ return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.')); }
+  const slots=((d&&d.t)||[]).slice(0,3).map(descSlot);
+  if(!slots.length||slots.some(x=>!x)) return shMsg(LT('QR non reconnu'),LT('Une pièce de cette toupie est absente de ton catalogue.'));
+  const from=String((d&&d.n)||'').trim().slice(0,20)||LT('Invité'); RC={from,slots,p};
+  const rows=slots.map(sl=>{ const r=resolve(sl); return `<div class="rcr">${img(r.img,'sm')}<div><b>${esc(r.name)}</b><div class="mut">${r.w} g</div></div></div>`; }).join('');
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${slots.length>1?LT('Deck reçu'):LT('Toupie reçue')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="fhelp">${LT('De')} <b>${esc(from)}</b></div><div class="rcl">${rows}</div>
+    <div class="mut note">${LT('« Jouer avec » ne touche pas à ta collection ni à tes stats.')}</div>
+    <div class="fact"><button class="go sm" onclick="rcPlay()">${LT('Jouer avec')}</button><button class="chip" onclick="rcAdd(this)">${LT('Ajouter à ma collection')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
+}
+function rcPlay(){
+  const p=RC.p===undefined?1:RC.p, M=st.m; if(RC.slots.length>1) M.mode='tournoi';
+  const n=M.mode==='tournoi'?3:1;
+  if(RC.slots.length>1||n===1) RC.slots.slice(0,n).forEach((s,k)=>{ M.p[p][k]=s; });
+  else { let k=M.p[p].findIndex(x=>!x||x.mode==='none'); if(k<0) k=0; M.p[p][k]=RC.slots[0]; }
+  M.names[p]=RC.from; if(p===0) M.me=(RC.from===PRF.n);
+  fmClose(); if(st.tab!=='match') setTab('match'); else drawMatch();
+}
+function rcAdd(btn){
+  const P=cptBuild(), all=cLoad(), have=new Set(T.map(x=>x.n)), say=t=>{ const e=document.getElementById('rcm'); if(e) e.textContent=t; }; let add=0;
+  RC.slots.forEach((s,k)=>{
+    const b=P.B[s.cb], r=s.cr?P.R[s.cr]:null, i=P.I[s.ci], f=CAT.find(x=>x.bi===i.n);
+    const o={id:Date.now()+k,nom:'',blade:b.n,ligne:b.l,typeBlade:b.bt,typeToupie:(f&&f.t)||b.bt,edition:b.e,ratchet:r?r.n:'',bit:i.n,poidsBlade:b.w,poidsRatchet:r?r.w:'',poidsBit:i.w};
+    if(r&&r.h) o.hauteurRatchet=+r.h; if(b.im) o.photoBlade=b.im; if(r&&r.im) o.photoRatchet=r.im; if(i.im) o.photoBit=i.im;
+    if(cErr(o).length) return; const nm=nmOf(o); if(have.has(nm)) return; have.add(nm); all.push(o); add++; });
+  if(!add) return say(LT('Tu as déjà tout ça dans ta collection.'));
+  if(!cSave(all)) return say(LT('Pas assez de place pour enregistrer.'));
+  btn.disabled=true; say(LT('Ajouté à ta collection.')); setTimeout(()=>location.reload(),700);
+}
+window.addEventListener('load',()=>{ if(location.hash.indexOf('#s=')===0){ const c=location.hash.slice(3); try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} setTimeout(()=>rcOpen(c),400); } });
+
 function emptyUI(){ return '<div class="empty">Tu n\'as pas encore de toupie.</div><button class="addb" onclick="setTab(\'toupies\')">Aller ajouter une toupie</button>'; }
 function mSet(k,v){ st.m[k]=v; drawMatch(); }
 function slotSet(p,s,f,v){ st.m.p[p][s][f]=(f==='mode'||f==='src'||f==='cb'||f==='cr'||f==='ci')?v:+v; drawMatch(); }
@@ -1384,7 +1486,7 @@ function matchUI(){
   const modes='<div class="frame f3">'+[['simple','Match simple'],['tournoi','Match 3v3'],['bracket','Tournoi']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" ${k==='bracket'?'disabled':''} onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div>';
   const rules=`<div class="rules"><label>Premier à<select onchange="mSet('target',+this.value)">${opt([3,4,5,7,10].map(v=>[v,v+' points']),M.target)}</select></label><label>Série<select onchange="mSet('bo',+this.value)">${opt([[1,'Match unique'],[3,'BO3'],[5,'BO5'],[7,'BO7']],M.bo||1)}</select></label></div>`;
   const note=M.mode==='tournoi'?'<div class="mut note">3 toupies par joueur, une par round, chacune une seule fois. Fin après 3 rounds ou au score.</div>':'';
-  const players=[0,1].map(p=>`<div class="pcard p${p}" style="--pc:${PCOL[p]}"><input class="nm" value="${esc(M.names[p])}" oninput="mName(${p},this.value)" aria-label="Nom du joueur ${p+1}">${p===0&&PRF.n?'<div class="menote" id="meNote">'+meNoteHTML()+'</div>':''}${Array.from({length:n},(_,s)=>slotUI(p,s)).join('')}</div>`).join('');
+  const players=[0,1].map(p=>`<div class="pcard p${p}" style="--pc:${PCOL[p]}"><input class="nm" value="${esc(M.names[p])}" oninput="mName(${p},this.value)" aria-label="Nom du joueur ${p+1}">${p===0&&PRF.n?'<div class="menote" id="meNote">'+meNoteHTML()+'</div>':''}${Array.from({length:n},(_,s)=>slotUI(p,s)).join('')}<div class="pqr"><button class="chip" onclick="scOpen(${p})">Scanner</button><button class="chip" onclick="qrSlots(${p})">Partager</button></div></div>`).join('');
   return '<div class="top">'+modes+rules+'</div>'+note+'<div class="pls">'+players+'</div>'+(slotsOk()?'':`<div class="mut note nsl">Ajoute une toupie à chaque emplacement pour lancer le match.</div>`)+`<div class="act"><button class="go" onclick="startMatch()" ${slotsOk()?'':'disabled'}>Lancer le match</button></div>`+histUI(M.mode);
 }
 
