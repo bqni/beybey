@@ -719,6 +719,7 @@ const cClean=o=>{ if(!o||typeof o!=='object'||Array.isArray(o)) return null;
   for(const k of ['statsBlade','statsRatchet','statsBit']){ const v=stn(o[k]); if(v) c[k]=v; }
   for(const [k] of [['photoBlade'],['photoRatchet'],['photoBit']]) if(pOk(o[k])) c[k]=o[k];
   return c; };
+/* ===== Collection perso : lecture / sauvegarde (validée) ===== */
 function cLoad(){ try{ const a=JSON.parse(localStorage.getItem(CKEY)||'[]'); if(!Array.isArray(a)) return []; const L=a.map(cClean).filter(Boolean), seen=new Set(); L.forEach((c,i)=>{ if(c.id<1e12||seen.has(c.id)) c.id=1e12+i; seen.add(c.id); }); return L; }catch(e){ return []; } }
 function cSave(a){ try{ localStorage.setItem(CKEY,JSON.stringify(a)); return true; }catch(e){ return false; } }
 function cErr(o){ const E=[],n=v=>{ const x=String(v===undefined||v===null?'':v).replace(',','.').trim(); return x!==''&&/^[0-9.]+(-[0-9.]+)?$/.test(x); };
@@ -730,6 +731,7 @@ function cErr(o){ const E=[],n=v=>{ const x=String(v===undefined||v===null?'':v)
   return E; }
 if(typeof TOUPIES==='undefined'||!Array.isArray(TOUPIES))
   fatal('data.js ne se charge pas',['Le fichier <b>data.js</b> est absent, vide ou contient une erreur : une virgule, une apostrophe ou une accolade oubliée. Compare avec un bloc qui marchait.']);
+/* ===== Normalisation des données du catalogue ===== */
 const hNom=n=>{ const m=String(n||'').match(/-(\d{2,3})$/); return m?+m[1]:''; };
 document.addEventListener('change',e=>{ if(e.target&&e.target.id==='f_ratchet'){ const h=document.getElementById('f_h'); if(h&&!h.value){ const v=hNom(e.target.value); if(v) h.value=v; } } });
 const NORM_T={attack:'Attack',attaque:'Attack',def:'Déf','déf':'Déf',defense:'Déf','défense':'Déf',stamina:'Stamina',endurance:'Stamina',balance:'Balance',equilibre:'Balance','équilibre':'Balance'};
@@ -739,11 +741,13 @@ const avg=v=>typeof v==='string'&&v.includes('-')?v.split('-').reduce((a,b)=>a+ 
 const ERR=[];
 const CUSTOM=cLoad().filter(o=>o&&!cErr(o).length);
 const bkey=o=>[o.blade,o.ratchet||'',o.bit].join('|');
+/* ===== Toupies masquées + liste complète (catalogue + collection) ===== */
 function hdLoad(){ try{ const a=JSON.parse(localStorage.getItem('arene_hide')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
 function hdSave(a){ try{ localStorage.setItem('arene_hide',JSON.stringify(a)); return true; }catch(e){ return false; } }
 const HID=hdLoad(), BASE=TOUPIES.filter(o=>!(o&&HID.includes(bkey(o)))), NBV=BASE.length;
 const ALL=BASE.concat(CUSTOM);
 /* Metal Coat : finition métallisée d'une toupie (couleur) */
+/* ===== Couleurs MetalCoat ===== */
 const MCC=['Black','Blue','Blue/Green','Bronze','Gold','Green','Gunmetal','Magenta','Navy','Orange','Pink','Red','Silver','Violet','White','Yellow'];
 const MCH={Black:'#2b2b2f',Blue:'#2f6bff','Blue/Green':'#1fb5a8',Bronze:'#b4793c',Gold:'#e0b52a',Green:'#2fb457',Gunmetal:'#6b717c',Magenta:'#d6389a',Navy:'#1b2f72',Orange:'#f08a24',Pink:'#f08ab4',Red:'#e0343a',Silver:'#b9c0c9',Violet:'#8a4fd8',White:'#f2f2f2',Yellow:'#f2d625'};
 const MCF={Black:'Noir',Blue:'Bleu','Blue/Green':'Bleu/Vert',Bronze:'Bronze',Gold:'Or',Green:'Vert',Gunmetal:'Gunmetal',Magenta:'Magenta',Navy:'Bleu marine',Orange:'Orange',Pink:'Rose',Red:'Rouge',Silver:'Argent',Violet:'Violet',White:'Blanc',Yellow:'Jaune'};
@@ -772,6 +776,7 @@ T.forEach(x=>{ x.dn=(x.b+' '+(x.r||'')+x.bt).replace('  ',' ').trim(); x.n=x.dn+
 const IM={},PH={};
 T.forEach(x=>{ PH[x.n]={}; for(const k of ['blade','ratchet','bit']){ const p=x._p[k]; if(p){ PH[x.n][k]=p; if(!isMk(p)) IM[p]=p; } } });
 /* ---- Photos des toupies ajoutées : stockées dans IndexedDB (pas de limite de 5 Mo), le texte reste dans localStorage ---- */
+/* ===== Photos : IndexedDB (photos perso) + chemins du catalogue ===== */
 function isMk(v){ return typeof v==='string'&&v.indexOf('idb:')===0; }
 const PHF=[['photoBlade','blade'],['photoRatchet','ratchet'],['photoBit','bit']];
 const IDB={p:null};
@@ -807,6 +812,7 @@ const num=v=>parseFloat(String(v));
 const LINE_ORDER=['BX','UX','CX'],TYPE_ORDER=['Attack','Déf','Stamina','Balance'];
 const LINE_COL={BX:'var(--l-bx)',UX:'var(--l-ux)',CX:'var(--l-cx)'};
 const DEF_DESC={nom:false,poids:true,ligne:false,type:false,att:true,def:true,end:true,haut:false,dash:true,burst:true};
+/* ===== État de l'interface, icônes et tri ===== */
 const SI={att:0,def:1,end:2};
 let EDV='all'; try{ const e=localStorage.getItem('ed'); if(e==='hasbro'||e==='tt') EDV=e; }catch(e){}
 const st={tab:'toupies',view:'collection',cat:'blades',ed:EDV,key:'nom',desc:false,q:'',a:0,b:1,son:true,voix:false};
@@ -845,6 +851,7 @@ function setMc(){ st.mc=!st.mc; draw(); }
 function setEd(e){ st.ed=e; try{ localStorage.setItem('ed',e); }catch(x){} draw(); }
 const TF=()=>st.ed==='all'?T:T.filter(x=>x.ed===st.ed);
 function setQ(v){ st.q=v; renderList(); }
+/* ===== Options : notice, thème, fond, son ===== */
 const NOTICE=[
  ['Installer l\'appli (iPhone et Android)','<p><b>iPhone</b> : ouvre le site dans <b>Safari</b>, touche le bouton Partager, puis <b>Sur l\'écran d\'accueil</b>.</p><p><b>Android</b> : ouvre le site dans <b>Chrome</b>, touche le menu (les 3 points), puis <b>Installer l\'application</b> ou <b>Ajouter à l\'écran d\'accueil</b>.</p><p>L\'icône s\'ouvre ensuite en plein écran, comme une vraie appli. Si l\'ancien nom ou l\'ancienne icône reste affiché après une mise à jour, supprime le raccourci et rajoute-le. Joue toujours depuis l\'icône : le navigateur et l\'icône ne partagent pas leurs données.</p>'],
  ['Ajouter une toupie','<p>Onglet <b>Toupies</b>, bouton <b>+ Ajouter une toupie</b>.</p><ul><li>Remplis la ligne (BX, UX ou CX), les types, les noms et les poids en grammes.</li><li>Pas de ratchet (ratchet intégré à la blade) : laisse la partie Ratchet vide.</li><li>Les stats sont au dos de la boîte : chaque pièce (blade, ratchet, bit) a 3 barres Attack, Defense et Stamina avec un chiffre à côté. Recopie-les dans Att, Déf et End, les 3 ou aucun. Le ratchet a aussi une Height, le bit un Dash et un Burst.</li><li><b>Après chaque ajout (ou modification), pense à sauvegarder</b> : Options, puis Exporter. Tes toupies et tes photos sont gardées dans le navigateur, elles peuvent disparaître s\'il nettoie ses données.</li><li>3 photos : une pour la blade (elle sert aussi pour la toupie), une pour le ratchet, une pour le bit. Après le choix de la photo, tu la déplaces et la zoomes pour la centrer (bouton Recadrer pour la reprendre ensuite). Elle est ensuite allégée toute seule.</li></ul><p>Pour changer ou supprimer une toupie ajoutée, ouvre sa fiche et touche <b>Modifier</b>.</p>'],
@@ -2147,6 +2154,7 @@ new MutationObserver(()=>csEnhance(document.body)).observe(document.body,{childL
 csEnhance(document.body);
 draw();
 
+/* ===== Rappel de sauvegarde après un ajout ===== */
 function rmShow(){ if(document.getElementById('rm')) return; const e=document.createElement('div'); e.id='rm'; e.setAttribute('role','status');
   e.innerHTML='<div><b>Toupie enregistrée.</b> Pense à faire une sauvegarde : Options, puis Exporter. Sans ça, tu peux tout perdre si le navigateur nettoie ses données.</div><div class="fact"><button class="go sm" onclick="rmClose();setTab(\'opts\')">Aller à la sauvegarde</button><button class="chip" onclick="rmClose()">Plus tard</button></div>'; document.body.appendChild(e); }
 function rmClose(){ const e=document.getElementById('rm'); if(e) e.remove(); }
