@@ -117,7 +117,8 @@ details[open] summary{background:var(--accent-soft)}
 .sl{font:var(--fw-semi) var(--fs-xs) var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--text-2)}
 .bres{display:grid;gap:var(--sp-2);justify-items:center;text-align:center}.bres .tot{text-align:center;font-size:var(--fs-2xl)}
 .bres .sb{max-width:320px}.bres .sb i{font-size:var(--fs-sm);grid-template-columns:14px 1fr 30px}.bres .sb i u{height:6px}.bres .sb i b{font-size:var(--fs-sm)}
-.cmp{gap:var(--sp-1)}.ch{display:flex;justify-content:space-between;font:var(--fw-semi) var(--fs-lg) var(--font);padding:0 var(--sp-2)}
+.cmp{gap:var(--sp-1)}.ch{display:flex;justify-content:space-between;gap:var(--sp-2);font:var(--fw-semi) var(--fs-lg) var(--font);padding:0 var(--sp-2)}
+.ch span{min-width:0;max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cr{display:grid;grid-template-columns:1fr 1.3fr 1fr;align-items:center;text-align:center;padding:5px 0;border-top:1px solid var(--border)}
 .cr span{color:var(--text-2);font-size:var(--fs-sm);display:grid}.cr span small{font-size:10px}
 .cr b{font:var(--fw-semi) var(--fs-lg) var(--font);color:var(--text)}.cr b.cw.a{color:var(--pa)}.cr b.cw.b{color:var(--pink)}.cr b.tie{color:var(--text-2);opacity:.5}
@@ -560,7 +561,9 @@ function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.r
   var RX=[
     [/^Round (\d+) sur (\d+)$/,function(m){ return 'Round '+m[1]+' of '+m[2]; }],
     [/^Premier à (\d+)$/,function(m){ return 'First to '+m[1]; }],
-    [/^(.+) pour B$/,function(m){ return m[1]+' for B'; }],
+    [/^([+-]?[\d.]+) pour (.+)$/,function(m){ return m[1]+' for '+m[2]; }],
+    [/^Lancer un combat : (.+) contre (.+)$/,function(m){ return 'Start a battle: '+m[1]+' vs '+m[2]; }],
+    [/^Combat : (.+) contre (.+)$/,function(m){ return 'Battle: '+m[1]+' vs '+m[2]; }],
     [/^Joueur (\d)$/,function(m){ return 'Player '+m[1]; }],
     [/^Nom du joueur (\d)$/,function(m){ return 'Player '+m[1]+' name'; }],
     [/^Toupie (\d)$/,function(m){ return 'Bey '+m[1]; }],
@@ -1053,10 +1056,10 @@ function bdOne(n,L){
   const w=Math.round(parts.reduce((a,o)=>a+wnum(o.w),0)*10)/10;
   const own=T.find(x=>x.b===b.n&&(x.r||'')===(r?r.n:'')&&x.bt===t.n);
   const col=n?'var(--pink)':'var(--accent)';
-  const html=`<div class="pcard" style="--pc:${col}"><div class="sl" style="color:${col}">Build ${n?'B':'A'}${own?' · '+own.n:''}</div>
+  const html=`<div class="pcard" style="--pc:${col}"><div class="sl" style="color:${col}">${esc(b.n+' '+(r?r.n:'')+t.n)}</div>
     <div class="bgrid">${slot('Blade',b,sel(0,bl))}${slot('Ratchet',r,sel(1,ra,integ))}${slot('Bit',t,sel(2,bi))}</div>
     ${integ?'<div class="mut">Ratchet intégré à la blade.</div>':''}</div>`;
-  return {html,w,S:S3||[0,0,0],h:r&&r.h?+r.h:null,dash:t.dash!==''?+t.dash:null,burst:t.burst!==''?+t.burst:null};
+  return {html,nm:b.n,w,S:S3||[0,0,0],h:r&&r.h?+r.h:null,dash:t.dash!==''?+t.dash:null,burst:t.burst!==''?+t.burst:null};
 }
 function buildUI(){
   const L=bdLists(), a=bdOne(0,L), b=bdOne(1,L);
@@ -1065,14 +1068,15 @@ function buildUI(){
     const f=v=>v===null?'—':(Math.round(v*10)/10)+(unit||'');
     const d=(x!==null&&y!==null)?Math.round((y-x)*10)/10:null;
     const ca=win&&d!==null&&d<0?' cw a':win&&d===0?' tie':'', cb=win&&d!==null&&d>0?' cw b':win&&d===0?' tie':'';
-    return `<div class="cr"><b class="${ca}">${f(x)}</b><span>${lab}${d?`<small>${d>0?'+':''}${d} pour B</small>`:''}</span><b class="${cb}">${f(y)}</b></div>`;
+    return `<div class="cr"><b class="${ca}">${f(x)}</b><span>${lab}${d?`<small>${d>0?'+':''}${d} pour ${esc(b.nm)}</small>`:''}</span><b class="${cb}">${f(y)}</b></div>`;
   };
   const rows=[row('Poids',a.w,b.w,true,' g'),...(a.S[0]+a.S[1]+a.S[2]+b.S[0]+b.S[1]+b.S[2]>0?[row('Attaque',a.S[0],b.S[0],true),row('Défense',a.S[1],b.S[1],true),row('Stamina',a.S[2],b.S[2],true)]:[]),row('Hauteur',a.h,b.h,false),row('Dash',a.dash,b.dash,true),row('Burst',a.burst,b.burst,true)].join('');
-  return a.html+b.html+`<div class="pcard cmp"><div class="sl">Comparatif</div><div class="ch"><span style="color:var(--pa)">A</span><span style="color:var(--pink)">B</span></div>${rows}</div>`
-    +`<div class="bfw"><button class="go" onclick="bfAsk()">Lancer un combat A contre B</button><div class="mut note bfl">Attaque, Défense et Stamina n'apparaissent que si tu les as saisies : elles sont au dos des boîtes, à recopier à la main dans la fiche de la toupie (Modifier). <a href="#" onclick="st.view='collection';setTab('toupies');return false">Aller à mes toupies</a></div></div>`;
+  return a.html+b.html+`<div class="pcard cmp"><div class="sl">Comparatif</div><div class="ch"><span style="color:var(--pa)">${esc(a.nm)}</span><span style="color:var(--pink)">${esc(b.nm)}</span></div>${rows}</div>`
+    +`<div class="bfw"><button class="go" onclick="bfAsk()">Lancer un combat : ${esc(a.nm)} contre ${esc(b.nm)}</button><div class="mut note bfl">Attaque, Défense et Stamina n'apparaissent que si tu les as saisies : elles sont au dos des boîtes, à recopier à la main dans la fiche de la toupie (Modifier). <a href="#" onclick="st.view='collection';setTab('toupies');return false">Aller à mes toupies</a></div></div>`;
 }
 function bfAsk(){
-  const h=`<div class="fwrap"><div class="fh"><h2>Combat A contre B</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  const L=bdLists(), na=bdOne(0,L).nm, nb=bdOne(1,L).nm;
+  const h=`<div class="fwrap"><div class="fh"><h2>Combat : ${esc(na)} contre ${esc(nb)}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
   <div class="fs">Premier à</div><div class="chips" id="bfp">${[3,4,5,7,10].map(v=>`<button class="chip ${st.m.target===v?'on':''}" onclick="bfPick(${v})">${v} points</button>`).join('')}</div>
   <button class="addb cat" onclick="bfGo()">Lancer le combat</button></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
