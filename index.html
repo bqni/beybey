@@ -34,6 +34,14 @@ body.ishome .hdr,body.ishome .sub,body.ishome #ctl{display:none}
 .hmb small{font-size:10px;letter-spacing:.02em;text-transform:none;color:var(--muted,var(--text));opacity:.7;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hmb:active,.hm-ic:active,.hm-pill:active,.hm-go:active{transform:scale(.97);filter:brightness(1.25)}
 @media (max-height:700px){.hm-go{height:52px}.hmb{height:50px}}
+.hm-cl,.hm-cr{display:contents}
+@media (orientation:landscape) and (max-height:520px){
+.hmx{display:grid;grid-template-columns:1fr auto 1fr;grid-template-rows:auto auto auto;column-gap:var(--sp-4);row-gap:6px;align-items:center;max-width:none;padding:6px max(var(--sp-4),env(safe-area-inset-right,0px)) 0 max(var(--sp-4),env(safe-area-inset-left,0px))}
+.hm-top{grid-area:1/1/2/4}.hm-logo{grid-area:1/2;z-index:1;pointer-events:none}
+.hm-arena{grid-area:2/2;margin-top:0}.hm-go{grid-area:3/2;height:44px;font-size:var(--fs-lg)}
+.hm-grid{display:contents}.hm-cl,.hm-cr{display:flex;flex-direction:column;gap:var(--sp-2);align-self:center}
+.hm-cl{grid-area:2/1/4/2}.hm-cr{grid-area:2/3/4/4}.hmb{height:46px}
+}
 </style>
 <script>var t="futur";try{var L=localStorage;if(L.getItem("theme")===null&&L.getItem("bg")===null&&!L.getItem("arene_hist")&&!L.getItem("arene_custom")&&!L.getItem("arene_profil")){t="futurl";L.setItem("theme","futurl");L.setItem("bg","sparks")}else t=L.getItem("theme")||"futur"}catch(e){}if(t!=="futurl")t="futur";document.documentElement.dataset.theme=t;try{if(localStorage.getItem("zoom")==="1")document.querySelector("meta[name=viewport]").content="width=device-width, initial-scale=1, viewport-fit=cover"}catch(e){}</script>
 <style>
@@ -2257,10 +2265,11 @@ function homeTick(){
     stFinish({p:k==='nul'?-1:w,k}); HM.phase='after'; HM.tNext=now+(k==='Spin'||k==='nul'?5200:3600);
   } else homeRound(); }
 function homeFit(){
-  if(st.tab!=='home') return; const c=document.getElementById('hstg'), g=document.querySelector('.hm-grid'), t=document.getElementById('tabs'); if(!c||!g||!t) return;
-  const maxW=Math.min(380,c.parentElement.clientWidth||380); c.style.width=maxW+'px';
-  const slack=t.getBoundingClientRect().top-g.getBoundingClientRect().bottom-14;
-  c.style.width=Math.max(220,Math.min(maxW,Math.floor(maxW+slack)))+'px';
+  if(st.tab!=='home') return; const c=document.getElementById('hstg'), t=document.getElementById('tabs'); if(!c||!t) return;
+  const land=matchMedia('(orientation:landscape) and (max-height:520px)').matches, ref=document.querySelector(land?'.hm-go':'.hm-grid'); if(!ref) return;
+  const maxW=land?Math.min(380,innerHeight):Math.min(380,c.parentElement.clientWidth||380), base=land?100:maxW; c.style.width=base+'px';
+  const slack=t.getBoundingClientRect().top-ref.getBoundingClientRect().bottom-(land?8:14);
+  c.style.width=Math.max(land?100:220,Math.min(maxW,Math.floor(base+slack)))+'px';
 }
 addEventListener('resize',()=>{ if(st.tab==='home') homeFit(); });
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>homeFit());
@@ -2285,7 +2294,7 @@ function homeUI(){
     <div class="hm-logo" role="heading" aria-level="1">BEYBEY</div>
     <div class="hm-arena"><canvas id="hstg" aria-hidden="true"></canvas></div>
     <button class="go hm-go" onclick="setTab('match')">MATCH</button>
-    <div class="hm-grid">${b('toupies','Collection',nT+' toupies')}${b('build','Build','assembler')}${b('hist','Historique',nH+' matchs')}${b('pf','Profil',esc(PRF.n||'—'))}${b('fr','Amis',nF+(nF>1?' amis':' ami'))}${b('opts','Options','sauvegarde')}</div></div>`;
+    <div class="hm-grid"><div class="hm-cl">${b('toupies','Collection',nT+' toupies')}${b('build','Build','assembler')}${b('hist','Historique',nH+' matchs')}</div><div class="hm-cr">${b('pf','Profil',esc(PRF.n||'—'))}${b('fr','Amis',nF+(nF>1?' amis':' ami'))}${b('opts','Options','sauvegarde')}</div></div></div>`;
 }
 
 /* ===== Bienvenue (premier lancement) ===== */
