@@ -2322,6 +2322,14 @@ try{ const vv=window.visualViewport; let tm; const fixVp=()=>{ clearTimeout(tm);
   if(vv){ vv.addEventListener('resize',fixVp); vv.addEventListener('scroll',fixVp); }
   document.addEventListener('focusout',fixVp); addEventListener('orientationchange',fixVp); addEventListener('pageshow',fixVp);
 }catch(e){}
+// iPhone (appli installée) : avec le temps, iOS peut raccourcir la zone de page, et la barre du bas se retrouve au-dessus d'une bande vide.
+// On mesure l'écart entre la hauteur réelle de l'écran et celle de la page, et on redescend la barre d'autant.
+try{ const sa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
+  const fixBar=()=>{ const tb=document.getElementById('tabs'); if(!tb) return; let d=0;
+    if(sa&&innerHeight>innerWidth){ d=Math.max(screen.width,screen.height)-innerHeight; if(d<6||d>200) d=0; }
+    tb.style.bottom=d?(-d)+'px':''; document.documentElement.style.setProperty('--bar-gap',d+'px'); };
+  if(sa){ ['resize','pageshow','focus','orientationchange'].forEach(e=>addEventListener(e,fixBar)); document.addEventListener('visibilitychange',()=>{ if(!document.hidden) fixBar(); }); setInterval(fixBar,2000); fixBar(); }
+}catch(e){}
 </script>
 </body>
 </html>
