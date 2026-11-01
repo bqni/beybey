@@ -15,10 +15,10 @@
 /* ===== Accueil ===== */
 body.ishome .hdr,body.ishome .sub,body.ishome #ctl{display:none}
 .hmx{display:flex;flex-direction:column;gap:var(--sp-3);padding:var(--sp-3) var(--sp-4) 0;max-width:430px;margin:0 auto}
-.hm-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--sp-2);min-height:48px}.hm-r{justify-self:end}
+.hm-top{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);min-height:48px}
 .hm-me{justify-self:start;display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--text);padding:0;cursor:pointer;font:inherit}.hm-me b{font:var(--fw-bold) var(--fs-sm) var(--font);color:var(--accent);letter-spacing:.04em}
 .hm-av{position:relative;width:44px;height:44px;flex:none}.hm-av svg{position:absolute;inset:0;width:100%;height:100%}.hm-av i{position:absolute;inset:6px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--accent);font:var(--fw-bold) 15px var(--font);font-style:normal;overflow:hidden}.hm-av i img{width:100%;height:100%;object-fit:cover}
-.hm-logo{font:var(--fw-bold) var(--fs-lg)/1 var(--font);letter-spacing:.16em}
+.hm-logo{text-align:center;font:var(--fw-bold) var(--fs-lg)/1 var(--font);letter-spacing:.16em}
 .hm-r{display:flex;align-items:center;gap:var(--sp-2)}
 .hm-pill{height:40px;padding:0 var(--sp-3);border:1px solid var(--frame);background:var(--surface);color:var(--accent);font:var(--fw-semi) var(--fs-sm) var(--font);letter-spacing:.06em;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;clip-path:var(--poly-s,none)}
 .hm-ic{width:44px;height:40px;display:grid;place-items:center;border:1px solid var(--frame);background:var(--surface);color:var(--text);clip-path:var(--poly-s,none)}
@@ -2252,10 +2252,11 @@ function hmMe(){
 function homeUI(){
   const nT=T.length+(typeof cLoad==='function'?cLoad().length:0), nH=hLoad().length, nF=Object.keys(fLoad()).length, dark=(document.documentElement.dataset.theme||'futur')!=='futurl';
   const b=(k,l,s)=>`<button class="hmb" onclick="homeGo('${k}')"><span>${l}</span><small>${s}</small></button>`;
-  return `<div class="hmx"><div class="hm-top">${hmMe()}<div class="hm-logo">BEYBEY</div><div class="hm-r"><button class="hm-ic" onclick="homeTheme()" aria-label="${dark?'Passer en thème clair':'Passer en thème sombre'}">${dark?IC_MOON:IC_SUN}</button></div></div>
+  return `<div class="hmx"><div class="hm-top">${hmMe()}<div class="hm-r"><button class="hm-ic" onclick="homeTheme()" aria-label="${dark?'Passer en thème clair':'Passer en thème sombre'}">${dark?IC_MOON:IC_SUN}</button></div></div>
+    <div class="hm-logo">BEYBEY</div>
     <div class="hm-arena"><canvas id="hstg" aria-hidden="true"></canvas></div>
     <button class="go hm-go" onclick="setTab('match')">MATCH</button>
-    <div class="hm-grid">${b('toupies','Collection',nT+' toupies')}${b('hist','Historique',nH+' matchs')}${b('fr','Amis',nF+(nF>1?' amis':' ami'))}${b('build','Build','assembler')}${b('pf','Profil',esc(PRF.n||'—'))}${b('opts','Options','sauvegarde')}</div></div>`;
+    <div class="hm-grid">${b('toupies','Collection',nT+' toupies')}${b('build','Build','assembler')}${b('hist','Historique',nH+' matchs')}${b('pf','Profil',esc(PRF.n||'—'))}${b('fr','Amis',nF+(nF>1?' amis':' ami'))}${b('opts','Options','sauvegarde')}</div></div>`;
 }
 
 /* ===== Bienvenue (premier lancement) ===== */
