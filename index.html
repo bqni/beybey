@@ -559,7 +559,7 @@ Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec 
 Object.assign(I18N.TXT,{"Invitée": "Guest", "Toupie invitée": "Guest bey", "Choisir dans le catalogue…": "Pick from the catalog…", "Ou écris son nom…": "Or type its name…", "Nom de la toupie": "Bey name", "Toupie invitée : elle n'est pas ajoutée à ta collection.": "Guest bey: it is not added to your collection."});
 Object.assign(I18N.TXT,{"Toupie custom": "Custom bey", "Ma collection": "My collection", "Catalogue : rien n'est ajouté à ta collection.": "Catalog: nothing is added to your collection."});
 Object.assign(I18N.TXT,{"Lancer un combat A contre B": "Start a battle A vs B", "Les règles (points, rounds) se règlent dans l'onglet Match.": "Rules (points, rounds) are set in the Match tab."});
-Object.assign(I18N.TXT,{"Nom du build (optionnel)":"Build name (optional)","Enregistrer dans Mes toupies":"Save to My beys","Il manque une pièce.":"A part is missing.","Nom perso (optionnel)":"Custom name (optional)","Choisir une toupie":"Choose a bey","Ajouter une toupie":"Add a bey","Changer":"Change","Retour":"Back","Choisir cette toupie":"Choose this bey","Toupie":"Bey","Catalogue":"Catalogue","Tape un nom pour chercher dans le catalogue.":"Type a name to search the catalogue.","Affine ta recherche pour voir les autres.":"Refine your search to see the others.","Rien dans le catalogue.":"Nothing in the catalogue.","Rien trouvé.":"Nothing found.","Tu peux changer les pièces ou garder celles-ci.":"You can change the parts or keep these.","Ajoute une toupie à chaque emplacement pour lancer le match.":"Add a bey to every slot to start the match.","Série":"Series","Match unique":"Single match","Match suivant":"Next match"});
+Object.assign(I18N.TXT,{"Nom du build (optionnel)":"Build name (optional)","Nom du build":"Build name","Donne un nom à ton build pour l'enregistrer.":"Give your build a name to save it.","Ma collection":"My collection","Enregistrer dans Mes toupies":"Save to My beys","Il manque une pièce.":"A part is missing.","Nom perso (optionnel)":"Custom name (optional)","Choisir une toupie":"Choose a bey","Ajouter une toupie":"Add a bey","Changer":"Change","Retour":"Back","Choisir cette toupie":"Choose this bey","Toupie":"Bey","Catalogue":"Catalogue","Tape un nom pour chercher dans le catalogue.":"Type a name to search the catalogue.","Affine ta recherche pour voir les autres.":"Refine your search to see the others.","Rien dans le catalogue.":"Nothing in the catalogue.","Rien trouvé.":"Nothing found.","Tu peux changer les pièces ou garder celles-ci.":"You can change the parts or keep these.","Ajoute une toupie à chaque emplacement pour lancer le match.":"Add a bey to every slot to start the match.","Série":"Series","Match unique":"Single match","Match suivant":"Next match"});
 Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat": "Start the battle"});
 Object.assign(I18N.TXT,{"Aucun":"None"});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
@@ -1053,18 +1053,25 @@ function bdSet(n,k,v){ BD[n][k]=+v; draw(); }
 async function bdSave(n,btn){
   const L=bdLists(), B=BD[n], b=L.bl[B[0]], r=b.integ?null:L.ra[B[1]], t=L.bi[B[2]], msg=document.getElementById('bm'+n);
   const say=m=>{ if(msg) msg.textContent=m; };
+  const nom=(BN[n]||'').trim();
+  if(!nom){ const e=document.querySelectorAll('.bnm')[n]; if(e) e.focus(); return say(LT('Donne un nom à ton build pour l\'enregistrer.')); }
   if(!b||!t) return say(LT('Il manque une pièce.'));
-  const Tb=T[b.i], Tr=r?T[r.i]:null, Tt=T[t.i];
-  const o={id:Date.now(),blade:Tb.b,ligne:Tb.l,typeBlade:Tb.bty,typeToupie:Tt.t||Tb.t,edition:Tb.ed,ratchet:Tr?Tr.r:'',bit:Tt.bt,poidsBlade:Tb.wb,poidsRatchet:Tr?Tr.wr:'',poidsBit:Tt.wbt};
-  if(Tr&&(Tr.h||hNom(Tr.r))) o.hauteurRatchet=+(Tr.h||hNom(Tr.r));
-  if(Tt.dash!=='') o.dashBit=+Tt.dash; if(Tt.burst!=='') o.burstBit=+Tt.burst;
-  if(Tb.sb) o.statsBlade=Tb.sb; if(Tr&&Tr.sr) o.statsRatchet=Tr.sr; if(Tt.sbt) o.statsBit=Tt.sbt;
-  const nom=(BN[n]||'').trim(); if(nom) o.nom=nom;
-  const er=cErr(o); if(er.length) return say(er[0]);
+  const Tb=b.cat?null:T[b.i], Tr=r&&!r.cat?T[r.i]:null, Tt=t.cat?null:T[t.i];
+  const o={id:Date.now(),nom,
+    blade:b.cat?b.c.n:Tb.b, ligne:b.cat?b.c.l:Tb.l, typeBlade:b.cat?b.c.bt:Tb.bty,
+    typeToupie:(Tt&&Tt.t)||(t.cat&&t.ty)||(b.cat?b.tt:Tb.t), edition:b.cat?b.c.e:Tb.ed,
+    ratchet:r?(r.cat?r.c.n:Tr.r):'', bit:t.cat?t.c.n:Tt.bt,
+    poidsBlade:b.cat?b.c.w:Tb.wb, poidsRatchet:r?(r.cat?r.c.w:Tr.wr):'', poidsBit:t.cat?t.c.w:Tt.wbt};
+  if(r){ const h=r.cat?r.c.h:(Tr.h||hNom(Tr.r)); const hh=h||hNom(o.ratchet); if(hh) o.hauteurRatchet=+hh; }
+  if(Tt){ if(Tt.dash!=='') o.dashBit=+Tt.dash; if(Tt.burst!=='') o.burstBit=+Tt.burst; if(Tt.sbt) o.statsBit=Tt.sbt; }
+  if(Tb&&Tb.sb) o.statsBlade=Tb.sb; if(Tr&&Tr.sr) o.statsRatchet=Tr.sr;
+  const er=cErr(o); if(er.length) return say(LT(er[0]));
   const nm=nmOf(o), dp=T.find(x=>x.n===nm);
   if(dp) return say(LT('Tu as déjà cette toupie')+' : '+(dp.nom||dp.n)+'.');
   if(btn) btn.disabled=true;
-  try{ for(const [f,k] of PHF){ const v=(f==='photoBlade'?Tb:f==='photoRatchet'?Tr:Tt); const pv=v&&v._p&&v._p[k]; if(!pv) continue; o[f]=isMk(pv)?await pStore(o.id,k,IM[pv]):pv; } }catch(e){}
+  try{ for(const [f,k] of PHF){ const part=f==='photoBlade'?b:f==='photoRatchet'?r:t, src=f==='photoBlade'?Tb:f==='photoRatchet'?Tr:Tt;
+      if(part&&part.cat){ if(part.c.im) o[f]=part.c.im; continue; }
+      const pv=src&&src._p&&src._p[k]; if(!pv) continue; o[f]=isMk(pv)?await pStore(o.id,k,IM[pv]):pv; } }catch(e){}
   const all=cLoad(); all.push(o);
   if(!cSave(all)){ if(btn) btn.disabled=false; return say(LT('Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.')); }
   try{ sessionStorage.setItem('bb_rm','1'); }catch(e){}
@@ -1075,13 +1082,26 @@ function bdLists(){
   const bl=T.map((x,i)=>({i,n:x.b,s:x.sb,w:x.wb,ty:x.bty,img:P(x).blade,integ:!x.r&&!x.sr}));
   const ra=T.map((x,i)=>({x,i})).filter(o=>o.x.r).map(o=>({i:o.i,n:o.x.r,s:o.x.sr,w:o.x.wr,h:o.x.h,img:P(o.x).ratchet}));
   const seen={},bi=[]; T.forEach((x,i)=>{ if(seen[x.bt]) return; seen[x.bt]=1; bi.push({i,n:x.bt,s:x.sbt,w:x.wbt,ty:x.t,dash:x.dash,burst:x.burst,img:P(x).bit}); });
-  return {bl,ra,bi};
+  const nOwn=[bl.length,ra.length,bi.length];
+  if(CAT.length){
+    const C=cptBuild(), sb={},sr={},si={};
+    bl.forEach(o=>sb[o.n]=1); ra.forEach(o=>sr[o.n]=1); bi.forEach(o=>si[o.n]=1);
+    Object.values(C.B).sort(cpSort).forEach(c=>{ if(sb[c.n]) return; sb[c.n]=1;
+      const integ=!CAT.some(x=>x.b===c.n&&x.e===c.e&&(x.r||x.bo));
+      const f=CAT.find(x=>x.b===c.n&&x.e===c.e);
+      bl.push({cat:1,c,n:c.n,w:c.w,ty:c.bt,img:c.im,integ,tt:f&&f.t}); });
+    Object.values(C.R).sort(cpSort).forEach(c=>{ if(sr[c.n]) return; sr[c.n]=1; ra.push({cat:1,c,n:c.n,w:c.w,h:c.h,img:c.im}); });
+    Object.values(C.I).sort(cpSort).forEach(c=>{ if(si[c.n]) return; si[c.n]=1; const f=CAT.find(x=>x.bi===c.n); bi.push({cat:1,c,n:c.n,w:c.w,ty:f&&f.t,dash:'',burst:'',img:c.im}); });
+  }
+  return {bl,ra,bi,nOwn};
 }
 function bdOne(n,L){
   const {bl,ra,bi}=L, B=BD[n];
   B[0]=Math.min(B[0],bl.length-1); B[1]=Math.min(B[1],ra.length-1); B[2]=Math.min(B[2],bi.length-1);
   const b=bl[B[0]], integ=b.integ, r=integ?null:ra[B[1]], t=bi[B[2]];
-  const sel=(k,Ls,dis)=>`<select ${dis?'disabled':''} onchange="bdSet(${n},${k},this.value)">${Ls.map((o,i)=>`<option value="${i}" ${i===B[k]?'selected':''}>${o.n}</option>`).join('')}</select>`;
+  const sel=(k,Ls,dis)=>{ const no=L.nOwn[k], op=(o,i)=>`<option value="${i}" ${i===B[k]?'selected':''}>${esc(o.n)}</option>`;
+    const body=(no>0&&no<Ls.length)?`<optgroup label="${LT('Ma collection')}">${Ls.slice(0,no).map((o,i)=>op(o,i)).join('')}</optgroup><optgroup label="${LT('Catalogue')}">${Ls.slice(no).map((o,i)=>op(o,i+no)).join('')}</optgroup>`:Ls.map(op).join('');
+    return `<select ${dis?'disabled':''} onchange="bdSet(${n},${k},this.value)">${body}</select>`; };
   const slot=(lab,o,S)=>`<div class="bslot"><span class="sl">${lab}</span>${o?img(o.img,'xs'):'<div class="pimg xs"></div>'}${S}</div>`;
   const parts=[b,r,t].filter(Boolean);
   const S3=sum3(b.s,r&&r.s,t.s);
@@ -1091,7 +1111,7 @@ function bdOne(n,L){
   const html=`<div class="pcard" style="--pc:${col}"><div class="sl" style="color:${col}">${esc(b.n+' '+(r?r.n:'')+t.n)}</div>
     <div class="bgrid">${slot('Blade',b,sel(0,bl))}${slot('Ratchet',r,sel(1,ra,integ))}${slot('Bit',t,sel(2,bi))}</div>
     ${integ?'<div class="mut">Ratchet intégré à la blade.</div>':''}
-    <input class="nm bnm" value="${esc(BN[n])}" oninput="BN[${n}]=this.value" placeholder="${LT('Nom du build (optionnel)')}" aria-label="${LT('Nom du build (optionnel)')}" autocomplete="off">
+    <input class="nm bnm" value="${esc(BN[n])}" oninput="BN[${n}]=this.value" placeholder="${LT('Nom du build')}" aria-label="${LT('Nom du build')}" required autocomplete="off">
     <button class="chip bsv" onclick="bdSave(${n},this)">${LT('Enregistrer dans Mes toupies')}</button><div class="mut note bmsg" id="bm${n}"></div></div>`;
   return {html,nm:b.n,w,S:S3||[0,0,0],h:r&&r.h?+r.h:null,dash:t.dash!==''?+t.dash:null,burst:t.burst!==''?+t.burst:null};
 }
