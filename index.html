@@ -550,6 +550,7 @@ Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec 
 Object.assign(I18N.TXT,{"Invitée": "Guest", "Toupie invitée": "Guest bey", "Choisir dans le catalogue…": "Pick from the catalog…", "Ou écris son nom…": "Or type its name…", "Nom de la toupie": "Bey name", "Toupie invitée : elle n'est pas ajoutée à ta collection.": "Guest bey: it is not added to your collection."});
 Object.assign(I18N.TXT,{"Toupie custom": "Custom bey", "Ma collection": "My collection", "Catalogue : rien n'est ajouté à ta collection.": "Catalog: nothing is added to your collection."});
 Object.assign(I18N.TXT,{"Lancer un combat A contre B": "Start a battle A vs B", "Les règles (points, rounds) se règlent dans l'onglet Match.": "Rules (points, rounds) are set in the Match tab."});
+Object.assign(I18N.TXT,{"Série":"Series","Match unique":"Single match","Match suivant":"Next match"});
 Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat": "Start the battle"});
 Object.assign(I18N.TXT,{"Aucun":"None"});
 function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
@@ -559,7 +560,8 @@ function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.r
   var TX=I18N.TXT,HT=I18N.HTML,AT=I18N.ATTR;
   var pl=function(n,s,p){ return n+' '+(n==1?s:p); };
   var RX=[
-    [/^Round (\d+) sur (\d+)$/,function(m){ return 'Round '+m[1]+' of '+m[2]; }],
+    [/^(.*?)Round (\d+) sur (\d+)$/,function(m){ return m[1]+'Round '+m[2]+' of '+m[3]; }],
+    [/^(.+) remporte la série (\d+) à (\d+)$/,function(m){ return tr(m[1])+' wins the series '+m[2]+' to '+m[3]; }],
     [/^Premier à (\d+)$/,function(m){ return 'First to '+m[1]; }],
     [/^([+-]?[\d.]+) pour (.+)$/,function(m){ return m[1]+' for '+m[2]; }],
     [/^Lancer un combat : (.+) contre (.+)$/,function(m){ return 'Start a battle: '+m[1]+' vs '+m[2]; }],
@@ -1078,11 +1080,13 @@ function bfAsk(){
   const L=bdLists(), na=bdOne(0,L).nm, nb=bdOne(1,L).nm;
   const h=`<div class="fwrap"><div class="fh"><h2>Combat : ${esc(na)} contre ${esc(nb)}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
   <div class="fs">Premier à</div><div class="chips" id="bfp">${[3,4,5,7,10].map(v=>`<button class="chip ${st.m.target===v?'on':''}" onclick="bfPick(${v})">${v} points</button>`).join('')}</div>
+  <div class="fs">Série</div><div class="chips" id="bfb">${[[1,'Match unique'],[3,'BO3'],[5,'BO5'],[7,'BO7']].map(([v,l])=>`<button class="chip ${(st.m.bo||1)===v?'on':''}" onclick="bfBo(${v})">${l}</button>`).join('')}</div>
   <button class="addb cat" onclick="bfGo()">Lancer le combat</button></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
   f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
 }
 function bfPick(v){ st.m.target=v; document.querySelectorAll('#bfp .chip').forEach(b=>b.classList.toggle('on',b.textContent.trim().indexOf(v+' ')===0)); }
+function bfBo(v){ st.m.bo=v; document.querySelectorAll('#bfb .chip').forEach((b,i)=>b.classList.toggle('on',[1,3,5,7][i]===v)); }
 function bfGo(){ st.m.rounds=0; fmClose(); buildFight(); }
 function buildFight(){
   const L=bdLists(), biT=[], seen={}; T.forEach((x,i)=>{ if(seen[x.bt]) return; seen[x.bt]=1; biT.push(i); });
@@ -1118,7 +1122,7 @@ function draw(){
 const wnum=v=>(typeof v==='string'&&v.includes('-'))?v.split('-').reduce((a,b)=>a+ +b,0)/2:num(v);
 const RA=T.map((x,i)=>x.r?i:-1).filter(i=>i>=0);
 const mk=i=>{ if(!T.length) return {mode:'stock',stock:0,blade:0,ratchet:-1,bit:0}; i%=T.length;return {mode:'stock',stock:i,blade:i,ratchet:T[i].r?i:-1,bit:i};};
-st.m={mode:'simple',target:4,rounds:0,names:[LT('Joueur 1'),LT('Joueur 2')],p:[[mk(0),mk(1),mk(2)],[mk(3),mk(4),mk(5)]]};
+st.m={mode:'simple',target:4,bo:1,rounds:0,names:[LT('Joueur 1'),LT('Joueur 2')],p:[[mk(0),mk(1),mk(2)],[mk(3),mk(4),mk(5)]]};
 const PCOL=['var(--pa)','var(--pink)'];
 let G=null,tmr=null;
 
@@ -1169,7 +1173,7 @@ function matchUI(){
     +'<div class="pcard soon"><div class="sl">Tournoi</div><b>Arrive bientôt</b><div class="mut">Un tableau à élimination directe : tu ajoutes les joueurs, chacun enregistre ses toupies, et c\'est parti.</div></div>';
   const n=M.mode==='tournoi'?3:1;
   const modes='<div class="frame f3">'+[['simple','Match simple'],['tournoi','Match 3v3'],['bracket','Tournoi']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div>';
-  const rules=`<div class="rules"><label>Premier à<select onchange="mSet('target',+this.value)">${opt([3,4,5,7,10].map(v=>[v,v+' points']),M.target)}</select></label></div>`;
+  const rules=`<div class="rules"><label>Premier à<select onchange="mSet('target',+this.value)">${opt([3,4,5,7,10].map(v=>[v,v+' points']),M.target)}</select></label><label>Série<select onchange="mSet('bo',+this.value)">${opt([[1,'Match unique'],[3,'BO3'],[5,'BO5'],[7,'BO7']],M.bo||1)}</select></label></div>`;
   const note=M.mode==='tournoi'?'<div class="mut note">3 toupies par joueur, une par round, chacune une seule fois. Fin après 3 rounds ou au score.</div>':'';
   const players=[0,1].map(p=>`<div class="pcard p${p}" style="--pc:${PCOL[p]}"><input class="nm" value="${esc(M.names[p])}" oninput="st.m.names[${p}]=this.value" aria-label="Nom du joueur ${p+1}">${Array.from({length:n},(_,s)=>slotUI(p,s)).join('')}</div>`).join('');
   return '<div class="top">'+modes+rules+'</div>'+note+'<div class="pls">'+players+'</div>'+`<div class="act"><div class="opts"><label><input type="checkbox" ${st.son?'checked':''} onchange="st.son=this.checked"> Son</label></div><button class="go" onclick="startMatch()">Lancer le match</button></div>`+histUI(M.mode);
@@ -1186,7 +1190,7 @@ function startMatch(){
   try{ ctx(); }catch(e){}
   const M=JSON.parse(JSON.stringify(st.m)),tour=M.mode==='tournoi';
   stopTimer(); run++;
-  G={M,tour,round:1,score:[0,0],hist:[],used:[[],[]],cur:[0,0],pick:[null,null],t:0,t0:0,
+  G={M,tour,bo:M.bo||1,wins:[0,0],mn:1,cw:-1,sw:-1,round:1,score:[0,0],hist:[],used:[[],[]],cur:[0,0],pick:[null,null],t:0,t0:0,
      max:tour?Math.min(3,M.rounds||3):M.rounds,phase:tour?'pick':'ready',ready:[false,false]};
   document.getElementById('ov').classList.add('show'); arena(); goLandscape();
 }
@@ -1241,6 +1245,7 @@ function setReady(p){
 function winText(){
   const [a,b]=G.score,t=G.M.target,n=G.M.names;
   const w=a>=t?0:b>=t?1:a>b?0:b>a?1:-1;
+  if(G.bo>1&&G.phase==='over'&&G.sw>=0) return `${esc(n[G.sw])} remporte la série ${G.wins[G.sw]} à ${G.wins[1-G.sw]}`;
   return w<0?`Égalité ${a} à ${b}`:`${esc(n[w])} gagne ${a} à ${b}`;
 }
 /* ===== Mini-scène : les deux toupies ===== */
@@ -1493,9 +1498,9 @@ function arena(){
     ready:`<canvas id="stg"></canvas><div class="mut">Quand vous êtes prêts, appuyez chacun sur <b>Prêt</b> : le 3, 2, 1 part tout seul</div>`,
     fight:`<div class="tm" id="tm">${fmt(Date.now()-G.t0)}</div><canvas id="stg"></canvas><button class="chip" onclick="nul()">Round nul</button>`,
     scored:`<div class="tm">${fmt(G.t)}</div><canvas id="stg"></canvas><div class="bn2">${last}</div><div class="row2"><button class="chip" onclick="undo()">Annuler</button><button class="go sm" onclick="nextRound()">Round suivant</button></div>`,
-    over:`<div class="win">${winText()}</div><canvas id="stg"></canvas><div class="row2"><button class="chip" onclick="undo()">Annuler</button><button class="chip" onclick="stopMatch()">Fermer</button><button class="go sm" onclick="startMatch()">Rejouer</button></div>`
+    over:`<div class="win">${winText()}</div>${G.bo>1?`<div class="bn2">${esc(G.M.names[0])} ${G.wins[0]} – ${G.wins[1]} ${esc(G.M.names[1])}</div>`:''}<canvas id="stg"></canvas><div class="row2"><button class="chip" onclick="undo()">Annuler</button><button class="chip" onclick="stopMatch()">Fermer</button>${G.bo>1&&G.sw<0?'<button class="go sm" onclick="nextMatch()">Match suivant</button>':'<button class="go sm" onclick="startMatch()">Rejouer</button>'}</div>`
   }[G.phase];
-  setOv(`<div class="arena"><div class="ahd">${xbtn}<span>Round ${G.round}${G.max?' sur '+G.max:''}</span><span>Premier à ${G.M.target}</span></div><div class="mid">${mid}</div>${side(0)}${side(1)}</div>`);
+  setOv(`<div class="arena"><div class="ahd">${xbtn}<span>${G.bo>1?'BO'+G.bo+' · '+G.wins[0]+'–'+G.wins[1]+' · Match '+G.mn+' · ':''}Round ${G.round}${G.max?' sur '+G.max:''}</span><span>Premier à ${G.M.target}</span></div><div class="mid">${mid}</div>${side(0)}${side(1)}</div>`);
   mountStage();
 }
 const cdc=p=>{ const r=cur(p); return `<div class="cdc p${p}" style="--pc:${PCOL[p]}"><div class="cdp"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}</div><div class="cdn"><div class="bn">${r.blade}</div><div class="bs">${r.name===r.blade?'':r.name}</div></div></div>`; };
@@ -1542,7 +1547,7 @@ function hSave(a){ try{ localStorage.setItem(HKEY,JSON.stringify(a.slice(0,300))
 function histAdd(){
   try{
     const names=[0,1].map(p=>(G.tour?G.used[p]:[G.cur[p]]).map(sl=>resolve(G.M.p[p][sl]).name));
-    const rec={id:Date.now(),cat:G.tour?'tournoi':'simple',n:[G.M.names[0],G.M.names[1]],b:names,s:[G.score[0],G.score[1]],tg:G.M.target,r:G.hist.length,w:G.score[0]>G.score[1]?0:G.score[1]>G.score[0]?1:-1};
+    const rec={id:Date.now(),cat:G.tour?'tournoi':'simple',n:[G.M.names[0],G.M.names[1]],b:names,s:[G.score[0],G.score[1]],tg:G.M.target,bo:G.bo>1?G.bo:0,mn:G.mn,r:G.hist.length,w:G.score[0]>G.score[1]?0:G.score[1]>G.score[0]?1:-1};
     const a=hLoad(); a.unshift(rec); hSave(a); G.hid=rec.id;
   }catch(e){}
 }
@@ -1553,15 +1558,24 @@ function histUI(cat){
   const when=id=>{ const d=new Date(id); return d.toLocaleDateString(LOC,{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString(LOC,{hour:'2-digit',minute:'2-digit'}); };
   const rows=L.slice(0,40).map(r=>{
     const w=r.w,nm=i=>`<span class="hn ${w===i?'hw':''}" style="color:${i?'var(--pink)':'var(--pa)'}">${esc(r.n[i])}</span>`;
-    return `<div class="hr"><div class="hd mut">${when(r.id)} · ${r.r} round${r.r>1?'s':''} · à ${r.tg}</div><div class="hm">${nm(0)}<b class="hsc">${r.s[0]} – ${r.s[1]}</b>${nm(1)}</div><div class="hs mut">${r.b[0].map(esc).join(' · ')} <i>vs</i> ${r.b[1].map(esc).join(' · ')}</div>${w<0?'<div class="mut">Égalité</div>':''}</div>`;
+    return `<div class="hr"><div class="hd mut">${when(r.id)} · ${r.r} round${r.r>1?'s':''} · à ${r.tg}${r.bo?' · BO'+r.bo+' · M'+r.mn:''}</div><div class="hm">${nm(0)}<b class="hsc">${r.s[0]} – ${r.s[1]}</b>${nm(1)}</div><div class="hs mut">${r.b[0].map(esc).join(' · ')} <i>vs</i> ${r.b[1].map(esc).join(' · ')}</div>${w<0?'<div class="mut">Égalité</div>':''}</div>`;
   }).join('');
   return `<div class="pcard hist"><div class="hh"><div class="sl">Historique · ${title}</div>${L.length?`<button class="chip" onclick="histClear('${cat}')">Vider</button>`:''}</div>${L.length?`<div class="mut">${L.length} match${L.length>1?'s':''} terminé${L.length>1?'s':''}</div>${rows}`:'<div class="mut">Aucun match pour l\'instant. Termine un match pour le retrouver ici.</div>'}</div>`;
+}
+function serieEnd(){
+  const [a,b]=G.score; G.cw=a>b?0:b>a?1:-1; G.sw=-1;
+  if(G.bo>1&&G.cw>=0){ G.wins[G.cw]++; if(G.wins[G.cw]>=Math.ceil(G.bo/2)) G.sw=G.cw; }
+}
+function nextMatch(){
+  if(!G||G.phase!=='over'||G.bo<2||G.sw>=0) return; playSnd('next');
+  G.mn++; G.round=1; G.score=[0,0]; G.hist=[]; G.used=[[],[]]; G.cur=[0,0]; G.pick=[null,null]; G.ready=[false,false]; G.hid=null; G.cw=-1; G.t=0; G.t0=0;
+  G.phase=G.tour?'pick':'ready'; ST.fid=-1; arena();
 }
 function endRound(){
   stopTimer(); G.t=Date.now()-G.t0;
   const t=G.M.target;
   G.phase=(G.score[0]>=t||G.score[1]>=t||(G.max&&G.round>=G.max))?'over':'scored';
-  if(G.phase==='over'){ histAdd(); [784,988,1319].forEach((f,i)=>setTimeout(()=>beep(f,.4,.35),i*220)); buzz([120,60,120,60,300]); }
+  if(G.phase==='over'){ serieEnd(); histAdd(); [784,988,1319].forEach((f,i)=>setTimeout(()=>beep(f,.4,.35),i*220)); buzz([120,60,120,60,300]); }
   arena();
 }
 function score(p,pts,k){
@@ -1573,6 +1587,7 @@ function nul(){ if(!G||G.phase!=='fight') return; playSnd('nul'); G.hist.push({p
 function undo(){
   if(!G||G.phase==='fight'||!G.hist.length) return;
   if(G.hid){ histDel(G.hid); G.hid=null; }
+  if(G.phase==='over'&&G.bo>1&&G.cw>=0){ G.wins[G.cw]--; G.cw=-1; G.sw=-1; }
   const h=G.hist.pop(); if(h.p>=0) G.score[h.p]-=h.pts;
   G.phase='fight'; G.t0=Date.now()-h.t; arena(); startTimer();
 }
