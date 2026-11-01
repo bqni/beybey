@@ -1050,11 +1050,21 @@ function renderList(){
 }
 const BD=[[0,0,0],[1,0,0]], BN=['',''];
 function bdSet(n,k,v){ BD[n][k]=+v; draw(); }
+function bdAsk(n){
+  const h=`<div class="fwrap"><div class="fh"><h2>${LT('Nom du build')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  <input class="nm" id="bdq" value="${esc(BN[n]||'')}" placeholder="${LT('Nom du build')}" aria-label="${LT('Nom du build')}" autocomplete="off" maxlength="40" onkeydown="if(event.key==='Enter'){event.preventDefault();bdSave(${n},document.getElementById('bdq_b'));}">
+  <div class="mut note bmsg" id="bdq_m"></div>
+  <button class="addb cat" id="bdq_b" onclick="bdSave(${n},this)">${LT('Enregistrer dans Mes toupies')}</button></div>`;
+  let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
+  setTimeout(()=>{ const e=document.getElementById('bdq'); if(e) e.focus(); },60);
+}
 async function bdSave(n,btn){
   const L=bdLists(), B=BD[n], b=L.bl[B[0]], r=b.integ?null:L.ra[B[1]], t=L.bi[B[2]], msg=document.getElementById('bm'+n);
-  const say=m=>{ if(msg) msg.textContent=m; };
+  const say=m=>{ const d=document.getElementById('bdq_m'); const e=d||msg; if(e) e.textContent=m; };
+  const qi=document.getElementById('bdq'); if(qi) BN[n]=qi.value;
   const nom=(BN[n]||'').trim();
-  if(!nom){ const e=document.querySelectorAll('.bnm')[n]; if(e) e.focus(); return say(LT('Donne un nom à ton build pour l\'enregistrer.')); }
+  if(!nom){ if(qi) qi.focus(); return say(LT('Donne un nom à ton build pour l\'enregistrer.')); }
   if(!b||!t) return say(LT('Il manque une pièce.'));
   const Tb=b.cat?null:T[b.i], Tr=r&&!r.cat?T[r.i]:null, Tt=t.cat?null:T[t.i];
   const o={id:Date.now(),nom,
@@ -1111,8 +1121,7 @@ function bdOne(n,L){
   const html=`<div class="pcard" style="--pc:${col}"><div class="sl" style="color:${col}">${esc(b.n+' '+(r?r.n:'')+t.n)}</div>
     <div class="bgrid">${slot('Blade',b,sel(0,bl))}${slot('Ratchet',r,sel(1,ra,integ))}${slot('Bit',t,sel(2,bi))}</div>
     ${integ?'<div class="mut">Ratchet intégré à la blade.</div>':''}
-    <input class="nm bnm" value="${esc(BN[n])}" oninput="BN[${n}]=this.value" placeholder="${LT('Nom du build')}" aria-label="${LT('Nom du build')}" required autocomplete="off">
-    <button class="chip bsv" onclick="bdSave(${n},this)">${LT('Enregistrer dans Mes toupies')}</button><div class="mut note bmsg" id="bm${n}"></div></div>`;
+    <button class="chip bsv" onclick="bdAsk(${n})">${LT('Enregistrer dans Mes toupies')}</button><div class="mut note bmsg" id="bm${n}"></div></div>`;
   return {html,nm:b.n,w,S:S3||[0,0,0],h:r&&r.h?+r.h:null,dash:t.dash!==''?+t.dash:null,burst:t.burst!==''?+t.burst:null};
 }
 function buildUI(){
