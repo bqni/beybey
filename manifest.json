@@ -16,5 +16,14 @@
    "sizes": "512x512",
    "type": "image/png"
   }
+ ],
+ "id": "./",
+ "lang": "fr",
+ "description": "Collection Beyblade X, builds et matchs entre amis.",
+ "scope": "./",
+ "orientation": "any",
+ "categories": [
+  "games",
+  "utilities"
  ]
 }

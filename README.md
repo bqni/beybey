@@ -36,3 +36,5 @@ Le catalogue vient de [Beydex Public Resources](https://github.com/catgamer109/B
 
 [PolyForm Noncommercial 1.0.0](LICENSE) : libre d'utiliser, modifier et partager, **sans usage commercial**.
 Projet de fan, non affilié à Takara Tomy ni à Hasbro.
+
+Polices : Chakra Petch et Inter (licence SIL OFL), hébergées dans le dossier fonts/ : aucune requête vers Google, et elles marchent hors ligne.

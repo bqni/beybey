@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Beybey · Arène Beyblade</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="description" content="Beybey : ta collection Beyblade X, des comparaisons de builds et des matchs entre amis. Projet de fan, gratuit, tout reste sur ton appareil.">
+<meta property="og:title" content="Beybey · Arène Beyblade"><meta property="og:description" content="Collection, builds et matchs Beyblade X. Projet de fan, données gardées sur ton appareil."><meta property="og:image" content="https://bqni.github.io/beybey/icon-512.png"><meta property="og:type" content="website">
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/chakra-petch-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/chakra-petch-latin-500-normal.woff2) format('woff2')}@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/chakra-petch-latin-600-normal.woff2) format('woff2')}@font-face{font-family:'Chakra Petch';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/chakra-petch-latin-700-normal.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-latin-500-normal.woff2) format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-latin-600-normal.woff2) format('woff2')}</style>
 <script>var t="futur";try{t=localStorage.getItem("theme")||"futur"}catch(e){}if(t!=="futurl")t="futur";document.documentElement.dataset.theme=t</script>
 <style>
 /* ===== Design tokens ===== */
@@ -508,10 +510,10 @@ html[data-bg="hex"] #bgc,html[data-bg="sparks"] #bgc{display:block}
 .nm.ff{color:var(--text)}
 .pf .nm{width:100%}.pfg{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-2);text-align:center}.pfc b{display:block;font-size:var(--fs-lg);color:var(--text)}.pft{display:flex;justify-content:space-between;align-items:baseline;gap:var(--sp-3);text-align:right;border-top:1px solid var(--border);padding-top:var(--sp-2)}.pft b{font-size:var(--fs-md)}.pft small{color:var(--text-2);font-weight:var(--fw-regular,400)}.pfc span{font-size:var(--fs-sm);color:var(--text-2)}.menote{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap;font-size:var(--fs-sm)}.menote:empty{display:none}
 .bhb{display:flex;gap:var(--sp-2);flex:none}.bhb .chip{height:44px!important}.pqr{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2)}.pqr .chip{height:44px;padding:0 4px;font-size:var(--fs-sm)}.qrbox{background:#fff;border-radius:12px;padding:14px;margin:var(--sp-3) auto;width:min(78vw,320px);box-sizing:border-box}.qrbox svg{display:block;width:100%;height:auto}.qrn{text-align:center}.rcl{display:grid;gap:var(--sp-2);margin:var(--sp-3) 0}.rcr{display:flex;align-items:center;gap:var(--sp-3)}.rcr b{color:var(--text)}.scw{background:#000;border-radius:12px;overflow:hidden;margin:var(--sp-3) 0}.scw video{display:block;width:100%;max-height:58vh;object-fit:cover}
-.ops .optl{padding:var(--sp-3) var(--sp-4) 4px}.ops .frame button{height:38px}.ops .frame{margin-bottom:var(--sp-1)}.ops .note{margin-top:var(--sp-1)}.ops .bkf button{height:44px;font-size:var(--fs-lg);letter-spacing:.03em}.frame.one{grid-template-columns:1fr}.cseg button{height:34px;font-size:var(--fs-sm)}.cseg{margin:0!important}.hall .flist{margin:0}.op2{display:grid;grid-template-columns:1fr 1fr;gap:0 var(--sp-3);padding:0 var(--sp-4)}.op2 .optl{padding-left:0;padding-right:0;white-space:nowrap}.op2 .frame{margin:0 0 var(--sp-1)}.op2 .frame button,.bgsel{height:38px;padding:0 4px;font-size:var(--fs-sm)}select.bgsel{width:100%;height:38px;margin:0 0 var(--sp-1)}.op2 .cs{margin:0 0 var(--sp-1)}.op2 .csb{height:38px;font-size:var(--fs-sm)}
+.ops .optl{padding:var(--sp-3) var(--sp-4) 4px}.ops .frame button{height:44px}.ops .frame{margin-bottom:var(--sp-1)}.ops .note{margin-top:var(--sp-1)}.ops .bkf button{height:44px;font-size:var(--fs-lg);letter-spacing:.03em}.frame.one{grid-template-columns:1fr}.cseg button{height:34px;font-size:var(--fs-sm)}.cseg{margin:0!important}.hall .flist{margin:0}.op2{display:grid;grid-template-columns:1fr 1fr;gap:0 var(--sp-3);padding:0 var(--sp-4)}.op2 .optl{padding-left:0;padding-right:0;white-space:nowrap}.op2 .frame{margin:0 0 var(--sp-1)}.op2 .frame button,.bgsel{height:44px;padding:0 4px;font-size:var(--fs-sm)}select.bgsel{width:100%;height:38px;margin:0 0 var(--sp-1)}.op2 .cs{margin:0 0 var(--sp-1)}.op2 .csb{height:38px;font-size:var(--fs-sm)}
 .fwrap.hall{display:flex;flex-direction:column;height:calc(100vh - var(--sp-3) - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));height:calc(100dvh - var(--sp-3) - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}.hall .fh,.hall .pfg,.hall .note,.hall .hseg{flex:none}.hseg{margin:0!important}.hbar{flex:none;display:flex;gap:var(--sp-2)}.hclr{flex:1;height:48px!important;font-size:var(--fs-md)}.hscroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.hall .bhb .chip.sq{width:44px;height:44px}
 @media (orientation:portrait){.act{display:block;position:sticky;bottom:calc(var(--tab-h) + env(safe-area-inset-bottom,0px) + var(--sp-2));z-index:6;padding:var(--sp-4) var(--sp-4) 0;margin:0;background:linear-gradient(to bottom,transparent,var(--bg) 35%)}.act .go{margin:0;width:100%}#fm .fwrap:has(.qrbox) .fact{justify-content:center}#fm .fwrap:has(.qrbox) .qrn{margin-bottom:var(--sp-3)}}
-.frame button small{display:block;font-size:.62em;opacity:.7;letter-spacing:.12em;margin-top:2px}.pimg:empty{background:var(--surface-2);border:1px dashed var(--text-2);opacity:.55}.nm.frn{text-transform:none!important;font-size:var(--fs-md);font-weight:var(--fw-medium)}.nm.frn::placeholder{text-transform:none}.flist{gap:0;padding:0}.frow{display:grid;gap:2px;text-align:left;width:100%;padding:var(--sp-3);border:0;border-bottom:1px solid var(--border);background:none;color:var(--text);font:var(--fw-semi) var(--fs-md) var(--font);min-height:var(--ctl-h)}.frow:last-child{border-bottom:0}.frow .mut{font-weight:400;font-size:var(--fs-sm)}.frn{color:var(--text)!important}
+.frame button small{display:block;font-size:.7em;opacity:.95;letter-spacing:.12em;margin-top:2px}.pimg:empty{background:var(--surface-2);border:1px dashed var(--text-2);opacity:.55}.nm.frn{text-transform:none!important;font-size:var(--fs-md);font-weight:var(--fw-medium)}.nm.frn::placeholder{text-transform:none}.flist{gap:0;padding:0}.frow{display:grid;gap:2px;text-align:left;width:100%;padding:var(--sp-3);border:0;border-bottom:1px solid var(--border);background:none;color:var(--text);font:var(--fw-semi) var(--fs-md) var(--font);min-height:var(--ctl-h)}.frow:last-child{border-bottom:0}.frow .mut{font-weight:400;font-size:var(--fs-sm)}.frn{color:var(--text)!important}
 .pfrs{justify-self:start;height:44px!important}
 .qty{margin-left:6px;font:var(--fw-semi) var(--fs-sm) var(--font);color:var(--accent)}.qst{grid-column:1/-1;display:flex;align-items:center;justify-content:flex-end;gap:6px;margin:var(--sp-2) 0 0;color:var(--text-2);font-size:var(--fs-sm)}.qst .chip.sq{width:30px;height:30px;font-size:var(--fs-md)}.qst b{min-width:22px;text-align:center;color:var(--text)}.fwrap:not(.adv) .fadv{display:none}.fadvt{display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-3) 0;color:var(--text-2);font-size:var(--fs-sm)}.fadvt input{width:20px;height:20px;accent-color:var(--accent)}.fst{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);align-items:end}.fst>span{grid-column:1/-1}
 html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
@@ -869,6 +871,18 @@ function optsUI(){
   const bgS='<select class="bgsel" onchange="optSet(\'bg\',this.value)" aria-label="Fond d\'écran">'+[['actuel','Grille'],['hex','Hexagones'],['sparks','Particules']].map(([v,l])=>'<option value="'+v+'"'+(bgMode===v?' selected':'')+'>'+l+'</option>').join('')+'</select>';
   return '<div class="ops">'+pfUI()+friendsUI()+'<div class="optl">Mes données</div><div class="frame bkf"><button onclick="backupExport()"><span>Exporter</span></button><button onclick="document.getElementById(\'imp\').click()"><span>Importer</span></button></div><input type="file" id="imp" accept="application/json,.json" hidden onchange="backupImport(this)"><div class="mut note" id="bkmsg" aria-live="polite">'+CUSTOM.length+' toupie'+(CUSTOM.length>1?'s':'')+' ajoutée'+(CUSTOM.length>1?'s':'')+' · '+hLoad().length+' match'+(hLoad().length>1?'s':'')+' dans l\'historique. Exporte pour sauvegarder ou changer d\'appareil.</div><div class="op2"><div><div class="optl">Langue</div>'+seg('lang',[['fr','Français'],['en','English']],LANG,false)+'</div><div><div class="optl">Son</div>'+son+'</div></div><div class="op2"><div><div class="optl">Thème</div>'+seg('theme',THEMES,th,false)+'</div><div><div class="optl">Fond d\'écran</div>'+bgS+'</div></div><div class="mut note">Les réglages et les données sont gardés sur cet appareil.</div>'+(HID.length?'<div class="optl">Toupies de base</div><div class="frame"><button onclick="bsRestore()"><span>Remettre les toupies de base</span><small>'+HID.length+'</small></button></div>':'')+'<div class="mut note">Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.</div>'+noticeUI()+'</div>';
 }
+/* ===== Accessibilité : fenêtres, Échap, états des boutons ===== */
+let FMO=null;
+function fmShown(f){
+  if(!f.classList.contains('show')) FMO=document.activeElement&&document.activeElement!==document.body?document.activeElement:null;
+  f.setAttribute('role','dialog'); f.setAttribute('aria-modal','true'); f.setAttribute('aria-label','Fenêtre');
+  f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden'; a11yPass(f);
+}
+function a11yPass(root){
+  (root||document).querySelectorAll('.frame button,.chips .chip').forEach(b=>{ if(b.hasAttribute('onclick')) b.setAttribute('aria-pressed',b.classList.contains('on')?'true':'false'); });
+  const t=document.getElementById('tabs'); if(t&&!root) t.querySelectorAll('button').forEach(b=>{ if(b.classList.contains('on')) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+}
+addEventListener('keydown',e=>{ if(e.key!=='Escape') return; if(document.getElementById('cr')||(typeof csOpen!=='undefined'&&csOpen)) return; const f=document.getElementById('fm'); if(f&&f.classList.contains('show')){ e.preventDefault(); fmClose(); } });
 /* ===== Ajout / modification de toupies + sauvegarde ===== */
 const FM={id:0,ph:{}};
 const TYPES4=[['','Choisir…'],['Attack','Attack'],['Déf','Déf'],['Stamina','Stamina'],['Balance','Balance']];
@@ -894,7 +908,7 @@ function tpForm(id,pre,fromCat){
   <div class="ferr" id="f_err" role="alert"></div>
   <div class="fact"><button class="go sm" onclick="fmSave()">Enregistrer</button><button class="chip" onclick="fmClose()">Annuler</button>${o?'<button class="chip dng" id="f_del" onclick="fmDel()">Supprimer</button>':''}</div></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
-  f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
+  f.innerHTML=h; fmShown(f);
 }
 
 const CAT=(typeof CATALOGUE!=='undefined'&&Array.isArray(CATALOGUE))?CATALOGUE:[];
@@ -913,7 +927,7 @@ function addOpen(){
   <button class="addb" onclick="tpForm()">Manuellement</button><div class="mut note addn">Formulaire vide : tu remplis tout toi-même.</div>
   <button class="addb cat" onclick="catOpen()">Depuis le catalogue</button><div class="mut note addn">Tu choisis chaque pièce dans une liste, les poids et les photos se remplissent tout seuls.</div></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
-  f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
+  f.innerHTML=h; fmShown(f);
 }
 function catOpen(){
   cptBuild(); CPS={e:(st.ed==='tt'?'tt':'hasbro')};
@@ -925,7 +939,7 @@ function catOpen(){
   ${row('cp_b','Blade')}${row('cp_r','Ratchet')}${row('cp_i','Bit')}
   <div class="ferr" id="f_err" role="alert"></div><div class="fact"><button class="go sm" id="cp_go" onclick="cpGo()" disabled>Enregistrer</button><button class="chip" onclick="fmClose()">Annuler</button></div></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
-  f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
+  f.innerHTML=h; fmShown(f);
   const P=CPT, ph=[['','Choisir…']];
   document.getElementById('cp_r').innerHTML=fmOpts([['','Aucun']].concat(Object.values(P.R).sort(cpSort).map(x=>[x.n,esc(x.n)])),'');
   document.getElementById('cp_i').innerHTML=fmOpts(ph.concat(Object.values(P.I).sort(cpSort).map(x=>[x.n,esc(x.n)])),'');
@@ -971,7 +985,7 @@ function cpSave(o){
   try{ sessionStorage.setItem('bb_rm','1'); }catch(e){}
   location.reload();
 }
-function fmClose(){ if(typeof scStop==='function') scStop(); const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
+function fmClose(){ if(typeof scStop==='function') scStop(); const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; if(FMO&&FMO.isConnected){ try{ FMO.focus({preventScroll:true}); }catch(e){} } FMO=null; }
 function fmRm(k){ FM.ph[k]=''; FM.rm[k]=true; fmPhShow(k); }
 function fmPhShow(k){ const v=FM.ph[k],e=document.getElementById('phv_'+k),x=document.getElementById('phx_'+k); if(e) e.innerHTML=v?`<img src="${v}" alt="">`:''; if(x) x.hidden=!v; const cc=document.getElementById('phc_'+k); if(cc) cc.hidden=!v; }
 var CR=null;
@@ -1116,7 +1130,7 @@ function renderList(){
 const BD=[[0,0,0],[1,0,0]], BN=['',''];
 var BP=null;
 function bpOpen(n,k){ BP={n,k,q:''}; let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
-  f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden'; bpDraw(); }
+  fmShown(f); bpDraw(); }
 function bpDraw(){ const f=document.getElementById('fm'); if(!f||!BP) return; const nm=[LT('Blade'),LT('Ratchet'),LT('Bit')][BP.k];
   f.innerHTML=`<div class="fwrap pkw"><div class="fh"><h2>${nm}</h2><button class="chip sq" onclick="bpClose()" aria-label="Fermer">✕</button></div>
     <label class="search pks">${IC.search}<input id="bp_q" type="search" placeholder="${LT('Chercher…')}" value="${esc(BP.q)}" oninput="bpQ(this.value)" autocomplete="off"></label>
@@ -1141,7 +1155,7 @@ function bdAsk(n){
   <div class="mut note bmsg" id="bdq_m"></div>
   <button class="addb cat" id="bdq_b" onclick="bdSave(${n},this)">${LT('Enregistrer dans Mes toupies')}</button></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
-  f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
+  f.innerHTML=h; fmShown(f);
   setTimeout(()=>{ const e=document.getElementById('bdq'); if(e) e.focus(); },60);
 }
 async function bdSave(n,btn){
@@ -1225,7 +1239,7 @@ function bfAsk(){
   <div class="fs">Série</div><div class="chips" id="bfb">${[[1,'Match unique'],[3,'BO3'],[5,'BO5'],[7,'BO7']].map(([v,l])=>`<button class="chip ${(st.m.bo||1)===v?'on':''}" onclick="bfBo(${v})">${l}</button>`).join('')}</div>
   <button class="addb cat" onclick="bfGo()">Lancer le combat</button></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
-  f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden';
+  f.innerHTML=h; fmShown(f);
 }
 function bfPick(v){ st.m.target=v; document.querySelectorAll('#bfp .chip').forEach(b=>b.classList.toggle('on',b.textContent.trim().indexOf(v+' ')===0)); }
 function bfBo(v){ st.m.bo=v; document.querySelectorAll('#bfb .chip').forEach((b,i)=>b.classList.toggle('on',[1,3,5,7][i]===v)); }
@@ -1260,6 +1274,7 @@ function draw(){
     renderList();
   }
   document.getElementById('tabs').innerHTML=[['toupies','Toupies',IC.grid],['build','Build',IC.build],['match','Match',IC.bolt],['opts','Options',IC.opts]].map(([k,l,i])=>`<button class="${st.tab===k?'on':''}" onclick="setTab('${k}')">${i}<span>${l}</span></button>`).join('');
+  a11yPass();
 }
 const wnum=v=>(typeof v==='string'&&v.includes('-'))?v.split('-').reduce((a,b)=>a+ +b,0)/2:num(v);
 const RA=T.map((x,i)=>x.r?i:-1).filter(i=>i>=0);
@@ -1350,7 +1365,7 @@ function descSlot(d){
   let b=P.B[k]; if(!b) b=Object.values(P.B).find(y=>y.n===d[1]); if(!b||!P.I[d[3]]||(d[2]&&!P.R[d[2]])) return null;
   return {mode:'custom',src:'cat',stock:0,blade:0,ratchet:-1,bit:0,cg:-1,cb:b.k,cr:d[2]||'',ci:d[3]};
 }
-function shOpen(h){ let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); } f.innerHTML=h; f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden'; }
+function shOpen(h){ let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); } f.innerHTML=h; fmShown(f); }
 function shMsg(t,m){ shOpen(`<div class="fwrap"><div class="fh"><h2>${t}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div><div class="fhelp">${m}</div><div class="fact"><button class="go sm" onclick="fmClose()">OK</button></div></div>`); }
 let QRU='';
 async function qrShow(list){
@@ -1562,7 +1577,7 @@ function pkOpen(p,s,edit){
     if(t.mode==='stock'){ if(t.src==='cat'){ const x=CAT[t.cg]; if(x){ t.cb=x.e+'|'+x.b; t.cr=x.r||''; t.ci=x.bi||''; t._b=[t.cb,t.cr,t.ci]; } } else { const x=T[t.stock]; if(x){ t.blade=t.stock; t.ratchet=x.r?t.stock:-1; t.bit=t.stock; t._b=[t.blade,t.ratchet,t.bit]; } } }
     PK.t=t; }
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
-  f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden'; pkDraw();
+  fmShown(f); pkDraw();
 }
 function pkDraw(){
   const f=document.getElementById('fm'); if(!f||!PK) return;
