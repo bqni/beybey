@@ -8,6 +8,7 @@ Contenu du dossier
   lib/              deux petites bibliothèques pour les QR codes (création et lecture caméra)
   sw.js             le mode hors ligne (le site s'ouvre sans internet après une première visite)
   avatars/          les 16 avatars de profil
+  CREDITS.txt       crédits et licences (bibliothèques, polices, catalogue)
   photos/           les photos du catalogue (photos/cat) et tes éventuelles photos de data.js
   sons/             les sons du match (ne pas toucher)
   manifest.json, icon-192.png, icon-512.png, apple-touch-icon.png

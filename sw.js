@@ -1,7 +1,7 @@
 // Beybey : mode hors ligne. Le site s'ouvre sans internet après une première visite.
 // Réseau d'abord (tu as toujours la dernière version), cache en secours.
 const CACHE = 'beybey-v1';
-const BASE = ['./', 'index.html', 'lib/qrcode.js', 'lib/jsQR.js', 'data.js', 'catalogue.js', 'manifest.json', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png',
+const BASE = ['./', 'index.html', 'lib/qrcode.js', 'lib/jsQR.js', 'CREDITS.txt', 'data.js', 'catalogue.js', 'manifest.json', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png',
   'fonts/inter-latin-400-normal.woff2', 'fonts/inter-latin-500-normal.woff2', 'fonts/inter-latin-600-normal.woff2', 'fonts/chakra-petch-latin-400-normal.woff2', 'fonts/chakra-petch-latin-500-normal.woff2', 'fonts/chakra-petch-latin-600-normal.woff2', 'fonts/chakra-petch-latin-700-normal.woff2',
   'sons/cd.mp3', 'sons/cd_en.mp3', 'sons/next.mp3', 'sons/nul.mp3', 'sons/p1.mp3', 'sons/p2.mp3', 'sons/sc.mp3'].concat(Array.from({length:16},(_,i)=>'avatars/a'+String(i+1).padStart(2,'0')+'.webp'));
 
