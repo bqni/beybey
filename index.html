@@ -1643,6 +1643,14 @@ try{ if(sessionStorage.getItem('bb_rm')){ sessionStorage.removeItem('bb_rm'); se
 ['gesturestart','gesturechange','gestureend'].forEach(g=>document.addEventListener(g,e=>e.preventDefault()));
 const PBOOT=photosBoot().catch(()=>{});
 try{ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }catch(e){}
+// iPhone : après le clavier (noms des joueurs, recherche…), la barre du bas pouvait rester coincée au milieu de l'écran.
+// Quand plus aucun champ n'est actif et que la vue est décalée, on remet la page d'aplomb.
+try{ const vv=window.visualViewport; let tm; const fixVp=()=>{ clearTimeout(tm); tm=setTimeout(()=>{
+    const a=document.activeElement; if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
+    if(vv&&(Math.abs(vv.height-innerHeight)>1||vv.offsetTop>1||vv.pageTop>scrollY+1)){ scrollTo(scrollX,scrollY); const tb=document.getElementById('tabs'); if(tb){ tb.style.display='none'; void tb.offsetHeight; tb.style.display=''; } } },150); };
+  if(vv){ vv.addEventListener('resize',fixVp); vv.addEventListener('scroll',fixVp); }
+  document.addEventListener('focusout',fixVp); addEventListener('orientationchange',fixVp); addEventListener('pageshow',fixVp);
+}catch(e){}
 </script>
 </body>
 </html>
