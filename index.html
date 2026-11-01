@@ -1030,7 +1030,7 @@ function cpSave(o){
   const dp=T.find(x=>x.n===nm); if(dp){ if(dp._c) return dupMsg(dp); box.textContent='Une toupie « '+nm+' » existe déjà.'; box.scrollIntoView({block:'center'}); return; }
   o.id=Date.now(); const all=cLoad(); all.push(o);
   if(!cSave(all)){ box.textContent='Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.'; return; }
-  try{ sessionStorage.setItem('bb_rm','1'); }catch(e){}
+  try{ sessionStorage.setItem('bb_rm',String(Date.now())); }catch(e){}
   location.reload();
 }
 function fmClose(){ if(typeof scStop==='function') scStop(); const f=document.getElementById('fm'); if(f){ f.classList.remove('show','wtabs'); f.style.bottom=''; f.innerHTML=''; } document.body.classList.remove('fmt'); document.documentElement.style.overflow=''; if(FMO&&FMO.isConnected){ try{ FMO.focus({preventScroll:true}); }catch(e){} } FMO=null; }
@@ -1078,7 +1078,7 @@ async function fmSave(){
   for(const [f,k] of PHF){ const v=FM.ph[k]; if(v){ o[f]=(typeof v==='string'&&v.indexOf('photos/')===0)?v:await pStore(o.id,k,v); } else if(!FM.rm[k]&&FM.orig[k]) o[f]=FM.orig[k]; else if(FM.rm[k]&&isMk(FM.orig[k])) idbDel('photos',FM.orig[k].slice(4)).catch(()=>{}); }
   const all=cLoad(),ix=all.findIndex(x=>x.id===o.id); ix>=0?all[ix]=o:all.push(o);
   if(!cSave(all)){ box.textContent='Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.'; return; }
-  try{ sessionStorage.setItem('bb_rm','1'); }catch(e){}
+  try{ sessionStorage.setItem('bb_rm',String(Date.now())); }catch(e){}
   location.reload();
 }
 function bsDel(b,k){
@@ -1090,7 +1090,7 @@ function cuQty(id,d,rl){
   const all=cLoad(), o=all.find(x=>x.id===id); if(!o) return;
   o.qty=Math.max(1,Math.min(99,(+o.qty||1)+d)); if(!cSave(all)) return;
   const x=T.find(t=>t._c===id); if(x) x.q=o.qty;
-  if(rl){ try{ sessionStorage.setItem('bb_rm','1'); }catch(e){} location.reload(); return; }
+  if(rl){ try{ sessionStorage.setItem('bb_rm',String(Date.now())); }catch(e){} location.reload(); return; }
   document.querySelectorAll('[data-q="'+id+'"]').forEach(e=>{ e.textContent=o.qty; });
   document.querySelectorAll('[data-qb="'+id+'"]').forEach(e=>{ e.textContent='×'+o.qty; e.hidden=o.qty<2; });
 }
@@ -1233,7 +1233,7 @@ async function bdSave(n,btn){
       const pv=src&&src._p&&src._p[k]; if(!pv) continue; o[f]=isMk(pv)?await pStore(o.id,k,IM[pv]):pv; } }catch(e){}
   const all=cLoad(); all.push(o);
   if(!cSave(all)){ if(btn) btn.disabled=false; return say(LT('Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.')); }
-  try{ sessionStorage.setItem('bb_rm','1'); }catch(e){}
+  try{ sessionStorage.setItem('bb_rm',String(Date.now())); }catch(e){}
   location.reload();
 }
 function bdLists(){
@@ -2325,9 +2325,12 @@ function rmShow(msg){ if(document.getElementById('rm')) return; const e=document
 function rmClose(){ const e=document.getElementById('rm'); if(e) e.remove(); }
 try{ const lb=+localStorage.getItem('arene_lastbk')||0, sh=+localStorage.getItem('arene_bkrem')||0, now=Date.now();
   if(lb&&now-lb>30*864e5&&now-sh>3*864e5&&(CUSTOM.length||hLoad().length)){ localStorage.setItem('arene_bkrem',String(now)); setTimeout(()=>rmShow('<b>Ça fait plus de 30 jours</b> que tu n\'as pas sauvegardé. Fais un export dans Options pour ne rien perdre.'),1200); } }catch(e){}
-// Rappel après un ajout : une seule fois par jour, et jamais si une sauvegarde date de moins de 24 h (pour ne pas harceler quand on ajoute plusieurs toupies d'affilée).
-try{ if(sessionStorage.getItem('bb_rm')){ sessionStorage.removeItem('bb_rm'); const now=Date.now(), lb=+localStorage.getItem('arene_lastbk')||0, la=+localStorage.getItem('arene_bkadd')||0;
-  if(now-la>864e5&&now-lb>864e5){ localStorage.setItem('arene_bkadd',String(now)); setTimeout(rmShow,400); } } }catch(e){}
+// Rappel après un ajout : il arrive 90 s après le DERNIER ajout (chaque nouvel ajout repousse l'échéance). Si l'appli est fermée entre-temps, il ne vient pas.
+// Au plus une fois par jour, et jamais si une sauvegarde date de moins de 24 h.
+try{ const t0=+sessionStorage.getItem('bb_rm')||0; if(t0){ setTimeout(()=>{ try{
+    if(+sessionStorage.getItem('bb_rm')!==t0) return; sessionStorage.removeItem('bb_rm');
+    const now=Date.now(), lb=+localStorage.getItem('arene_lastbk')||0, la=+localStorage.getItem('arene_bkadd')||0;
+    if(now-la>864e5&&now-lb>864e5){ localStorage.setItem('arene_bkadd',String(now)); rmShow(); } }catch(e){} },Math.max(500,t0+90000-Date.now())); } }catch(e){}
 ['gesturestart','gesturechange','gestureend'].forEach(g=>document.addEventListener(g,e=>e.preventDefault()));
 const PBOOT=photosBoot().catch(()=>{});
 try{ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }catch(e){}
