@@ -1099,7 +1099,7 @@ async function backupExport(){ try{ await PBOOT; }catch(e){}
   try{ const a=document.createElement('a'); a.href=URL.createObjectURL(file); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); bkDone(); bkMsg('Sauvegarde téléchargée : '+name); }catch(e){ bkMsg('Impossible de créer le fichier sur cet appareil.'); }
 }
 function backupImport(inp){
-  const f=inp.files&&inp.files[0]; if(!f) return; if(f.size>30e6){ bkMsg('Fichier trop gros pour une sauvegarde Beybey.'); inp.value=''; return; } const r=new FileReader();
+  const f=inp.files&&inp.files[0]; if(!f) return; if(f.size>100e6){ bkMsg('Fichier trop gros pour une sauvegarde Beybey.'); inp.value=''; return; } const r=new FileReader();
   r.onload=async()=>{ try{
       const d=JSON.parse(r.result); if(!d||d.app!=='arene-beyblade') throw 0;
       const have=cLoad(),names=new Set(T.map(x=>x.n)); let addT=0,addH=0;
