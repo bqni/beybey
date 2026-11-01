@@ -146,7 +146,7 @@ button.go:active:not(:disabled){opacity:.78}
 button,.tabs{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 #tabs button:focus,#tabs button:focus-visible{outline:0;box-shadow:none}
 #tabs button:active:not(:disabled){box-shadow:none;background-image:none;background:var(--accent-soft)}
-.bsb:active:not(:disabled){background:var(--accent-soft);border-color:var(--accent)}.bsb.flash{background:var(--accent-soft);border-color:var(--accent)}.bsb i{font-style:normal;color:var(--text-2);font-size:var(--fs-xs)}.bsb:disabled{opacity:.5}
+.bsb:active:not(:disabled){background:var(--accent-soft);border-color:var(--accent)}.bsb.bsel{background:var(--accent-soft);border-color:var(--accent)}.bsb i{font-style:normal;color:var(--text-2);font-size:var(--fs-xs)}.bsb:disabled{opacity:.5}
 .pkr.cur{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .bft{margin-top:var(--sp-2);margin-bottom:var(--sp-2)}.bfw.bft .go{width:100%}
 .frame button:disabled{opacity:.4}
@@ -1084,7 +1084,7 @@ function bpList(){
   return h||`<div class="mut note">${LT('Rien trouvé.')}</div>`;
 }
 var BFL=null;
-function bpPick(i){ if(!BP) return; BD[BP.n][BP.k]=i; BFL=[BP.n,BP.k]; bpClose(); draw(); void document.body.offsetHeight; setTimeout(()=>{ BFL=null; document.querySelectorAll('.bsb.flash').forEach(e=>e.classList.remove('flash')); },900); }
+function bpPick(i){ if(!BP) return; BD[BP.n][BP.k]=i; BFL=[BP.n,BP.k]; bpClose(); draw(); void document.body.offsetHeight; setTimeout(()=>{ BFL=null; document.querySelectorAll('.bsb.bsel').forEach(e=>e.classList.remove('bsel')); },900); }
 function bdAsk(n){
   const h=`<div class="fwrap"><div class="fh"><h2>${LT('Nom du build')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
   <input class="nm" id="bdq" value="${esc(BN[n]||'')}" placeholder="${LT('Nom du build')}" aria-label="${LT('Nom du build')}" autocomplete="off" maxlength="40" onkeydown="if(event.key==='Enter'){event.preventDefault();bdSave(${n},document.getElementById('bdq_b'));}">
@@ -1144,7 +1144,7 @@ function bdOne(n,L){
   const {bl,ra,bi}=L, B=BD[n];
   B[0]=Math.min(B[0],bl.length-1); B[1]=Math.min(B[1],ra.length-1); B[2]=Math.min(B[2],bi.length-1);
   const b=bl[B[0]], integ=b.integ, r=integ?null:ra[B[1]], t=bi[B[2]];
-  const slot=(lab,o,k,dis)=>`<div class="bslot"><span class="sl">${lab}</span><button class="bsb${BFL&&BFL[0]===n&&BFL[1]===k?' flash':''}" ${dis?'disabled':''} onclick="bpOpen(${n},${k})" aria-label="${lab} : ${o?esc(o.n):''}">${o?img(o.img,'sm'):'<div class="pimg sm"></div>'}<b>${dis?LT('Intégré'):esc(o.n)}</b></button></div>`;
+  const slot=(lab,o,k,dis)=>`<div class="bslot"><span class="sl">${lab}</span><button class="bsb${BFL&&BFL[0]===n&&BFL[1]===k?' bsel':''}" ${dis?'disabled':''} onclick="bpOpen(${n},${k})" aria-label="${lab} : ${o?esc(o.n):''}">${o?img(o.img,'sm'):'<div class="pimg sm"></div>'}<b>${dis?LT('Intégré'):esc(o.n)}</b></button></div>`;
   const parts=[b,r,t].filter(Boolean);
   const S3=sum3(b.s,r&&r.s,t.s);
   const w=Math.round(parts.reduce((a,o)=>a+wnum(o.w),0)*10)/10;
