@@ -16,8 +16,8 @@
 body.ishome .hdr,body.ishome .sub,body.ishome #ctl{display:none}
 .hmx{display:flex;flex-direction:column;gap:var(--sp-3);padding:var(--sp-3) var(--sp-4) 0;max-width:430px;margin:0 auto}
 .hm-top{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);min-height:48px}
-.hm-me{justify-self:start;display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--text);padding:0;cursor:pointer;font:inherit}.hm-me b{font:var(--fw-bold) var(--fs-sm) var(--font);color:var(--accent);letter-spacing:.04em}
-.hm-av{position:relative;width:44px;height:44px;flex:none}.hm-av svg{position:absolute;inset:0;width:100%;height:100%}.hm-av i{position:absolute;inset:6px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--accent);font:var(--fw-bold) 15px var(--font);font-style:normal;overflow:hidden}.hm-av i img{width:100%;height:100%;object-fit:cover}
+.hm-me{justify-self:start;display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--text);padding:0;cursor:pointer;font:inherit}.hm-me{min-width:0;flex:1;margin-right:var(--sp-2)}.hm-w{display:flex;align-items:baseline;gap:2px;flex:none;color:var(--accent)}.hm-w b{font:var(--fw-bold) var(--fs-md) var(--font)}.hm-w small{font:var(--fw-semi) 10px var(--font);opacity:.8}.hm-nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:var(--fw-semi) var(--fs-sm) var(--font);letter-spacing:.05em;text-transform:uppercase}
+.hm-av{position:relative;width:40px;height:40px;flex:none}.hm-av em{position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);padding:0 4px;background:var(--surface);border:1px solid var(--frame);color:var(--accent);font:var(--fw-bold) 8px/12px var(--font);font-style:normal;letter-spacing:.02em}.hm-av svg{position:absolute;inset:0;width:100%;height:100%}.hm-av i{position:absolute;inset:5px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--accent);font:var(--fw-bold) 15px var(--font);font-style:normal;overflow:hidden}.hm-av i img{width:100%;height:100%;object-fit:cover}
 .hm-logo{text-align:center;font:var(--fw-bold) var(--fs-lg)/1 var(--font);letter-spacing:.16em}
 .hm-r{display:flex;align-items:center;gap:var(--sp-2)}
 .hm-pill{height:40px;padding:0 var(--sp-3);border:1px solid var(--frame);background:var(--surface);color:var(--accent);font:var(--fw-semi) var(--fs-sm) var(--font);letter-spacing:.06em;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;clip-path:var(--poly-s,none)}
@@ -1332,7 +1332,7 @@ function pfCommit(){
   if(nn&&old&&nn!==old){ const L=hLoad(); L.forEach(r=>{ if(r.me&&r.n&&r.n[0]===old) r.n[0]=nn; }); hSave(L); }
   if(nn&&nn!==old){ PRF.hn=nn; pfSave(); }
 }
-function pfSet(v){ const was=st.m.me||!st.m.names[0]||st.m.names[0]===LT('Joueur 1'); PRF.n=String(v||'').trim().slice(0,20); pfSave(); if(was){ st.m.names[0]=PRF.n||LT('Joueur 1'); st.m.me=!!PRF.n; } }
+function pfSet(v){ const was=st.m.me||!st.m.names[0]||st.m.names[0]===LT('Joueur 1'); PRF.n=String(v||'').trim().slice(0,16); pfSave(); if(was){ st.m.names[0]=PRF.n||LT('Joueur 1'); st.m.me=!!PRF.n; } }
 function pfStats(L0,cat){
   const L=(L0||hLoad()).filter(r=>r.me&&(!cat||r.cat===cat)); let w=0,l=0,d=0; const use={};
   L.forEach(r=>{ if(r.w===0) w++; else if(r.w===1) l++; else d++; (r.b&&r.b[0]||[]).forEach(n=>{ if(n) use[n]=(use[n]||0)+1; }); });
@@ -1345,7 +1345,7 @@ const catSeg=(cur,fn)=>'<div class="frame f3 cseg">'+[['','Tout'],['simple','Sim
 function pfCat(v){ PFC=v; draw(); }
 function pfUI(){
   const S=pfStats(null,PFC||undefined),pct=S.n?Math.round(100*S.w/S.n):0,c=(v,l)=>`<div class="pfc"><b>${v}</b><span>${l}</span></div>`;
-  return '<div class="optl">Mon profil</div><div class="pcard pf" style="--pc:var(--pa)"><input class="nm" id="pfn" value="'+esc(PRF.n||'')+'" placeholder="Ton nom" maxlength="20" oninput="pfSet(this.value)" onchange="pfCommit()" aria-label="Ton nom">'
+  return '<div class="optl">Mon profil</div><div class="pcard pf" style="--pc:var(--pa)"><input class="nm" id="pfn" value="'+esc(PRF.n||'')+'" placeholder="Ton nom" maxlength="16" oninput="pfSet(this.value)" onchange="pfCommit()" aria-label="Ton nom">'
    +(PRF.n?catSeg(PFC,'pfCat(')+'<div class="pfg">'+c(S.n,'Matchs')+c(S.w,'Victoires')+c(S.l,'Défaites')+c(S.n?pct+'%':'—','Réussite')+'</div>'+'<div class="pfc pft"><span>Toupie la plus jouée</span><b>'+(S.top?esc(S.top)+' <small>×'+S.topn+'</small>':'—')+'</b></div>'+(S.n?'<button class="chip dng pfrs" onclick="pfReset(this)">Remettre mes stats à zéro</button>':'<div class="mut note">Aucun match compté pour l\'instant. Tu es toujours le joueur 1 par défaut.</div>')
     :'<div class="mut note">Entre ton nom : tu seras le joueur 1 par défaut et tes stats seront comptées.</div>')+'</div>';
 }
@@ -2247,7 +2247,7 @@ function homeGo(k){
   else setTab(k); }
 function hmMe(){
   const S=pfStats(), p=S.n?Math.round(100*S.w/S.n):0, C=2*Math.PI*20.5, nm=(PRF.n||'').trim();
-  return `<button class="hm-me" onclick="homeGo('pf')" aria-label="${esc(nm||LT('Profil'))}"><span class="hm-av"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5" fill="none" stroke="var(--frame)" stroke-width="2.5"/><circle cx="22" cy="22" r="20.5" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="${C*p/100} ${C}" transform="rotate(-90 22 22)"/></svg><i>${PRF.av?'<img src="'+esc(PRF.av)+'" alt="">':esc((nm[0]||'?').toUpperCase())}</i></span><b>${S.n?p+'%':'—'}</b></button>`;
+  return `<button class="hm-me" onclick="homeGo('pf')" aria-label="${esc(nm||LT('Profil'))}"><span class="hm-av"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5" fill="none" stroke="var(--frame)" stroke-width="2"/><circle cx="22" cy="22" r="20.5" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="${C*p/100} ${C}" transform="rotate(-90 22 22)"/></svg><i>${PRF.av?'<img src="'+esc(PRF.av)+'" alt="">':esc((nm[0]||'?').toUpperCase())}</i>${S.n?'<em>'+p+'%</em>':''}</span><span class="hm-w"><b>${S.w}</b><small>V</small></span><span class="hm-nm">${esc(nm||LT('Profil'))}</span></button>`;
 }
 function homeUI(){
   const nT=T.length+(typeof cLoad==='function'?cLoad().length:0), nH=hLoad().length, nF=Object.keys(fLoad()).length, dark=(document.documentElement.dataset.theme||'futur')!=='futurl';
@@ -2268,7 +2268,7 @@ function wlInit(){
   let seen=true; try{ const L=localStorage; seen=L.getItem(WKEY)!==null; if(!seen&&(PRF.n||L.getItem('arene_hist')||L.getItem('arene_custom')||L.getItem('arene_amis'))){ L.setItem(WKEY,'1'); seen=true; } }catch(e){}
   if(seen) return;
   const d=document.createElement('div'); d.id='wlc'; d.className='wlc'; d.setAttribute('role','dialog'); d.setAttribute('aria-modal','true');
-  d.innerHTML='<div><h2>'+LT('Bienvenue !')+'</h2><input class="nm" id="wln" maxlength="20" placeholder="'+LT('Ton nom')+'" autofocus autocomplete="off" onkeydown="if(event.key===\'Enter\')wlGo()" aria-label="'+LT('Ton nom')+'"><button class="go" onclick="wlGo()">'+LT('Commencer')+'</button><label class="lnk" style="display:flex;align-items:center;justify-content:center"><input type="file" accept=".json,application/json" hidden onchange="wlImp(this)">'+LT('Importer ma sauvegarde')+'</label><div class="mut note" id="bkmsg"></div></div>';
+  d.innerHTML='<div><h2>'+LT('Bienvenue !')+'</h2><input class="nm" id="wln" maxlength="16" placeholder="'+LT('Ton nom')+'" autofocus autocomplete="off" onkeydown="if(event.key===\'Enter\')wlGo()" aria-label="'+LT('Ton nom')+'"><button class="go" onclick="wlGo()">'+LT('Commencer')+'</button><label class="lnk" style="display:flex;align-items:center;justify-content:center"><input type="file" accept=".json,application/json" hidden onchange="wlImp(this)">'+LT('Importer ma sauvegarde')+'</label><div class="mut note" id="bkmsg"></div></div>';
   document.body.appendChild(d);
 }
 wlInit();
