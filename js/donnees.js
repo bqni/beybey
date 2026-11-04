@@ -73,7 +73,8 @@ const T=ALL.map((o,i)=>{
   const hasTot=o.total!==undefined&&o.total!==null&&o.total!=='';
   const tot=hasTot?pw(o.total):Math.round((avg(wb)+(wr===''?0:avg(wr))+avg(wbt))*10)/10;
   const ar=v=>Array.isArray(v)&&v.length===3?v.map(Number):null;
-  return {b:o.blade||'?',bty,l,t,r:o.ratchet||'',bt:o.bit||'?',wb,wr,wbt,tot,sb:ar(o.statsBlade),sr:ar(o.statsRatchet),sbt:ar(o.statsBit),h:o.hauteurRatchet||hNom(o.ratchet),dash:o.dashBit||'',burst:o.burstBit||'',_p:{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit},ed:o.edition==='tt'?'tt':'hasbro',nom:String(o.nom||'').trim(),mc:o.metalCoat||'',tg:o.tag||'',q:(+o.qty>1?Math.min(99,Math.floor(+o.qty)):1),_c:i>=NBV?o.id:0,_k:i<NBV?bkey(o):''};
+  const SB=typeof PHSB!=='undefined'?PHSB[o.blade]:null, SR=typeof PHSR!=='undefined'?PHSR[o.ratchet]:null, SI=typeof PHSI!=='undefined'?PHSI[o.bit]:null; // stats du catalogue si rien n'est saisi
+  return {b:o.blade||'?',bty,l,t,r:o.ratchet||'',bt:o.bit||'?',wb,wr,wbt,tot,sb:ar(o.statsBlade)||(SB?SB.slice(0,3):null),sr:ar(o.statsRatchet)||(SR?SR.slice(0,3):null),sbt:ar(o.statsBit)||(SI?SI.slice(0,3):null),h:o.hauteurRatchet||hNom(o.ratchet)||(SR?SR[3]:''),dash:o.dashBit||(SI?SI[3]:''),burst:o.burstBit||(SI?SI[4]:''),_p:{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit},ed:o.edition==='tt'?'tt':'hasbro',nom:String(o.nom||'').trim(),mc:o.metalCoat||'',tg:o.tag||'',q:(+o.qty>1?Math.min(99,Math.floor(+o.qty)):1),_c:i>=NBV?o.id:0,_k:i<NBV?bkey(o):''};
 });
 if(ERR.length) fatal('Il y a une erreur dans data.js',[...ERR,'Corrige ça dans <b>data.js</b>, puis recharge la page.']);
 T.forEach(x=>{ x.dn=(x.b+' '+(x.r||'')+x.bt).replace('  ',' ').trim(); x.n=x.dn+(x.mc?' (Metal Coat: '+x.mc+')':''); });
