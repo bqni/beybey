@@ -10,6 +10,11 @@ Catalogue des toupies (catalogue.js et photos/cat)
   Données et images de la communauté Beydex : github.com/catgamer109/Beydex-Public-Resources
   Les noms, visuels et marques des toupies appartiennent à Takara Tomy et à Hasbro.
 
+Mesures complémentaires (ph.js : diamètres des blades, dents et hauteur des bits)
+  Beyblade X Viewer (https://beyblade.phstudy.org/), avec l'accord de son auteur, qui demande une mention et un lien.
+  Une grande partie de ces mesures vient des recherches de 競技玩具研究所 (Kyogan Kenkyujo, http://kyoganken.web.fc2.com/),
+  utilisées avec leur accord (échange d'informations réciproque). Les mesures originales leur appartiennent.
+
 Avatars (avatars/)
   Images générées avec ChatGPT (OpenAI), choisies et retouchées pour l'appli.
 

@@ -33,6 +33,8 @@ function cptBuild(){ if(CPT) return CPT; const B={},R={},I={};
   CAT.forEach(c=>{ if(c.b){ const k=c.e+'|'+c.b, x=B[k]||(B[k]={k:k,e:c.e,n:c.b,l:c.l,bt:c.bt}); if(!x.w&&c.wb) x.w=c.wb; if(!x.im&&c.ib) x.im=c.ib; }
     if(c.r){ const x=R[c.r]||(R[c.r]={n:c.r}); if(!x.w&&c.wr) x.w=c.wr; if(!x.h&&c.h) x.h=c.h; if(!x.im&&c.ir) x.im=c.ir; }
     if(c.bi){ const x=I[c.bi]||(I[c.bi]={n:c.bi}); if(!x.w&&c.wbt) x.w=c.wbt; if(!x.im&&c.it) x.im=c.it; } });
+  if(typeof PHXR!=='undefined') Object.keys(PHXR).forEach(n=>{ if(!R[n]) R[n]={n:n,h:hNom(n)}; });
+  if(typeof PHXB!=='undefined') Object.keys(PHXB).forEach(n=>{ if(!I[n]) I[n]={n:n}; });
   CPT={B:B,R:R,I:I}; return CPT; }
 const cpSort=(a,b)=>a.n.localeCompare(b.n,undefined,{numeric:true,sensitivity:'base'});
 function addOpen(){
@@ -227,7 +229,8 @@ const totSt=x=>sum3(x.sb,x.sr,x.sbt);
 function card(x){
   const q=PH[x.n]||{}, g=v=>v===''?'—':v+' g';
   const pc=(lab,p,w,t,sa,xt,nm)=>`<div class="pc">${img(p,'xs')}<span>${lab}</span><em class="pnm">${nm?esc(nm):'—'}</em><b>${g(w)}</b>${t?typ(t):(xt||'<span class="tp">&nbsp;</span>')}${bars(sa)}</div>`;
-  const T3=totSt(x), ex=[x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
+  const bi=typeof PHBIT!=='undefined'&&PHBIT[x.bt], dia=typeof PHD!=='undefined'&&PHD[x.b];
+  const T3=totSt(x), ex=[dia?`Diamètre <b>${dia} mm</b>`:'',bi?`Dents du bit <b>${bi[0]}</b>`:'',bi?`Hauteur du bit <b>${bi[1]} mm</b>`:'',x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
   return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.nom?esc(x.nom):x.dn}${x._c?`<span class="qty" data-qb="${x._c}" ${x.q>1?'':'hidden'}>×${x.q}</span>`:''}</div>${x.nom?`<div class="mut pcl">${esc(x.dn)}</div>`:''}<div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div>${x.mc?`<div class="meta"><span class="mcb"><i style="background:${MCH[x.mc]||'var(--text)'}"></i>Metal Coat · ${mcL(x.mc)}${x.tg?' · '+x.tg.split(' ')[0]:''}</span></div>`:''}</div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb,'',x.b)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr,x.h?`<span class="tp">Hauteur <b>${x.h}</b></span>`:'',x.r)}${pc('Bit',q.bit,x.wbt,x.t,x.sbt,'',x.bt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip dng" onclick="cuDel(this,${x._c})">Supprimer</button><button class="chip" onclick="tpForm(${x._c})">Modifier</button><div class="qst" role="group" aria-label="Exemplaires"><button class="chip sq" onclick="cuQty(${x._c},-1)" aria-label="Moins">−</button><b data-q="${x._c}">${x.q}</b><button class="chip sq" onclick="cuQty(${x._c},1)" aria-label="Plus">+</button></div></div>`:x._k?`<div class="eact"><button class="chip dng" onclick="bsDel(this,'${encodeURIComponent(x._k)}')">Supprimer</button></div>`:''}</div></details>`;
 }
 function partCard(i){
