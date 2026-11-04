@@ -85,20 +85,26 @@ function cpCx(){
   if(!b||b.l!=='CX'||typeof PHLC==='undefined'){ w.innerHTML=''; w.dataset.k=''; return; }
   if(w.dataset.k===b.k) return; w.dataset.k=b.k;
   const op=(M,sel)=>fmOpts([['','Choisir…']].concat(Object.keys(M).sort((a,c)=>a.localeCompare(c)).map(n=>[n,esc(n)+' · '+M[n]+' g'])),sel);
-  const tk=String(b.n).replace(/([a-z])([A-Z])/g,'$1 $2').split(/\s+/), ab=tk.length>2&&PHAB[tk[tk.length-1]]?tk[tk.length-1]:'';
+  let tk=String(b.n).replace(/([a-z])([A-Z])/g,'$1 $2').split(/\s+/), ab=tk.length>2&&PHAB[tk[tk.length-1]]?tk[tk.length-1]:'';
   const AL={Brave:'Courage',Bucks:'Stag',Antlers:'Antler'}, tk2=tk.map(x=>AL[x]||x), lc=tk2.find(x=>PHLC[x])||'', mb=tk2.find(x=>PHMB[x]&&x!==lc)||'';
-  w.innerHTML=`<label class="cxc"><input type="checkbox" id="cp_cx" onchange="cpCxK()"><span>Personnaliser les pièces du blade (CX)</span></label><div id="cp_cxp" hidden><div class="mut note">Un blade CX se compose d'un lock chip, d'un main blade et d'un assist blade. Choisis chaque pièce : le poids total se calcule tout seul.</div><label class="ff3"><span>Lock chip</span><select id="cp_lc" onchange="cpCxT()">${op(PHLC,lc)}</select></label><label class="ff3"><span>Main blade</span><select id="cp_mb" onchange="cpCxT()">${op(PHMB,mb)}</select></label><label class="ff3"><span>Assist blade</span><select id="cp_ab" onchange="cpCxT()">${op(PHAB,ab)}</select></label><div class="cxt" id="cp_cxt"></div></div>`;
+  const l2=tk2[tk2.length-1], f4=l2.length===2&&PHOV[l2[0]]&&PHAB[l2[1]], ov=f4?l2[0]:'', me=f4?(tk2.find(x=>PHME[x])||''):'';
+  if(f4) ab=l2[1];
+  w.innerHTML=`<label class="cxc"><input type="checkbox" id="cp_cx" onchange="cpCxK()"><span>Personnaliser les pièces du blade (CX)</span></label><div id="cp_cxp" hidden><div class="mut note">Un blade CX se compose d'un lock chip, d'un main blade et d'un assist blade. Choisis chaque pièce : le poids total et les stats se calculent tout seuls.</div><label class="ff3"><span>Lock chip</span><select id="cp_lc" onchange="cpCxT()">${op(PHLC,lc)}</select></label><label class="cxc"><input type="checkbox" id="cp_cx4" onchange="cpCxK()"${f4?' checked':''}><span>Blade à 4 pièces (over blade + metal blade)</span></label><label class="ff3" id="cp_mb3"><span>Main blade</span><select id="cp_mb" onchange="cpCxT()">${op(PHMB,mb)}</select></label><div id="cp_mb4" hidden><label class="ff3"><span>Over blade</span><select id="cp_ov" onchange="cpCxT()">${op(PHOV,ov)}</select></label><label class="ff3"><span>Metal blade</span><select id="cp_me" onchange="cpCxT()">${op(PHME,me)}</select></label></div><label class="ff3"><span>Assist blade</span><select id="cp_ab" onchange="cpCxT()">${op(PHAB,ab)}</select></label><div class="cxt" id="cp_cxt"></div></div>`; cpCxK();
 }
-function cpCxK(){ const c=document.getElementById('cp_cx'), p=document.getElementById('cp_cxp'); if(p) p.hidden=!(c&&c.checked); cpCxT(); }
-function cpCxV(){ const g=id=>{ const e=document.getElementById(id); return e?e.value:''; }; const c=document.getElementById('cp_cx');
-  if(!c||!c.checked) return null; const lc=g('cp_lc'), mb=g('cp_mb'), ab=g('cp_ab');
-  return {lc:lc,mb:mb,ab:ab,ok:!!(lc&&mb&&ab),w:lc&&mb&&ab?Math.round((PHLC[lc]+PHMB[mb]+PHAB[ab])*100)/100:0,n:[lc,mb,ab].filter(Boolean).join(' ')}; }
+function cpCxK(){ const c=document.getElementById('cp_cx'), p=document.getElementById('cp_cxp'), q=document.getElementById('cp_cx4'), f=q&&q.checked, a=document.getElementById('cp_mb3'), d=document.getElementById('cp_mb4');
+  if(p) p.hidden=!(c&&c.checked); if(a) a.hidden=!!f; if(d) d.hidden=!f; cpCxT(); }
+function cpCxV(){ const g=id=>{ const e=document.getElementById(id); return e?e.value:''; }; const c=document.getElementById('cp_cx'), q=document.getElementById('cp_cx4');
+  if(!c||!c.checked) return null; const lc=g('cp_lc'), ab=g('cp_ab'), f=q&&q.checked, mb=g('cp_mb'), ov=g('cp_ov'), me=g('cp_me');
+  const ok=f?!!(lc&&ov&&me&&ab):!!(lc&&mb&&ab), r2=x=>Math.round(x*100)/100, sum=(...a)=>a.every(Boolean)?[0,1,2].map(i=>a.reduce((t,v)=>t+v[i],0)):null;
+  const w=!ok?0:r2((PHLC[lc]||0)+(f?PHOV[ov]+PHME[me]:PHMB[mb])+PHAB[ab]);
+  const st=!ok||typeof PHSM==='undefined'?null:(f?sum(PHSO[ov],PHSE[me],PHSA[ab]):sum(PHSM[mb],PHSA[ab]));
+  return {lc:lc,mb:f?ov+'/'+me:mb,ab:ab,ok:ok,w:w,st:st,n:f?[lc,ov&&me?ov+'/'+me:'',ab].filter(Boolean).join(' '):[lc,mb,ab].filter(Boolean).join(' ')}; }
 function cpCxT(){ const t=document.getElementById('cp_cxt'), v=cpCxV(), go=document.getElementById('cp_go'), g=id=>{ const s=document.getElementById(id); return s?s.value:''; };
   if(t) t.innerHTML=v&&v.ok?`Blade : <b>${esc(v.n)}</b> · <b>${v.w} g</b>`:''; 
   if(go) go.disabled=!(v?v.ok&&g('cp_i'):CPT.B[g('cp_b')]&&CPT.I[g('cp_i')]); }
 function cpGo(){
   const b=CPT.B[document.getElementById('cp_b').value], r=CPT.R[document.getElementById('cp_r').value], i=CPT.I[document.getElementById('cp_i').value];
-  const cv=cpCxV(); if(cv&&cv.ok&&i){ const o={blade:cv.n,ligne:'CX',typeBlade:b.bt,edition:b.e,ratchet:r?r.n:'',bit:i.n,poidsBlade:cv.w}; if(r&&r.w) o.poidsRatchet=r.w; if(i.w) o.poidsBit=i.w; if(r&&r.h) o.hauteurRatchet=r.h; if(r&&r.im) o.photoRatchet=r.im; if(i.im) o.photoBit=i.im; return cpSave(o); }
+  const cv=cpCxV(); if(cv&&cv.ok&&i){ const bc=CAT.find(c=>c.e===b.e&&c.b===b.n), o={blade:cv.n,ligne:'CX',typeBlade:b.bt,typeToupie:bc&&bc.t?bc.t:b.bt,edition:b.e,ratchet:r?r.n:'',bit:i.n,poidsBlade:cv.w}; if(cv.st) o.statsBlade=cv.st; if(r&&r.w) o.poidsRatchet=r.w; if(i.w) o.poidsBit=i.w; if(r&&r.h) o.hauteurRatchet=r.h; if(r&&r.im) o.photoRatchet=r.im; if(i.im) o.photoBit=i.im; return cpSave(o); }
   if(!b||!i) return;
   const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, same=c=>c.e===b.e&&c.b===b.n&&(c.r||'')===(r?r.n:'')&&c.bi===i.n;
   const bpk=!!(pk&&pk.bo&&pk.e===b.e&&pk.b===b.n), m=bpk?null:((pk&&same(pk))?pk:(CAT.find(c=>same(c)&&!c.mc)||CAT.find(same)));
@@ -255,8 +261,8 @@ const totSt=x=>sum3(x.sb,x.sr,x.sbt);
 function card(x){
   const q=PH[x.n]||{}, g=v=>v===''?'—':v+' g';
   const pc=(lab,p,w,t,sa,xt,nm)=>`<div class="pc">${img(p,'xs')}<span>${lab}</span><em class="pnm">${nm?esc(nm):'—'}</em><b>${g(w)}</b>${t?typ(t):(xt||'<span class="tp">&nbsp;</span>')}${bars(sa)}</div>`;
-  const bi=typeof PHBIT!=='undefined'&&PHBIT[x.bt], dia=typeof PHD!=='undefined'&&PHD[x.b];
-  const T3=totSt(x), ex=[dia?`Diamètre <b>${dia} mm</b>`:'',bi?`Dents du bit <b>${bi[0]}</b>`:'',bi?`Hauteur du bit <b>${bi[1]} mm</b>`:'',x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
+  const m2=typeof PHSI2!=='undefined'&&PHSI2[x.bt], bi=typeof PHBIT!=='undefined'&&PHBIT[x.bt], dia=typeof PHD!=='undefined'&&PHD[x.b];
+  const T3=totSt(x), ex=[dia?`Diamètre <b>${dia} mm</b>`:'',bi?`Dents du bit <b>${bi[0]}</b>`:'',bi?`Hauteur du bit <b>${bi[1]} mm</b>`:'',x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',m2?`2ᵉ mode <b>A ${m2[0]} · D ${m2[1]} · S ${m2[2]} · Dash ${m2[3]} · H ${m2[5]}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
   return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.nom?esc(x.nom):x.dn}${x._c?`<span class="qty" data-qb="${x._c}" ${x.q>1?'':'hidden'}>×${x.q}</span>`:''}</div>${x.nom?`<div class="mut pcl">${esc(x.dn)}</div>`:''}<div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div>${x.mc?`<div class="meta"><span class="mcb"><i style="background:${MCH[x.mc]||'var(--text)'}"></i>Metal Coat · ${mcL(x.mc)}${x.tg?' · '+x.tg.split(' ')[0]:''}</span></div>`:''}</div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb,'',x.b)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr,x.h?`<span class="tp">Hauteur <b>${x.h}</b></span>`:'',x.r)}${pc('Bit',q.bit,x.wbt,x.t,x.sbt,'',x.bt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip dng" onclick="cuDel(this,${x._c})">Supprimer</button><button class="chip" onclick="tpForm(${x._c})">Modifier</button><div class="qst" role="group" aria-label="Exemplaires"><button class="chip sq" onclick="cuQty(${x._c},-1)" aria-label="Moins">−</button><b data-q="${x._c}">${x.q}</b><button class="chip sq" onclick="cuQty(${x._c},1)" aria-label="Plus">+</button></div></div>`:x._k?`<div class="eact"><button class="chip dng" onclick="bsDel(this,'${encodeURIComponent(x._k)}')">Supprimer</button></div>`:''}</div></details>`;
 }
 function partCard(i){

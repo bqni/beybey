@@ -7,5 +7,8 @@ const PHXR={"M-65":[]};
 const PHXB={"MT":[]};
 // Pièces des blades CX (lock chip, main blade, assist blade) : poids en g.
 const PHLC={"Wolf":1.7,"Cerberus":1.7,"Incendio":1.7,"Pegasus":1.7,"Sol":1.7,"Dran":1.7,"Wizard":1.7,"Perseus":1.7,"Rhino":1.7,"Fox":1.7,"Whale":1.7,"Emperor":4.8,"Phoenix":1.7,"Bahamut":1.7,"Knight":1.7,"Ragna":1.7,"Unicorn":1.7,"Brachio":1.7,"Croc":1.7,"Leon":1.7,"Tiga":1.7,"Hornet":1.7,"Kraken":1.7,"Stag":1.7,"Valkyrie":5.6,"Drake":1.7};
-const PHMB={"Flame":29.0,"Reaper":28.9,"Courage":31.2,"Brush":30.4,"Arc":29.4,"Dark":30.3,"Blast":32.7,"Eclipse":32.2,"Hunt":31.4,"Might":33.2,"Flare":30.9,"B/Blitz":29.7,"G/Armor":27.7,"F/Rage":27.2,"P/Delta":27.9,"O/Whip":27.4,"Fang":30.3,"Volt":31.2};
+const PHMB={"Flame":29.0,"Reaper":28.9,"Courage":31.2,"Brush":30.4,"Arc":29.4,"Dark":30.3,"Blast":32.7,"Eclipse":32.2,"Hunt":31.4,"Might":33.2,"Flare":30.9,"Fang":30.3,"Volt":31.2};
+/* Blade CX à 4 pièces : over blade + metal blade (poids en g) */
+const PHOV={"F":3.8,"B":3.8,"P":3.4,"O":3.6,"G":3.3};
+const PHME={"Rage":27.2,"Blitz":29.7,"Delta":27.9,"Whip":27.4,"Armor":27.7};
 const PHAB={"D":5.9,"B":5.2,"J":4.8,"M":5.4,"C":5.0,"S":4.6,"R":4.7,"T":5.6,"A":5.0,"W":7.1,"F":5.8,"H":7.9,"Z":6.7,"K":4.9,"V":5.3,"E":6.1,"O":4.5,"G":11.5};
