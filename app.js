@@ -503,18 +503,32 @@ async function backupExport(){ try{ await PBOOT; }catch(e){}
 }
 function backupImport(inp,done){
   const f=inp.files&&inp.files[0]; if(!f) return; if(f.size>100e6){ bkMsg('Fichier trop gros pour une sauvegarde Beybey.'); inp.value=''; return; } const r=new FileReader();
-  r.onload=async()=>{ try{
-      const d=JSON.parse(r.result); if(!d||d.app!=='arene-beyblade') throw 0;
+  r.onload=async()=>{ let d; const wrote=[];
+    try{ d=JSON.parse(r.result); if(!d||typeof d!=='object'||d.app!=='arene-beyblade') throw 0; }catch(e){ bkMsg('Ce fichier n\'est pas une sauvegarde Beybey.'); inp.value=''; return; }
+    // Étape 1 : on prépare tout SANS toucher aux données existantes (seules les photos sont posées à part, et retirées si l'import échoue).
+    // Étape 2 : on écrit tout d'un coup ; si une écriture échoue, on remet les anciennes valeurs.
+    try{
       const have=cLoad(),names=new Set(T.map(x=>x.n)); let addT=0,addH=0;
-      for(const o0 of (Array.isArray(d.toupies)?d.toupies.slice(0,1500):[])){ const o=cClean(o0); if(!o||cErr(o).length) continue; const nm=nmOf(o); if(have.some(x=>x.id===o.id)||names.has(nm)) continue; for(const [f,k] of PHF){ if(typeof o[f]==='string'&&o[f].indexOf('data:')===0) o[f]=await pStore(o.id,k,o[f]); else if(!(typeof o[f]==='string'&&o[f].indexOf('photos/')===0)) delete o[f]; } have.push(o); names.add(nm); addT++; }
-      if(Array.isArray(d.masquees)){ const hd=hdLoad(); d.masquees.slice(0,2000).forEach(k=>{ if(typeof k==='string'&&k.length<80&&!hd.includes(k)) hd.push(k); }); hdSave(hd); }
-      if(d.reglages&&typeof d.reglages==='object'){ const rg=d.reglages; if(rg.theme==='futur'||rg.theme==='futurl') setTheme(rg.theme); if(typeof rg.bg==='string'&&BGS[rg.bg]) setBg(rg.bg); }
-      if(d.profil&&typeof d.profil==='object'&&ss(d.profil.n,20)&&!PRF.n){ PRF.n=ss(d.profil.n,20); if(sid(d.profil.id)) PRF.id=sid(d.profil.id); PRF.hn=PRF.n; if(/^a(0[1-9]|1[0-6])$/.test(d.profil.av)) PRF.av=d.profil.av; pfSave(); }
-      if(d.amis&&typeof d.amis==='object'&&!Array.isArray(d.amis)){ const F=fLoad(); Object.keys(d.amis).slice(0,500).forEach(k=>{ const i=sid(k), f=i&&i===k?fClean(d.amis[k],i):null; if(f&&!F[i]) F[i]=f; }); fSave(F); }
-      const hs=hLoad(); (Array.isArray(d.historique)?d.historique.slice(0,300):[]).forEach(h0=>{ const h=hClean(h0); if(h&&h.id&&!hs.some(x=>x.id===h.id)){ hs.push(h); addH++; } }); hs.sort((a,b)=>b.id-a.id);
-      if(!cSave(have)) { bkMsg('Pas assez de place pour tout importer.'); return; } hSave(hs);
+      for(const o0 of (Array.isArray(d.toupies)?d.toupies.slice(0,1500):[])){ const o=cClean(o0); if(!o||cErr(o).length) continue; const nm=nmOf(o); if(have.some(x=>x.id===o.id)||names.has(nm)) continue;
+        for(const [f,k] of PHF){ if(typeof o[f]==='string'&&o[f].indexOf('data:')===0){ const v=await pStore(o.id,k,o[f]); if(typeof v==='string'&&v.indexOf('idb:')===0) wrote.push(o.id+'_'+k); o[f]=v; } else if(!(typeof o[f]==='string'&&o[f].indexOf('photos/')===0)) delete o[f]; }
+        have.push(o); names.add(nm); addT++; }
+      const plan={}; plan[CKEY]=JSON.stringify(have);
+      if(Array.isArray(d.masquees)){ const hd=hdLoad(); d.masquees.slice(0,2000).forEach(k=>{ if(typeof k==='string'&&k.length<80&&!hd.includes(k)) hd.push(k); }); plan['arene_hide']=JSON.stringify(hd); }
+      let newTheme=null,newBg=null;
+      if(d.reglages&&typeof d.reglages==='object'){ const rg=d.reglages; if(rg.theme==='futur'||rg.theme==='futurl'){ newTheme=rg.theme; plan['arene_theme']=rg.theme; } if(typeof rg.bg==='string'&&BGS[rg.bg]){ newBg=rg.bg; plan['arene_bg']=rg.bg; } }
+      let newPrf=null;
+      if(d.profil&&typeof d.profil==='object'&&ss(d.profil.n,20)&&!PRF.n){ newPrf=Object.assign({},PRF,{n:ss(d.profil.n,20)}); if(sid(d.profil.id)) newPrf.id=sid(d.profil.id); newPrf.hn=newPrf.n; if(/^a(0[1-9]|1[0-6])$/.test(d.profil.av)) newPrf.av=d.profil.av; plan[PKEY]=JSON.stringify(newPrf); }
+      if(d.amis&&typeof d.amis==='object'&&!Array.isArray(d.amis)){ const F=fLoad(); Object.keys(d.amis).slice(0,500).forEach(k=>{ const i=sid(k), f=i&&i===k?fClean(d.amis[k],i):null; if(f&&!F[i]) F[i]=f; }); plan[FKEY]=JSON.stringify(F); }
+      const hs=hLoad(); (Array.isArray(d.historique)?d.historique.slice(0,300):[]).forEach(h0=>{ const h=hClean(h0); if(h&&h.id&&!hs.some(x=>x.id===h.id)){ hs.push(h); addH++; } }); hs.sort((a,b)=>b.id-a.id); plan[HKEY]=JSON.stringify(hs.slice(0,300));
+      const old={}, keys=Object.keys(plan); for(const k of keys) old[k]=localStorage.getItem(k);
+      try{ for(const k of keys) localStorage.setItem(k,plan[k]); }
+      catch(e){ for(const k of keys){ try{ if(old[k]===null) localStorage.removeItem(k); else localStorage.setItem(k,old[k]); }catch(x){} }
+        for(const id of wrote){ try{ await idbDel('photos',id); }catch(x){} }
+        bkMsg('Pas assez de place pour tout importer : rien n\'a été modifié.'); inp.value=''; return; }
+      // Tout est écrit : on met à jour l'état en mémoire.
+      if(newPrf) Object.assign(PRF,newPrf); if(newTheme) setTheme(newTheme); if(newBg) setBg(newBg);
       bkMsg('Importé : '+addT+' toupie'+(addT>1?'s':'')+' et '+addH+' match'+(addH>1?'s':'')+' en plus.'); if(done) setTimeout(done,900); else if(addT) setTimeout(()=>location.reload(),900);
-    }catch(e){ bkMsg('Ce fichier n\'est pas une sauvegarde Beybey.'); } inp.value=''; };
+    }catch(e){ for(const id of wrote){ try{ await idbDel('photos',id); }catch(x){} } bkMsg('L\'import a échoué : rien n\'a été modifié.'); } inp.value=''; };
   r.readAsText(f);
 }
 function setTab(t){ const f=document.getElementById('fm'); if(f&&f.classList.contains('wtabs')) fmClose(); st.tab=t; draw(); window.scrollTo(0,0); }
