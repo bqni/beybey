@@ -239,3 +239,7 @@ jsQR · Apache License 2.0
    See the License for the specific language governing permissions and
    limitations under the License.
 
+
+Stats avancées (stats.js : ATK / DEF / STA, dash, burst, hauteur)
+  Source : Beyblade X Viewer, PH Study (https://beyblade.phstudy.org), utilisées avec leur accord.
+  Valeurs de jeu officielles des pièces, données à titre indicatif.

@@ -11,6 +11,7 @@ Contenu du dossier
   data.js           toupies de départ (vide, facultatif)
   catalogue.js      la liste des toupies Hasbro et Takara Tomy (voir CATALOGUE plus bas)
   catalogue-ajouts.js  Metal Coat et éditions spéciales en plus (facultatif)
+  stats.js          stats avancées ATK/DEF/STA, dash, burst, hauteur (facultatif)
   ph.js             mesures en plus : diamètres des blades, dents et hauteur des bits (facultatif)
   lib/              deux petites bibliothèques pour les QR codes (création et lecture caméra)
   sw.js             le mode hors ligne (le site s'ouvre sans internet après une première visite)

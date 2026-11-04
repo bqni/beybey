@@ -109,7 +109,14 @@ function cpGo(){
   if(pk&&pk.bo&&pk.e===b.e&&pk.b===b.n){ o.metalCoat=pk.mc; if(pk.ib) o.photoBlade=pk.ib; if(pk.wb) o.poidsBlade=pk.wb; }
   cpSave(o);
 }
-function cpSave(o){
+function stFill(o){ // stats avancées (stats.js) : ne remplit que ce qui manque
+  if(typeof PHSB==='undefined') return o;
+  const b=PHSB[o.blade], r=PHSR[o.ratchet], i=PHSI[o.bit];
+  if(b&&!o.statsBlade) o.statsBlade=b.slice(0,3);
+  if(r){ if(!o.statsRatchet) o.statsRatchet=r.slice(0,3); if(!o.hauteurRatchet) o.hauteurRatchet=r[3]; }
+  if(i){ if(!o.statsBit) o.statsBit=i.slice(0,3); if(!o.dashBit) o.dashBit=i[3]; if(!o.burstBit) o.burstBit=i[4]; }
+  return o; }
+function cpSave(o){ stFill(o);
   const box=document.getElementById('f_err'); if(!o.ratchet) o.ratchet='';
   if(!o.hauteurRatchet&&o.ratchet&&hNom(o.ratchet)) o.hauteurRatchet=hNom(o.ratchet);
   const er=cErr(o);
