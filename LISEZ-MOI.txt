@@ -3,6 +3,9 @@ BEYBEY (Arène Beyblade) — mode d'emploi — version 1.0
 
 Contenu du dossier
   index.html        la page (ne pas toucher)
+  style.css         l'apparence (couleurs, mise en page)
+  app.js            le code de l'appli (collection, matchs, QR, sauvegardes…)
+  boot.js           petit script de démarrage (thème et réglages, avant l'affichage)
   data.js           toupies de départ (vide, facultatif)
   catalogue.js      la liste des toupies Hasbro et Takara Tomy (voir CATALOGUE plus bas)
   lib/              deux petites bibliothèques pour les QR codes (création et lecture caméra)
@@ -15,7 +18,7 @@ Contenu du dossier
                     pour installer l'appli sur l'écran d'accueil (ne pas toucher)
 
 Ouvrir la page
-  Via GitHub Pages (voir "Héberger" plus bas). Sur ordinateur, double-clic sur index.html marche aussi.
+  Via GitHub Pages (voir "Héberger" plus bas). Sur ordinateur, double-clic sur index.html marche aussi (sans le mode hors ligne).
 
 Les onglets
   Accueil   l'arène animée, le bouton MATCH et six raccourcis : Collection, Build, Historique, Profil, Amis et
@@ -91,11 +94,11 @@ Sauvegarde (Options > Mes données)
 
 Héberger gratuitement avec GitHub Pages
   1. Crée un compte sur github.com et un nouveau dépôt public (ex. beybey).
-  2. "Add file" > "Upload files" : glisse tout le contenu du dossier (index.html, data.js, photos, sons,
+  2. "Add file" > "Upload files" : glisse tout le contenu du dossier (index.html, style.css, app.js, boot.js, data.js, photos, sons,
      manifest.json et les icônes).
   3. Settings > Pages > Source : "Deploy from a branch", branche main, dossier /(root), Save.
   4. Après ~1 minute, ton lien est : https://TON-PSEUDO.github.io/NOM-DU-DEPOT/
-  Pour mettre à jour : remplace les fichiers modifiés (en général seulement index.html).
+  Pour mettre à jour : remplace les fichiers modifiés (selon la modification : index.html, style.css, app.js, boot.js, sw.js…).
   Le dépôt est public : n'y mets rien de privé.
 
 Installer sur le téléphone
