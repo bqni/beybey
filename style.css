@@ -585,4 +585,5 @@ button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-
 .fhelp{padding:var(--sp-3);border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:var(--fs-sm);line-height:1.5}.fhelp b{color:var(--text)}
 
 .cxc{display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-2) 0;font-size:var(--fs-sm);color:var(--text-2)}.cxc input{width:20px;height:20px;accent-color:var(--accent,currentColor)}
-#cp_cxp{display:grid;gap:var(--sp-2);margin-bottom:var(--sp-2)}.cxt{font-size:var(--fs-sm);color:var(--text-2)}.cxt b{color:var(--text)}
+#cp_cxp,.cxb{display:grid;gap:var(--sp-2);margin-bottom:var(--sp-2)}.cxt{font-size:var(--fs-sm);color:var(--text-2)}.cxt b{color:var(--text)}
+.cxbw{margin-top:var(--sp-2)}.cxb{padding-top:var(--sp-2)}

@@ -79,26 +79,29 @@ function cpSel(){
   cpCx(); cpCxT();
 }
 const CXW=n=>typeof PHLC==='undefined'?0:1;
+function cxPre(name){ // pièces probables d'un blade CX d'après son nom
+  const tk=String(name).replace(/([a-z])([A-Z])/g,'$1 $2').split(/\s+/), AL={Brave:'Courage',Bucks:'Stag',Antlers:'Antler'}, t2=tk.map(x=>AL[x]||x);
+  const lc=t2.find(x=>PHLC[x])||'', mb=t2.find(x=>PHMB[x]&&x!==lc)||'', l2=t2[t2.length-1], f4=!!(l2.length===2&&PHOV[l2[0]]&&PHAB[l2[1]]);
+  const ab=f4?l2[1]:(tk.length>2&&PHAB[tk[tk.length-1]]?tk[tk.length-1]:'');
+  return {lc:lc,mb:f4?'':mb,ov:f4?l2[0]:'',me:f4?(t2.find(x=>PHME[x])||''):'',ab:ab,f4:f4}; }
+function cxCalc(c){ // {lc,mb,ov,me,ab,f4} -> {ok,w,st,n}
+  const ok=!!(c.lc&&c.ab&&(c.f4?c.ov&&c.me:c.mb)), r2=x=>Math.round(x*100)/100, sum=(...a)=>a.every(Boolean)?[0,1,2].map(i=>a.reduce((t,v)=>t+v[i],0)):null;
+  if(!ok) return {ok:false,w:0,st:null,n:''};
+  return {ok:true,w:r2((PHLC[c.lc]||0)+(c.f4?PHOV[c.ov]+PHME[c.me]:PHMB[c.mb])+PHAB[c.ab]),st:typeof PHSM==='undefined'?null:(c.f4?sum(PHSO[c.ov],PHSE[c.me],PHSA[c.ab]):sum(PHSM[c.mb],PHSA[c.ab])),n:[c.lc,c.f4?c.ov+'/'+c.me:c.mb,c.ab].join(' ')}; }
 function cpCx(){
   const w=document.getElementById('cp_cxw'); if(!w) return;
   const sb=document.getElementById('cp_b'), b=sb&&CPT.B[sb.value];
   if(!b||b.l!=='CX'||typeof PHLC==='undefined'){ w.innerHTML=''; w.dataset.k=''; return; }
   if(w.dataset.k===b.k) return; w.dataset.k=b.k;
   const op=(M,sel)=>fmOpts([['','Choisir…']].concat(Object.keys(M).sort((a,c)=>a.localeCompare(c)).map(n=>[n,esc(n)+' · '+M[n]+' g'])),sel);
-  let tk=String(b.n).replace(/([a-z])([A-Z])/g,'$1 $2').split(/\s+/), ab=tk.length>2&&PHAB[tk[tk.length-1]]?tk[tk.length-1]:'';
-  const AL={Brave:'Courage',Bucks:'Stag',Antlers:'Antler'}, tk2=tk.map(x=>AL[x]||x), lc=tk2.find(x=>PHLC[x])||'', mb=tk2.find(x=>PHMB[x]&&x!==lc)||'';
-  const l2=tk2[tk2.length-1], f4=l2.length===2&&PHOV[l2[0]]&&PHAB[l2[1]], ov=f4?l2[0]:'', me=f4?(tk2.find(x=>PHME[x])||''):'';
-  if(f4) ab=l2[1];
+  const P=cxPre(b.n), lc=P.lc, mb=P.mb, ov=P.ov, me=P.me, ab=P.ab, f4=P.f4;
   w.innerHTML=`<label class="cxc"><input type="checkbox" id="cp_cx" onchange="cpCxK()"><span>Personnaliser les pièces du blade (CX)</span></label><div id="cp_cxp" hidden><div class="mut note">Un blade CX se compose d'un lock chip, d'un main blade et d'un assist blade. Choisis chaque pièce : le poids total et les stats se calculent tout seuls.</div><label class="ff3"><span>Lock chip</span><select id="cp_lc" onchange="cpCxT()">${op(PHLC,lc)}</select></label><label class="cxc"><input type="checkbox" id="cp_cx4" onchange="cpCxK()"${f4?' checked':''}><span>Blade à 4 pièces (over blade + metal blade)</span></label><label class="ff3" id="cp_mb3"><span>Main blade</span><select id="cp_mb" onchange="cpCxT()">${op(PHMB,mb)}</select></label><div id="cp_mb4" hidden><label class="ff3"><span>Over blade</span><select id="cp_ov" onchange="cpCxT()">${op(PHOV,ov)}</select></label><label class="ff3"><span>Metal blade</span><select id="cp_me" onchange="cpCxT()">${op(PHME,me)}</select></label></div><label class="ff3"><span>Assist blade</span><select id="cp_ab" onchange="cpCxT()">${op(PHAB,ab)}</select></label><div class="cxt" id="cp_cxt"></div></div>`; cpCxK();
 }
 function cpCxK(){ const c=document.getElementById('cp_cx'), p=document.getElementById('cp_cxp'), q=document.getElementById('cp_cx4'), f=q&&q.checked, a=document.getElementById('cp_mb3'), d=document.getElementById('cp_mb4');
   if(p) p.hidden=!(c&&c.checked); if(a) a.hidden=!!f; if(d) d.hidden=!f; cpCxT(); }
 function cpCxV(){ const g=id=>{ const e=document.getElementById(id); return e?e.value:''; }; const c=document.getElementById('cp_cx'), q=document.getElementById('cp_cx4');
-  if(!c||!c.checked) return null; const lc=g('cp_lc'), ab=g('cp_ab'), f=q&&q.checked, mb=g('cp_mb'), ov=g('cp_ov'), me=g('cp_me');
-  const ok=f?!!(lc&&ov&&me&&ab):!!(lc&&mb&&ab), r2=x=>Math.round(x*100)/100, sum=(...a)=>a.every(Boolean)?[0,1,2].map(i=>a.reduce((t,v)=>t+v[i],0)):null;
-  const w=!ok?0:r2((PHLC[lc]||0)+(f?PHOV[ov]+PHME[me]:PHMB[mb])+PHAB[ab]);
-  const st=!ok||typeof PHSM==='undefined'?null:(f?sum(PHSO[ov],PHSE[me],PHSA[ab]):sum(PHSM[mb],PHSA[ab]));
-  return {lc:lc,mb:f?ov+'/'+me:mb,ab:ab,ok:ok,w:w,st:st,n:f?[lc,ov&&me?ov+'/'+me:'',ab].filter(Boolean).join(' '):[lc,mb,ab].filter(Boolean).join(' ')}; }
+  if(!c||!c.checked) return null; const f=!!(q&&q.checked), x={lc:g('cp_lc'),mb:g('cp_mb'),ov:g('cp_ov'),me:g('cp_me'),ab:g('cp_ab'),f4:f};
+  return cxCalc(x); }
 function cpCxT(){ const t=document.getElementById('cp_cxt'), v=cpCxV(), go=document.getElementById('cp_go'), g=id=>{ const s=document.getElementById(id); return s?s.value:''; };
   if(t) t.innerHTML=v&&v.ok?`Blade : <b>${esc(v.n)}</b> · <b>${v.w} g</b>`:''; 
   if(go) go.disabled=!(v?v.ok&&g('cp_i'):CPT.B[g('cp_b')]&&CPT.I[g('cp_i')]); }
@@ -293,7 +296,18 @@ function renderList(){
   const key=curKey();
   document.getElementById('main').innerHTML=st.view==='collection'?collection(key):parts(key);
 }
-const BD=[[0,0,0],[1,0,0]], BN=['',''];
+const BD=[[0,0,0],[1,0,0]], BN=['',''], BC=[null,null];
+function bcBlade(n,b){ const c=BC[n]; if(!c||!b||b.l!=='CX') return b; const v=cxCalc(c); if(!v.ok) return b;
+  const e=b.cat?b.c.e:(T[b.i]&&T[b.i].ed)||'hasbro';
+  return {cat:1,c:{n:v.n,l:'CX',bt:b.ty,e:e,w:v.w},n:v.n,l:'CX',w:v.w,s:v.st||null,ty:b.ty,img:b.img,integ:false,tt:b.cat?b.tt:T[b.i].t,custom:1}; }
+function bcTog(n,on){ const L=bdLists(), b=L.bl[BD[n][0]]; BC[n]=on?cxPre(b.n):null; draw(); }
+function bcSet(n,k,v){ if(!BC[n]) return; if(k==='f4'){ BC[n].f4=!!v; } else BC[n][k]=v; draw(); }
+function bcUI(n,b){ if(!b||b.l!=='CX'||typeof PHLC==='undefined') return ''; const c=BC[n];
+  const op=(M,sel)=>fmOpts([['','Choisir…']].concat(Object.keys(M).sort((a,x)=>a.localeCompare(x)).map(k=>[k,esc(k)+' · '+M[k]+' g'])),sel);
+  let h=`<label class="cxc"><input type="checkbox" ${c?'checked':''} onchange="bcTog(${n},this.checked)"><span>${LT('Personnaliser les pièces du blade (CX)')}</span></label>`;
+  if(c){ const v=cxCalc(c), sel=(k,lab,M)=>`<label class="ff3"><span>${LT(lab)}</span><select onchange="bcSet(${n},'${k}',this.value)">${op(M,c[k])}</select></label>`;
+    h+=`<div class="cxb"><label class="cxc"><input type="checkbox" ${c.f4?'checked':''} onchange="bcSet(${n},'f4',this.checked)"><span>${LT('Blade à 4 pièces (over blade + metal blade)')}</span></label>${sel('lc','Lock chip',PHLC)}${c.f4?sel('ov','Over blade',PHOV)+sel('me','Metal blade',PHME):sel('mb','Main blade',PHMB)}${sel('ab','Assist blade',PHAB)}<div class="cxt">${v.ok?`${LT('Blade')} : <b>${esc(v.n)}</b> · <b>${v.w} g</b>`:''}</div></div>`; }
+  return `<div class="cxbw">${h}</div>`; }
 var BP=null;
 function bpOpen(n,k){ BP={n,k,q:''}; let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
   fmShown(f); bpDraw(); }
@@ -314,7 +328,7 @@ function bpList(){
   return h||`<div class="mut note">${LT('Rien trouvé.')}</div>`;
 }
 var BFL=null;
-function bpPick(i){ if(!BP) return; BD[BP.n][BP.k]=i; BFL=[BP.n,BP.k]; bpClose(); draw(); void document.body.offsetHeight; setTimeout(()=>{ BFL=null; document.querySelectorAll('.bsb.bsel').forEach(e=>e.classList.remove('bsel')); },900); }
+function bpPick(i){ if(!BP) return; if(BP.k===0&&BD[BP.n][0]!==i) BC[BP.n]=null; BD[BP.n][BP.k]=i; BFL=[BP.n,BP.k]; bpClose(); draw(); void document.body.offsetHeight; setTimeout(()=>{ BFL=null; document.querySelectorAll('.bsb.bsel').forEach(e=>e.classList.remove('bsel')); },900); }
 function bdAsk(n){
   const h=`<div class="fwrap"><div class="fh"><h2>${LT('Nom du build')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
   <input class="nm" id="bdq" value="${esc(BN[n]||'')}" placeholder="${LT('Nom du build')}" aria-label="${LT('Nom du build')}" autocomplete="off" maxlength="40" onkeydown="if(event.key==='Enter'){event.preventDefault();bdSave(${n},document.getElementById('bdq_b'));}">
@@ -325,7 +339,7 @@ function bdAsk(n){
   setTimeout(()=>{ const e=document.getElementById('bdq'); if(e) e.focus(); },60);
 }
 async function bdSave(n,btn){
-  const L=bdLists(), B=BD[n], b=L.bl[B[0]], r=b.integ?null:L.ra[B[1]], t=L.bi[B[2]], msg=document.getElementById('bm'+n);
+  const L=bdLists(), B=BD[n], b=bcBlade(n,L.bl[B[0]]), r=b.integ?null:L.ra[B[1]], t=L.bi[B[2]], msg=document.getElementById('bm'+n);
   const say=m=>{ const d=document.getElementById('bdq_m'); const e=d||msg; if(e) e.textContent=m; };
   const qi=document.getElementById('bdq'); if(qi) BN[n]=qi.value;
   const nom=(BN[n]||'').trim();
@@ -339,7 +353,8 @@ async function bdSave(n,btn){
     poidsBlade:b.cat?b.c.w:Tb.wb, poidsRatchet:r?(r.cat?r.c.w:Tr.wr):'', poidsBit:t.cat?t.c.w:Tt.wbt};
   if(r){ const h=r.cat?r.c.h:(Tr.h||hNom(Tr.r)); const hh=h||hNom(o.ratchet); if(hh) o.hauteurRatchet=+hh; }
   if(Tt){ if(Tt.dash!=='') o.dashBit=+Tt.dash; if(Tt.burst!=='') o.burstBit=+Tt.burst; if(Tt.sbt) o.statsBit=Tt.sbt; }
-  if(Tb&&Tb.sb) o.statsBlade=Tb.sb; if(Tr&&Tr.sr) o.statsRatchet=Tr.sr;
+  if(Tb&&Tb.sb) o.statsBlade=Tb.sb; if(b.custom&&b.s) o.statsBlade=b.s; if(Tr&&Tr.sr) o.statsRatchet=Tr.sr;
+  stFill(o);
   const er=cErr(o); if(er.length) return say(LT(er[0]));
   const nm=nmOf(o), dp=T.find(x=>x.n===nm);
   if(dp) return say(LT('Tu as déjà cette toupie')+' : '+(dp.nom||dp.n)+'.');
@@ -354,7 +369,7 @@ async function bdSave(n,btn){
 }
 function bdLists(){
   const P=x=>PH[x.n]||{};
-  const bl=T.map((x,i)=>({i,n:x.b,s:x.sb,w:x.wb,ty:x.bty,img:P(x).blade,integ:!x.r&&!x.sr}));
+  const bl=T.map((x,i)=>({i,n:x.b,s:x.sb,w:x.wb,ty:x.bty,l:x.l,img:P(x).blade,integ:!x.r&&!x.sr}));
   const ra=T.map((x,i)=>({x,i})).filter(o=>o.x.r).map(o=>({i:o.i,n:o.x.r,s:o.x.sr,w:o.x.wr,h:o.x.h,img:P(o.x).ratchet}));
   const seen={},bi=[]; T.forEach((x,i)=>{ if(seen[x.bt]) return; seen[x.bt]=1; bi.push({i,n:x.bt,s:x.sbt,w:x.wbt,ty:x.t,dash:x.dash,burst:x.burst,img:P(x).bit}); });
   const nOwn=[bl.length,ra.length,bi.length];
@@ -364,16 +379,16 @@ function bdLists(){
     Object.values(C.B).sort(cpSort).forEach(c=>{ if(sb[c.n]) return; sb[c.n]=1;
       const integ=!CAT.some(x=>x.b===c.n&&x.e===c.e&&(x.r||x.bo));
       const f=CAT.find(x=>x.b===c.n&&x.e===c.e);
-      if(c.im) IM[c.im]=c.im; bl.push({cat:1,c,n:c.n,w:c.w,ty:c.bt,img:c.im,integ,tt:f&&f.t}); });
-    Object.values(C.R).sort(cpSort).forEach(c=>{ if(sr[c.n]) return; sr[c.n]=1; if(c.im) IM[c.im]=c.im; ra.push({cat:1,c,n:c.n,w:c.w,h:c.h,img:c.im}); });
-    Object.values(C.I).sort(cpSort).forEach(c=>{ if(si[c.n]) return; si[c.n]=1; const f=CAT.find(x=>x.bi===c.n); if(c.im) IM[c.im]=c.im; bi.push({cat:1,c,n:c.n,w:c.w,ty:f&&f.t,dash:'',burst:'',img:c.im}); });
+      if(c.im) IM[c.im]=c.im; bl.push({cat:1,c,n:c.n,l:c.l,w:c.w,s:typeof PHSB!=='undefined'&&PHSB[c.n]||null,ty:c.bt,img:c.im,integ,tt:f&&f.t}); });
+    Object.values(C.R).sort(cpSort).forEach(c=>{ if(sr[c.n]) return; sr[c.n]=1; if(c.im) IM[c.im]=c.im; const q=typeof PHSR!=='undefined'&&PHSR[c.n]; ra.push({cat:1,c,n:c.n,w:c.w,h:c.h||(q?q[3]:''),s:q?q.slice(0,3):null,img:c.im}); });
+    Object.values(C.I).sort(cpSort).forEach(c=>{ if(si[c.n]) return; si[c.n]=1; const f=CAT.find(x=>x.bi===c.n); if(c.im) IM[c.im]=c.im; const q=typeof PHSI!=='undefined'&&PHSI[c.n]; bi.push({cat:1,c,n:c.n,w:c.w,ty:f&&f.t,s:q?q.slice(0,3):null,dash:q?q[3]:'',burst:q?q[4]:'',img:c.im}); });
   }
   return {bl,ra,bi,nOwn};
 }
 function bdOne(n,L){
   const {bl,ra,bi}=L, B=BD[n];
   B[0]=Math.min(B[0],bl.length-1); B[1]=Math.min(B[1],ra.length-1); B[2]=Math.min(B[2],bi.length-1);
-  const b=bl[B[0]], integ=b.integ, r=integ?null:ra[B[1]], t=bi[B[2]];
+  const b0=bl[B[0]], b=bcBlade(n,b0), integ=b.integ, r=integ?null:ra[B[1]], t=bi[B[2]];
   const slot=(lab,o,k,dis)=>`<div class="bslot"><span class="sl">${lab}</span><button class="bsb${BFL&&BFL[0]===n&&BFL[1]===k?' bsel':''}" ${dis?'disabled':''} onclick="bpOpen(${n},${k})" aria-label="${lab} : ${o?esc(o.n):''}">${o?img(o.img,'sm'):'<div class="pimg sm"></div>'}<b>${dis?LT('Intégré'):esc(o.n)}</b></button></div>`;
   const parts=[b,r,t].filter(Boolean);
   const S3=sum3(b.s,r&&r.s,t.s);
@@ -381,7 +396,7 @@ function bdOne(n,L){
   const own=T.find(x=>x.b===b.n&&(x.r||'')===(r?r.n:'')&&x.bt===t.n);
   const col=n?'var(--pink)':'var(--accent)';
   const html=`<div class="pcard" style="--pc:${col}"><div class="bh"><div class="sl" style="color:${col}">${esc(b.n+' '+(r?r.n:'')+t.n)}</div><span class="bhb"><button class="chip" onclick="qrBuild(${n})">QR</button><button class="chip bsv" onclick="bdAsk(${n})">${LT('Enregistrer')}</button></span></div>
-    <div class="bgrid">${slot('Blade',b,0)}${slot('Ratchet',r,1,integ)}${slot('Bit',t,2)}</div>
+    <div class="bgrid">${slot('Blade',b,0)}${slot('Ratchet',r,1,integ)}${slot('Bit',t,2)}</div>${bcUI(n,b0)}
     <div class="mut note bmsg" id="bm${n}"></div></div>`;
   return {html,nm:b.n,w,S:S3||[0,0,0],h:r&&r.h?+r.h:null,dash:t.dash!==''?+t.dash:null,burst:t.burst!==''?+t.burst:null};
 }
