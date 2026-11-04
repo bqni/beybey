@@ -26,7 +26,7 @@ function tpForm(id,pre,fromCat){
   f.innerHTML=h; fmShown(f);
 }
 
-const CAT=(typeof CATALOGUE!=='undefined'&&Array.isArray(CATALOGUE))?CATALOGUE:[];
+const CAT=((typeof CATALOGUE!=='undefined'&&Array.isArray(CATALOGUE))?CATALOGUE:[]).concat((typeof CATALOGUE_AJOUTS!=='undefined'&&Array.isArray(CATALOGUE_AJOUTS))?CATALOGUE_AJOUTS:[]);
 function catPre(c){ const o={blade:c.b,ligne:c.l,typeBlade:c.bt,typeToupie:c.t,edition:c.e,ratchet:c.r,bit:c.bi}; if(c.wb) o.poidsBlade=c.wb; if(c.wr) o.poidsRatchet=c.wr; if(c.wbt) o.poidsBit=c.wbt; if(c.h) o.hauteurRatchet=c.h; if(c.ib) o.photoBlade=c.ib; if(c.ir) o.photoRatchet=c.ir; if(c.it) o.photoBit=c.it; if(c.mc) o.metalCoat=c.mc; if(c.tg) o.tag=c.tg; return o; }
 let CPT=null,CPS={e:'hasbro'};
 function cptBuild(){ if(CPT) return CPT; const B={},R={},I={};

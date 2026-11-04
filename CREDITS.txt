@@ -10,6 +10,10 @@ Catalogue des toupies (catalogue.js et photos/cat)
   Données et images de la communauté Beydex : github.com/catgamer109/Beydex-Public-Resources
   Les noms, visuels et marques des toupies appartiennent à Takara Tomy et à Hasbro.
 
+Catalogue : ajouts (catalogue-ajouts.js : Metal Coat et éditions spéciales)
+  Liste des éditions : Beyblade X Viewer (https://beyblade.phstudy.org/), avec l'accord de son auteur. Poids de blades mesurés par
+  競技玩具研究所 (http://kyoganken.web.fc2.com/), utilisés avec leur accord. Photos et autres poids : catalogue Beydex ci-dessus.
+
 Mesures complémentaires (ph.js : diamètres des blades, dents et hauteur des bits)
   Beyblade X Viewer (https://beyblade.phstudy.org/), avec l'accord de son auteur, qui demande une mention et un lien.
   Une grande partie de ces mesures vient des recherches de 競技玩具研究所 (Kyogan Kenkyujo, http://kyoganken.web.fc2.com/),

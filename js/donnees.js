@@ -52,9 +52,9 @@ const HID=hdLoad(), BASE=TOUPIES.filter(o=>!(o&&HID.includes(bkey(o)))), NBV=BAS
 const ALL=BASE.concat(CUSTOM);
 /* Metal Coat : finition métallisée d'une toupie (couleur) */
 /* ===== Couleurs MetalCoat ===== */
-const MCC=['Black','Blue','Blue/Green','Bronze','Gold','Green','Gunmetal','Magenta','Navy','Orange','Pink','Red','Silver','Violet','White','Yellow'];
-const MCH={Black:'#2b2b2f',Blue:'#2f6bff','Blue/Green':'#1fb5a8',Bronze:'#b4793c',Gold:'#e0b52a',Green:'#2fb457',Gunmetal:'#6b717c',Magenta:'#d6389a',Navy:'#1b2f72',Orange:'#f08a24',Pink:'#f08ab4',Red:'#e0343a',Silver:'#b9c0c9',Violet:'#8a4fd8',White:'#f2f2f2',Yellow:'#f2d625'};
-const MCF={Black:'Noir',Blue:'Bleu','Blue/Green':'Bleu/Vert',Bronze:'Bronze',Gold:'Or',Green:'Vert',Gunmetal:'Gunmetal',Magenta:'Magenta',Navy:'Bleu marine',Orange:'Orange',Pink:'Rose',Red:'Rouge',Silver:'Argent',Violet:'Violet',White:'Blanc',Yellow:'Jaune'};
+const MCC=['Black','Blue','Blue/Green','Bronze','Cyan','Gold','Green','Gunmetal','Magenta','Navy','Orange','Pink','Red','Silver','Violet','White','Yellow'];
+const MCH={Black:'#2b2b2f',Blue:'#2f6bff','Blue/Green':'#1fb5a8',Bronze:'#b4793c',Cyan:'#22c7d6',Gold:'#e0b52a',Green:'#2fb457',Gunmetal:'#6b717c',Magenta:'#d6389a',Navy:'#1b2f72',Orange:'#f08a24',Pink:'#f08ab4',Red:'#e0343a',Silver:'#b9c0c9',Violet:'#8a4fd8',White:'#f2f2f2',Yellow:'#f2d625'};
+const MCF={Black:'Noir',Blue:'Bleu','Blue/Green':'Bleu/Vert',Bronze:'Bronze',Cyan:'Cyan',Gold:'Or',Green:'Vert',Gunmetal:'Gunmetal',Magenta:'Magenta',Navy:'Bleu marine',Orange:'Orange',Pink:'Rose',Red:'Rouge',Silver:'Argent',Violet:'Violet',White:'Blanc',Yellow:'Jaune'};
 const mcL=c=>LANG==='fr'?(MCF[c]||c):c;
 const nmOf=o=>(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim()+(o.metalCoat?' (Metal Coat: '+o.metalCoat+')':'');
 const T=ALL.map((o,i)=>{
