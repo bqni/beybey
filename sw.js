@@ -1,6 +1,6 @@
 // Beybey : mode hors ligne. Le site s'ouvre sans internet après une première visite.
 // Réseau d'abord (tu as toujours la dernière version), cache en secours.
-const CACHE = 'beybey-v10';
+const CACHE = 'beybey-v11';
 // Cœur de l'appli : doit être complet, sinon la mise à jour est refusée et l'ancienne version reste active (pas d'appli à moitié à jour).
 const CORE = ['./', 'index.html', 'style.css', 'boot.js', 'js/langue.js', 'js/fond.js', 'js/donnees.js', 'js/interface.js', 'js/collection.js', 'js/profil.js', 'js/partage.js', 'js/match.js', 'js/historique.js', 'js/accueil.js', 'data.js', 'catalogue.js', 'catalogue-ajouts.js', 'ph.js','stats.js', 'lib/qrcode.js', 'lib/jsQR.js', 'manifest.json'];
 // Le reste est mis en cache au mieux : s'il manque, l'appli marche quand même (réseau d'abord).
@@ -38,7 +38,9 @@ self.addEventListener('fetch', e => {
   e.respondWith((async () => {
     const cache = await caches.open(CACHE);
     try {
-      const res = await fetch(req);
+      // Pages, scripts et données : on revalide toujours (sinon GitHub Pages sert l'ancienne version jusqu'à 10 min). Photos, sons, polices : cache normal.
+      const gros = /\/(photos|sons|fonts|avatars)\//.test(req.url);
+      const res = await fetch(req, isRange || gros ? undefined : { cache: 'no-cache' });
       if (res.status === 200 && !isRange) cache.put(req, res.clone()).catch(() => {});
       return res;
     } catch (err) {
