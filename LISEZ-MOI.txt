@@ -117,4 +117,5 @@ Installer sur le téléphone
 CATALOGUE
 Le fichier catalogue.js contient la liste des toupies Beyblade X (Hasbro et Takara Tomy) utilisée par le bouton « Depuis le catalogue ».
 Source : Beydex Public Resources (github.com/catgamer109/Beydex-Public-Resources). Merci à l'équipe Beydex.
+Mesures, éditions spéciales et stats avancées : Beyblade X Viewer, PH Study (beyblade.phstudy.org) et 競技玩具研究所 (http://kyoganken.web.fc2.com/), avec leur accord. Merci à eux.
 Si tu retires catalogue.js, l'appli marche toujours : seul le bouton du catalogue disparaît.

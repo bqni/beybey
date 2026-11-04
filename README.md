@@ -30,7 +30,9 @@ Bugs, idées, forks et pull requests bienvenus. Préviens-moi si tu fais ta vers
 
 ## Crédits
 
-Le catalogue vient de [Beydex Public Resources](https://github.com/catgamer109/Beydex-Public-Resources), des données de la communauté publiées pour être réutilisées. Merci à l'équipe Beydex. Poids et types sont indicatifs : tu peux les corriger dans ta collection.
+Le catalogue vient de [Beydex Public Resources](https://github.com/catgamer109/Beydex-Public-Resources), des données de la communauté publiées pour être réutilisées. Merci à l'équipe Beydex.
+
+Les mesures (diamètres, bits), les éditions Metal Coat et spéciales, et les stats avancées (ATK/DEF/STA, dash, burst, hauteur) viennent de [Beyblade X Viewer](https://beyblade.phstudy.org/) (PH Study) et de [競技玩具研究所](http://kyoganken.web.fc2.com/) (Kyogan Kenkyujo), utilisées avec leur accord. Merci à eux. Poids et types sont indicatifs : tu peux les corriger dans ta collection.
 
 ## Licence
 
