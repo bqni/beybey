@@ -583,3 +583,6 @@ button,.chip,.cso,.csb,label,select,input{touch-action:manipulation;-webkit-tap-
 .ntb{display:none;padding:0 var(--sp-3) var(--sp-3);color:var(--text-2);font-size:var(--fs-sm);line-height:1.55}
 .ntc.open .ntb{display:block}.ntb p{margin:0 0 var(--sp-2)}.ntb ul{margin:0 0 var(--sp-2);padding-left:18px;display:grid;gap:4px}.ntb b{color:var(--text)}
 .fhelp{padding:var(--sp-3);border:1px solid var(--border);background:var(--surface);color:var(--text-2);font-size:var(--fs-sm);line-height:1.5}.fhelp b{color:var(--text)}
+
+.cxc{display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-2) 0;font-size:var(--fs-sm);color:var(--text-2)}.cxc input{width:20px;height:20px;accent-color:var(--accent,currentColor)}
+#cp_cxp{display:grid;gap:var(--sp-2);margin-bottom:var(--sp-2)}.cxt{font-size:var(--fs-sm);color:var(--text-2)}.cxt b{color:var(--text)}

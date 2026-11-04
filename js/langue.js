@@ -87,3 +87,5 @@ function setTheme(t){ document.documentElement.dataset.theme=t; try{ localStorag
   drawTh(); }
 function drawTh(){ if(!document.getElementById('th')) return; const cur=document.documentElement.dataset.theme||'futur'; document.getElementById('th').innerHTML=THEMES.map(([k,l])=>`<button class="${k===cur?'on':''}" onclick="setTheme('${k}')">${l}</button>`).join(''); }
 drawTh();
+
+Object.assign(I18N.TXT,{"Personnaliser les pièces du blade (CX)":"Customize the blade parts (CX)","Un blade CX se compose d'un lock chip, d'un main blade et d'un assist blade. Choisis chaque pièce : le poids total se calcule tout seul.":"A CX blade is made of a lock chip, a main blade and an assist blade. Pick each part: the total weight is computed for you.","Lock chip":"Lock chip","Main blade":"Main blade","Assist blade":"Assist blade"});

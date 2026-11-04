@@ -53,7 +53,7 @@ function catOpen(){
   <div class="fhelp">Cherche ta toupie pour avoir son build d'origine, puis change les pièces si tu veux. Poids et photos se remplissent tout seuls, tu pourras tout corriger. Données et images de la communauté (Beydex), poids indicatifs.</div>
   <div class="fs">Édition</div><label class="ff3"><select id="cp_e" onchange="cpEd(this.value)">${fmOpts([['hasbro','Hasbro'],['tt','Takara Tomy']],CPS.e)}</select></label>
   <div class="fs">Toupie (build d'origine)</div><label class="ff3"><select id="cp_n" onchange="cpBey()"></select></label>
-  ${row('cp_b','Blade')}${row('cp_r','Ratchet')}${row('cp_i','Bit')}
+  ${row('cp_b','Blade')}<div id="cp_cxw"></div>${row('cp_r','Ratchet')}${row('cp_i','Bit')}
   <div class="ferr" id="f_err" role="alert"></div><div class="fact"><button class="go sm" id="cp_go" onclick="cpGo()" disabled>Enregistrer</button><button class="chip" onclick="fmClose()">Annuler</button></div></div>`;
   let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
   f.innerHTML=h; fmShown(f);
@@ -76,10 +76,29 @@ function cpSel(){
   const ow={cp_b:bo?{im:bo.ib,w:bo.wb}:own&&{im:own.ib,w:own.wb},cp_r:own&&{im:own.ir,w:own.wr},cp_i:own&&{im:own.it,w:own.wbt}};
   it.forEach(([id,x])=>{ const p=document.getElementById(id+'_p'); if(!p) return; const y=((own||(bo&&id==='cp_b'))&&x&&ow[id]&&ow[id].im)?ow[id]:x;
     p.innerHTML=x?((y.im?`<img src="${y.im}" alt="" loading="lazy">`:'<span class="cpn"></span>')+(y.w?`<small>${y.w} g</small>`:'')):''; });
-  const go=document.getElementById('cp_go'); if(go) go.disabled=!(it[0][1]&&it[2][1]);
+  cpCx(); cpCxT();
 }
+const CXW=n=>typeof PHLC==='undefined'?0:1;
+function cpCx(){
+  const w=document.getElementById('cp_cxw'); if(!w) return;
+  const sb=document.getElementById('cp_b'), b=sb&&CPT.B[sb.value];
+  if(!b||b.l!=='CX'||typeof PHLC==='undefined'){ w.innerHTML=''; w.dataset.k=''; return; }
+  if(w.dataset.k===b.k) return; w.dataset.k=b.k;
+  const op=(M,sel)=>fmOpts([['','Choisir…']].concat(Object.keys(M).sort((a,c)=>a.localeCompare(c)).map(n=>[n,esc(n)+' · '+M[n]+' g'])),sel);
+  const tk=String(b.n).replace(/([a-z])([A-Z])/g,'$1 $2').split(/\s+/), ab=tk.length>2&&PHAB[tk[tk.length-1]]?tk[tk.length-1]:'';
+  const AL={Brave:'Courage',Bucks:'Stag',Antlers:'Antler'}, tk2=tk.map(x=>AL[x]||x), lc=tk2.find(x=>PHLC[x])||'', mb=tk2.find(x=>PHMB[x]&&x!==lc)||'';
+  w.innerHTML=`<label class="cxc"><input type="checkbox" id="cp_cx" onchange="cpCxK()"><span>Personnaliser les pièces du blade (CX)</span></label><div id="cp_cxp" hidden><div class="mut note">Un blade CX se compose d'un lock chip, d'un main blade et d'un assist blade. Choisis chaque pièce : le poids total se calcule tout seul.</div><label class="ff3"><span>Lock chip</span><select id="cp_lc" onchange="cpCxT()">${op(PHLC,lc)}</select></label><label class="ff3"><span>Main blade</span><select id="cp_mb" onchange="cpCxT()">${op(PHMB,mb)}</select></label><label class="ff3"><span>Assist blade</span><select id="cp_ab" onchange="cpCxT()">${op(PHAB,ab)}</select></label><div class="cxt" id="cp_cxt"></div></div>`;
+}
+function cpCxK(){ const c=document.getElementById('cp_cx'), p=document.getElementById('cp_cxp'); if(p) p.hidden=!(c&&c.checked); cpCxT(); }
+function cpCxV(){ const g=id=>{ const e=document.getElementById(id); return e?e.value:''; }; const c=document.getElementById('cp_cx');
+  if(!c||!c.checked) return null; const lc=g('cp_lc'), mb=g('cp_mb'), ab=g('cp_ab');
+  return {lc:lc,mb:mb,ab:ab,ok:!!(lc&&mb&&ab),w:lc&&mb&&ab?Math.round((PHLC[lc]+PHMB[mb]+PHAB[ab])*100)/100:0,n:[lc,mb,ab].filter(Boolean).join(' ')}; }
+function cpCxT(){ const t=document.getElementById('cp_cxt'), v=cpCxV(), go=document.getElementById('cp_go'), g=id=>{ const s=document.getElementById(id); return s?s.value:''; };
+  if(t) t.innerHTML=v&&v.ok?`Blade : <b>${esc(v.n)}</b> · <b>${v.w} g</b>`:''; 
+  if(go) go.disabled=!(v?v.ok&&g('cp_i'):CPT.B[g('cp_b')]&&CPT.I[g('cp_i')]); }
 function cpGo(){
   const b=CPT.B[document.getElementById('cp_b').value], r=CPT.R[document.getElementById('cp_r').value], i=CPT.I[document.getElementById('cp_i').value];
+  const cv=cpCxV(); if(cv&&cv.ok&&i){ const o={blade:cv.n,ligne:'CX',typeBlade:b.bt,edition:b.e,ratchet:r?r.n:'',bit:i.n,poidsBlade:cv.w}; if(r&&r.w) o.poidsRatchet=r.w; if(i.w) o.poidsBit=i.w; if(r&&r.h) o.hauteurRatchet=r.h; if(r&&r.im) o.photoRatchet=r.im; if(i.im) o.photoBit=i.im; return cpSave(o); }
   if(!b||!i) return;
   const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, same=c=>c.e===b.e&&c.b===b.n&&(c.r||'')===(r?r.n:'')&&c.bi===i.n;
   const bpk=!!(pk&&pk.bo&&pk.e===b.e&&pk.b===b.n), m=bpk?null:((pk&&same(pk))?pk:(CAT.find(c=>same(c)&&!c.mc)||CAT.find(same)));
