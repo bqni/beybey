@@ -1,0 +1,1734 @@
+/* ===== Langue : français (par défaut pour les navigateurs en français) ou anglais ===== */
+var LANG=(function(){ try{ var l=localStorage.getItem('lang'); if(l==='fr'||l==='en') return l; }catch(e){} return /^fr/i.test(navigator.language||'')?'fr':'en'; })();
+var LOC=LANG==='fr'?'fr-FR':'en-GB';
+document.documentElement.lang=LANG;
+var I18N={"HTML": {"<p><b>iPhone</b> : ouvre le site dans <b>Safari</b>, touche le bouton Partager, puis <b>Sur l'écran d'accueil</b>.</p><p><b>Android</b> : ouvre le site dans <b>Chrome</b>, touche le menu (les 3 points), puis <b>Installer l'application</b> ou <b>Ajouter à l'écran d'accueil</b>.</p><p>L'icône s'ouvre ensuite en plein écran, comme une vraie appli. Si l'ancien nom ou l'ancienne icône reste affiché après une mise à jour, supprime le raccourci et rajoute-le. Joue toujours depuis l'icône : le navigateur et l'icône ne partagent pas leurs données.</p>": "<p><b>iPhone</b>: open the site in <b>Safari</b>, tap the Share button, then <b>Add to Home Screen</b>.</p><p><b>Android</b>: open the site in <b>Chrome</b>, tap the menu (the 3 dots), then <b>Install app</b> or <b>Add to Home screen</b>.</p><p>The icon then opens full screen, like a real app. If the old name or icon is still shown after an update, delete the shortcut and add it again. Always play from the icon: the browser and the icon don't share their data.</p>", "<p>Onglet <b>Toupies</b>, bouton <b>+ Ajouter une toupie</b>.</p><ul><li>Remplis la ligne (BX, UX ou CX), les types, les noms et les poids en grammes.</li><li>Pas de ratchet (ratchet intégré à la blade) : laisse la partie Ratchet vide.</li><li>Les stats sont au dos de la boîte : chaque pièce (blade, ratchet, bit) a 3 barres Attack, Defense et Stamina avec un chiffre à côté. Recopie-les dans Att, Déf et End, les 3 ou aucun. Le ratchet a aussi une Height, le bit un Dash et un Burst.</li><li><b>Après chaque ajout (ou modification), pense à sauvegarder</b> : Options, puis Exporter. Tes toupies et tes photos sont gardées dans le navigateur, elles peuvent disparaître s'il nettoie ses données.</li><li>3 photos : une pour la blade (elle sert aussi pour la toupie), une pour le ratchet, une pour le bit. Après le choix de la photo, tu la déplaces et la zoomes pour la centrer (bouton Recadrer pour la reprendre ensuite). Elle est ensuite allégée toute seule.</li></ul><p>Pour changer ou supprimer une toupie ajoutée, ouvre sa fiche et touche <b>Modifier</b>.</p>": "<p>Go to the <b>Beys</b> tab and tap <b>+ Add a bey</b>.</p><ul><li>Fill in the line (BX, UX or CX), the types, the names and the weights in grams.</li><li>No ratchet (ratchet built into the blade): leave the Ratchet part empty.</li><li>The stats are on the back of the box: each part (blade, ratchet, bit) has 3 bars, Attack, Defense and Stamina, with a number next to them. Copy them into Att, Def and Sta, all 3 or none. The ratchet also has a Height, the bit a Dash and a Burst.</li><li><b>After every addition (or edit), remember to back up</b>: Options, then Export. Your beys and photos are kept in the browser and can disappear if it clears its data.</li><li>3 photos: one for the blade (it is also used for the whole bey), one for the ratchet, one for the bit. After choosing the photo, move and zoom it to center it (use Crop to redo it later). It is then compressed automatically.</li></ul><p>To edit or delete an added bey, open its card and tap <b>Edit</b>.</p>", "<p>Tes toupies ajoutées, ton historique et tes réglages sont gardés <b>uniquement sur cet appareil</b>. Sur iPhone, Safari et l'icône de l'écran d'accueil ne partagent rien : joue toujours depuis l'icône.</p><ul><li><b>Exporter</b> crée un fichier de sauvegarde (sur iPhone : « Enregistrer dans Fichiers »).</li><li><b>Importer</b> ajoute le contenu d'un fichier à ce que tu as déjà, sans rien écraser.</li></ul><p>Pense à exporter de temps en temps, surtout avant de vider les données du navigateur.</p>": "<p>Your added beys, your history and your settings are kept <b>only on this device</b>. On iPhone, Safari and the Home Screen icon share nothing: always play from the icon.</p><ul><li><b>Export</b> creates a backup file (on iPhone: “Save to Files”).</li><li><b>Import</b> adds the content of a file to what you already have, without overwriting anything.</li></ul><p>Remember to export from time to time, especially before clearing browser data.</p>", "<ul><li><b>Match simple</b> : une toupie par joueur.</li><li><b>Match 3v3</b> : trois toupies par joueur, une par round, chacune une seule fois.</li><li><b>Tournoi</b> : arrive plus tard.</li><li>Points : Spin Finish 1, Over Finish 2, Burst Finish 2, Xtreme Finish 3. Premier à 4 par défaut.</li><li>La croix ✕ quitte le match en cours (avec confirmation). Un match quitté n'est pas enregistré.</li></ul><p>L'historique des matchs terminés apparaît sous le bouton Lancer le match, séparé par catégorie. Annuler le dernier point d'un match fini le retire de l'historique.</p>": "<ul><li><b>Single match</b>: one bey per player.</li><li><b>3v3 Match</b>: three beys per player, one per round, each used only once.</li><li><b>Tournament</b>: coming later.</li><li>Points: Spin Finish 1, Over Finish 2, Burst Finish 2, Xtreme Finish 3. First to 4 by default.</li><li>The ✕ quits the current match (with confirmation). A match you quit is not saved.</li></ul><p>The history of finished matches appears under the Start match button, split by category. Undoing the last point of a finished match removes it from the history.</p>", "<p>Compose deux builds (blade, ratchet, bit) et compare-les. Sur chaque ligne, le gagnant prend la couleur de son camp : vert pour A, rose pour B. Les égalités sont grisées. Pour le poids, la toupie la plus lourde gagne.</p>": "<p>Build two combos (blade, ratchet, bit) and compare them. On each line, the winner takes the color of its side: green for A, pink for B. Ties are greyed out. For weight, the heavier bey wins.</p>", "<b>Où trouver les stats ?</b> Au dos de la boîte, chaque pièce (Blade, Ratchet, Bit) a ses barres : <b>Attack</b>, <b>Defense</b> et <b>Stamina</b>, avec un chiffre à côté. Recopie-les dans Att, Déf et End. Le ratchet a aussi une <b>Height</b> (hauteur), le bit un <b>Dash</b> et un <b>Burst</b>. Tout est facultatif, mais pour les stats remplis les 3 chiffres d'une pièce ou aucun.": "<b>Where to find the stats?</b> On the back of the box, each part (Blade, Ratchet, Bit) has its bars: <b>Attack</b>, <b>Defense</b> and <b>Stamina</b>, with a number next to them. Copy them into Att, Def and Sta. The ratchet also has a <b>Height</b>, the bit a <b>Dash</b> and a <b>Burst</b>. Everything is optional, but for stats fill in all 3 numbers of a part or none.", "<b>Toupie enregistrée.</b> Pense à faire une sauvegarde : Options, puis Exporter. Sans ça, tu peux tout perdre si le navigateur nettoie ses données.": "<b>Bey saved.</b> Remember to make a backup: Options, then Export. Otherwise you could lose everything if the browser clears its data.", "Quand vous êtes prêts, appuyez chacun sur <b>Prêt</b> : le 3, 2, 1 part tout seul": "When you are both ready, each of you taps <b>Ready</b>: the 3, 2, 1 starts by itself"}, "TXT": {"Notice": "Guide", "Installer l'appli (iPhone et Android)": "Install the app (iPhone and Android)", "Ajouter une toupie": "Add a bey", "Sauvegarde et autre appareil": "Backup and other devices", "Match et historique": "Match and history", "Build et comparatif": "Build and comparison", "Toupies": "Beys", "Mes toupies": "My beys", "Mes pièces": "My parts", "Collection": "Collection", "Parts": "Parts", "+ Ajouter une toupie": "+ Add a bey", "Compose deux builds et compare-les": "Build two combos and compare them", "Choisis deux toupies et lance le combat": "Pick two beys and start the battle", "Thème, fond et sauvegarde": "Theme, background and backup", "Thème": "Theme", "Fond": "Background", "Sombre": "Dark", "Clair": "Light", "Grille": "Grid", "Hexagones": "Hexagons", "Particules": "Particles", "Mes données": "My data", "Exporter": "Export", "Importer": "Import", "Les réglages et les données sont gardés sur cet appareil.": "Settings and data are stored on this device.", "Aucun résultat": "No results", "Attaque": "Attack", "Défense": "Defense", "Déf": "Defense", "Poids": "Weight", "Hauteur": "Height", "Nom": "Name", "Comparatif": "Comparison", "Ratchet intégré à la blade.": "Ratchet built into the blade.", "Aller à la sauvegarde": "Go to backup", "Plus tard": "Later", "Fermer": "Close", "Quitter": "Quit", "Modifier": "Edit", "Supprimer": "Delete", "Confirmer la suppression": "Confirm deletion", "Retirer": "Remove", "Recadrer": "Crop", "Valider": "Confirm", "Enregistrer": "Save", "Vider": "Clear", "Modifier la toupie": "Edit bey", "Nouvelle toupie": "New bey", "Général": "General", "Ligne": "Line", "Type de la toupie": "Bey type", "Type de la blade": "Blade type", "(facultatif)": "(optional)", "(sa photo sert aussi pour la toupie)": "(its photo is also used for the whole bey)", "Poids (g)": "Weight (g)", "Photo de la blade": "Blade photo", "Photo du ratchet": "Ratchet photo", "Photo du bit": "Bit photo", "Stats au dos de la boîte": "Stats on the back of the box", "Choisir…": "Choose…", "Il manque le nom de la blade.": "The blade name is missing.", "Il manque le nom du bit.": "The bit name is missing.", "Choisis la ligne (BX, UX ou CX).": "Choose the line (BX, UX or CX).", "Choisis le type de la blade.": "Choose the blade type.", "Choisis le type de la toupie.": "Choose the bey type.", "Le poids de la blade doit être un nombre.": "The blade weight must be a number.", "Le poids du bit doit être un nombre.": "The bit weight must be a number.", "Le poids du ratchet doit être un nombre.": "The ratchet weight must be a number.", "Cette photo ne peut pas être lue. Essaie une autre image.": "This photo can't be read. Try another image.", "Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.": "Not enough space to save. Remove a photo or a bey and try again.", "Pas assez de place pour tout importer.": "Not enough space to import everything.", "Sauvegarde exportée.": "Backup exported.", "Impossible de créer le fichier sur cet appareil.": "Can't create the file on this device.", "Ce fichier n'est pas une sauvegarde Beybey.": "This file is not a Beybey backup.", "Glisse la photo pour la centrer, zoome avec le curseur.": "Drag the photo to center it, zoom with the slider.", "Toupie stock": "Stock bey", "Pièces perso": "Custom parts", "Déjà utilisée": "Already used", "Match simple": "Single match", "Match 3v3": "3v3 Match", "Tournoi": "Tournament", "Arrive bientôt": "Coming soon", "Un tableau à élimination directe : tu ajoutes les joueurs, chacun enregistre ses toupies, et c'est parti.": "A knockout bracket: add the players, each one registers their beys, and off you go.", "3 toupies par joueur, une par round, chacune une seule fois. Fin après 3 rounds ou au score.": "3 beys per player, one per round, each used only once. Ends after 3 rounds or on score.", "Premier à": "First to", "Illimités": "Unlimited", "Son": "Sound", "Lancer le match": "Start match", "Prêt": "Ready", "Round nul": "Draw round", "Round suivant": "Next round", "Rejouer": "Play again", "Égalité": "Tie", "Chaque joueur choisit sa toupie pour ce round": "Each player picks a bey for this round", "Hyper vitesse": "Hyper Speed", "Aucun match pour l'instant. Termine un match pour le retrouver ici.": "No matches yet. Finish a match to see it here.", "Inverser l'ordre": "Reverse order", "Trier par": "Sort by", "Chercher…": "Search…", "Annuler": "Cancel", "Quitter le match en cours ? Il ne sera pas enregistré.": "Quit the current match? It won't be saved.", "Vider l'historique de cette catégorie ?": "Clear the history of this category?"}, "ATTR": {"Att": "Att", "Déf": "Def", "End": "Sta"}};
+Object.assign(I18N.TXT,{"Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.":"Beybey 1.0 · Bey catalog: Beydex (community data, github.com/catgamer109/Beydex-Public-Resources). Fan project, not affiliated with Takara Tomy or Hasbro.","+ Depuis le catalogue":"+ From the catalog","Catalogue":"Catalog","Chercher dans le catalogue…":"Search the catalog…","Seulement celles que je n'ai pas":"Only the ones I don't have","dans ta collection":"in your collection","Dans ta collection":"In your collection","Affine ta recherche pour voir la suite.":"Refine your search to see more.","Choisis une toupie : le formulaire se remplit tout seul, tu pourras corriger les poids et ajouter les stats et les photos. Données de la communauté (Beydex), poids indicatifs.":"Pick a bey: the form fills itself in, then you can fix the weights and add stats and photos. Community data (Beydex), weights are approximate.","Pré-rempli depuis le catalogue (Beydex). Vérifie les poids avec ta balance, et ajoute les stats et les photos si tu veux.":"Pre-filled from the catalog (Beydex). Check the weights with your scale, and add stats and photos if you like.","Garde au moins une toupie":"Keep at least one bey","Confirmer ?":"Confirm?","Remettre les toupies de base":"Restore default beys","Toupies de base":"Default beys","Supprimer":"Delete","Quitter ?":"Quit?","Tous":"All","Édition":"Edition","Choisis l'édition : Hasbro ou Takara Tomy.":"Pick the edition: Hasbro or Takara Tomy."});
+Object.assign(I18N.TXT,{"Crédits et licences":"Credits and licenses"});
+Object.assign(I18N.TXT,{"Ajouter une toupie": "Add a bey", "Comment veux-tu l'ajouter ?": "How do you want to add it?", "Manuellement": "Manually", "Formulaire vide : tu remplis tout toi-même.": "Empty form: you fill everything in yourself.", "Depuis le catalogue": "From the catalog", "Tu choisis chaque pièce dans une liste, les poids et les photos se remplissent tout seuls.": "Pick each part from a list, weights and photos fill in by themselves.", "Cherche ta toupie pour avoir son build d'origine, puis change les pièces si tu veux. Poids et photos se remplissent tout seuls, tu pourras tout corriger. Données et images de la communauté (Beydex), poids indicatifs.": "Pick each part: the form fills itself in (weights, photos), and you can fix everything. Community data and images (Beydex), weights are approximate.", "Blade": "Blade", "Ratchet": "Ratchet", "Bit": "Bit", "Continuer": "Continue", "Pré-rempli depuis le catalogue (Beydex). Vérifie les poids avec ta balance, et ajoute les stats et les photos si tu veux.": "Pre-filled from the catalog (Beydex). Check the weights with your scale, and add stats and photos if you like.", "Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.": "Beybey 1.0 · Bey catalog: Beydex (community data and images, github.com/catgamer109/Beydex-Public-Resources). Fan project, not affiliated with Takara Tomy or Hasbro."});
+Object.assign(I18N.TXT,{"Rechercher…":"Search…"});
+Object.assign(I18N.TXT,{"Avatar":"Avatar","Changer l'avatar":"Change avatar","Enlever l'avatar":"Remove avatar","Ton nom, ton avatar et tes stats":"Your name, avatar and stats"});
+Object.assign(I18N.TXT,{"Bienvenue !":"Welcome!","Commencer":"Start","Tu as déjà une sauvegarde ?":"Already have a backup?","Importer ma sauvegarde":"Import my backup"});
+Object.assign(I18N.TXT,{"Code":"Code","Pas encore d'amis":"No friends yet","Pour ajouter un pote, scanne son code QR. Il peut l'afficher avec le bouton Code, et toi tu peux montrer le tien de la même façon.":"To add a friend, scan their QR code. They can show it with the Code button, and you can show yours the same way.","Ajoute des potes et compare vos stats":"Add friends and compare stats"});
+Object.assign(I18N.TXT,{"Zoom de la page (pincer pour agrandir)":"Page zoom (pinch to enlarge)","Bloqué":"Locked","Autorisé":"Allowed","<b>Ça fait plus de 30 jours</b> que tu n'as pas sauvegardé. Fais un export dans Options pour ne rien perdre.":"<b>It has been over 30 days</b> since your last backup. Export from Options so you lose nothing."});
+Object.assign(I18N.TXT,{"Attaque, Défense et Stamina n'apparaissent que si tu les as saisies : elles sont au dos des boîtes, à recopier à la main dans la fiche de la toupie (Modifier). ":"Attack, Defense and Stamina only show up if you entered them: they are on the back of the boxes, to copy by hand in the bey's sheet (Edit). ","Aller à mes toupies":"Go to my beys","Exemplaires":"Copies","Tu as déjà cette toupie":"You already have this bey","Ajouter un exemplaire":"Add another copy","Moins":"Less","Plus":"More","Stats avancées (Att / Déf / End, Dash, Burst)":"Advanced stats (Att / Def / Sta, Dash, Burst)"});
+Object.assign(I18N.TXT,{"Cherche ta toupie pour avoir son build d'origine, puis change les pièces si tu veux. Poids et photos se remplissent tout seuls, tu pourras tout corriger. Données et images de la communauté (Beydex), poids indicatifs.": "Search your bey to get its original build, then change parts if you want. Weights and photos fill in by themselves, and you can fix everything. Community data and images (Beydex), weights are approximate.", "Toupie (build d'origine)": "Bey (original build)"});
+Object.assign(I18N.TXT,{"Tu n'as pas encore de toupie.": "You don't have any bey yet.", "Aller ajouter une toupie": "Go add a bey"});
+Object.assign(I18N.TXT,{"Aucune toupie pour l'instant. Ajoute la première avec le bouton ci-dessus.": "No bey yet. Add your first one with the button above."});
+Object.assign(I18N.TXT,{"Invitée": "Guest", "Toupie invitée": "Guest bey", "Choisir dans le catalogue…": "Pick from the catalog…", "Ou écris son nom…": "Or type its name…", "Nom de la toupie": "Bey name", "Toupie invitée : elle n'est pas ajoutée à ta collection.": "Guest bey: it is not added to your collection."});
+Object.assign(I18N.TXT,{"Toupie custom": "Custom bey", "Ma collection": "My collection", "Catalogue : rien n'est ajouté à ta collection.": "Catalog: nothing is added to your collection."});
+Object.assign(I18N.TXT,{"Lancer un combat A contre B": "Start a battle A vs B", "Les règles (points, rounds) se règlent dans l'onglet Match.": "Rules (points, rounds) are set in the Match tab."});
+Object.assign(I18N.TXT,{"Nom du build (optionnel)":"Build name (optional)","Touche une pièce pour la changer.":"Tap a part to change it.","Aucun":"None","Activé":"On","Désactivé":"Off","Intégré":"Built-in","Blade":"Blade","Ratchet":"Ratchet","Bit":"Bit","Nom du build":"Build name","Donne un nom à ton build pour l'enregistrer.":"Give your build a name to save it.","Ma collection":"My collection","Enregistrer dans Mes toupies":"Save to My beys","Il manque une pièce.":"A part is missing.","Nom perso (optionnel)":"Custom name (optional)","Choisir une toupie":"Choose a bey","Ajouter une toupie":"Add a bey","Changer":"Change","Retour":"Back","Choisir cette toupie":"Choose this bey","Toupie":"Bey","Catalogue":"Catalogue","Tape un nom pour chercher dans le catalogue.":"Type a name to search the catalogue.","Affine ta recherche pour voir les autres.":"Refine your search to see the others.","Rien dans le catalogue.":"Nothing in the catalogue.","Rien trouvé.":"Nothing found.","Tu peux changer les pièces ou garder celles-ci.":"You can change the parts or keep these.","Ajoute une toupie à chaque emplacement pour lancer le match.":"Add a bey to every slot to start the match.","Série":"Series","Match unique":"Single match","Match suivant":"Next match"});
+Object.assign(I18N.TXT,{"Combat A contre B": "Battle A vs B", "Lancer le combat": "Start the battle"});
+Object.assign(I18N.TXT,{"Aucun":"None"});
+Object.assign(I18N.TXT,{"Partager": "Share", "Choisis d'abord une toupie complète.": "Pick a complete Bey first.", "Cette toupie contient une pièce absente du catalogue : elle ne peut pas encore être partagée par QR.": "This Bey has a part that is not in the catalog: it can't be shared by QR yet.", "Impossible de créer le QR sur cet appareil.": "Can't create the QR on this device.", "Partager mon deck": "Share my deck", "Partager ma toupie": "Share my Bey", "Ton ami ouvre Beybey, va dans Match et touche Scanner.": "Your friend opens Beybey, goes to Match and taps Scan.", "Ajoute ton nom dans Profil pour qu'il s'affiche chez lui.": "Add your name in Profile so it shows up on their phone.", "Envoyer le lien": "Send the link", "Fermer": "Close", "Lien copié": "Link copied", "Colle-le dans un message.": "Paste it in a message.", "Scanner un QR": "Scan a QR", "Vise le QR de ton ami.": "Aim at your friend's QR.", "Impossible de charger le lecteur de QR (connexion ?).": "Can't load the QR reader (connection?).", "La caméra n'est pas disponible ici.": "The camera isn't available here.", "Caméra refusée. Autorise-la dans les réglages de l'iPhone pour scanner.": "Camera denied. Allow it in the iPhone settings to scan.", "QR non reconnu": "QR not recognised", "Ce QR ne vient pas de Beybey.": "This QR doesn't come from Beybey.", "Une pièce de cette toupie est absente de ton catalogue.": "A part of this Bey is missing from your catalog.", "Invité": "Guest", "Deck reçu": "Deck received", "Toupie reçue": "Bey received", "De": "From", "« Jouer avec » ne touche pas à ta collection ni à tes stats.": "“Play with” doesn't touch your collection or your stats.", "Jouer avec": "Play with", "Ajouter à ma collection": "Add to my collection", "Tu as déjà tout ça dans ta collection.": "You already have all of this in your collection.", "Pas assez de place pour enregistrer.": "Not enough space to save.", "Ajouté à ta collection.": "Added to your collection.", "Scanner": "Scan"});
+Object.assign(I18N.TXT,{"Mon profil":"My profile","Ton nom":"Your name","Matchs":"Matches","Victoires":"Wins","Défaites":"Losses","Réussite":"Win rate","Toupie la plus jouée":"Most played Bey","Apparence":"Appearance","Fond d'écran":"Wallpaper","Historique":"History","Les stats comptent seulement tes matchs (pas ceux joués en invité).":"Stats only count your own matches (not guest games).","Entre ton nom dans Profil pour compter tes stats.":"Enter your name in Profile to count your stats.","Toupie la plus jouée ici :":"Most played Bey here:","Tout voir":"See all","Chercher un ami…":"Search a friend…","Chercher":"Search","Remettre mes stats à zéro":"Reset my stats","Liste d'amis":"Friends list","Note (ex. : mon pote du club)":"Note (e.g. my buddy from the club)","Note":"Note","Toi contre":"You vs","Ses stats":"Their stats","au scan du":"at scan of","Scanne sa toupie pour voir ses stats.":"Scan their Bey to see their stats.","Amis":"Friends","Scanne la toupie d'un pote pour l'ajouter ici.":"Scan a friend's Bey to add them here.","les plus récents":"most recent","Chaque joueur ouvre Beybey, va dans Match, touche Scanner et vise ce QR. Il récupère seulement ses matchs.":"Each player opens Beybey, goes to Match, taps Scan and aims at this QR. They only get their own matches.","Qui es-tu ?":"Who are you?","Ton nom ne figure pas dans ce QR. Touche le tien :":"Your name isn't in this QR. Tap yours:","avec toi":"with you","Aucun match avec toi.":"No match with you.","Ce n'est pas moi":"That's not me","Aucun match à partager.": "No match to share.", "Partager la session": "Share the session", "contre": "vs", "Ton adversaire ouvre Beybey, va dans Match, touche Scanner et vise ce QR.": "Your opponent opens Beybey, goes to Match, taps Scan and aims at this QR.", "Page": "Page", "il doit scanner chaque page.": "they must scan every page.", "Page suivante": "Next page", "Résultats reçus": "Results received", "Ils seront ajoutés à ton historique, de ton point de vue, et comptés dans tes stats.": "They will be added to your history, from your point of view, and counted in your stats.", "Ajouter à mon historique": "Add to my history", "Ajouté à ton historique.": "Added to your history.", "Déjà dans ton historique.": "Already in your history.","Vider cet historique":"Clear this history","Entre ton nom : tu seras le joueur 1 par défaut et tes stats seront comptées.":"Enter your name: you will be player 1 by default and your stats will be counted.","Tu es toujours le joueur 1 par défaut.":"You are always player 1 by default.","Aucun match compté pour l'instant. Tu es toujours le joueur 1 par défaut.":"No match counted yet. You are always player 1 by default.","Tes stats sont comptées.":"Your stats are counted.","Stats non comptées (invité).":"Stats not counted (guest).","Revenir à ":"Back to "});
+Object.assign(I18N.TXT,{"Accueil":"Home","Historique":"History","Amis":"Friends","Profil":"Profile","Collection":"Collection","assembler":"compare","sauvegarde":"backup","Passer en thème clair":"Switch to light theme","Passer en thème sombre":"Switch to dark theme"});
+Object.assign(I18N.TXT,{"Simple":"Single","bientôt":"soon"});
+Object.assign(I18N.TXT,{"Global":"All","Vider tout l'historique ?":"Clear the whole history?","Date inconnue":"Unknown date","Ouvrir":"Open","Mon QR":"My QR","Ma fiche ami":"My friend card","Ami ajouté":"Friend added","Voir la fiche":"View card","Sa fiche est mise à jour.":"Their card was updated.","Il est dans ta liste d'amis. Tu peux lui ajouter une note.":"They are in your friends list. You can add a note.","C'est ta propre fiche.":"That is your own card.","Ajoute ton nom dans Profil pour partager ta fiche.":"Add your name in Profile to share your card.","Ton ami ouvre Beybey, va dans Amis (depuis l\'accueil) et touche Scanner. Il reçoit ton nom et tes stats.":"Your friend opens Beybey, goes to Friends (from the home screen) and taps Scan. They get your name and stats.","Scanne le QR d'un pote pour l'ajouter ici.":"Scan a friend's QR to add them here.","matchs":"matches","victoires":"wins"});
+function LT(s){ return LANG==='fr'?s:(window.LTR?window.LTR(s):(I18N.TXT[s]||s)); }
+function setLang(l){ try{ localStorage.setItem('lang',l); }catch(e){} location.reload(); }
+(function(){
+  if(LANG==='fr') return;
+  var TX=I18N.TXT,HT=I18N.HTML,AT=I18N.ATTR;
+  var pl=function(n,s,p){ return n+' '+(n==1?s:p); };
+  var RX=[
+    [/^(.*?)Round (\d+) sur (\d+)$/,function(m){ return m[1]+'Round '+m[2]+' of '+m[3]; }],
+    [/^(.+) remporte la série (\d+) à (\d+)$/,function(m){ return tr(m[1])+' wins the series '+m[2]+' to '+m[3]; }],
+    [/^Premier à (\d+)$/,function(m){ return 'First to '+m[1]; }],
+    [/^([+-]?[\d.]+) pour (.+)$/,function(m){ return m[1]+' for '+m[2]; }],
+    [/^Lancer un combat : (.+) contre (.+)$/,function(m){ return 'Start a battle: '+m[1]+' vs '+m[2]; }],
+    [/^Combat : (.+) contre (.+)$/,function(m){ return 'Battle: '+m[1]+' vs '+m[2]; }],
+    [/^Joueur (\d)$/,function(m){ return 'Player '+m[1]; }],
+    [/^Nom du joueur (\d)$/,function(m){ return 'Player '+m[1]+' name'; }],
+    [/^Toupie (\d)$/,function(m){ return 'Bey '+m[1]; }],
+    [/^(\d+) toupies? ajoutées? · (\d+) matchs? dans l'historique\. Exporte pour sauvegarder ou changer d'appareil\.$/,function(m){ return pl(+m[1],'bey','beys')+' added · '+pl(+m[2],'match','matches')+' in history. Export to back up or switch devices.'; }],
+    [/^(\d+) matchs? terminés?$/,function(m){ return pl(+m[1],'match','matches')+' finished'; }],
+    [/^Historique · (.+)$/,function(m){ return 'History · '+tr(m[1]); }],
+    [/^(.+) gagne (\d+) à (\d+)$/,function(m){ return tr(m[1])+' wins '+m[2]+' to '+m[3]; }],
+    [/^Égalité (.+)$/,function(m){ return 'Tie '+m[1]; }],
+    [/^(.+ · \d\d:\d\d · \d+ rounds?) · à (\d+)$/,function(m){ return m[1]+' · to '+m[2]; }],
+    [/^(.+) \+(\d+) · (.+)$/,function(m){ return tr(m[1])+' +'+m[2]+' · '+m[3]; }],
+    [/^Sauvegarde téléchargée : (.+)$/,function(m){ return 'Backup downloaded: '+m[1]; }],
+    [/^Importé : (\d+) toupies? et (\d+) matchs? en plus\.$/,function(m){ return 'Imported: '+pl(+m[1],'bey','beys')+' and '+pl(+m[2],'match','matches')+' added.'; }],
+    [/^Une toupie « (.+) » existe déjà\.$/,function(m){ return 'A bey \u201c'+m[1]+'\u201d already exists.'; }],
+    [/^Ex\. (.+)$/,function(m){ return 'E.g. '+m[1]; }]
+  ];
+  function tr(t,el){
+    if(t==='Annuler'&&el&&/undo/.test(el.getAttribute&&el.getAttribute('onclick')||'')) return 'Undo';
+    if(Object.prototype.hasOwnProperty.call(TX,t)) return TX[t];
+    for(var i=0;i<RX.length;i++){ var m=RX[i][0].exec(t); if(m) return RX[i][1](m); }
+    return t;
+  }
+  window.LTR=tr;
+  function trAttr(e){ ['placeholder','aria-label','title','alt'].forEach(function(a){ var v=e.getAttribute(a); if(!v) return; var r=Object.prototype.hasOwnProperty.call(AT,v)?AT[v]:tr(v); if(r!==v) e.setAttribute(a,r); }); }
+  function run(root){
+    if(!root) return;
+    if(root.nodeType===3){ one(root); return; }
+    if(root.nodeType!==1||/^(SCRIPT|STYLE|CANVAS)$/.test(root.tagName)) return;
+    var blocks=[]; if(root.matches&&root.matches('.ntb,.fhelp,#rm>div,.mut')) blocks.push(root);
+    root.querySelectorAll('.ntb,.fhelp,#rm>div,.mut').forEach(function(e){ blocks.push(e); });
+    blocks.forEach(function(e){ if(!e.children.length) return; var k=e.innerHTML.trim(); if(Object.prototype.hasOwnProperty.call(HT,k)) e.innerHTML=HT[k]; });
+    var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),n,list=[]; while(n=w.nextNode()) list.push(n);
+    list.forEach(one);
+    if(root.matches&&root.matches('[placeholder],[aria-label],[title],[alt]')) trAttr(root);
+    root.querySelectorAll('[placeholder],[aria-label],[title],[alt]').forEach(trAttr);
+  }
+  function one(n){ var p=n.parentElement; if(!p||/^(SCRIPT|STYLE|TEXTAREA)$/.test(p.tagName)) return; var v=n.nodeValue; if(!/[A-Za-zÀ-ÿ]/.test(v)) return; var t=v.trim(),r=tr(t,p); if(r!==t) n.nodeValue=v.replace(t,r); }
+  var mo=new MutationObserver(function(ms){ ms.forEach(function(m){ m.addedNodes.forEach(function(x){ run(x); }); }); });
+  mo.observe(document.body||document.documentElement,{childList:true,subtree:true});
+  document.addEventListener('DOMContentLoaded',function(){ run(document.body); });
+  window.addEventListener('load',function(){ run(document.body); });
+})();
+const TYPE={'Stamina':'var(--t-stamina)','Déf':'var(--t-def)','Attack':'var(--t-attack)','Balance':'var(--t-balance)'};
+const THEMES=[['futur','Sombre'],['futurl','Clair']];
+function setTheme(t){ document.documentElement.dataset.theme=t; try{ localStorage.setItem('theme',t); }catch(e){}
+  drawTh(); }
+function drawTh(){ if(!document.getElementById('th')) return; const cur=document.documentElement.dataset.theme||'futur'; document.getElementById('th').innerHTML=THEMES.map(([k,l])=>`<button class="${k===cur?'on':''}" onclick="setTheme('${k}')">${l}</button>`).join(''); }
+drawTh();
+/* ===== Fond du site : Grille (CSS) / Hexagones / Particules ===== */
+const BGS={actuel:1,hex:1,sparks:1}; let bgMode='actuel',bgRun=0;
+function bgPal(){ return document.documentElement.dataset.theme==='futurl'?{a:[214,20,111],b:[18,160,90],g:.07}:{a:[57,255,140],b:[255,45,149],g:.07}; }
+const rg=(c,a)=>`rgba(${c[0]},${c[1]},${c[2]},${a})`, rr=(a,b)=>a+Math.random()*(b-a);
+const BG={cv:null,w:0,h:0,d:1,t0:0,hex:null,cells:[],sp:[]};
+function bgSize(){ const cv=BG.cv,d=Math.min(1.5,devicePixelRatio||1);BG.d=d;BG.w=innerWidth;BG.h=innerHeight;cv.width=Math.round(BG.w*d);cv.height=Math.round(BG.h*d);BG.hex=null;BG.sp=[];BG.cells=[]; }
+function bgHexLayer(P){ const S=28,hh=S*Math.sqrt(3),o=document.createElement('canvas');o.width=BG.cv.width;o.height=BG.cv.height;const c=o.getContext('2d');c.scale(BG.d,BG.d);c.strokeStyle=rg(P.a,P.g);c.lineWidth=1;BG.pts=[];
+  for(let col=0,x=0;x<BG.w+S*2;col++,x+=S*1.5)for(let y=(col%2)*hh/2;y<BG.h+hh;y+=hh){ BG.pts.push([x,y]);c.beginPath();for(let i=0;i<6;i++){const a=Math.PI/3*i;c.lineTo(x+S*Math.cos(a),y+S*Math.sin(a));}c.closePath();c.stroke(); }
+  BG.hexS=S;BG.hex=o;BG.hexTheme=document.documentElement.dataset.theme; }
+function bgFrame(t,id){
+  if(id!==bgRun) return; requestAnimationFrame(tt=>bgFrame(tt,id));
+  if(document.hidden||!BG.cv) return;
+  if(t-(BG.last||0)<32) return; BG.last=t; const fm=document.getElementById('fm'); if(fm&&fm.classList.contains('show')) return;
+  const c=BG.cv.getContext('2d'),P=bgPal(); c.setTransform(1,0,0,1,0,0); c.clearRect(0,0,BG.cv.width,BG.cv.height); c.setTransform(BG.d,0,0,BG.d,0,0);
+  if(bgMode==='hex'){
+    if(!BG.hex||BG.hexTheme!==document.documentElement.dataset.theme) bgHexLayer(P);
+    c.drawImage(BG.hex,0,0,BG.w,BG.h);
+    if(!BG.cells.length) for(let i=0;i<10;i++) BG.cells.push({p:BG.pts[Math.floor(rr(0,BG.pts.length))],ph:rr(0,6),sp:rr(.5,1.1),k:i%3===0});
+    const S=BG.hexS;
+    BG.cells.forEach(e=>{ const a=Math.max(0,Math.sin(t/1000*e.sp+e.ph)); if(a<=0){ if(Math.random()<.02) e.p=BG.pts[Math.floor(rr(0,BG.pts.length))]; return; }
+      c.beginPath();for(let i=0;i<6;i++){const an=Math.PI/3*i;c.lineTo(e.p[0]+S*Math.cos(an),e.p[1]+S*Math.sin(an));}c.closePath();
+      c.fillStyle=rg(e.k?P.b:P.a,a*.18);c.fill();c.strokeStyle=rg(e.k?P.b:P.a,a*.5);c.lineWidth=1;c.stroke(); });
+  } else if(bgMode==='sparks'){
+    const dt=Math.min(.05,(t-(BG.t0||t))/1000);BG.t0=t;
+    if(!BG.sp.length) for(let i=0;i<70;i++) BG.sp.push({x:rr(0,BG.w),y:rr(0,BG.h),r:rr(.9,2.6),v:rr(22,70),k:i%4===0,ph:rr(0,6),dr:rr(8,22),f:rr(.4,1)});
+    BG.sp.forEach(p=>{ p.y-=p.v*dt; p.x+=Math.sin(t/1000*p.f+p.ph)*p.dr*dt;
+      if(p.y<-10){ p.y=BG.h+10; p.x=rr(0,BG.w); }
+      const a=.3+.6*Math.abs(Math.sin(t/800*p.f+p.ph)),col=p.k?P.b:P.a;
+      c.fillStyle=rg(col,a);c.shadowColor=rg(col,.9);c.shadowBlur=10;c.beginPath();c.arc(p.x,p.y,p.r,0,7);c.fill(); });
+    c.shadowBlur=0;
+  }
+}
+function setBg(m){ if(!BGS[m]) m='actuel'; bgMode=m; document.documentElement.dataset.bg=m; try{ localStorage.setItem('bg',m); }catch(e){}
+    bgRun++; BG.t0=0; BG.sp=[]; BG.cells=[]; if(m!=='actuel'){ BG.cv=document.getElementById('bgc'); bgSize(); requestAnimationFrame(t=>bgFrame(t,bgRun)); } }
+addEventListener('resize',()=>{ if(bgMode!=='actuel') bgSize(); });
+{ let m='actuel'; try{ m=localStorage.getItem('bg')||'actuel'; }catch(e){} setBg(m); }
+/* Les toupies viennent de data.js */
+function fatal(titre,lignes){
+  document.body.innerHTML='<div style="padding:24px;font:16px/1.5 system-ui,sans-serif;color:#E5E7EB;background:#111318;min-height:100vh"><h2 style="color:#E58FB4;margin:0 0 12px">'+titre+'</h2>'+lignes.map(l=>'<p>'+l+'</p>').join('')+'</div>';
+  throw new Error(titre);
+}
+const CKEY='arene_custom';
+/* ===== Nettoyage des données reçues (QR, import, stockage) : tout est forcé en nombres ou en texte court ===== */
+const nn=(v,d)=>{ v=typeof v==='number'||typeof v==='string'?Number(v):NaN; return isFinite(v)?Math.max(-1e9,Math.min(1e9,Math.round(v))):(d===undefined?0:d); };
+const nid=v=>{ v=typeof v==='number'||typeof v==='string'?Number(v):NaN; return isFinite(v)?Math.max(0,Math.min(9e15,Math.round(v))):0; };
+const ss=(v,n)=>typeof v==='string'||typeof v==='number'?String(v).slice(0,n||40):'';
+const sid=v=>ss(v,200).replace(/[^A-Za-z0-9_-]/g,'').slice(0,20);
+const sl=(v,n)=>Array.isArray(v)?v.slice(0,n||6).map(x=>ss(x,60)):[];
+const stClean=s=>{ if(!Array.isArray(s)) return null; const t=(Array.isArray(s[0])||Array.isArray(s[1])||Array.isArray(s[2]))?s:[s,null,null];
+  return [0,1,2].map(i=>{ const a=t[i]; return Array.isArray(a)?[Math.max(0,nn(a[0])),Math.max(0,nn(a[1])),Math.max(0,nn(a[2])),ss(a[3],60),Math.max(0,nn(a[4]))]:null; }); };
+const hClean=r=>{ if(!r||typeof r!=='object'||Array.isArray(r)) return null; const o={id:nid(r.id),from:ss(r.from,20),cat:r.cat==='tournoi'?'tournoi':'simple',tg:nn(r.tg),bo:nn(r.bo),mn:nn(r.mn),r:nn(r.r),w:(r.w===0||r.w===1)?r.w:-1,
+  s:[nn(r.s&&r.s[0]),nn(r.s&&r.s[1])],n:[ss(r.n&&r.n[0],20),ss(r.n&&r.n[1],20)],ids:[sid(r.ids&&r.ids[0]),sid(r.ids&&r.ids[1])],me:r.me?1:0,b:[sl(r.b&&r.b[0]),sl(r.b&&r.b[1])]};
+  if(r.oid!==undefined&&r.oid!==null) o.oid=nid(r.oid); if(Array.isArray(r.pc)) o.pc=[sl(r.pc[0]),sl(r.pc[1])]; return o; };
+const avOk=v=>typeof v==='string'&&/^a(0[1-9]|1[0-6])$/.test(v)?v:'';
+const fClean=(f,id)=>{ if(!f||typeof f!=='object'||Array.isArray(f)) return null; const o={id,n:ss(f.n,20),note:ss(f.note,60),at:nid(f.at)}; const st=stClean(f.st); if(st) o.st=st; const av=avOk(f.av); if(av) o.av=av; return o; };
+const tx=(v,n)=>ss(v,n||60).replace(/[<>"`\\]/g,'').replace(/'/g,'\u2019');
+const pOk=v=>typeof v==='string'&&(/^idb:[\w-]{1,80}$/.test(v)||/^photos\/[\w\-./]{1,120}$/.test(v)||/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+\/=]+$/.test(v));
+const stn=v=>Array.isArray(v)?v.slice(0,3).map(x=>(typeof x==='number'||(typeof x==='string'&&/^[0-9.,]{0,8}$/.test(x)))?x:''):undefined;
+const cClean=o=>{ if(!o||typeof o!=='object'||Array.isArray(o)) return null;
+  const c={id:nid(o.id)}; for(const k of ['nom','blade','ligne','typeBlade','typeToupie','edition','ratchet','bit','tag']) if(o[k]!==undefined&&o[k]!==null) c[k]=tx(o[k]);
+  for(const k of ['poidsBlade','poidsRatchet','poidsBit']) if(o[k]!==undefined&&o[k]!==null) c[k]=typeof o[k]==='number'?(isFinite(o[k])?o[k]:''):(typeof o[k]==='string'?ss(o[k],12).replace(/[^0-9.,-]/g,''):'');
+  if(o.hauteurRatchet!==undefined&&o.hauteurRatchet!==null&&o.hauteurRatchet!=='') c.hauteurRatchet=nn(o.hauteurRatchet);
+  if(o.metalCoat!==undefined&&o.metalCoat!==null&&o.metalCoat!=='') c.metalCoat=tx(o.metalCoat,20); if(o.qty!==undefined) c.qty=Math.max(1,Math.min(99,nn(o.qty,1)));
+  for(const k of ['dashBit','burstBit']) if(o[k]!==undefined&&o[k]!==null&&o[k]!=='') c[k]=nn(o[k]);
+  for(const k of ['statsBlade','statsRatchet','statsBit']){ const v=stn(o[k]); if(v) c[k]=v; }
+  for(const [k] of [['photoBlade'],['photoRatchet'],['photoBit']]) if(pOk(o[k])) c[k]=o[k];
+  return c; };
+/* ===== Collection perso : lecture / sauvegarde (validée) ===== */
+function cLoad(){ try{ const a=JSON.parse(localStorage.getItem(CKEY)||'[]'); if(!Array.isArray(a)) return []; const L=a.map(cClean).filter(Boolean), seen=new Set(); L.forEach((c,i)=>{ if(c.id<1e12||seen.has(c.id)) c.id=1e12+i; seen.add(c.id); }); return L; }catch(e){ return []; } }
+function cSave(a){ try{ localStorage.setItem(CKEY,JSON.stringify(a)); return true; }catch(e){ return false; } }
+function cErr(o){ const E=[],n=v=>{ const x=String(v===undefined||v===null?'':v).replace(',','.').trim(); return x!==''&&/^[0-9.]+(-[0-9.]+)?$/.test(x); };
+  if(!o.blade) E.push('Il manque le nom de la blade.'); if(!o.bit) E.push('Il manque le nom du bit.');
+  if(!['BX','UX','CX'].includes(String(o.ligne||'').toUpperCase())) E.push('Choisis la ligne (BX, UX ou CX).');
+  if(!normT(o.typeBlade)) E.push('Choisis le type de la blade.'); if(!normT(o.typeToupie)) E.push('Choisis le type de la toupie.');
+  if(!n(o.poidsBlade)) E.push('Le poids de la blade doit être un nombre.'); if(!n(o.poidsBit)) E.push('Le poids du bit doit être un nombre.');
+  if(o.ratchet&&!n(o.poidsRatchet)) E.push('Le poids du ratchet doit être un nombre.');
+  return E; }
+if(typeof TOUPIES==='undefined'||!Array.isArray(TOUPIES))
+  fatal('data.js ne se charge pas',['Le fichier <b>data.js</b> est absent, vide ou contient une erreur : une virgule, une apostrophe ou une accolade oubliée. Compare avec un bloc qui marchait.']);
+/* ===== Normalisation des données du catalogue ===== */
+const hNom=n=>{ const m=String(n||'').match(/-(\d{2,3})$/); return m?+m[1]:''; };
+document.addEventListener('change',e=>{ if(e.target&&e.target.id==='f_ratchet'){ const h=document.getElementById('f_h'); if(h&&!h.value){ const v=hNom(e.target.value); if(v) h.value=v; } } });
+const NORM_T={attack:'Attack',attaque:'Attack',def:'Déf','déf':'Déf',defense:'Déf','défense':'Déf',stamina:'Stamina',endurance:'Stamina',balance:'Balance',equilibre:'Balance','équilibre':'Balance'};
+const normT=v=>NORM_T[String(v||'').trim().toLowerCase()]||'';
+const pw=v=>{ if(v===undefined||v===null||v==='') return ''; if(typeof v==='number') return v; const s=String(v).replace(/g/gi,'').replace(',','.').trim(); return /^[0-9.]+$/.test(s)?parseFloat(s):s; };
+const avg=v=>typeof v==='string'&&v.includes('-')?v.split('-').reduce((a,b)=>a+ +b,0)/2:parseFloat(v);
+const ERR=[];
+const CUSTOM=cLoad().filter(o=>o&&!cErr(o).length);
+const bkey=o=>[o.blade,o.ratchet||'',o.bit].join('|');
+/* ===== Toupies masquées + liste complète (catalogue + collection) ===== */
+function hdLoad(){ try{ const a=JSON.parse(localStorage.getItem('arene_hide')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function hdSave(a){ try{ localStorage.setItem('arene_hide',JSON.stringify(a)); return true; }catch(e){ return false; } }
+const HID=hdLoad(), BASE=TOUPIES.filter(o=>!(o&&HID.includes(bkey(o)))), NBV=BASE.length;
+const ALL=BASE.concat(CUSTOM);
+/* Metal Coat : finition métallisée d'une toupie (couleur) */
+/* ===== Couleurs MetalCoat ===== */
+const MCC=['Black','Blue','Blue/Green','Bronze','Gold','Green','Gunmetal','Magenta','Navy','Orange','Pink','Red','Silver','Violet','White','Yellow'];
+const MCH={Black:'#2b2b2f',Blue:'#2f6bff','Blue/Green':'#1fb5a8',Bronze:'#b4793c',Gold:'#e0b52a',Green:'#2fb457',Gunmetal:'#6b717c',Magenta:'#d6389a',Navy:'#1b2f72',Orange:'#f08a24',Pink:'#f08ab4',Red:'#e0343a',Silver:'#b9c0c9',Violet:'#8a4fd8',White:'#f2f2f2',Yellow:'#f2d625'};
+const MCF={Black:'Noir',Blue:'Bleu','Blue/Green':'Bleu/Vert',Bronze:'Bronze',Gold:'Or',Green:'Vert',Gunmetal:'Gunmetal',Magenta:'Magenta',Navy:'Bleu marine',Orange:'Orange',Pink:'Rose',Red:'Rouge',Silver:'Argent',Violet:'Violet',White:'Blanc',Yellow:'Jaune'};
+const mcL=c=>LANG==='fr'?(MCF[c]||c):c;
+const nmOf=o=>(o.blade+' '+(o.ratchet||'')+o.bit).replace('  ',' ').trim()+(o.metalCoat?' (Metal Coat: '+o.metalCoat+')':'');
+const T=ALL.map((o,i)=>{
+  const ERRX=ERR, ERR2={push:m=>{ if(i<NBV) ERRX.push(m); }}; 
+  const nm=o.blade||('toupie n°'+(i+1));
+  const l=String(o.ligne||'').trim().toUpperCase(), bty=normT(o.typeBlade), t=normT(o.typeToupie);
+  const wb=pw(o.poidsBlade), wr=pw(o.poidsRatchet), wbt=pw(o.poidsBit);
+  if(!o.blade) ERR2.push(nm+' : il manque <b>blade</b>');
+  if(!o.bit) ERR2.push(nm+' : il manque <b>bit</b>');
+  if(!['BX','UX','CX'].includes(l)) ERR2.push(nm+' : <b>ligne</b> doit être BX, UX ou CX');
+  if(!bty) ERR2.push(nm+' : <b>typeBlade</b> doit être Attack, Déf, Stamina ou Balance');
+  if(!t) ERR2.push(nm+' : <b>typeToupie</b> doit être Attack, Déf, Stamina ou Balance');
+  if(wb===''||isNaN(avg(wb))) ERR2.push(nm+' : <b>poidsBlade</b> doit être un nombre');
+  if(wbt===''||isNaN(avg(wbt))) ERR2.push(nm+' : <b>poidsBit</b> doit être un nombre');
+  if(wr!==''&&isNaN(avg(wr))) ERR2.push(nm+' : <b>poidsRatchet</b> doit être un nombre (ou \'\' s\'il n\'y a pas de ratchet)');
+  const hasTot=o.total!==undefined&&o.total!==null&&o.total!=='';
+  const tot=hasTot?pw(o.total):Math.round((avg(wb)+(wr===''?0:avg(wr))+avg(wbt))*10)/10;
+  const ar=v=>Array.isArray(v)&&v.length===3?v.map(Number):null;
+  return {b:o.blade||'?',bty,l,t,r:o.ratchet||'',bt:o.bit||'?',wb,wr,wbt,tot,sb:ar(o.statsBlade),sr:ar(o.statsRatchet),sbt:ar(o.statsBit),h:o.hauteurRatchet||hNom(o.ratchet),dash:o.dashBit||'',burst:o.burstBit||'',_p:{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit},ed:o.edition==='tt'?'tt':'hasbro',nom:String(o.nom||'').trim(),mc:o.metalCoat||'',tg:o.tag||'',q:(+o.qty>1?Math.min(99,Math.floor(+o.qty)):1),_c:i>=NBV?o.id:0,_k:i<NBV?bkey(o):''};
+});
+if(ERR.length) fatal('Il y a une erreur dans data.js',[...ERR,'Corrige ça dans <b>data.js</b>, puis recharge la page.']);
+T.forEach(x=>{ x.dn=(x.b+' '+(x.r||'')+x.bt).replace('  ',' ').trim(); x.n=x.dn+(x.mc?' (Metal Coat: '+x.mc+')':''); });
+const IM={},PH={};
+T.forEach(x=>{ PH[x.n]={}; for(const k of ['blade','ratchet','bit']){ const p=x._p[k]; if(p){ PH[x.n][k]=p; if(!isMk(p)) IM[p]=p; } } });
+/* ---- Photos des toupies ajoutées : stockées dans IndexedDB (pas de limite de 5 Mo), le texte reste dans localStorage ---- */
+/* ===== Photos : IndexedDB (photos perso) + chemins du catalogue ===== */
+function isMk(v){ return typeof v==='string'&&v.indexOf('idb:')===0; }
+const PHF=[['photoBlade','blade'],['photoRatchet','ratchet'],['photoBit','bit']];
+const IDB={p:null};
+function idbDb(){ if(!IDB.p) IDB.p=new Promise(res=>{ try{ const r=indexedDB.open('beybey',1);
+  r.onupgradeneeded=()=>{ const d=r.result; if(!d.objectStoreNames.contains('photos')) d.createObjectStore('photos'); if(!d.objectStoreNames.contains('bak')) d.createObjectStore('bak'); };
+  r.onsuccess=()=>res(r.result); r.onerror=()=>res(null); r.onblocked=()=>res(null); }catch(e){ res(null); } }); return IDB.p; }
+function idbTx(store,mode,fn){ return idbDb().then(db=>{ if(!db) throw 0; return new Promise((res,rej)=>{ const tx=db.transaction(store,mode); let out; try{ out=fn(tx.objectStore(store)); }catch(e){ rej(e); return; } tx.oncomplete=()=>res(out&&out.result!==undefined?out.result:undefined); tx.onerror=tx.onabort=()=>rej(tx.error); }); }); }
+const idbPut=(s,k,v)=>idbTx(s,'readwrite',o=>o.put(v,k));
+const idbDel=(s,k)=>idbTx(s,'readwrite',o=>o.delete(k));
+const idbGet=(s,k)=>idbTx(s,'readonly',o=>o.get(k));
+function idbAll(s){ return idbDb().then(db=>{ if(!db) throw 0; return new Promise((res,rej)=>{ const out=[],c=db.transaction(s,'readonly').objectStore(s).openCursor(); c.onsuccess=()=>{ const x=c.result; if(x){ out.push([x.key,x.value]); x.continue(); } else res(out); }; c.onerror=()=>rej(c.error); }); }); }
+function pStore(id,k,data){ const key=id+'_'+k; return idbPut('photos',key,data).then(()=>idbGet('photos',key)).then(v=>{ if(v!==data) throw 0; IM['idb:'+key]=data; return 'idb:'+key; }).catch(()=>data); }
+const phRes=v=>isMk(v)?(IM[v]||''):(v||'');
+async function photosBoot(){
+  try{ navigator.storage&&navigator.storage.persist&&navigator.storage.persist(); }catch(e){}
+  const db=await idbDb(); if(!db) return;
+  let n=0; try{ (await idbAll('photos')).forEach(([k,v])=>{ IM['idb:'+k]=v; n++; }); }catch(e){}
+  const raw=localStorage.getItem(CKEY),arr=cLoad();
+  const isLeg=v=>typeof v==='string'&&v.indexOf('data:')===0;
+  if(arr.some(o=>o&&PHF.some(([f])=>isLeg(o[f])))){
+    try{ await idbPut('bak','arene_custom_'+Date.now(),raw); }catch(e){ return; }
+    let ch=false;
+    for(const o of arr){ if(!o) continue; for(const [f,k] of PHF){ if(isLeg(o[f])){ const m=await pStore(o.id,k,o[f]); if(isMk(m)){ o[f]=m; ch=true; } } } }
+    if(ch&&!cSave(arr)){ /* échec : l'ancienne version reste intacte */ }
+  }
+  try{ const used=new Set(); cLoad().forEach(o=>o&&PHF.forEach(([f])=>{ if(isMk(o[f])) used.add(o[f].slice(4)); }));
+    if(used.size) for(const [k] of await idbAll('photos')) if(!used.has(k)) await idbDel('photos',k); }catch(e){}
+  if(n) draw();
+}
+
+const num=v=>parseFloat(String(v));
+
+const LINE_ORDER=['BX','UX','CX'],TYPE_ORDER=['Attack','Déf','Stamina','Balance'];
+const LINE_COL={BX:'var(--l-bx)',UX:'var(--l-ux)',CX:'var(--l-cx)'};
+const DEF_DESC={nom:false,poids:true,ligne:false,type:false,att:true,def:true,end:true,haut:false,dash:true,burst:true};
+/* ===== État de l'interface, icônes et tri ===== */
+const SI={att:0,def:1,end:2};
+let EDV='all'; try{ const e=localStorage.getItem('ed'); if(e==='hasbro'||e==='tt') EDV=e; }catch(e){}
+const st={tab:'home',view:'collection',cat:'blades',ed:EDV,key:'nom',desc:false,q:'',a:0,b:1,son:true,voix:false};
+try{ if(localStorage.getItem('arene_son')==='0') st.son=false; }catch(e){}
+function zoomSet(v){ try{ localStorage.setItem('zoom',v?'1':'0'); }catch(e){} document.querySelector('meta[name=viewport]').content=v?'width=device-width, initial-scale=1, viewport-fit=cover':'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover'; draw(); }
+function zoomOn(){ try{ return localStorage.getItem('zoom')==='1'; }catch(e){ return false; } }
+function sonSet(v){ st.son=!!v; try{ localStorage.setItem('arene_son',v?'1':'0'); }catch(e){} draw(); }
+let AC=null,run=0;
+const sv=(p)=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const IC={home:sv('<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h4.5v-5.5h4V20h4.5V10"/>'),grid:sv('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
+  build:sv('<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/>'),
+  bolt:sv('<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'),
+  opts:sv('<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/>'),
+  search:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>'};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const hit=(s)=>!st.q||s.toLowerCase().includes(st.q.trim().toLowerCase());
+
+function sortList(list,key,desc,val){
+  const d=desc?-1:1;
+  return [...list].sort((x,y)=>{
+    const a=val(x,key),b=val(y,key);
+    const c=typeof a==='string'?a.localeCompare(b,'fr'):a-b;
+    return c?d*c:x.n.localeCompare(y.n,'fr');
+  });
+}
+function keysFor(){
+  const S=[['att','Attaque'],['def','Défense'],['end','Stamina']];
+  if(st.view==='collection') return [['nom','Nom'],['poids','Poids'],['ligne','Ligne'],['type','Type'],...S];
+  return st.cat==='ratchets'?[['nom','Nom'],['poids','Poids'],['haut','Hauteur'],...S]:st.cat==='bits'?[['nom','Nom'],['poids','Poids'],['type','Type'],['dash','Dash'],['burst','Burst'],...S]:[['nom','Nom'],['poids','Poids'],['type','Type'],...S];
+}
+function curKey(){ return keysFor().some(a=>a[0]===st.key)?st.key:'nom'; }
+function flipLbl(){ const t=['nom','ligne','type'].includes(curKey()); return st.desc?(t?'Z→A':'9→1'):(t?'A→Z':'1→9'); }
+function setKey(k){ st.key=k; st.desc=DEF_DESC[k]; const f=document.getElementById('fl'); if(f) f.textContent=flipLbl(); renderList(); }
+function flip(){ st.desc=!st.desc; draw(); }
+function setView(v){ st.view=v; draw(); }
+function setCat(c){ st.cat=c; draw(); }
+function setMc(){ st.mc=!st.mc; draw(); }
+function setEd(e){ st.ed=e; try{ localStorage.setItem('ed',e); }catch(x){} draw(); }
+const TF=()=>st.ed==='all'?T:T.filter(x=>x.ed===st.ed);
+function setQ(v){ st.q=v; renderList(); }
+/* ===== Options : notice, thème, fond, son ===== */
+const NOTICE=[
+ ['Installer l\'appli (iPhone et Android)','<p><b>iPhone</b> : ouvre le site dans <b>Safari</b>, touche le bouton Partager, puis <b>Sur l\'écran d\'accueil</b>.</p><p><b>Android</b> : ouvre le site dans <b>Chrome</b>, touche le menu (les 3 points), puis <b>Installer l\'application</b> ou <b>Ajouter à l\'écran d\'accueil</b>.</p><p>L\'icône s\'ouvre ensuite en plein écran, comme une vraie appli. Si l\'ancien nom ou l\'ancienne icône reste affiché après une mise à jour, supprime le raccourci et rajoute-le. Joue toujours depuis l\'icône : le navigateur et l\'icône ne partagent pas leurs données.</p>'],
+ ['Ajouter une toupie','<p>Onglet <b>Toupies</b>, bouton <b>+ Ajouter une toupie</b>.</p><ul><li>Remplis la ligne (BX, UX ou CX), les types, les noms et les poids en grammes.</li><li>Pas de ratchet (ratchet intégré à la blade) : laisse la partie Ratchet vide.</li><li>Les stats sont au dos de la boîte : chaque pièce (blade, ratchet, bit) a 3 barres Attack, Defense et Stamina avec un chiffre à côté. Recopie-les dans Att, Déf et End, les 3 ou aucun. Le ratchet a aussi une Height, le bit un Dash et un Burst.</li><li><b>Après chaque ajout (ou modification), pense à sauvegarder</b> : Options, puis Exporter. Tes toupies et tes photos sont gardées dans le navigateur, elles peuvent disparaître s\'il nettoie ses données.</li><li>3 photos : une pour la blade (elle sert aussi pour la toupie), une pour le ratchet, une pour le bit. Après le choix de la photo, tu la déplaces et la zoomes pour la centrer (bouton Recadrer pour la reprendre ensuite). Elle est ensuite allégée toute seule.</li></ul><p>Pour changer ou supprimer une toupie ajoutée, ouvre sa fiche et touche <b>Modifier</b>.</p>'],
+ ['Sauvegarde et autre appareil','<p>Tes toupies ajoutées, ton historique et tes réglages sont gardés <b>uniquement sur cet appareil</b>. Sur iPhone, Safari et l\'icône de l\'écran d\'accueil ne partagent rien : joue toujours depuis l\'icône.</p><ul><li><b>Exporter</b> crée un fichier de sauvegarde (sur iPhone : « Enregistrer dans Fichiers »).</li><li><b>Importer</b> ajoute le contenu d\'un fichier à ce que tu as déjà, sans rien écraser.</li></ul><p>Pense à exporter de temps en temps, surtout avant de vider les données du navigateur.</p>'],
+ ['Match et historique','<ul><li><b>Match simple</b> : une toupie par joueur.</li><li><b>Match 3v3</b> : trois toupies par joueur, une par round, chacune une seule fois.</li><li><b>Tournoi</b> : arrive plus tard.</li><li>Points : Spin Finish 1, Over Finish 2, Burst Finish 2, Xtreme Finish 3. Premier à 4 par défaut.</li><li>La croix ✕ quitte le match en cours (avec confirmation). Un match quitté n\'est pas enregistré.</li></ul><p>L\'historique des matchs terminés apparaît sous le bouton Lancer le match, séparé par catégorie. Annuler le dernier point d\'un match fini le retire de l\'historique.</p>'],
+ ['Build et comparatif','<p>Compose deux builds (blade, ratchet, bit) et compare-les. Sur chaque ligne, le gagnant prend la couleur de son camp : vert pour A, rose pour B. Les égalités sont grisées. Pour le poids, la toupie la plus lourde gagne.</p>']
+];
+function ntToggle(i){ const e=document.getElementById('nt'+i); if(!e) return; const o=e.classList.toggle('open'); e.querySelector('.nth').setAttribute('aria-expanded',o); }
+function noticeUI(){ return '<div class="optl">Notice</div><div class="nts">'+NOTICE.map(([t,b],i)=>`<div class="ntc" id="nt${i}"><button class="nth" onclick="ntToggle(${i})" aria-expanded="false"><span>${t}</span><i aria-hidden="true">+</i></button><div class="ntb">${b}</div></div>`).join('')+'</div>'; }
+function optSet(k,v){ if(k==='lang'){ setLang(v); return; } if(k==='theme') setTheme(v); else setBg(v); draw(); }
+function optsUI(){
+  const th=document.documentElement.dataset.theme||'futur';
+  const seg=(k,list,cur,f3)=>'<div class="frame'+(f3?' f3':'')+'">'+list.map(([v,l])=>`<button class="${cur===v?'on':''}" onclick="optSet('${k}','${v}')"><span>${l}</span></button>`).join('')+'</div>';
+  const thS='<div class="frame thi">'+[['futur','Sombre',IC_MOON],['futurl','Clair',IC_SUN]].map(([v,l,i])=>`<button class="${th===v?'on':''}" onclick="optSet('theme','${v}')" aria-label="${l}" title="${l}"><span>${i}</span></button>`).join('')+'</div>';
+  const son='<div class="frame"><button class="'+(st.son?'on':'')+'" onclick="sonSet(1)"><span>Activé</span></button><button class="'+(st.son?'':'on')+'" onclick="sonSet(0)"><span>Désactivé</span></button></div>';
+  const bgS='<select class="bgsel" onchange="optSet(\'bg\',this.value)" aria-label="Fond d\'écran">'+[['actuel','Grille'],['hex','Hexagones'],['sparks','Particules']].map(([v,l])=>'<option value="'+v+'"'+(bgMode===v?' selected':'')+'>'+l+'</option>').join('')+'</select>';
+  return '<div class="ops"><div class="optl">Mes données</div><div class="frame bkf"><button onclick="backupExport()"><span>Exporter</span></button><button onclick="document.getElementById(\'imp\').click()"><span>Importer</span></button></div><input type="file" id="imp" accept="application/json,.json" hidden onchange="backupImport(this)"><div class="mut note" id="bkmsg" aria-live="polite">'+CUSTOM.length+' toupie'+(CUSTOM.length>1?'s':'')+' ajoutée'+(CUSTOM.length>1?'s':'')+' · '+hLoad().length+' match'+(hLoad().length>1?'s':'')+' dans l\'historique. Exporte pour sauvegarder ou changer d\'appareil.</div><div class="op2"><div><div class="optl">Langue</div>'+seg('lang',[['fr','Français'],['en','English']],LANG,false)+'</div><div><div class="optl">Son</div>'+son+'</div></div><div class="op2"><div><div class="optl">Fond d\'écran</div>'+bgS+'</div><div><div class="optl">Thème</div>'+thS+'</div></div><div class="mut note">Les réglages et les données sont gardés sur cet appareil.</div>'+(HID.length?'<div class="optl">Toupies de base</div><div class="frame"><button onclick="bsRestore()"><span>Remettre les toupies de base</span><small>'+HID.length+'</small></button></div>':'')+'<div class="mut note">Beybey 1.0 · Catalogue des toupies : Beydex (données et images de la communauté, github.com/catgamer109/Beydex-Public-Resources). Projet de fan, non affilié à Takara Tomy ni à Hasbro.</div>'+'<div class="mut note"><a href="CREDITS.txt" target="_blank" rel="noopener">Crédits et licences</a></div>'+'<div class="zmo"><span class="mut">Zoom de la page (pincer pour agrandir)</span><span class="zmb"><button class="'+(zoomOn()?'':'on')+'" onclick="zoomSet(0)" aria-pressed="'+(!zoomOn())+'">Bloqué</button><button class="'+(zoomOn()?'on':'')+'" onclick="zoomSet(1)" aria-pressed="'+zoomOn()+'">Autorisé</button></span></div>'+noticeUI()+'</div>';
+}
+/* ===== Accessibilité : fenêtres, Échap, états des boutons ===== */
+let FMO=null;
+function fmShown(f){
+  if(!f.classList.contains('show')) FMO=document.activeElement&&document.activeElement!==document.body?document.activeElement:null;
+  f.setAttribute('role','dialog'); f.setAttribute('aria-modal','true'); f.setAttribute('aria-label','Fenêtre');
+  const wt=!!f.querySelector('.hall'), tb=document.getElementById('tabs'); f.classList.toggle('wtabs',wt); document.body.classList.toggle('fmt',wt); f.style.bottom=wt&&tb?tb.offsetHeight+'px':''; f.setAttribute('aria-modal',wt?'false':'true');
+  f.classList.add('show'); f.scrollTop=0; document.documentElement.style.overflow='hidden'; a11yPass(f);
+}
+function a11yPass(root){
+  (root||document).querySelectorAll('.frame button,.chips .chip').forEach(b=>{ if(b.hasAttribute('onclick')) b.setAttribute('aria-pressed',b.classList.contains('on')?'true':'false'); });
+  const t=document.getElementById('tabs'); if(t&&!root) t.querySelectorAll('button').forEach(b=>{ if(b.classList.contains('on')) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+}
+addEventListener('keydown',e=>{ if(e.key!=='Escape') return; if(document.getElementById('cr')||(typeof csOpen!=='undefined'&&csOpen)) return; const f=document.getElementById('fm'); if(f&&f.classList.contains('show')){ e.preventDefault(); fmClose(); } });
+/* ===== Ajout / modification de toupies + sauvegarde ===== */
+const FM={id:0,ph:{}};
+const TYPES4=[['','Choisir…'],['Attack','Attack'],['Déf','Déf'],['Stamina','Stamina'],['Balance','Balance']];
+const gv=id=>{ const e=document.getElementById(id); return e?e.value.trim():''; };
+function fmOpts(list,sel){ return list.map(([v,l])=>`<option value="${v}" ${v===sel?'selected':''}>${l}</option>`).join(''); }
+function fmField(id,lab,val,mode,ph){ return `<label class="ff3"><span>${lab}</span><input class="nm ff" id="${id}" value="${esc(val===undefined||val===null?'':val)}" inputmode="${mode||'text'}" placeholder="${ph||''}" autocomplete="off" autocapitalize="${mode?'off':'words'}"></label>`; }
+function fmStats(pre,a){ a=a||[]; return `<div class="fst fadv"><span>Stats au dos de la boîte</span>${['Att','Déf','End'].map((l,i)=>`<label><input class="nm ff" id="${pre}${i}" value="${a[i]===undefined?'':a[i]}" inputmode="numeric" placeholder="${l}" aria-label="${l}"></label>`).join('')}</div>`; }
+function fmPhoto(k,lab){ const v=FM.ph[k]; return `<div class="fph"><div class="pimg sm" id="phv_${k}">${v?`<img src="${v}" alt="">`:''}</div><div><label class="chip phb"><input type="file" accept="image/*" hidden onchange="fmPick('${k}',this)">${lab}</label><button type="button" class="chip" id="phc_${k}" onclick="fmCrop('${k}')" ${v?'':'hidden'}>Recadrer</button><button type="button" class="chip" id="phx_${k}" onclick="fmRm('${k}')" ${v?'':'hidden'}>Retirer</button></div></div>`; }
+function tpForm(id,pre,fromCat){
+  const o=id?CUSTOM.find(x=>x.id===id):null, src=o||pre||null; FM.id=o?o.id:0; FM.tag=(src&&src.tag)||''; FM.ph={blade:phRes(src&&src.photoBlade),ratchet:phRes(src&&src.photoRatchet),bit:phRes(src&&src.photoBit)}; FM.rm={}; FM.orig=o?{blade:o.photoBlade,ratchet:o.photoRatchet,bit:o.photoBit}:{};
+  o&&0;
+  const adv=!!o||!!(src&&(src.statsBlade||src.statsRatchet||src.statsBit||src.dashBit||src.burstBit));
+  const h=`<div class="fwrap${adv?' adv':''}"><div class="fh"><h2>${o?'Modifier la toupie':'Nouvelle toupie'}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  ${fromCat?'<div class="fhelp">Pré-rempli depuis le catalogue (Beydex). Vérifie les poids avec ta balance, et ajoute les stats et les photos si tu veux.</div>':''}<div class="fhelp fadv"><b>Où trouver les stats ?</b> Au dos de la boîte, chaque pièce (Blade, Ratchet, Bit) a ses barres : <b>Attack</b>, <b>Defense</b> et <b>Stamina</b>, avec un chiffre à côté. Recopie-les dans Att, Déf et End. Le ratchet a aussi une <b>Height</b> (hauteur), le bit un <b>Dash</b> et un <b>Burst</b>. Tout est facultatif, mais pour les stats remplis les 3 chiffres d'une pièce ou aucun.</div>
+  ${o?'':`<label class="fadvt"><input type="checkbox" id="f_adv" ${adv?'checked':''} onchange="this.closest('.fwrap').classList.toggle('adv',this.checked)"><span>Stats avancées (Att / Déf / End, Dash, Burst)</span></label>`}
+  <div class="fs">Général</div><div class="fg2"><label class="ff3"><span>Édition</span><select id="f_ed">${fmOpts([['','Choisir…'],['hasbro','Hasbro'],['tt','Takara Tomy']],src?(src.edition==='tt'?'tt':'hasbro'):'')}</select></label></div><div class="fg2"><label class="ff3"><span>Metal Coat</span><select id="f_mc">${fmOpts([['','Aucun']].concat(MCC.map(c=>[c,mcL(c)])),src&&src.metalCoat||'')}</select></label></div><div class="fg2"><label class="ff3"><span>Ligne</span><select id="f_ligne">${fmOpts([['','Choisir…'],['BX','BX'],['UX','UX'],['CX','CX']],src&&String(src.ligne).toUpperCase()||'')}</select></label><label class="ff3"><span>Type de la toupie</span><select id="f_t">${fmOpts(TYPES4,src?normT(src.typeToupie):'')}</select></label></div>
+  <div class="fs">Blade <small>(sa photo sert aussi pour la toupie)</small></div>
+  ${fmField('f_blade','Nom',src&&src.blade,'','Ex. Delta Unicorn')}${fmField('f_nom','Nom perso (optionnel)',src&&src.nom,'','Ex. Mon Antler défense')}<div class="fg2"><label class="ff3"><span>Type de la blade</span><select id="f_bty">${fmOpts(TYPES4,src?normT(src.typeBlade):'')}</select></label>${fmField('f_wb','Poids (g)',src&&src.poidsBlade,'decimal','Ex. 33')}</div>${fmStats('f_sb',src&&src.statsBlade)}${fmPhoto('blade','Photo de la blade')}
+  <div class="fs">Ratchet <small>(facultatif)</small></div>
+  <div class="fg2">${fmField('f_ratchet','Nom',src&&src.ratchet,'','Ex. 3-60')}${fmField('f_wr','Poids (g)',src&&src.poidsRatchet,'decimal','Ex. 6.2')}</div>${fmField('f_h','Hauteur',src&&src.hauteurRatchet,'numeric','Ex. 60')}${fmStats('f_sr',src&&src.statsRatchet)}${fmPhoto('ratchet','Photo du ratchet')}
+  <div class="fs">Bit</div>
+  <div class="fg2">${fmField('f_bit','Nom',src&&src.bit,'','Ex. GU')}${fmField('f_wbt','Poids (g)',src&&src.poidsBit,'decimal','Ex. 2.1')}</div><div class="fg2 fadv">${fmField('f_dash','Dash',src&&src.dashBit,'numeric','Ex. 30')}${fmField('f_burst','Burst',src&&src.burstBit,'numeric','Ex. 30')}</div>${fmStats('f_sbt',src&&src.statsBit)}${fmPhoto('bit','Photo du bit')}
+  <div class="ferr" id="f_err" role="alert"></div>
+  <div class="fact"><button class="go sm" onclick="fmSave()">Enregistrer</button><button class="chip" onclick="fmClose()">Annuler</button>${o?'<button class="chip dng" id="f_del" onclick="fmDel()">Supprimer</button>':''}</div></div>`;
+  let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  f.innerHTML=h; fmShown(f);
+}
+
+const CAT=(typeof CATALOGUE!=='undefined'&&Array.isArray(CATALOGUE))?CATALOGUE:[];
+function catPre(c){ const o={blade:c.b,ligne:c.l,typeBlade:c.bt,typeToupie:c.t,edition:c.e,ratchet:c.r,bit:c.bi}; if(c.wb) o.poidsBlade=c.wb; if(c.wr) o.poidsRatchet=c.wr; if(c.wbt) o.poidsBit=c.wbt; if(c.h) o.hauteurRatchet=c.h; if(c.ib) o.photoBlade=c.ib; if(c.ir) o.photoRatchet=c.ir; if(c.it) o.photoBit=c.it; if(c.mc) o.metalCoat=c.mc; if(c.tg) o.tag=c.tg; return o; }
+let CPT=null,CPS={e:'hasbro'};
+function cptBuild(){ if(CPT) return CPT; const B={},R={},I={};
+  CAT.forEach(c=>{ if(c.b){ const k=c.e+'|'+c.b, x=B[k]||(B[k]={k:k,e:c.e,n:c.b,l:c.l,bt:c.bt}); if(!x.w&&c.wb) x.w=c.wb; if(!x.im&&c.ib) x.im=c.ib; }
+    if(c.r){ const x=R[c.r]||(R[c.r]={n:c.r}); if(!x.w&&c.wr) x.w=c.wr; if(!x.h&&c.h) x.h=c.h; if(!x.im&&c.ir) x.im=c.ir; }
+    if(c.bi){ const x=I[c.bi]||(I[c.bi]={n:c.bi}); if(!x.w&&c.wbt) x.w=c.wbt; if(!x.im&&c.it) x.im=c.it; } });
+  CPT={B:B,R:R,I:I}; return CPT; }
+const cpSort=(a,b)=>a.n.localeCompare(b.n,undefined,{numeric:true,sensitivity:'base'});
+function addOpen(){
+  if(!CAT.length) return tpForm();
+  const h=`<div class="fwrap"><div class="fh"><h2>Ajouter une toupie</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  <div class="fhelp">Comment veux-tu l'ajouter ?</div>
+  <button class="addb" onclick="tpForm()">Manuellement</button><div class="mut note addn">Formulaire vide : tu remplis tout toi-même.</div>
+  <button class="addb cat" onclick="catOpen()">Depuis le catalogue</button><div class="mut note addn">Tu choisis chaque pièce dans une liste, les poids et les photos se remplissent tout seuls.</div></div>`;
+  let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  f.innerHTML=h; fmShown(f);
+}
+function catOpen(){
+  cptBuild(); CPS={e:(st.ed==='tt'?'tt':'hasbro')};
+  const row=(id,lab)=>`<div class="fs">${lab}</div><div class="cpr"><label class="ff3"><select id="${id}" onchange="cpSel()"></select></label><div class="cpp" id="${id}_p"></div></div>`;
+  const h=`<div class="fwrap cpwrap"><div class="fh"><h2>Depuis le catalogue</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  <div class="fhelp">Cherche ta toupie pour avoir son build d'origine, puis change les pièces si tu veux. Poids et photos se remplissent tout seuls, tu pourras tout corriger. Données et images de la communauté (Beydex), poids indicatifs.</div>
+  <div class="fs">Édition</div><label class="ff3"><select id="cp_e" onchange="cpEd(this.value)">${fmOpts([['hasbro','Hasbro'],['tt','Takara Tomy']],CPS.e)}</select></label>
+  <div class="fs">Toupie (build d'origine)</div><label class="ff3"><select id="cp_n" onchange="cpBey()"></select></label>
+  ${row('cp_b','Blade')}${row('cp_r','Ratchet')}${row('cp_i','Bit')}
+  <div class="ferr" id="f_err" role="alert"></div><div class="fact"><button class="go sm" id="cp_go" onclick="cpGo()" disabled>Enregistrer</button><button class="chip" onclick="fmClose()">Annuler</button></div></div>`;
+  let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  f.innerHTML=h; fmShown(f);
+  const P=CPT, ph=[['','Choisir…']];
+  document.getElementById('cp_r').innerHTML=fmOpts([['','Aucun']].concat(Object.values(P.R).sort(cpSort).map(x=>[x.n,esc(x.n)])),'');
+  document.getElementById('cp_i').innerHTML=fmOpts(ph.concat(Object.values(P.I).sort(cpSort).map(x=>[x.n,esc(x.n)])),'');
+  cpEd(CPS.e);
+}
+function cpBey(){ const n=document.getElementById('cp_n'), c=n&&n.value!==''?CAT[+n.value]:null; if(!c) return;
+  [['cp_b',c.e+'|'+c.b],['cp_r',c.r||''],['cp_i',c.bi||'']].forEach(([id,v])=>{ const s=document.getElementById(id); if(s){ s.value=v; s.dispatchEvent(new Event('change',{bubbles:true})); } }); }
+function cpEd(e){ CPS.e=e; const nn=document.getElementById('cp_n'); if(nn){ nn.innerHTML=fmOpts([['','Choisir…']].concat(CAT.map((c,i)=>({c:c,i:i})).filter(x=>x.c.e===e).sort((a,b)=>a.c.n.localeCompare(b.c.n,undefined,{numeric:true,sensitivity:'base'})).map(x=>[String(x.i),esc(x.c.n)])),''); nn.dispatchEvent(new Event('change')); }
+  const sel=document.getElementById('cp_b'); if(!sel) return;
+  sel.innerHTML=fmOpts([['','Choisir…']].concat(Object.values(CPT.B).filter(x=>x.e===e).sort(cpSort).map(x=>[x.k,esc(x.n)])),''); sel.dispatchEvent(new Event('change')); }
+function cpSel(){
+  const g=id=>{ const s=document.getElementById(id); return s?s.value:''; };
+  const it=[['cp_b',CPT.B[g('cp_b')]],['cp_r',CPT.R[g('cp_r')]],['cp_i',CPT.I[g('cp_i')]]];
+  const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, bb=it[0][1], rr=it[1][1], ii=it[2][1];
+  const sm=c=>bb&&ii&&c.e===bb.e&&c.b===bb.n&&(c.r||'')===(rr?rr.n:'')&&c.bi===ii.n, own=pk&&sm(pk)?pk:(bb&&ii?(CAT.find(c=>sm(c)&&!c.mc)||CAT.find(sm)||null):null);
+  const bo=pk&&pk.bo&&bb&&pk.e===bb.e&&pk.b===bb.n?pk:null;
+  const ow={cp_b:bo?{im:bo.ib,w:bo.wb}:own&&{im:own.ib,w:own.wb},cp_r:own&&{im:own.ir,w:own.wr},cp_i:own&&{im:own.it,w:own.wbt}};
+  it.forEach(([id,x])=>{ const p=document.getElementById(id+'_p'); if(!p) return; const y=((own||(bo&&id==='cp_b'))&&x&&ow[id]&&ow[id].im)?ow[id]:x;
+    p.innerHTML=x?((y.im?`<img src="${y.im}" alt="" loading="lazy">`:'<span class="cpn"></span>')+(y.w?`<small>${y.w} g</small>`:'')):''; });
+  const go=document.getElementById('cp_go'); if(go) go.disabled=!(it[0][1]&&it[2][1]);
+}
+function cpGo(){
+  const b=CPT.B[document.getElementById('cp_b').value], r=CPT.R[document.getElementById('cp_r').value], i=CPT.I[document.getElementById('cp_i').value];
+  if(!b||!i) return;
+  const nv=document.getElementById('cp_n'), pk=nv&&nv.value!==''?CAT[+nv.value]:null, same=c=>c.e===b.e&&c.b===b.n&&(c.r||'')===(r?r.n:'')&&c.bi===i.n;
+  const bpk=!!(pk&&pk.bo&&pk.e===b.e&&pk.b===b.n), m=bpk?null:((pk&&same(pk))?pk:(CAT.find(c=>same(c)&&!c.mc)||CAT.find(same)));
+  if(m) return cpSave(catPre(m));
+  const o={blade:b.n,ligne:b.l,typeBlade:b.bt,edition:b.e,ratchet:r?r.n:'',bit:i.n};
+  if(b.w) o.poidsBlade=b.w; if(r&&r.w) o.poidsRatchet=r.w; if(i.w) o.poidsBit=i.w; if(r&&r.h) o.hauteurRatchet=r.h;
+  if(b.im) o.photoBlade=b.im; if(r&&r.im) o.photoRatchet=r.im; if(i.im) o.photoBit=i.im;
+  if(pk&&pk.bo&&pk.e===b.e&&pk.b===b.n){ o.metalCoat=pk.mc; if(pk.ib) o.photoBlade=pk.ib; if(pk.wb) o.poidsBlade=pk.wb; }
+  cpSave(o);
+}
+function cpSave(o){
+  const box=document.getElementById('f_err'); if(!o.ratchet) o.ratchet='';
+  if(!o.hauteurRatchet&&o.ratchet&&hNom(o.ratchet)) o.hauteurRatchet=hNom(o.ratchet);
+  const er=cErr(o);
+  if(er.length) return tpForm(0,o,true); // données incomplètes (combo perso) : on ouvre le formulaire pour compléter
+  const nm=nmOf(o);
+  const dp=T.find(x=>x.n===nm); if(dp){ if(dp._c) return dupMsg(dp); box.textContent='Une toupie « '+nm+' » existe déjà.'; box.scrollIntoView({block:'center'}); return; }
+  o.id=Date.now(); const all=cLoad(); all.push(o);
+  if(!cSave(all)){ box.textContent='Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.'; return; }
+  try{ localStorage.setItem('arene_dirty',String(Date.now())); }catch(e){}
+  location.reload();
+}
+function fmClose(){ if(typeof scStop==='function') scStop(); const f=document.getElementById('fm'); if(f){ f.classList.remove('show','wtabs'); f.style.bottom=''; f.innerHTML=''; } document.body.classList.remove('fmt'); document.documentElement.style.overflow=''; if(FMO&&FMO.isConnected){ try{ FMO.focus({preventScroll:true}); }catch(e){} } FMO=null; }
+function fmRm(k){ FM.ph[k]=''; FM.rm[k]=true; fmPhShow(k); }
+function fmPhShow(k){ const v=FM.ph[k],e=document.getElementById('phv_'+k),x=document.getElementById('phx_'+k); if(e) e.innerHTML=v?`<img src="${v}" alt="">`:''; if(x) x.hidden=!v; const cc=document.getElementById('phc_'+k); if(cc) cc.hidden=!v; }
+var CR=null;
+function crOpen(k,src){
+  const im=new Image(); im.onload=()=>{
+    let e=document.getElementById('cr'); if(!e){ e=document.createElement('div'); e.id='cr'; document.body.appendChild(e); }
+    const V=Math.max(200,Math.min(320,innerWidth-80)),w=im.naturalWidth,h=im.naturalHeight,mn=V/Math.max(w,h),cv=V/Math.min(w,h);
+    CR={k,im,V,w,h,mn,s:cv,x:0,y:0};
+    CR.x=(V-w*CR.s)/2; CR.y=(V-h*CR.s)/2;
+    e.innerHTML=`<div class="crb"><p>Glisse la photo pour la centrer, zoome avec le curseur.</p><canvas id="crc" width="${V}" height="${V}" style="width:${V}px;height:${V}px"></canvas><input type="range" id="crz" min="${mn}" max="${cv*4}" step="any" value="${CR.s}" aria-label="Zoom"><div class="fact"><button class="go sm" onclick="crOk()">Valider</button><button class="chip" onclick="crClose()">Annuler</button></div></div>`;
+    e.classList.add('show'); const c=document.getElementById('crc'); let d=null;
+    c.onpointerdown=ev=>{ d={px:ev.clientX,py:ev.clientY,x:CR.x,y:CR.y}; c.setPointerCapture(ev.pointerId); c.style.cursor='grabbing'; };
+    c.onpointermove=ev=>{ if(!d) return; CR.x=d.x+(ev.clientX-d.px); CR.y=d.y+(ev.clientY-d.py); crDraw(); };
+    c.onpointerup=c.onpointercancel=()=>{ d=null; c.style.cursor='grab'; };
+    c.onwheel=ev=>{ ev.preventDefault(); crZoom(CR.s*(ev.deltaY<0?1.08:1/1.08)); };
+    document.getElementById('crz').oninput=ev=>crZoom(+ev.target.value);
+    crDraw();
+  };
+  im.onerror=()=>{ const r=document.getElementById('f_err'); if(r) r.textContent='Cette photo ne peut pas être lue. Essaie une autre image.'; };
+  im.src=src;
+}
+function crClamp(){ const a=CR.w*CR.s,b=CR.h*CR.s,V=CR.V;
+  CR.x=a>=V?Math.min(0,Math.max(V-a,CR.x)):Math.min(V-a,Math.max(0,CR.x));
+  CR.y=b>=V?Math.min(0,Math.max(V-b,CR.y)):Math.min(V-b,Math.max(0,CR.y)); }
+function crZoom(n){ const V=CR.V,cx=(V/2-CR.x)/CR.s,cy=(V/2-CR.y)/CR.s; n=Math.max(CR.mn,Math.min(CR.mn*0+n,CR.mn*0+document.getElementById('crz').max*1)); CR.s=n; CR.x=V/2-cx*n; CR.y=V/2-cy*n; document.getElementById('crz').value=n; crDraw(); }
+function crDraw(){ crClamp(); const c=document.getElementById('crc'),x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,CR.V,CR.V); x.drawImage(CR.im,CR.x,CR.y,CR.w*CR.s,CR.h*CR.s); }
+function crOk(){ const S=480,f=S/CR.V,c=document.createElement('canvas'); c.width=c.height=S; const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,S,S); x.drawImage(CR.im,CR.x*f,CR.y*f,CR.w*CR.s*f,CR.h*CR.s*f); const k=CR.k; FM.ph[k]=c.toDataURL('image/jpeg',.78); FM.rm[k]=false; crClose(); fmPhShow(k); }
+function crClose(){ const e=document.getElementById('cr'); if(e){ e.classList.remove('show'); e.innerHTML=''; } CR=null; }
+function fmCrop(k){ if(FM.ph[k]) crOpen(k,FM.ph[k]); }
+function fmPick(k,inp){
+  const f=inp.files&&inp.files[0]; if(!f) return; const u=URL.createObjectURL(f);
+  crOpen(k,u); setTimeout(()=>URL.revokeObjectURL(u),60000); inp.value=''; }
+async function fmSave(){
+  const arr=pre=>{ const v=[0,1,2].map(i=>gv(pre+i)); return v.every(x=>x!=='')?v.map(x=>+String(x).replace(',','.')):undefined; };
+  const o={id:FM.id||Date.now(),blade:gv('f_blade'),ligne:gv('f_ligne'),typeBlade:gv('f_bty'),typeToupie:gv('f_t'),edition:gv('f_ed'),ratchet:gv('f_ratchet'),bit:gv('f_bit'),poidsBlade:gv('f_wb').replace(',','.'),poidsRatchet:gv('f_wr').replace(',','.'),poidsBit:gv('f_wbt').replace(',','.')};
+  const nomv=gv('f_nom').trim(); if(nomv) o.nom=nomv; const prev0=cLoad().find(x=>x.id===o.id); if(prev0&&prev0.qty>1) o.qty=prev0.qty;
+  const mcv=gv('f_mc'); if(mcv) o.metalCoat=mcv; if(FM.tag) o.tag=FM.tag; const h=gv('f_h'),da=gv('f_dash'),bu=gv('f_burst'); if(!h&&o.ratchet&&hNom(o.ratchet)) o.hauteurRatchet=hNom(o.ratchet); if(h) o.hauteurRatchet=+h; if(da) o.dashBit=+da; if(bu) o.burstBit=+bu;
+  const sb=arr('f_sb'),sr=arr('f_sr'),sbt=arr('f_sbt'); if(sb) o.statsBlade=sb; if(sr) o.statsRatchet=sr; if(sbt) o.statsBit=sbt;
+  const er=cErr(o); if(!o.edition) er.unshift('Choisis l\'édition : Hasbro ou Takara Tomy.'); const nm=nmOf(o);
+  if(!er.length){ const dp=T.find(x=>x.n===nm&&x._c!==FM.id); if(dp){ if(dp._c&&!FM.id) return dupMsg(dp); er.push('Une toupie « '+nm+' » existe déjà.'); } }
+  const box=document.getElementById('f_err'); if(er.length){ box.innerHTML=er.map(esc).join('<br>'); box.scrollIntoView({block:'center'}); return; }
+  for(const [f,k] of PHF){ const v=FM.ph[k]; if(v){ o[f]=(typeof v==='string'&&v.indexOf('photos/')===0)?v:await pStore(o.id,k,v); } else if(!FM.rm[k]&&FM.orig[k]) o[f]=FM.orig[k]; else if(FM.rm[k]&&isMk(FM.orig[k])) idbDel('photos',FM.orig[k].slice(4)).catch(()=>{}); }
+  const all=cLoad(),ix=all.findIndex(x=>x.id===o.id); ix>=0?all[ix]=o:all.push(o);
+  if(!cSave(all)){ box.textContent='Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.'; return; }
+  try{ localStorage.setItem('arene_dirty',String(Date.now())); }catch(e){}
+  location.reload();
+}
+function bsDel(b,k){
+  if(T.length<=1){ b.textContent=LT('Garde au moins une toupie'); return; }
+  if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent=LT('Confirmer ?'); setTimeout(()=>{ if(b.isConnected){ b.dataset.ok=''; b.textContent=LT('Supprimer'); } },3500); return; }
+  const a=hdLoad(); k=decodeURIComponent(k); if(!a.includes(k)) a.push(k); hdSave(a); location.reload();
+}
+function cuQty(id,d,rl){
+  const all=cLoad(), o=all.find(x=>x.id===id); if(!o) return;
+  o.qty=Math.max(1,Math.min(99,(+o.qty||1)+d)); if(!cSave(all)) return;
+  const x=T.find(t=>t._c===id); if(x) x.q=o.qty;
+  if(rl){ try{ localStorage.setItem('arene_dirty',String(Date.now())); }catch(e){} location.reload(); return; }
+  document.querySelectorAll('[data-q="'+id+'"]').forEach(e=>{ e.textContent=o.qty; });
+  document.querySelectorAll('[data-qb="'+id+'"]').forEach(e=>{ e.textContent='×'+o.qty; e.hidden=o.qty<2; });
+}
+function dupMsg(x){ const b=document.getElementById('f_err'); if(!b) return; const q=x.q||1;
+  b.innerHTML=esc(LT('Tu as déjà cette toupie'))+' ('+q+'). <button type="button" class="chip" onclick="cuQty('+x._c+',1,1)">'+esc(LT('Ajouter un exemplaire'))+'</button>'; b.scrollIntoView({block:'center'}); }
+async function cuDel(b,id){
+  if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent=LT('Confirmer ?'); setTimeout(()=>{ if(b.isConnected){ b.dataset.ok=''; b.textContent=LT('Supprimer'); } },3500); return; }
+  cSave(cLoad().filter(x=>x.id!==id)); for(const [,k] of PHF){ try{ await idbDel('photos',id+'_'+k); }catch(e){} } location.reload();
+}
+function bsRestore(){ hdSave([]); location.reload(); }
+async function fmDel(){ const b=document.getElementById('f_del'); if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent='Confirmer la suppression'; return; }
+  cSave(cLoad().filter(x=>x.id!==FM.id)); for(const [,k] of PHF) { try{ await idbDel('photos',FM.id+'_'+k); }catch(e){} } location.reload(); }
+function bkMsg(t){ const e=document.getElementById('bkmsg'); if(e) e.textContent=t; }
+function bkDone(){ try{ localStorage.setItem('arene_lastbk',String(Date.now())); localStorage.removeItem('arene_bkrem'); }catch(e){} }
+async function backupExport(){ try{ await PBOOT; }catch(e){}
+  const d=new Date(),pad=n=>String(n).padStart(2,'0'),name='beybey-sauvegarde-'+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'.json';
+  const data={app:'arene-beyblade',v:1,date:d.toISOString(),toupies:cLoad().map(o=>{ const c=Object.assign({},o); PHF.forEach(([f])=>{ if(isMk(c[f])){ const v=IM[c[f]]; if(v) c[f]=v; else delete c[f]; } }); return c; }),historique:hLoad(),masquees:hdLoad(),profil:PRF,amis:fLoad(),reglages:{theme:document.documentElement.dataset.theme==='futurl'?'futurl':'futur',bg:BGS[bgMode]?bgMode:'actuel'}};
+  const file=new File([JSON.stringify(data)],name,{type:'application/json'});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Sauvegarde Beybey'}).then(()=>{ bkDone(); bkMsg('Sauvegarde exportée.'); }).catch(()=>{}); return; }
+  try{ const a=document.createElement('a'); a.href=URL.createObjectURL(file); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); bkDone(); bkMsg('Sauvegarde téléchargée : '+name); }catch(e){ bkMsg('Impossible de créer le fichier sur cet appareil.'); }
+}
+function backupImport(inp,done){
+  const f=inp.files&&inp.files[0]; if(!f) return; if(f.size>100e6){ bkMsg('Fichier trop gros pour une sauvegarde Beybey.'); inp.value=''; return; } const r=new FileReader();
+  r.onload=async()=>{ try{
+      const d=JSON.parse(r.result); if(!d||d.app!=='arene-beyblade') throw 0;
+      const have=cLoad(),names=new Set(T.map(x=>x.n)); let addT=0,addH=0;
+      for(const o0 of (Array.isArray(d.toupies)?d.toupies.slice(0,1500):[])){ const o=cClean(o0); if(!o||cErr(o).length) continue; const nm=nmOf(o); if(have.some(x=>x.id===o.id)||names.has(nm)) continue; for(const [f,k] of PHF){ if(typeof o[f]==='string'&&o[f].indexOf('data:')===0) o[f]=await pStore(o.id,k,o[f]); else if(!(typeof o[f]==='string'&&o[f].indexOf('photos/')===0)) delete o[f]; } have.push(o); names.add(nm); addT++; }
+      if(Array.isArray(d.masquees)){ const hd=hdLoad(); d.masquees.slice(0,2000).forEach(k=>{ if(typeof k==='string'&&k.length<80&&!hd.includes(k)) hd.push(k); }); hdSave(hd); }
+      if(d.reglages&&typeof d.reglages==='object'){ const rg=d.reglages; if(rg.theme==='futur'||rg.theme==='futurl') setTheme(rg.theme); if(typeof rg.bg==='string'&&BGS[rg.bg]) setBg(rg.bg); }
+      if(d.profil&&typeof d.profil==='object'&&ss(d.profil.n,20)&&!PRF.n){ PRF.n=ss(d.profil.n,20); if(sid(d.profil.id)) PRF.id=sid(d.profil.id); PRF.hn=PRF.n; if(/^a(0[1-9]|1[0-6])$/.test(d.profil.av)) PRF.av=d.profil.av; pfSave(); }
+      if(d.amis&&typeof d.amis==='object'&&!Array.isArray(d.amis)){ const F=fLoad(); Object.keys(d.amis).slice(0,500).forEach(k=>{ const i=sid(k), f=i&&i===k?fClean(d.amis[k],i):null; if(f&&!F[i]) F[i]=f; }); fSave(F); }
+      const hs=hLoad(); (Array.isArray(d.historique)?d.historique.slice(0,300):[]).forEach(h0=>{ const h=hClean(h0); if(h&&h.id&&!hs.some(x=>x.id===h.id)){ hs.push(h); addH++; } }); hs.sort((a,b)=>b.id-a.id);
+      if(!cSave(have)) { bkMsg('Pas assez de place pour tout importer.'); return; } hSave(hs);
+      bkMsg('Importé : '+addT+' toupie'+(addT>1?'s':'')+' et '+addH+' match'+(addH>1?'s':'')+' en plus.'); if(done) setTimeout(done,900); else if(addT) setTimeout(()=>location.reload(),900);
+    }catch(e){ bkMsg('Ce fichier n\'est pas une sauvegarde Beybey.'); } inp.value=''; };
+  r.readAsText(f);
+}
+function setTab(t){ const f=document.getElementById('fm'); if(f&&f.classList.contains('wtabs')) fmClose(); st.tab=t; draw(); window.scrollTo(0,0); }
+
+function partItems(){
+  const P=x=>PH[x.n]||{};
+  const TT=TF();
+  if(st.cat==='ratchets') return TT.filter(x=>x.r).map(x=>({n:x.r+(x.mc?' · '+mcL(x.mc):''),w:x.wr,img:P(x).ratchet,ty:'',l:'',s:x.sr,h:x.h,ex:x.h?`Hauteur <b>${x.h}</b>`:''}));
+  if(st.cat==='bits') return TT.map(x=>({n:x.bt+(x.mc?' · '+mcL(x.mc):''),w:x.wbt,img:P(x).bit,ty:x.t,l:'',s:x.sbt,dash:x.dash,burst:x.burst,ex:(x.dash!==''?`Dash <b>${x.dash}</b> · `:'')+(x.burst!==''?`Burst <b>${x.burst}</b>`:'')}));
+  return TT.map(x=>({n:x.b+(x.mc?' · '+mcL(x.mc):''),w:x.wb,img:P(x).blade,ty:x.bty,l:x.l,s:x.sb,ex:''}));
+}
+function img(p,cls){ return p&&IM[p]?`<div class="pimg ${cls||''}"><img loading="lazy" onerror="this.remove()" src="${IM[p]}" alt=""></div>`:`<div class="pimg ${cls||''}"></div>`; }
+function typ(t){ return t?`<span class="tp"><span class="dot" style="background:${TYPE[t]}"></span>${t}</span>`:''; }
+const SC={A:'var(--stat-a)',D:'var(--stat-d)',S:'var(--stat-s)'};
+function bars(a,mx){ if(!a) return ''; mx=mx||70; return '<div class="sb">'+['A','D','S'].map((k,i)=>`<i><span>${k}</span><u style="--w:${Math.min(100,a[i]/mx*100)}%;--c:${SC[k]}"></u><b>${a[i]}</b></i>`).join('')+'</div>'; }
+const sum3=(...L)=>{ const v=L.filter(Boolean); return v.length?[0,1,2].map(i=>Math.round(v.reduce((s,a)=>s+a[i],0)*10)/10):null; };
+const totSt=x=>sum3(x.sb,x.sr,x.sbt);
+function card(x){
+  const q=PH[x.n]||{}, g=v=>v===''?'—':v+' g';
+  const pc=(lab,p,w,t,sa,xt,nm)=>`<div class="pc">${img(p,'xs')}<span>${lab}</span><em class="pnm">${nm?esc(nm):'—'}</em><b>${g(w)}</b>${t?typ(t):(xt||'<span class="tp">&nbsp;</span>')}${bars(sa)}</div>`;
+  const T3=totSt(x), ex=[x.dash!==''?`Dash <b>${x.dash}</b>`:'',x.burst!==''?`Burst <b>${x.burst}</b>`:'',T3?`<em class="t3">Total <b>A ${T3[0]} · D ${T3[1]} · S ${T3[2]}</b></em>`:''].filter(Boolean).join('<span></span>');
+  return `<details><summary>${img(q.blade)}<div class="rm"><div class="pname">${x.nom?esc(x.nom):x.dn}${x._c?`<span class="qty" data-qb="${x._c}" ${x.q>1?'':'hidden'}>×${x.q}</span>`:''}</div>${x.nom?`<div class="mut pcl">${esc(x.dn)}</div>`:''}<div class="meta"><span class="badge" style="--bc:${LINE_COL[x.l]}">${x.l}</span>${typ(x.t)}<span class="tp">${x.ed==='tt'?'Takara Tomy':'Hasbro'}</span></div>${x.mc?`<div class="meta"><span class="mcb"><i style="background:${MCH[x.mc]||'var(--text)'}"></i>Metal Coat · ${mcL(x.mc)}${x.tg?' · '+x.tg.split(' ')[0]:''}</span></div>`:''}</div><div class="tot">${x.tot}<small>g</small></div></summary><div class="exp">${pc('Blade',q.blade,x.wb,x.bty,x.sb,'',x.b)}${pc('Ratchet',q.ratchet,x.wr,'',x.sr,x.h?`<span class="tp">Hauteur <b>${x.h}</b></span>`:'',x.r)}${pc('Bit',q.bit,x.wbt,x.t,x.sbt,'',x.bt)}${ex?`<div class="ex">${ex}</div>`:''}${x._c?`<div class="eact"><button class="chip dng" onclick="cuDel(this,${x._c})">Supprimer</button><button class="chip" onclick="tpForm(${x._c})">Modifier</button><div class="qst" role="group" aria-label="Exemplaires"><button class="chip sq" onclick="cuQty(${x._c},-1)" aria-label="Moins">−</button><b data-q="${x._c}">${x.q}</b><button class="chip sq" onclick="cuQty(${x._c},1)" aria-label="Plus">+</button></div></div>`:x._k?`<div class="eact"><button class="chip dng" onclick="bsDel(this,'${encodeURIComponent(x._k)}')">Supprimer</button></div>`:''}</div></details>`;
+}
+function partCard(i){
+  const bd=i.l?`<span class="badge" style="--bc:${LINE_COL[i.l]}">${i.l}</span>`:'';
+  return `<div class="rw">${img(i.img)}<div class="rm"><div class="pname">${i.n}</div><div class="meta">${bd}${typ(i.ty)}</div>${(i.s||i.ex)?`<div class="stl">${i.s?`A <b>${i.s[0]}</b> · D <b>${i.s[1]}</b> · S <b>${i.s[2]}</b>`:''}${i.s&&i.ex?' · ':''}${i.ex||''}</div>`:''}</div><div class="tot">${i.w}<small>g</small></div></div>`;
+}
+function group(key,g){ return `<div class="gh">${key==='type'?`<span class="dot" style="background:${TYPE[g]}"></span>`:''}${g}</div>`; }
+function collection(key){
+  const L=sortList(TF().filter(x=>(!st.mc||x.mc)&&hit(x.n+' '+x.nom+' '+x.l+' '+x.t+' '+x.tg)),key,st.desc,(x,k)=>k==='nom'?(x.nom||x.n):k==='poids'?x.tot:k==='ligne'?LINE_ORDER.indexOf(x.l):k==='type'?TYPE_ORDER.indexOf(x.t):((totSt(x)||[0,0,0])[SI[k]]));
+  let last=null,html='';
+  for(const x of L){
+    if(key==='ligne'||key==='type'){ const g=key==='ligne'?x.l:x.t; if(g!==last){ html+=group(key,g); last=g; } }
+    html+=card(x);
+  }
+  return '<div class="list">'+(html||'<div class="empty">'+(T.length?'Aucun résultat':'Aucune toupie pour l\'instant. Ajoute la première avec le bouton ci-dessus.')+'</div>')+'</div>';
+}
+function parts(key){
+  const L=sortList(partItems().filter(i=>hit(i.n)),key,st.desc,(x,k)=>k==='nom'?x.n:k==='type'?TYPE_ORDER.indexOf(x.ty):k==='haut'?(+x.h||0):k==='dash'?(+x.dash||0):k==='burst'?(+x.burst||0):k in SI?((x.s||[0,0,0])[SI[k]]):num(x.w));
+  let last=null,html='';
+  for(const i of L){
+    if(key==='type'&&i.ty!==last){ html+=group(key,i.ty); last=i.ty; }
+    html+=partCard(i);
+  }
+  return '<div class="list">'+(html||'<div class="empty">'+(T.length?'Aucun résultat':'Aucune toupie pour l\'instant. Ajoute la première avec le bouton ci-dessus.')+'</div>')+'</div>';
+}
+function renderList(){
+  if(st.tab!=='toupies') return;
+  const key=curKey();
+  document.getElementById('main').innerHTML=st.view==='collection'?collection(key):parts(key);
+}
+const BD=[[0,0,0],[1,0,0]], BN=['',''];
+var BP=null;
+function bpOpen(n,k){ BP={n,k,q:''}; let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  fmShown(f); bpDraw(); }
+function bpDraw(){ const f=document.getElementById('fm'); if(!f||!BP) return; const nm=[LT('Blade'),LT('Ratchet'),LT('Bit')][BP.k];
+  f.innerHTML=`<div class="fwrap pkw"><div class="fh"><h2>${nm}</h2><button class="chip sq" onclick="bpClose()" aria-label="Fermer">✕</button></div>
+    <label class="search pks">${IC.search}<input id="bp_q" type="search" placeholder="${LT('Chercher…')}" value="${esc(BP.q)}" oninput="bpQ(this.value)" autocomplete="off"></label>
+    <div id="bp_l">${bpList()}</div></div>`;
+  const e=document.getElementById('bp_q'); if(e&&!BP.q) setTimeout(()=>{ try{ e.focus({preventScroll:true}); }catch(x){} },60); }
+function bpQ(v){ BP.q=v; const l=document.getElementById('bp_l'); if(l) l.innerHTML=bpList(); }
+function bpClose(){ BP=null; fmClose(); }
+function bpList(){
+  const L=bdLists(), Ls=[L.bl,L.ra,L.bi][BP.k], no=L.nOwn[BP.k], q=BP.q.trim(), cur=BD[BP.n][BP.k];
+  const row=(o,i)=>`<button class="pkr${i===cur?' cur':''}" onclick="bpPick(${i})">${img(o.img,'sm')}<span class="pkn"><b>${esc(o.n)}</b><small>${o.ty?typ(o.ty):''}${o.w?' <i>'+o.w+' g</i>':''}</small></span></button>`;
+  const ok=o=>!q||pkOk(o.n,q), a=Ls.map((o,i)=>[o,i]).filter(x=>x[1]<no&&ok(x[0])), c=Ls.map((o,i)=>[o,i]).filter(x=>x[1]>=no&&ok(x[0]));
+  let h='';
+  if(a.length) h+=(c.length?`<div class="fs">${LT('Ma collection')}</div>`:'')+a.map(x=>row(x[0],x[1])).join('');
+  if(c.length) h+=(a.length?`<div class="fs">${LT('Catalogue')}</div>`:'')+c.map(x=>row(x[0],x[1])).join('');
+  return h||`<div class="mut note">${LT('Rien trouvé.')}</div>`;
+}
+var BFL=null;
+function bpPick(i){ if(!BP) return; BD[BP.n][BP.k]=i; BFL=[BP.n,BP.k]; bpClose(); draw(); void document.body.offsetHeight; setTimeout(()=>{ BFL=null; document.querySelectorAll('.bsb.bsel').forEach(e=>e.classList.remove('bsel')); },900); }
+function bdAsk(n){
+  const h=`<div class="fwrap"><div class="fh"><h2>${LT('Nom du build')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  <input class="nm" id="bdq" value="${esc(BN[n]||'')}" placeholder="${LT('Nom du build')}" aria-label="${LT('Nom du build')}" autocomplete="off" maxlength="40" onkeydown="if(event.key==='Enter'){event.preventDefault();bdSave(${n},document.getElementById('bdq_b'));}">
+  <div class="mut note bmsg" id="bdq_m"></div>
+  <button class="addb cat" id="bdq_b" onclick="bdSave(${n},this)">${LT('Enregistrer dans Mes toupies')}</button></div>`;
+  let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  f.innerHTML=h; fmShown(f);
+  setTimeout(()=>{ const e=document.getElementById('bdq'); if(e) e.focus(); },60);
+}
+async function bdSave(n,btn){
+  const L=bdLists(), B=BD[n], b=L.bl[B[0]], r=b.integ?null:L.ra[B[1]], t=L.bi[B[2]], msg=document.getElementById('bm'+n);
+  const say=m=>{ const d=document.getElementById('bdq_m'); const e=d||msg; if(e) e.textContent=m; };
+  const qi=document.getElementById('bdq'); if(qi) BN[n]=qi.value;
+  const nom=(BN[n]||'').trim();
+  if(!nom){ if(qi) qi.focus(); return say(LT('Donne un nom à ton build pour l\'enregistrer.')); }
+  if(!b||!t) return say(LT('Il manque une pièce.'));
+  const Tb=b.cat?null:T[b.i], Tr=r&&!r.cat?T[r.i]:null, Tt=t.cat?null:T[t.i];
+  const o={id:Date.now(),nom,
+    blade:b.cat?b.c.n:Tb.b, ligne:b.cat?b.c.l:Tb.l, typeBlade:b.cat?b.c.bt:Tb.bty,
+    typeToupie:(Tt&&Tt.t)||(t.cat&&t.ty)||(b.cat?b.tt:Tb.t), edition:b.cat?b.c.e:Tb.ed,
+    ratchet:r?(r.cat?r.c.n:Tr.r):'', bit:t.cat?t.c.n:Tt.bt,
+    poidsBlade:b.cat?b.c.w:Tb.wb, poidsRatchet:r?(r.cat?r.c.w:Tr.wr):'', poidsBit:t.cat?t.c.w:Tt.wbt};
+  if(r){ const h=r.cat?r.c.h:(Tr.h||hNom(Tr.r)); const hh=h||hNom(o.ratchet); if(hh) o.hauteurRatchet=+hh; }
+  if(Tt){ if(Tt.dash!=='') o.dashBit=+Tt.dash; if(Tt.burst!=='') o.burstBit=+Tt.burst; if(Tt.sbt) o.statsBit=Tt.sbt; }
+  if(Tb&&Tb.sb) o.statsBlade=Tb.sb; if(Tr&&Tr.sr) o.statsRatchet=Tr.sr;
+  const er=cErr(o); if(er.length) return say(LT(er[0]));
+  const nm=nmOf(o), dp=T.find(x=>x.n===nm);
+  if(dp) return say(LT('Tu as déjà cette toupie')+' : '+(dp.nom||dp.n)+'.');
+  if(btn) btn.disabled=true;
+  try{ for(const [f,k] of PHF){ const part=f==='photoBlade'?b:f==='photoRatchet'?r:t, src=f==='photoBlade'?Tb:f==='photoRatchet'?Tr:Tt;
+      if(part&&part.cat){ if(part.c.im) o[f]=part.c.im; continue; }
+      const pv=src&&src._p&&src._p[k]; if(!pv) continue; o[f]=isMk(pv)?await pStore(o.id,k,IM[pv]):pv; } }catch(e){}
+  const all=cLoad(); all.push(o);
+  if(!cSave(all)){ if(btn) btn.disabled=false; return say(LT('Pas assez de place pour enregistrer. Retire une photo ou une toupie et réessaie.')); }
+  try{ localStorage.setItem('arene_dirty',String(Date.now())); }catch(e){}
+  location.reload();
+}
+function bdLists(){
+  const P=x=>PH[x.n]||{};
+  const bl=T.map((x,i)=>({i,n:x.b,s:x.sb,w:x.wb,ty:x.bty,img:P(x).blade,integ:!x.r&&!x.sr}));
+  const ra=T.map((x,i)=>({x,i})).filter(o=>o.x.r).map(o=>({i:o.i,n:o.x.r,s:o.x.sr,w:o.x.wr,h:o.x.h,img:P(o.x).ratchet}));
+  const seen={},bi=[]; T.forEach((x,i)=>{ if(seen[x.bt]) return; seen[x.bt]=1; bi.push({i,n:x.bt,s:x.sbt,w:x.wbt,ty:x.t,dash:x.dash,burst:x.burst,img:P(x).bit}); });
+  const nOwn=[bl.length,ra.length,bi.length];
+  if(CAT.length){
+    const C=cptBuild(), sb={},sr={},si={};
+    bl.forEach(o=>sb[o.n]=1); ra.forEach(o=>sr[o.n]=1); bi.forEach(o=>si[o.n]=1);
+    Object.values(C.B).sort(cpSort).forEach(c=>{ if(sb[c.n]) return; sb[c.n]=1;
+      const integ=!CAT.some(x=>x.b===c.n&&x.e===c.e&&(x.r||x.bo));
+      const f=CAT.find(x=>x.b===c.n&&x.e===c.e);
+      if(c.im) IM[c.im]=c.im; bl.push({cat:1,c,n:c.n,w:c.w,ty:c.bt,img:c.im,integ,tt:f&&f.t}); });
+    Object.values(C.R).sort(cpSort).forEach(c=>{ if(sr[c.n]) return; sr[c.n]=1; if(c.im) IM[c.im]=c.im; ra.push({cat:1,c,n:c.n,w:c.w,h:c.h,img:c.im}); });
+    Object.values(C.I).sort(cpSort).forEach(c=>{ if(si[c.n]) return; si[c.n]=1; const f=CAT.find(x=>x.bi===c.n); if(c.im) IM[c.im]=c.im; bi.push({cat:1,c,n:c.n,w:c.w,ty:f&&f.t,dash:'',burst:'',img:c.im}); });
+  }
+  return {bl,ra,bi,nOwn};
+}
+function bdOne(n,L){
+  const {bl,ra,bi}=L, B=BD[n];
+  B[0]=Math.min(B[0],bl.length-1); B[1]=Math.min(B[1],ra.length-1); B[2]=Math.min(B[2],bi.length-1);
+  const b=bl[B[0]], integ=b.integ, r=integ?null:ra[B[1]], t=bi[B[2]];
+  const slot=(lab,o,k,dis)=>`<div class="bslot"><span class="sl">${lab}</span><button class="bsb${BFL&&BFL[0]===n&&BFL[1]===k?' bsel':''}" ${dis?'disabled':''} onclick="bpOpen(${n},${k})" aria-label="${lab} : ${o?esc(o.n):''}">${o?img(o.img,'sm'):'<div class="pimg sm"></div>'}<b>${dis?LT('Intégré'):esc(o.n)}</b></button></div>`;
+  const parts=[b,r,t].filter(Boolean);
+  const S3=sum3(b.s,r&&r.s,t.s);
+  const w=Math.round(parts.reduce((a,o)=>a+wnum(o.w),0)*10)/10;
+  const own=T.find(x=>x.b===b.n&&(x.r||'')===(r?r.n:'')&&x.bt===t.n);
+  const col=n?'var(--pink)':'var(--accent)';
+  const html=`<div class="pcard" style="--pc:${col}"><div class="bh"><div class="sl" style="color:${col}">${esc(b.n+' '+(r?r.n:'')+t.n)}</div><span class="bhb"><button class="chip" onclick="qrBuild(${n})">QR</button><button class="chip bsv" onclick="bdAsk(${n})">${LT('Enregistrer')}</button></span></div>
+    <div class="bgrid">${slot('Blade',b,0)}${slot('Ratchet',r,1,integ)}${slot('Bit',t,2)}</div>
+    <div class="mut note bmsg" id="bm${n}"></div></div>`;
+  return {html,nm:b.n,w,S:S3||[0,0,0],h:r&&r.h?+r.h:null,dash:t.dash!==''?+t.dash:null,burst:t.burst!==''?+t.burst:null};
+}
+function buildUI(){
+  const L=bdLists(), a=bdOne(0,L), b=bdOne(1,L);
+  const row=(lab,x,y,win,unit)=>{
+    if(x===null&&y===null) return '';
+    const f=v=>v===null?'—':(Math.round(v*10)/10)+(unit||'');
+    const d=(x!==null&&y!==null)?Math.round((y-x)*10)/10:null;
+    const ca=win&&d!==null&&d<0?' cw a':win&&d===0?' tie':'', cb=win&&d!==null&&d>0?' cw b':win&&d===0?' tie':'';
+    return `<div class="cr"><b class="${ca}">${f(x)}</b><span>${lab}${d?`<small>${d>0?'+':''}${d} pour ${esc(b.nm)}</small>`:''}</span><b class="${cb}">${f(y)}</b></div>`;
+  };
+  const rows=[row('Poids',a.w,b.w,true,' g'),...(a.S[0]+a.S[1]+a.S[2]+b.S[0]+b.S[1]+b.S[2]>0?[row('Attaque',a.S[0],b.S[0],true),row('Défense',a.S[1],b.S[1],true),row('Stamina',a.S[2],b.S[2],true)]:[]),row('Hauteur',a.h,b.h,false),row('Dash',a.dash,b.dash,true),row('Burst',a.burst,b.burst,true)].join('');
+  return a.html+b.html+`<div class="pcard cmp"><div class="sl">Comparatif</div><div class="ch"><span style="color:var(--pa)">${esc(a.nm)}</span><span style="color:var(--pink)">${esc(b.nm)}</span></div>${rows}</div>`
+    +`<div class="bfw"><button class="go" onclick="bfAsk()">Lancer un combat : ${esc(a.nm)} contre ${esc(b.nm)}</button><div class="mut note bfl">Attaque, Défense et Stamina n'apparaissent que si tu les as saisies : elles sont au dos des boîtes, à recopier à la main dans la fiche de la toupie (Modifier). <a href="#" onclick="st.view='collection';setTab('toupies');return false">Aller à mes toupies</a></div></div>`;
+}
+function bfAsk(){
+  const L=bdLists(), na=bdOne(0,L).nm, nb=bdOne(1,L).nm;
+  const h=`<div class="fwrap"><div class="fh"><h2>Combat : ${esc(na)} contre ${esc(nb)}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  <div class="fs">Premier à</div><div class="chips" id="bfp">${[3,4,5,7,10].map(v=>`<button class="chip ${st.m.target===v?'on':''}" onclick="bfPick(${v})">${v} points</button>`).join('')}</div>
+  <div class="fs">Série</div><div class="chips" id="bfb">${[[1,'Match unique'],[3,'BO3'],[5,'BO5'],[7,'BO7']].map(([v,l])=>`<button class="chip ${(st.m.bo||1)===v?'on':''}" onclick="bfBo(${v})">${l}</button>`).join('')}</div>
+  <button class="addb cat" onclick="bfGo()">Lancer le combat</button></div>`;
+  let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  f.innerHTML=h; fmShown(f);
+}
+function bfPick(v){ st.m.target=v; document.querySelectorAll('#bfp .chip').forEach(b=>b.classList.toggle('on',b.textContent.trim().indexOf(v+' ')===0)); }
+function bfBo(v){ st.m.bo=v; document.querySelectorAll('#bfb .chip').forEach((b,i)=>b.classList.toggle('on',[1,3,5,7][i]===v)); }
+function bfGo(){ st.m.rounds=0; fmClose(); buildFight(); }
+function buildFight(){
+  const L=bdLists(), biT=[], seen={}; T.forEach((x,i)=>{ if(seen[x.bt]) return; seen[x.bt]=1; biT.push(i); });
+  const slot=n=>{ const B=BD[n], integ=!!(L.bl[B[0]]&&L.bl[B[0]].integ); const r=integ?-1:(RA[B[1]]===undefined?-1:RA[B[1]]); return {mode:'custom',src:'own',stock:0,blade:B[0],ratchet:r,bit:biT[B[2]]===undefined?0:biT[B[2]]}; };
+  st.m.mode='simple'; st.m.p[0][0]=slot(0); st.m.p[1][0]=slot(1);
+  startMatch();
+}
+function draw(){
+  const h=document.getElementById('h'),sub=document.getElementById('sub'),c=document.getElementById('ctl'),m=document.getElementById('main');
+  sub.textContent='';
+  document.body.classList.toggle('ishome',st.tab==='home'); document.documentElement.classList.toggle('hmp',st.tab==='home');
+  if(st.tab!=='home'&&HM.iv){ clearInterval(HM.iv); HM.iv=0; }
+  if(st.tab==='home'){
+    c.innerHTML=''; m.innerHTML=homeUI(); homeStart();
+  }else if(st.tab==='build'){
+    h.textContent='Build'; sub.textContent='Compose deux builds et compare-les';
+    c.innerHTML=''; m.innerHTML=T.length?buildUI():emptyUI();
+  }else if(st.tab==='amis'){
+    h.textContent=LT('Amis'); sub.textContent=LT('Ajoute des potes et compare vos stats');
+    c.innerHTML=''; m.innerHTML=friendsPage();
+  }else if(st.tab==='profil'){
+    h.textContent='Profil'; sub.textContent='Ton nom, ton avatar et tes stats';
+    c.innerHTML=''; m.innerHTML='<div class="ops">'+pfUI()+'</div>';
+  }else if(st.tab==='opts'){
+    h.textContent='Options'; sub.textContent='Thème, fond et sauvegarde';
+    c.innerHTML=''; m.innerHTML=optsUI();
+  }else if(st.tab==='match'){
+    h.textContent='Match'; sub.textContent='Choisis deux toupies et lance le combat';
+    c.innerHTML=''; m.innerHTML=T.length?matchUI():emptyUI();
+  }else{
+    const col=st.view==='collection', TT=TF(), nR=TT.filter(x=>x.r).length;
+    h.textContent=col?'Mes toupies':'Mes pièces';
+    const frame='<div class="frame">'+[['collection','Collection',TT.length],['parts','Parts',TT.length*2+nR]].map(([k,l,n])=>`<button class="${st.view===k?'on':''}" onclick="setView('${k}')"><span>${l}</span><small>${n}</small></button>`).join('')+'</div>';
+    const key=curKey();
+    const bar=`<div class="bar"><label class="search">${IC.search}<input id="q" type="search" placeholder="Chercher…" value="${esc(st.q)}" oninput="setQ(this.value)" autocomplete="off"></label><select id="k" aria-label="Trier par" onchange="setKey(this.value)">${keysFor().map(([k,l])=>`<option value="${k}" ${k===key?'selected':''}>${l}</option>`).join('')}</select><button id="fl" class="chip fl" onclick="flip()" aria-label="Inverser l’ordre">${flipLbl()}</button></div>`;
+    const chips=col?'':'<div class="chips">'+[['blades','Blades',TT.length],['ratchets','Ratchets',nR],['bits','Bits',TT.length]].map(([k,l,n])=>`<button class="chip ${st.cat===k?'on':''}" onclick="setCat('${k}')"><span>${l}</span><small> · ${n}</small></button>`).join('')+'</div>';
+    const eds='<div class="chips ed">'+[['all','Tous',T.length],['hasbro','Hasbro',T.filter(x=>x.ed==='hasbro').length],['tt','Takara Tomy',T.filter(x=>x.ed==='tt').length]].map(([k,l,n])=>`<button class="chip ${st.ed===k?'on':''}" onclick="setEd('${k}')"><span>${l}</span><small> · ${n}</small></button>`).join('')+(T.some(x=>x.mc)?`<button class="chip ${st.mc?'on':''}" onclick="setMc()"><span>Metal Coat</span><small> · ${T.filter(x=>x.mc).length}</small></button>`:'')+'</div>';
+    c.innerHTML=frame+bar+eds+chips+(col?'<button class="addb" onclick="addOpen()">+ Ajouter une toupie</button>':'');
+    renderList();
+  }
+  document.getElementById('tabs').innerHTML=[['home','Accueil',IC.home],['toupies','Toupies',IC.grid],['build','Build',IC.build],['match','Match',IC.bolt],['opts','Options',IC.opts]].map(([k,l,i])=>`<button class="${st.tab===k?'on':''}" onclick="setTab('${k}')">${i}<span>${l}</span></button>`).join('');
+  homeFit();
+  a11yPass();
+}
+const wnum=v=>(typeof v==='string'&&v.includes('-'))?v.split('-').reduce((a,b)=>a+ +b,0)/2:num(v);
+const RA=T.map((x,i)=>x.r?i:-1).filter(i=>i>=0);
+const mk=()=>({mode:'none'});
+/* ===== Profil du joueur (propriétaire de l'appareil) ===== */
+const PKEY='arene_profil';
+let PRF=(()=>{ let r={}; try{ r=JSON.parse(localStorage.getItem(PKEY)||'{}')||{}; }catch(e){} if(typeof r!=='object'||Array.isArray(r)) r={}; return {n:ss(r.n,20),hn:ss(r.hn,20),id:sid(r.id),al:Array.isArray(r.al)?r.al.slice(0,20).map(x=>ss(x,20)).filter(Boolean):[],rst:nn(r.rst),av:/^a(0[1-9]|1[0-6])$/.test(r.av)?r.av:''}; })();
+function pfSave(){ try{ localStorage.setItem(PKEY,JSON.stringify(PRF)); }catch(e){} }
+if(!PRF.id){ try{ PRF.id=Array.from(crypto.getRandomValues(new Uint8Array(7))).map(b=>b.toString(36).padStart(2,'0')).join(''); }catch(e){ PRF.id=Math.random().toString(36).slice(2,12); } pfSave(); }
+const nz=s=>String(s||'').trim().toLowerCase();
+function pfReset(b){
+  if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent=LT('Confirmer ?'); setTimeout(()=>{ if(b.isConnected){ b.dataset.ok=''; b.textContent=LT('Remettre mes stats à zéro'); } },3500); return; }
+  const L=hLoad(); L.forEach(r=>{ r.me=0; }); hSave(L); PRF.rst=Date.now(); pfSave(); draw();
+}
+function pfCommit(){
+  const nn=PRF.n||'', old=PRF.hn||'';
+  if(nn&&old&&nn!==old){ const L=hLoad(); L.forEach(r=>{ if(r.me&&r.n&&r.n[0]===old) r.n[0]=nn; }); hSave(L); }
+  if(nn&&nn!==old){ PRF.hn=nn; pfSave(); }
+}
+function pfSet(v){ const was=st.m.me||!st.m.names[0]||st.m.names[0]===LT('Joueur 1'); PRF.n=String(v||'').trim().slice(0,16); pfSave(); if(was){ st.m.names[0]=PRF.n||LT('Joueur 1'); st.m.me=!!PRF.n; } }
+function pfStats(L0,cat){
+  const L=(L0||hLoad()).filter(r=>r.me&&(!cat||r.cat===cat)); let w=0,l=0,d=0; const use={};
+  L.forEach(r=>{ if(r.w===0) w++; else if(r.w===1) l++; else d++; (r.b&&r.b[0]||[]).forEach(n=>{ if(n) use[n]=(use[n]||0)+1; }); });
+  const top=Object.entries(use).sort((a,b)=>b[1]-a[1])[0];
+  return {n:L.length,w,l,d,top:top?top[0]:'',topn:top?top[1]:0};
+}
+const stShare=()=>[undefined,'simple','tournoi'].map(c=>{ const S=pfStats(null,c); return [S.n,S.w,S.l,S.top,S.topn]; });
+let PFC='';
+const catSeg=(cur,fn)=>'<div class="frame f3 cseg">'+[['','Tout'],['simple','Simple'],['tournoi','3v3']].map(([v,l])=>`<button class="${cur===v?'on':''}" onclick="${fn}'${v}')"><span>${l}</span></button>`).join('')+'</div>';
+function pfCat(v){ PFC=v; draw(); }
+const AVN=16, avSrc=a=>'avatars/'+a+'.webp';
+function avClose(){ const e=document.getElementById('avp'); if(e) e.remove(); }
+function pfAv(a){ PRF.av=PRF.av===a?'':a; pfSave(); avClose(); draw(); }
+function avPick(){ avClose(); let o=''; for(let i=1;i<=AVN;i++){ const a='a'+String(i).padStart(2,'0'); o+=`<button class="avo${PRF.av===a?' on':''}" onclick="pfAv('${a}')" aria-pressed="${PRF.av===a}" aria-label="Avatar ${i}"><img src="${avSrc(a)}" alt=""></button>`; }
+  const d=document.createElement('div'); d.id='avp'; d.className='wlc'; d.setAttribute('role','dialog'); d.setAttribute('aria-modal','true'); d.setAttribute('aria-label',LT('Avatar')); d.onclick=e=>{ if(e.target===d) avClose(); };
+  d.innerHTML=`<div class="avbox"><h2>${LT('Avatar')}</h2><div class="avg">${o}</div>${PRF.av?`<button class="lnk" style="background:none;border:0;color:var(--text);font:inherit;font-size:var(--fs-sm);text-decoration:underline;cursor:pointer" onclick="pfAv('${PRF.av}')">${LT('Enlever l\'avatar')}</button>`:''}<button class="chip" onclick="avClose()">${LT('Fermer')}</button></div>`;
+  document.body.appendChild(d); }
+function pfAvUI(){ const nm=(PRF.n||'?').trim(); return `<div class="avrow"><span class="avcur">${PRF.av?`<img src="${avSrc(PRF.av)}" alt="">`:`<i>${esc((nm[0]||'?').toUpperCase())}</i>`}</span><button class="chip" onclick="avPick()">${LT('Changer l\'avatar')}</button></div>`; }
+function pfUI(){
+  const S=pfStats(null,PFC||undefined),pct=S.n?Math.round(100*S.w/S.n):0,c=(v,l)=>`<div class="pfc"><b>${v}</b><span>${l}</span></div>`;
+  return '<div class="optl">Mon profil</div><div class="pcard pf" style="--pc:var(--pa)"><input class="nm" id="pfn" value="'+esc(PRF.n||'')+'" placeholder="Ton nom" maxlength="16" oninput="pfSet(this.value)" onchange="pfCommit()" aria-label="Ton nom">'+pfAvUI()
+   +(PRF.n?catSeg(PFC,'pfCat(')+'<div class="pfg">'+c(S.n,'Matchs')+c(S.w,'Victoires')+c(S.l,'Défaites')+c(S.n?pct+'%':'—','Réussite')+'</div>'+'<div class="pfc pft"><span>Toupie la plus jouée</span><b>'+(S.top?esc(S.top)+' <small>×'+S.topn+'</small>':'—')+'</b></div>'+(S.n?'<button class="chip dng pfrs" onclick="pfReset(this)">Remettre mes stats à zéro</button>':'<div class="mut note">Aucun match compté pour l\'instant. Tu es toujours le joueur 1 par défaut.</div>')
+    :'<div class="mut note">Entre ton nom : tu seras le joueur 1 par défaut et tes stats seront comptées.</div>')+'</div>';
+}
+function mName(p,v){
+  st.m.names[p]=v; if(st.m.ids[p]){ st.m.ids[p]=''; }
+  if(p===0&&PRF.n){ const me=v.trim()===PRF.n; if(me!==!!st.m.me) st.m.me=me; }
+  noteRefresh();
+}
+function frChip(p){ const id=st.m.ids[p], f=id&&fLoad()[id]; return f?' <button class="chip" onclick="FRL=false;frOpen(\''+id+'\')">Profil de '+esc(f.n)+'</button>':''; }
+function meNoteHTML(){
+  if(!PRF.n) return frChip(0);
+  return (st.m.me?'<span class="mut">Tes stats sont comptées.</span>':'<span class="mut">Stats non comptées (invité).</span> <button class="chip" onclick="mMe()">Revenir à '+esc(PRF.n)+'</button>')+frChip(0);
+}
+function noteRefresh(){ const a=document.getElementById('meNote'); if(a) a.innerHTML=meNoteHTML(); const b=document.getElementById('fnote1'); if(b) b.innerHTML=frChip(1); }
+function mMe(){ st.m.me=true; st.m.names[0]=PRF.n; st.m.ids[0]=''; drawMatch(); }
+st.m={mode:'simple',target:4,bo:1,rounds:0,names:[PRF.n||LT('Joueur 1'),LT('Joueur 2')],me:!!PRF.n,ids:['',''],p:[[mk(),mk(),mk()],[mk(),mk(),mk()]]};
+const PCOL=['var(--pa)','var(--pink)'];
+let G=null,tmr=null;
+
+function resolve(c){
+  if(!c||c.mode==='none') return {name:'',blade:'—',img:'',w:'',ty:'',pc:[]};
+  if(c.src==='cat'&&typeof CAT!=='undefined'&&CAT.length){
+    const none={name:LT('Choisir dans le catalogue…'),blade:'—',img:'',w:'',ty:'',pc:[]};
+    if(c.mode==='custom'){ const P=cptBuild(), b=P.B[c.cb], r=P.R[c.cr], i=P.I[c.ci]; if(!b||!i) return none;
+      if(b.im) IM[b.im]=b.im; return {pc:[b.n,r?r.n:'',i.n],name:b.n+' '+(r?r.n:'')+i.n,blade:b.n,img:b.im||'',w:Math.round(((+b.w||0)+(r?+r.w||0:0)+(+i.w||0))*10)/10,ty:normT(b.bt)}; }
+    const x=c.cg>=0?CAT[c.cg]:null; if(!x) return none;
+    if(x.ib) IM[x.ib]=x.ib; return {pc:[x.b,x.r||'',x.bi||''],name:x.n,blade:x.b,img:x.ib||'',w:Math.round(((+x.wb||0)+(+x.wr||0)+(+x.wbt||0))*10)/10,ty:x.t};
+  }
+  if(c.mode==='stock'){ const x=T[c.stock],ph=PH[x.n]||{}; return {pc:[x.b,x.r||'',x.bt||''],name:x.nom||x.n,blade:x.b,img:ph.blade,w:x.tot,ty:x.t}; }
+  const bl=T[c.blade],ra=c.ratchet>=0?T[c.ratchet]:null,bi=T[c.bit],ph=PH[bl.n]||{};
+  const w=wnum(bl.wb)+(ra?wnum(ra.wr):0)+wnum(bi.wbt);
+  return {pc:[bl.b,ra?ra.r:'',bi.bt],name:bl.b+' '+(ra?ra.r:'')+bi.bt,blade:bl.b,img:ph.blade,w:Math.round(w*10)/10,ty:bl.bty};
+}
+function opt(list,sel){ return list.map(([v,l])=>`<option value="${v}" ${v==sel?'selected':''}>${l}</option>`).join(''); }
+function drawMatch(){ document.getElementById('main').innerHTML=T.length?matchUI():emptyUI(); }
+/* ===== Partage par QR (toupie ou deck) + réception ===== */
+const QRB='https://bqni.github.io/beybey/';
+const LIBS={};
+function libLoad(src,test){ if(test()) return Promise.resolve(true); return LIBS[src]||(LIBS[src]=new Promise(res=>{ const e=document.createElement('script'); e.src=src; e.onload=()=>res(test()); e.onerror=()=>{ LIBS[src]=null; res(false); }; document.head.appendChild(e); })); }
+const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const b64d=s=>{ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4) s+='='; return decodeURIComponent(escape(atob(s))); };
+const edS=e=>e==='tt'?'t':'h';
+function slotDesc(c){
+  if(!c||c.mode==='none') return null;
+  if(c.src==='cat'){
+    if(c.mode==='custom'){ const b=cptBuild().B[c.cb]; return b&&c.ci?[edS(b.e),b.n,c.cr||'',c.ci]:null; }
+    const x=c.cg>=0?CAT[c.cg]:null; return x?[edS(x.e),x.b,x.r||'',x.bi||'']:null;
+  }
+  if(c.mode==='stock'){ const x=T[c.stock]; return x?[edS(x.ed),x.b,x.r||'',x.bt]:null; }
+  const bl=T[c.blade],ra=c.ratchet>=0?T[c.ratchet]:null,bi=T[c.bit];
+  return bl&&bi?[edS(bl.ed),bl.b,ra?ra.r:'',bi.bt]:null;
+}
+function descSlot(d){
+  if(!Array.isArray(d)||!CAT.length) return null; const P=cptBuild(), k=(d[0]==='t'?'tt':'hasbro')+'|'+d[1];
+  let b=P.B[k]; if(!b) b=Object.values(P.B).find(y=>y.n===d[1]); if(!b||!P.I[d[3]]||(d[2]&&!P.R[d[2]])) return null;
+  return {mode:'custom',src:'cat',stock:0,blade:0,ratchet:-1,bit:0,cg:-1,cb:b.k,cr:d[2]||'',ci:d[3]};
+}
+function shOpen(h){ let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); } f.innerHTML=h; fmShown(f); }
+function shMsg(t,m){ shOpen(`<div class="fwrap"><div class="fh"><h2>${t}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div><div class="fhelp">${m}</div><div class="fact"><button class="go sm" onclick="fmClose()">OK</button></div></div>`); }
+let QRU='';
+async function qrShow(list){
+  if(!list.length&&!PRF.n) return shMsg(LT('Mon QR'),LT('Ajoute ton nom dans Profil pour partager ta fiche.'));
+  if(list.some(d=>!d)) return shMsg(LT('Partager'),LT('Choisis d\'abord une toupie complète.'));
+  if(list.some(d=>!descSlot(d))) return shMsg(LT('Partager'),LT('Cette toupie contient une pièce absente du catalogue : elle ne peut pas encore être partagée par QR.'));
+  await libLoad('lib/qrcode.js',()=>typeof qrcode==='function');
+  QRU=QRB+'#s='+b64e(JSON.stringify({v:1,n:PRF.n||'',i:PRF.id,a:avOk(PRF.av)||undefined,st:stShare(),t:list}));
+  let svg=''; try{ const q=qrcode(0,'L'); q.addData(QRU); q.make(); svg=q.createSvgTag({cellSize:4,margin:0,scalable:true}); }catch(e){ svg=''; }
+  if(!svg) return shMsg(LT('Partager'),LT('Impossible de créer le QR sur cet appareil.'));
+  const rows=list.map(d=>{ const r=resolve(descSlot(d)); return `<div class="rcr">${img(r.img,'sm')}<div><b>${esc(r.name)}</b><div class="mut">${r.w} g</div></div></div>`; }).join('');
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${!list.length?LT('Ma fiche ami'):list.length>1?LT('Partager mon deck'):LT('Partager ma toupie')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="qrbox" role="img" aria-label="QR code">${svg}</div>
+    <div class="mut note qrn">${!list.length?LT('Ton ami ouvre Beybey, va dans Amis (depuis l\'accueil) et touche Scanner. Il reçoit ton nom et tes stats.'):LT('Ton ami ouvre Beybey, va dans Match et touche Scanner.')}${PRF.n?'':' '+LT('Ajoute ton nom dans Profil pour qu\'il s\'affiche chez lui.')}</div>
+    <div class="rcl">${rows}</div>
+    <div class="fact"><button class="chip" onclick="qrSend()">${LT('Envoyer le lien')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div></div>`);
+}
+function qrSend(){ try{ if(navigator.share){ navigator.share({title:'Beybey',url:QRU}).catch(()=>{}); return; } navigator.clipboard.writeText(QRU).then(()=>shMsg(LT('Lien copié'),LT('Colle-le dans un message.'))); }catch(e){} }
+function qrSlots(p){ const n=st.m.mode==='tournoi'?3:1; qrShow([...Array(n).keys()].map(k=>slotDesc(st.m.p[p][k]))); }
+function qrBuild(n){
+  const L=bdLists(),B=BD[n],b=L.bl[B[0]],r=b&&!b.integ?L.ra[B[1]]:null,t=L.bi[B[2]]; if(!b||!t) return;
+  qrShow([[edS(b.cat?b.c.e:T[b.i].ed),b.cat?b.c.n:T[b.i].b,r?(r.cat?r.c.n:T[r.i].r):'',t.cat?t.c.n:T[t.i].bt]]);
+}
+/* scanner */
+let SCN=null;
+function scStop(){ if(!SCN) return; clearTimeout(SCN.t); try{ SCN.s&&SCN.s.getTracks().forEach(t=>t.stop()); }catch(e){} SCN=null; }
+async function scOpen(p){
+  scStop(); SCN={p};
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Scanner un QR')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="scw"><video id="scv" playsinline muted autoplay></video></div><div class="mut note" id="scm" aria-live="polite">${LT('Vise le QR de ton ami.')}</div></div>`);
+  const m=t=>{ const e=document.getElementById('scm'); if(e) e.textContent=t; };
+  if(!(await libLoad('lib/jsQR.js',()=>typeof jsQR==='function'))) return m(LT('Impossible de charger le lecteur de QR (connexion ?).'));
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) return m(LT('La caméra n\'est pas disponible ici.'));
+  try{ const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false}); if(!SCN){ s.getTracks().forEach(t=>t.stop()); return; } SCN.s=s;
+    const v=document.getElementById('scv'); v.srcObject=s; await v.play(); const cv=document.createElement('canvas'), cx=cv.getContext('2d',{willReadFrequently:true});
+    const tick=()=>{ if(!SCN) return;
+      if(v.videoWidth){ const k=Math.min(1,520/v.videoWidth); cv.width=Math.round(v.videoWidth*k); cv.height=Math.round(v.videoHeight*k); cx.drawImage(v,0,0,cv.width,cv.height);
+        const d=cx.getImageData(0,0,cv.width,cv.height), r=jsQR(d.data,cv.width,cv.height,{inversionAttempts:'dontInvert'});
+        const mm=r&&r.data&&r.data.match(/#([sr])=([A-Za-z0-9_-]+)/);
+        if(mm){ const p=SCN.p; scStop(); if(mm[1]==='r') rrOpen(mm[2]); else rcOpen(mm[2],p); return; } }
+      SCN.t=setTimeout(tick,120); };
+    tick();
+  }catch(e){ m(LT('Caméra refusée. Autorise-la dans les réglages de l\'iPhone pour scanner.')); }
+}
+/* réception */
+let RC=null;
+function rcOpen(code,p){
+  let d; try{ d=JSON.parse(b64d(code)); }catch(e){ return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.')); }
+  if(!d||typeof d!=='object') return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.'));
+  if(sid(d.i)&&(p===-1||!(Array.isArray(d.t)&&d.t.length))) return frRecv(d);
+  let slots; try{ slots=(Array.isArray(d.t)?d.t:[]).slice(0,3).map(descSlot); }catch(e){ slots=[]; }
+  if(!slots.length||slots.some(x=>!x)) return shMsg(LT('QR non reconnu'),LT('Une pièce de cette toupie est absente de ton catalogue.'));
+  const from=ss(d.n,20).trim()||LT('Invité'); RC={from,slots,p,id:sid(d.i),st:stClean(d.st),av:avOk(d.a)};
+  const rows=slots.map(sl=>{ const r=resolve(sl); return `<div class="rcr">${img(r.img,'sm')}<div><b>${esc(r.name)}</b><div class="mut">${r.w} g</div></div></div>`; }).join('');
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${slots.length>1?LT('Deck reçu'):LT('Toupie reçue')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="fhelp">${LT('De')} <b>${esc(from)}</b></div><div class="rcl">${rows}</div>
+    <div class="mut note">${LT('« Jouer avec » ne touche pas à ta collection ni à tes stats.')}</div>
+    <div class="fact"><button class="go sm" onclick="rcPlay()">${LT('Jouer avec')}</button><button class="chip" onclick="rcAdd(this)">${LT('Ajouter à ma collection')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
+}
+function frRecv(d){
+  const id=sid(d.i), nm=ss(d.n,20).trim()||LT('Invité'), S=stClean(d.st), g=S&&S[0];
+  if(id===PRF.id) return shMsg(LT('Ma fiche ami'),LT('C\'est ta propre fiche.'));
+  const had=!!fLoad()[id]; fUpsert(id,nm,S,avOk(d.a));
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Ami ajouté')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="fhelp">${favH({n:nm,av:avOk(d.a)},'')} <b>${esc(nm)}</b>${g?' · '+(g[0]||0)+' '+LT('matchs')+', '+(g[1]||0)+' '+LT('victoires'):''}</div>
+    <div class="mut note">${had?LT('Sa fiche est mise à jour.'):LT('Il est dans ta liste d\'amis. Tu peux lui ajouter une note.')}</div>
+    <div class="fact"><button class="go sm" onclick="frOpen('${id}')">${LT('Voir la fiche')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div></div>`);
+  if(st.tab==='opts'||st.tab==='amis') draw(); else if(st.tab==='match') drawMatch();
+}
+function rcPlay(){
+  const p=RC.p===undefined?1:RC.p, M=st.m; if(RC.slots.length>1) M.mode='tournoi';
+  const n=M.mode==='tournoi'?3:1;
+  if(RC.slots.length>1||n===1) RC.slots.slice(0,n).forEach((s,k)=>{ M.p[p][k]=s; });
+  else { let k=M.p[p].findIndex(x=>!x||x.mode==='none'); if(k<0) k=0; M.p[p][k]=RC.slots[0]; }
+  M.names[p]=RC.from; M.ids[p]=RC.id||''; if(RC.id) fUpsert(RC.id,RC.from,RC.st,RC.av); if(p===0) M.me=(RC.id?RC.id===PRF.id:RC.from===PRF.n);
+  fmClose(); if(st.tab!=='match') setTab('match'); else drawMatch();
+}
+function rcAdd(btn){
+  const P=cptBuild(), all=cLoad(), have=new Set(T.map(x=>x.n)), say=t=>{ const e=document.getElementById('rcm'); if(e) e.textContent=t; }; let add=0;
+  RC.slots.forEach((s,k)=>{
+    const b=P.B[s.cb], r=s.cr?P.R[s.cr]:null, i=P.I[s.ci], f=CAT.find(x=>x.bi===i.n);
+    const o={id:Date.now()+k,nom:'',blade:b.n,ligne:b.l,typeBlade:b.bt,typeToupie:(f&&f.t)||b.bt,edition:b.e,ratchet:r?r.n:'',bit:i.n,poidsBlade:b.w,poidsRatchet:r?r.w:'',poidsBit:i.w};
+    if(r&&r.h) o.hauteurRatchet=+r.h; if(b.im) o.photoBlade=b.im; if(r&&r.im) o.photoRatchet=r.im; if(i.im) o.photoBit=i.im;
+    if(cErr(o).length) return; const nm=nmOf(o); if(have.has(nm)) return; have.add(nm); all.push(o); add++; });
+  if(!add) return say(LT('Tu as déjà tout ça dans ta collection.'));
+  if(!cSave(all)) return say(LT('Pas assez de place pour enregistrer.'));
+  btn.disabled=true; say(LT('Ajouté à ta collection.')); setTimeout(()=>location.reload(),700);
+}
+window.addEventListener('load',()=>{ const k=location.hash.slice(1,3); if(k==='s='||k==='r='){ const c=location.hash.slice(3); try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} setTimeout(()=>k==='r='?rrOpen(c):rcOpen(c),400); } });
+/* ===== Amis ===== */
+const FKEY='arene_amis';
+function fLoad(){ try{ const F=JSON.parse(localStorage.getItem(FKEY)||'{}')||{}, O={}; if(typeof F!=='object'||Array.isArray(F)) return {}; for(const k in F){ const i=sid(k); if(i&&i===k){ const f=fClean(F[k],i); if(f) O[i]=f; } } return O; }catch(e){ return {}; } }
+function fSave(o){ try{ localStorage.setItem(FKEY,JSON.stringify(o)); }catch(e){} }
+function fUpsert(id,n,sts,av){ id=sid(id); if(!id||id===PRF.id) return; const F=fLoad(), f=F[id]||{id,n:'',note:''}; if(ss(n,20)) f.n=ss(n,20); if(av!==undefined){ const a=avOk(av); if(a) f.av=a; else delete f.av; } const c=stClean(sts); if(c){ f.st=c; f.at=Date.now(); } F[id]=f; fSave(F); }
+function friendsPage(q){
+  FRL=false; q=q||''; const F=Object.values(fLoad()).sort((a,b)=>String(a.n).localeCompare(b.n)), all=F.length;
+  const btns='<div class="frame"><button onclick="qrShow([])"><span>'+LT('Code')+'</span></button><button onclick="scOpen(-1)"><span>'+LT('Scanner')+'</span></button></div>';
+  if(!all) return '<div class="ops frp"><div class="pcard frempty"><b>'+LT('Pas encore d\'amis')+'</b><p class="mut">'+LT('Pour ajouter un pote, scanne son code QR. Il peut l\'afficher avec le bouton Code, et toi tu peux montrer le tien de la même façon.')+'</p></div>'+btns+'</div>';
+  const L=q?F.filter(f=>nz(f.n+' '+(f.note||'')).includes(nz(q))):F;
+  return '<div class="ops frp">'+btns+(all>6?'<input class="nm frn" id="frq" value="'+esc(q)+'" placeholder="'+LT('Chercher un ami…')+'" oninput="frSearch(this.value)" aria-label="'+LT('Chercher')+'">':'')+'<div class="optl">'+LT('Amis')+' ('+all+')</div><div class="flist pcard" id="frl">'+frRows(L)+'</div></div>';
+}
+const favH=(f,c)=>`<span class="fav ${c||''}">${f.av?`<img src="${avSrc(f.av)}" alt="">`:`<i>${esc(((f.n||'?').trim()[0]||'?').toUpperCase())}</i>`}</span>`;
+function frRows(L){ return L.map(f=>`<button class="frow" onclick="frOpen('${f.id}')">${favH(f)}<span class="frt"><b>${esc(f.n)}</b>${f.note?`<span class="mut">${esc(f.note)}</span>`:''}</span></button>`).join('')||`<div class="mut note">${LT('Aucun résultat')}</div>`; }
+function frSearch(q){ const F=Object.values(fLoad()).sort((a,b)=>String(a.n).localeCompare(b.n)); document.getElementById('frl').innerHTML=frRows(q?F.filter(f=>nz(f.n+' '+(f.note||'')).includes(nz(q))):F); }
+let FRL=false;
+function frList(q){
+  FRL=true; q=q||''; const F=Object.values(fLoad()).sort((a,b)=>String(a.n).localeCompare(b.n)), all=F.length;
+  const L=q?F.filter(f=>nz(f.n+' '+(f.note||'')).includes(nz(q))):F;
+  shOpen(`<div class="fwrap hall"><div class="fh"><h2>${LT('Amis')} (${all})</h2><button class="chip sq" onclick="FRL=false;fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="frame"><button onclick="scOpen(-1)"><span>${LT('Scanner')}</span></button><button onclick="qrShow([])"><span>${LT('Mon QR')}</span></button></div>
+    ${all>6?`<input class="nm frn" id="frq" value="${esc(q)}" placeholder="${LT('Chercher un ami…')}" oninput="frList(this.value)" aria-label="${LT('Chercher')}">`:''}
+    <div class="hscroll"><div class="flist pcard">${L.map(f=>`<button class="frow" onclick="frOpen('${f.id}')"><b>${esc(f.n)}</b>${f.note?`<span class="mut">${esc(f.note)}</span>`:''}</button>`).join('')||`<div class="mut note">${LT('Aucun résultat')}</div>`}</div></div></div>`);
+  if(q){ const e=document.getElementById('frq'); if(e){ e.focus(); e.setSelectionRange(q.length,q.length); } }
+}
+let FRC='';
+function frCat(id,v){ FRC=v; frOpen(id); }
+function frH2H(f){
+  const L=hLoad().filter(r=>r.me&&(!FRC||r.cat===FRC)&&((r.ids&&r.ids[1])?r.ids[1]===f.id:nz(r.n[1])===nz(f.n))); let w=0,l=0;
+  L.forEach(r=>{ if(r.w===0) w++; else if(r.w===1) l++; }); return {n:L.length,w,l};
+}
+function frOpen(id){
+  const f=fLoad()[id]; if(!f) return; const H=frH2H(f), S0=f.st, S=S0&&(Array.isArray(S0[0])?S0[FRC==='simple'?1:FRC==='tournoi'?2:0]:(FRC?null:S0)), c=(v,l)=>`<div class="pfc"><b>${v}</b><span>${l}</span></div>`;
+  const when=f.at?new Date(f.at).toLocaleDateString(LOC,{day:'numeric',month:'short'}):'';
+  shOpen(`<div class="fwrap"><div class="fh"><h2 class="fht">${favH(f,'big')}<span>${esc(f.n)}</span></h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <input class="nm frn" id="frn" value="${esc(f.note||'')}" maxlength="60" placeholder="${LT('Note (ex. : mon pote du club)')}" oninput="frNote('${id}',this.value)" aria-label="${LT('Note')}">
+    ${catSeg(FRC,`frCat('${id}',`)}<div class="optl" style="padding:0">${LT('Toi contre')} ${esc(f.n)}</div>
+    <div class="pfg">${c(H.n,LT('Matchs'))}${c(H.w,LT('Victoires'))}${c(H.l,LT('Défaites'))}${c(H.n?Math.round(100*H.w/H.n)+'%':'—',LT('Réussite'))}</div>
+    ${S?`<div class="optl" style="padding:0">${LT('Ses stats')}${when?' · '+LT('au scan du')+' '+when:''}</div><div class="pfg">${c(S[0]||0,LT('Matchs'))}${c(S[1]||0,LT('Victoires'))}${c(S[2]||0,LT('Défaites'))}${c(S[0]?Math.round(100*S[1]/S[0])+'%':'—',LT('Réussite'))}</div>${S[3]?`<div class="mut note">${LT('Toupie la plus jouée')} : <b>${esc(S[3])}</b> ×${S[4]||0}</div>`:''}`:`<div class="mut note">${LT('Scanne sa toupie pour voir ses stats.')}</div>`}
+    <div class="fact"><button class="chip dng" onclick="frDel(this,'${id}')">${LT('Retirer')}</button><button class="chip" onclick="FRL?frList():fmClose()">${LT(FRL?'Retour':'Fermer')}</button></div></div>`);
+}
+function frNote(id,v){ const F=fLoad(); if(F[id]){ F[id].note=String(v).slice(0,60); fSave(F); } }
+function frDel(b,id){  if(b.dataset.ok!=='1'){ b.dataset.ok='1'; b.textContent=LT('Confirmer ?'); setTimeout(()=>{ if(b.isConnected){ b.dataset.ok=''; b.textContent=LT('Retirer'); } },3500); return; } const F=fLoad(); delete F[id]; fSave(F); if(FRL&&Object.keys(F).length){ frList(); } else { FRL=false; fmClose(); } if(st.tab==='opts'||st.tab==='amis') draw(); else if(st.tab==='match') drawMatch(); }
+
+/* ===== Partage des résultats d'une session (un seul code, plusieurs joueurs) ===== */
+const u8b64=u=>{ let s=''; u.forEach(c=>{ s+=String.fromCharCode(c); }); return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); };
+const b64u8=s=>{ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4) s+='='; return Uint8Array.from(atob(s),c=>c.charCodeAt(0)); };
+async function packJ(o){ const j=JSON.stringify(o); try{ if(typeof CompressionStream==='function'){ const z=new Blob([j]).stream().pipeThrough(new CompressionStream('deflate-raw')); return 'z'+u8b64(new Uint8Array(await new Response(z).arrayBuffer())); } }catch(e){} return 'p'+b64e(j); }
+async function unpackJ(c){ try{ if(typeof c!=='string'||c.length>20000) return null; if(c[0]==='z'){ const z=new Blob([b64u8(c.slice(1))]).stream().pipeThrough(new DecompressionStream('deflate-raw')), rd=z.getReader(), dec=new TextDecoder(); let out='',n=0; for(;;){ const {done,value}=await rd.read(); if(done) break; n+=value.length; if(n>262144){ rd.cancel(); return null; } out+=dec.decode(value,{stream:true}); } return JSON.parse(out+dec.decode()); } return JSON.parse(b64d(c.slice(1))); }catch(e){ return null; } }
+function sessAll(){ const L=hLoad(); if(!L.length) return []; const t0=L[0].id; return L.filter(r=>t0-r.id<21600000).slice(0,40); }
+const pcOf=(r,i)=>r.pc?r.pc[i]:(r.b[i]||[]);
+function sessPack(list){
+  const P=[], ix=(id,n)=>{ const k=id||('n:'+nz(n)); let i=P.findIndex(p=>p.k===k); if(i<0){ P.push({k,id:id||'',n:String(n||'')}); i=P.length-1; } return i; };
+  const M=list.map(r=>{ const a=ix(r.me?PRF.id:((r.ids&&r.ids[0])||''),r.n[0]), b=ix((r.ids&&r.ids[1])||'',r.n[1]); return [r.id,r.cat==='tournoi'?1:0,r.tg,r.bo||0,r.mn||0,r.r,r.w,r.s[0],r.s[1],a,b,pcOf(r,0),pcOf(r,1)]; });
+  return {v:2,n:PRF.n||'',i:PRF.id,a:avOk(PRF.av)||undefined,st:stShare(),p:P.map(p=>[p.id,p.n]),m:M};
+}
+async function rsShow(){
+  const all=sessAll(); if(!all.length) return shMsg(LT('Partager'),LT('Aucun match à partager.'));
+  await libLoad('lib/qrcode.js',()=>typeof qrcode==='function');
+  let list=all, code='';
+  while(list.length){ code=await packJ(sessPack(list)); if((QRB+'#r='+code).length<=900||list.length===1) break; list=list.slice(0,Math.max(1,list.length-2)); }
+  QRU=QRB+'#r='+code;
+  let svg=''; try{ const q=qrcode(0,'L'); q.addData(QRU); q.make(); svg=q.createSvgTag({cellSize:4,margin:0,scalable:true}); }catch(e){}
+  if(!svg) return shMsg(LT('Partager'),LT('Impossible de créer le QR sur cet appareil.'));
+  const names=[...new Set(list.flatMap(r=>[r.n[0],r.n[1]]))];
+  shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Partager la session')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="fhelp">${names.map(esc).join(', ')} · ${list.length} match${list.length>1?'s':''}${list.length<all.length?' ('+LT('les plus récents')+')':''}</div>
+    <div class="qrbox" role="img" aria-label="QR code">${svg}</div>
+    <div class="mut note qrn">${LT('Chaque joueur ouvre Beybey, va dans Match, touche Scanner et vise ce QR. Il récupère seulement ses matchs.')}</div>
+    <div class="fact"><button class="chip" onclick="qrSend()">${LT('Envoyer le lien')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div></div>`);
+}
+let RR=null;
+function rrMe(){ const P=RR.d.p; let i=P.findIndex(p=>p[0]&&p[0]===PRF.id); if(i<0&&PRF.n) i=P.findIndex(p=>nz(p[1])===nz(PRF.n)); if(i<0) i=P.findIndex(p=>(PRF.al||[]).includes(nz(p[1]))); return i; }
+async function rrOpen(code){
+  let d=await unpackJ(code); if(!d||typeof d!=='object'||d.v!==2||!Array.isArray(d.m)||!Array.isArray(d.p)) return shMsg(LT('QR non reconnu'),LT('Ce QR ne vient pas de Beybey.'));
+  const P=d.p.slice(0,12).map(p=>[sid(Array.isArray(p)&&p[0]),ss(Array.isArray(p)&&p[1],20)]);
+  d={v:2,n:ss(d.n,20),i:sid(d.i),a:avOk(d.a),st:stClean(d.st),p:P,m:d.m.slice(0,60).filter(Array.isArray).map(x=>[nid(x[0]),x[1]?1:0,nn(x[2]),nn(x[3]),nn(x[4]),nn(x[5]),nn(x[6]),nn(x[7]),nn(x[8]),nn(x[9],-1),nn(x[10],-1),sl(x[11]),sl(x[12])]).filter(x=>P[x[9]]&&P[x[10]])};
+  RR={d,from:d.n.trim()||LT('Invité'),me:undefined}; rrRender();
+}
+function rrRender(){
+  const d=RR.d,P=d.p; if(RR.me===undefined||RR.me<0) RR.me=rrMe(); const me=RR.me;
+  if(me<0){
+    shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Qui es-tu ?')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+      <div class="fhelp">${LT('Ton nom ne figure pas dans ce QR. Touche le tien :')}</div>
+      <div class="flist pcard">${P.map((p,i)=>`<button class="frow" onclick="rrPick(${i})"><b>${esc(p[1])}</b></button>`).join('')}</div></div>`); return;
+  }
+  const mine=d.m.filter(x=>x[9]===me||x[10]===me);
+  const rows=mine.map(x=>{ const fl=x[10]===me&&x[9]!==me, a=fl?x[10]:x[9], b=fl?x[9]:x[10], sa=fl?x[8]:x[7], sb=fl?x[7]:x[8]; return `<div class="hr"><div class="hm"><span class="hn" style="color:var(--pa)">${esc(P[a][1])}</span><b class="hsc">${sa} – ${sb}</b><span class="hn" style="color:var(--pink)">${esc(P[b][1])}</span></div></div>`; }).join('');
+  shOpen(`<div class="fwrap hall"><div class="fh"><h2>${LT('Résultats reçus')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+    <div class="fhelp">${LT('De')} <b>${esc(RR.from)}</b> · ${mine.length} match${mine.length>1?'s':''} ${LT('avec toi')} (${esc(P[me][1])})</div><div class="hscroll">${rows||`<div class="mut">${LT('Aucun match avec toi.')}</div>`}
+    <div class="mut note">${LT('Ils seront ajoutés à ton historique, de ton point de vue, et comptés dans tes stats.')}</div></div>
+    <div class="fact rrb">${mine.length?`<button class="go sm" onclick="rrAdd(this)">${LT('Ajouter à mon historique')}</button>`:''}<button class="chip" onclick="rrWho()">${LT('Ce n\'est pas moi')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
+}
+function rrWho(){ RR.me=-2; const d=RR.d; shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Qui es-tu ?')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div><div class="flist pcard">${d.p.map((p,i)=>`<button class="frow" onclick="rrPick(${i})"><b>${esc(p[1])}</b></button>`).join('')}</div></div>`); }
+function rrPick(i){ RR.me=i; RR.picked=true; rrRender(); }
+function rrAdd(btn){
+  const d=RR.d,P=d.p,me=RR.me,from=sid(d.i)||String(d.n||'?').slice(0,20); const L=hLoad().filter(r=>!(r.from===from&&(r.oid===1e9||r.oid===undefined&&r.id<1e12))); let add=0;
+  if(RR.picked){ const nm=nz(P[me][1]); if(nm&&nm!==nz(PRF.n)){ PRF.al=PRF.al||[]; if(!PRF.al.includes(nm)) PRF.al.push(nm); pfSave(); } }
+  d.m.forEach(x=>{ if(x[9]!==me&&x[10]!==me) return; if(L.some(r=>r.oid===x[0]&&r.from===from)) return;
+    const fl=x[10]===me&&x[9]!==me, o=fl?x[9]:x[10], sa=fl?x[8]:x[7], sb=fl?x[7]:x[8], w=x[6]<0?-1:(fl?1-x[6]:x[6]), pa=fl?x[12]:x[11], pb=fl?x[11]:x[12];
+    let id=x[0]; while(L.some(r=>r.id===id)) id++;
+    L.push({id,oid:x[0],from,cat:x[1]?'tournoi':'simple',tg:x[2],bo:x[3],mn:x[4],r:x[5],w,s:[sa,sb],n:[PRF.n||P[me][1],P[o][1]],ids:[PRF.id,sid(P[o][0])],pc:[pa,pb],b:[pa,pb],me:x[0]<(PRF.rst||0)?0:1});
+    if(sid(P[o][0])) fUpsert(P[o][0],P[o][1],null); add++; });
+  if(sid(d.i)&&sid(d.i)!==PRF.id) fUpsert(d.i,d.n,d.st,d.a);
+  L.sort((a,b)=>b.id-a.id); hSave(L); btn.disabled=true;
+  const e=document.getElementById('rcm'); if(e) e.textContent=add?LT('Ajouté à ton historique.'):LT('Déjà dans ton historique.');
+  setTimeout(()=>{ fmClose(); if(st.tab==='match') drawMatch(); else if(st.tab==='opts'||st.tab==='amis') draw(); },900);
+}
+
+function emptyUI(){ return '<div class="empty">Tu n\'as pas encore de toupie.</div><button class="addb" onclick="setTab(\'toupies\')">Aller ajouter une toupie</button>'; }
+function mSet(k,v){ st.m[k]=v; drawMatch(); }
+
+function slotUI(p,s){
+  const c=st.m.p[p][s], lab=st.m.mode==='tournoi'?`<div class="sl">Toupie ${s+1}</div>`:'';
+  if(!c||c.mode==='none') return `<div class="slot">${lab}<button class="slotadd" onclick="pkOpen(${p},${s})"><span>+</span> Ajouter une toupie</button></div>`;
+  const r=resolve(c), pcs=r.pc.filter(Boolean).map(esc).join(' · ');
+  return `<div class="slot">${lab}<div class="prv">${img(r.img,'sm')}<div class="grow"><b>${esc(r.name)}</b><div class="mut prm">${typ(r.ty)}<span>${r.w?r.w+' g':''}</span></div><div class="mut pcl">${pcs}</div></div><button class="chip" onclick="pkOpen(${p},${s},1)">Changer</button></div></div>`;
+}
+/* ===== Page « Choisir une toupie » : collection + catalogue dans une seule liste ===== */
+let PK=null;
+const pkNorm=x=>String(x||'').toLowerCase();
+function pkOpen(p,s,edit){
+  PK={p,s,q:'',t:null};
+  const c=st.m.p[p][s];
+  if(edit&&c&&c.mode!=='none'){ const t=JSON.parse(JSON.stringify(c));
+    if(t.mode==='stock'){ if(t.src==='cat'){ const x=CAT[t.cg]; if(x){ t.cb=x.e+'|'+x.b; t.cr=x.r||''; t.ci=x.bi||''; t._b=[t.cb,t.cr,t.ci]; } } else { const x=T[t.stock]; if(x){ t.blade=t.stock; t.ratchet=x.r?t.stock:-1; t.bit=t.stock; t._b=[t.blade,t.ratchet,t.bit]; } } }
+    PK.t=t; }
+  let f=document.getElementById('fm'); if(!f){ f=document.createElement('div'); f.id='fm'; document.body.appendChild(f); }
+  fmShown(f); pkDraw();
+}
+function pkDraw(){
+  const f=document.getElementById('fm'); if(!f||!PK) return;
+  const who=esc(st.m.names[PK.p]||'')+(st.m.mode==='tournoi'?' · '+LT('Toupie')+' '+(PK.s+1):'');
+  if(PK.t){ f.innerHTML=pkStep2(who); return; }
+  f.innerHTML=`<div class="fwrap pkw"><div class="fh"><h2>Choisir une toupie</h2><button class="chip sq" onclick="pkClose()" aria-label="Fermer">✕</button></div>
+    <div class="mut pkwho">${who}</div>
+    <label class="search pks">${IC.search}<input id="pk_q" type="search" placeholder="Chercher…" value="${esc(PK.q)}" oninput="pkQ(this.value)" autocomplete="off"></label>
+    <div id="pk_l">${pkList()}</div></div>`;
+  const q=document.getElementById('pk_q'); if(q&&!PK.q) setTimeout(()=>{ try{ q.focus({preventScroll:true}); }catch(e){} },60);
+}
+function pkQ(v){ PK.q=v; const l=document.getElementById('pk_l'); if(l) l.innerHTML=pkList(); }
+function pkOk(txt,q){ const w=pkNorm(q).split(/\s+/).filter(Boolean), h=pkNorm(txt); return w.every(x=>h.includes(x)); }
+function pkRow(kind,i,name,im,ty,w,tag){ return `<button class="pkr" onclick="pkPick('${kind}',${i})">${img(im,'sm')}<span class="pkn"><b>${esc(name)}</b><small>${typ(ty)}${w?' <i>'+w+' g</i>':''}</small></span>${tag?`<em>${esc(tag)}</em>`:''}</button>`; }
+function pkList(){
+  const q=PK.q.trim(), own=T.map((x,i)=>({x,i})).filter(o=>!q||pkOk(o.x.n+' '+o.x.nom+' '+o.x.b+' '+(o.x.r||'')+' '+o.x.bt,q));
+  let h=own.length?`<div class="fs">${LT('Ma collection')}</div>`+own.map(o=>pkRow('own',o.i,o.x.nom||o.x.n,(PH[o.x.n]||{}).blade,o.x.t,o.x.tot,'')).join(''):'';
+  if(CAT.length){
+    if(!q) h+=`<div class="fs">${LT('Catalogue')}</div><div class="mut note">${LT('Tape un nom pour chercher dans le catalogue.')}</div>`;
+    else{
+      const ed=x=>x.e==='tt'?'Takara Tomy':'Hasbro', m=CAT.map((x,i)=>({x,i})).filter(o=>pkOk(o.x.n+' '+o.x.b+' '+(o.x.r||'')+' '+o.x.bi,q));
+      h+=`<div class="fs">${LT('Catalogue')}</div>`+(m.length?m.slice(0,40).map(o=>{ if(o.x.ib) IM[o.x.ib]=o.x.ib; return pkRow('cat',o.i,o.x.n,o.x.ib,o.x.t,Math.round(((+o.x.wb||0)+(+o.x.wr||0)+(+o.x.wbt||0))*10)/10,ed(o.x)); }).join('')+(m.length>40?`<div class="mut note">${LT('Affine ta recherche pour voir les autres.')}</div>`:''):`<div class="mut note">${LT('Rien dans le catalogue.')}</div>`);
+    }
+  }
+  return h||`<div class="mut note">${LT('Rien trouvé.')}</div>`;
+}
+function pkPick(kind,i){
+  if(kind==='own'){ const x=T[i]; PK.t={mode:'stock',src:'own',stock:i,blade:i,ratchet:x.r?i:-1,bit:i,cg:-1,cb:'',cr:'',ci:'',_b:[i,x.r?i:-1,i]}; }
+  else{ const x=CAT[i]; PK.t={mode:x.bi?'stock':'custom',src:'cat',stock:0,blade:0,ratchet:-1,bit:0,cg:i,cb:x.e+'|'+x.b,cr:x.r||'',ci:x.bi||''}; if(x.bi) PK.t._b=[x.e+'|'+x.b,x.r||'',x.bi]; }
+  pkDraw();
+}
+function pkPartSel(k,v){ const t=PK.t; if(!t) return; if(t.src==='cat'){ t[['cb','cr','ci'][k]]=v; } else { t[['blade','ratchet','bit'][k]]=+v; } t.mode='custom'; pkDraw(); }
+function pkChanged(t){ const b=t._b; if(!b) return true; const cur=t.src==='cat'?[t.cb,t.cr,t.ci]:[t.blade,t.ratchet,t.bit]; return cur.some((v,k)=>v!==b[k]); }
+function ppItems(k){
+  const t=PK.t, ed=x=>x.e==='tt'?'Takara Tomy':'Hasbro', out=[];
+  if(t.src==='cat'){ const P=cptBuild();
+    if(k===0) Object.values(P.B).sort(cpSort).forEach(x=>out.push({v:x.k,n:x.n,img:x.im,ty:x.bt,w:x.w,tag:ed(x)}));
+    if(k===1){ out.push({v:'',n:LT('Aucun')}); Object.values(P.R).sort(cpSort).forEach(x=>out.push({v:x.n,n:x.n,img:x.im,w:x.w})); }
+    if(k===2) Object.values(P.I).sort(cpSort).forEach(x=>out.push({v:x.n,n:x.n,img:x.im,w:x.w}));
+    return {out,cur:[t.cb,t.cr,t.ci][k]}; }
+  const seen={}, add=(v,n,img,ty,w)=>{ if(seen[n]) return; seen[n]=1; out.push({v,n,img,ty,w}); };
+  const cur=[t.blade,t.ratchet,t.bit][k], cn=cur>=0&&T[cur]?[T[cur].b,T[cur].r,T[cur].bt][k]:null;
+  if(k===1) out.push({v:-1,n:LT('Aucun')});
+  T.forEach((x,i)=>{ const P=PH[x.n]||{}; if(k===0) add(i,x.b,P.blade,x.bty,x.wb); else if(k===1&&x.r) add(i,x.r,P.ratchet,'',x.wr); else if(k===2) add(i,x.bt,P.bit,x.t,x.wbt); });
+  out.forEach(o=>{ if(o.img&&!IM[o.img]) IM[o.img]=o.img; });
+  return {out,cur,cn};
+}
+function ppOpen(k){ PP={k,q:''}; ppDraw(); }
+function ppDraw(){ const f=document.getElementById('fm'); if(!f||!PK||!PP) return; const nm=[LT('Blade'),LT('Ratchet'),LT('Bit')][PP.k];
+  f.innerHTML=`<div class="fwrap pkw"><div class="fh"><h2>${nm}</h2><button class="chip sq" onclick="ppClose()" aria-label="Fermer">✕</button></div>
+    <label class="search pks">${IC.search}<input id="pp_q" type="search" placeholder="${LT('Chercher…')}" value="${esc(PP.q)}" oninput="ppQ(this.value)" autocomplete="off"></label>
+    <div id="pp_l">${ppList()}</div></div>`;
+  const e=document.getElementById('pp_q'); if(e&&!PP.q) setTimeout(()=>{ try{ e.focus({preventScroll:true}); }catch(x){} },60); }
+function ppQ(v){ PP.q=v; const l=document.getElementById('pp_l'); if(l) l.innerHTML=ppList(); }
+function ppClose(){ PP=null; pkDraw(); }
+function ppList(){
+  const {out,cur,cn}=ppItems(PP.k), q=PP.q.trim(), t=PK.t;
+  const h=out.map((o,i)=>[o,i]).filter(x=>!q||pkOk(x[0].n,q)||x[0].v===-1&&false).map(([o,i])=>{ const on=t.src==='cat'?o.v===cur:(o.v===-1?cur===-1:o.n===cn);
+    return `<button class="pkr${on?' cur':''}" onclick="ppPick(${i})">${img(o.img,'sm')}<span class="pkn"><b>${esc(o.n)}</b><small>${o.ty?typ(o.ty):''}${o.w?' <i>'+o.w+' g</i>':''}</small></span>${o.tag?`<em>${esc(o.tag)}</em>`:''}</button>`; }).join('');
+  return h||`<div class="mut note">${LT('Rien trouvé.')}</div>`;
+}
+function ppPick(i){ if(!PK||!PP) return; const o=ppItems(PP.k).out[i]; if(!o) return; const k=PP.k; PP=null; pkPartSel(k,o.v); }
+var PP=null;
+function pkStep2(who){
+  const t=PK.t, cat=t.src==='cat';
+  const pic=(im)=>{ if(im&&!IM[im]) IM[im]=im; return im; };
+  let parts;
+  if(cat){ const P=cptBuild(), b=P.B[t.cb], rr=P.R[t.cr], ii=P.I[t.ci];
+    parts=[[b&&b.n||LT('Choisir…'),b&&b.im,b&&b.w],[rr?rr.n:LT('Aucun'),rr&&rr.im,rr&&rr.w],[ii&&ii.n||LT('Choisir…'),ii&&ii.im,ii&&ii.w]]; }
+  else{ const B=T[t.blade], R=t.ratchet>=0?T[t.ratchet]:null, I=T[t.bit], P=CAT.length?cptBuild():null;
+    const fb=(k,n)=>{ if(!P||!n) return ''; if(k==='b'){ const x=P.B[(B&&B.ed||'hasbro')+'|'+n]||Object.values(P.B).find(y=>y.n===n); return x&&x.im||''; } const x=(k==='r'?P.R:P.I)[n]; return x&&x.im||''; };
+    parts=[[B?B.b:'',B&&((PH[B.n]||{}).blade||fb('b',B.b)),B&&B.wb],[R?R.r:LT('Aucun'),R&&((PH[R.n]||{}).ratchet||fb('r',R.r)),R&&R.wr],[I?I.bt:'',I&&((PH[I.n]||{}).bit||fb('i',I.bt)),I&&I.wbt]]; }
+  const labs=['Blade','Ratchet','Bit'];
+  const sel=`<div class="g3 pkpics">${parts.map((x,k)=>`<div class="bslot"><span class="sl">${labs[k]}</span><button class="bsb" onclick="ppOpen(${k})" aria-label="${labs[k]} : ${esc(x[0])}">${img(pic(x[1]),'sm')}<b>${esc(x[0])}</b><i>${x[2]?x[2]+' g':'&nbsp;'}</i></button></div>`).join('')}</div>`+(cat?`<div class="mut note">${LT("Catalogue : rien n'est ajouté à ta collection.")}</div>`:'');
+  const r=resolve(t), ok=cat?(t.mode==='stock'||!!(t.cb&&t.ci)):true;
+  return `<div class="fwrap pkw"><div class="fh"><h2>Choisir une toupie</h2><button class="chip sq" onclick="pkClose()" aria-label="Fermer">✕</button></div>
+    <div class="mut pkwho">${who}</div>
+    <div class="prv pkprv">${img(r.img,'sm')}<div class="grow"><b>${esc(r.name)}</b><div class="mut prm">${typ(r.ty)}<span>${r.w?r.w+' g':''}</span></div></div></div>
+    <div class="fhelp">${LT('Touche une pièce pour la changer.')}</div>${sel}
+    <div class="fact"><button class="go sm" onclick="pkSave()" ${ok?'':'disabled'}>${LT('Choisir cette toupie')}</button><button class="chip" onclick="pkBack()">${LT('Retour')}</button></div></div>`;
+}
+function pkBack(){ if(PK){ PK.t=null; pkDraw(); } }
+function pkSave(){
+  if(!PK||!PK.t) return; const t=JSON.parse(JSON.stringify(PK.t));
+  if(t.src==='cat'&&t.mode==='custom'&&!(t.cb&&t.ci)) return;
+  t.mode=(t._b&&!pkChanged(t))?'stock':'custom';
+  delete t._b; st.m.p[PK.p][PK.s]=t; pkClose(); drawMatch();
+}
+function pkClose(){ PK=null; PP=null; const f=document.getElementById('fm'); if(f){ f.classList.remove('show'); f.innerHTML=''; } document.documentElement.style.overflow=''; }
+function matchUI(){
+  const M=st.m;
+  if(M.mode==='bracket') return '<div class="top">'+'<div class="frame f3">'+[['simple','Simple'],['tournoi','3v3'],['bracket','Tournoi<small>bientôt</small>']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" ${k==='bracket'?'disabled':''} onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div></div>'
+    +'<div class="pcard soon"><div class="sl">Tournoi</div><b>Arrive bientôt</b><div class="mut">Un tableau à élimination directe : tu ajoutes les joueurs, chacun enregistre ses toupies, et c\'est parti.</div></div>';
+  const n=M.mode==='tournoi'?3:1;
+  const modes='<div class="frame f3">'+[['simple','Simple'],['tournoi','3v3'],['bracket','Tournoi<small>bientôt</small>']].map(([k,l])=>`<button class="${M.mode===k?'on':''}" ${k==='bracket'?'disabled':''} onclick="mSet('mode','${k}')"><span>${l}</span></button>`).join('')+'</div>';
+  const rules=`<div class="rules"><label>Premier à<select onchange="mSet('target',+this.value)">${opt([3,4,5,7,10].map(v=>[v,v+' points']),M.target)}</select></label><label>Série<select onchange="mSet('bo',+this.value)">${opt([[1,'Match unique'],[3,'BO3'],[5,'BO5'],[7,'BO7']],M.bo||1)}</select></label></div>`;
+  const note=M.mode==='tournoi'?'<div class="mut note">3 toupies par joueur, une par round, chacune une seule fois. Fin après 3 rounds ou au score.</div>':'';
+  const players=[0,1].map(p=>`<div class="pcard p${p}" style="--pc:${PCOL[p]}"><input class="nm" value="${esc(M.names[p])}" oninput="mName(${p},this.value)" aria-label="Nom du joueur ${p+1}">${p===0?'<div class="menote" id="meNote">'+meNoteHTML()+'</div>':'<div class="menote" id="fnote1">'+frChip(1)+'</div>'}${Array.from({length:n},(_,s)=>slotUI(p,s)).join('')}<div class="pqr"><button class="chip" onclick="scOpen(${p})">Scanner</button><button class="chip" onclick="qrSlots(${p})">Partager</button></div></div>`).join('');
+  return '<div class="top">'+modes+rules+'</div>'+note+'<div class="pls">'+players+'</div>'+(slotsOk()?'':`<div class="mut note nsl">Ajoute une toupie à chaque emplacement pour lancer le match.</div>`)+`<div class="act"><button class="go" onclick="startMatch()" ${slotsOk()?'':'disabled'}>Lancer le match</button></div>`+histUI(M.mode);
+}
+
+const fmt=ms=>{const t=Math.floor(ms/100),s=Math.floor(t/10);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')+'.'+(t%10);};
+const cur=p=>resolve(G.M.p[p][G.cur[p]]);
+const setOv=h=>{document.getElementById('ov').innerHTML=h;};
+const xbtn='<button class="x" onclick="askQuit()" aria-label="Quitter">✕</button>';
+function stopTimer(){ clearInterval(tmr); tmr=null; }
+function startTimer(){ stopTimer(); tmr=setInterval(()=>{const e=document.getElementById('tm'); if(e&&G) e.textContent=fmt(Date.now()-G.t0);},100); }
+
+function slotsOk(){ const n=st.m.mode==='tournoi'?3:1; return [0,1].every(p=>[...Array(n).keys()].every(k=>st.m.p[p][k]&&st.m.p[p][k].mode!=='none')); }
+function startMatch(){
+  if(!slotsOk()) return;
+  try{ ctx(); }catch(e){}
+  const M=JSON.parse(JSON.stringify(st.m)),tour=M.mode==='tournoi';
+  stopTimer(); run++;
+  G={M,tour,bo:M.bo||1,wins:[0,0],mn:1,cw:-1,sw:-1,round:1,score:[0,0],hist:[],used:[[],[]],cur:[0,0],pick:[null,null],t:0,t0:0,
+     max:tour?Math.min(3,M.rounds||3):M.rounds,phase:tour?'pick':'ready',ready:[false,false]};
+  document.getElementById('ov').classList.add('show'); arena(); goLandscape();
+}
+function goLandscape(){
+  try{
+    const d=document.documentElement, f=d.requestFullscreen||d.webkitRequestFullscreen;
+    const lock=()=>{ try{ screen.orientation.lock('landscape').catch(()=>{}); }catch(e){} };
+    if(f){ const p=f.call(d); if(p&&p.then) p.then(lock).catch(lock); else lock(); } else lock();
+  }catch(e){}
+}
+function leaveLandscape(){
+  try{ screen.orientation.unlock(); }catch(e){}
+  try{ if(document.fullscreenElement) document.exitFullscreen(); }catch(e){}
+}
+let QT=0;
+function askQuit(){
+  if(!G||G.phase==='pick'||G.phase==='over'||Date.now()-QT<3500){ QT=0; stopMatch(); return; }
+  QT=Date.now(); const b=document.querySelector('#ov button.x'); if(!b) return;
+  const t=LT('Quitter ?'); b.classList.add('ask'); b.textContent=t;
+  setTimeout(()=>{ if(Date.now()-QT>=3400){ QT=0; if(b.isConnected){ b.classList.remove('ask'); b.textContent='✕'; } } },3500);
+}
+function stopMatch(){ leaveLandscape(); run++; stopTimer(); try{ speechSynthesis.cancel(); }catch(e){} document.getElementById('ov').classList.remove('show'); G=null; if(st.tab==='match') draw(); }
+function pickSlot(p,s){ G.pick[p]=s; arena(); }
+function confirmPick(){ G.cur=[G.pick[0],G.pick[1]]; G.ready=[false,false]; G.phase='ready'; arena(); }
+
+function pickUI(){
+  const imgp=r=>img(r.img,'sm');
+  const col=p=>`<div class="pk s${p} p${p}" style="--pc:${PCOL[p]}"><div class="pnm">${esc(G.M.names[p])}</div>`+[0,1,2].map(s=>{
+    const r=resolve(G.M.p[p][s]),u=G.used[p].includes(s);
+    return `<button class="pks ${G.pick[p]===s?'on':''}" ${u?'disabled':''} onclick="pickSlot(${p},${s})">${imgp(r)}<span><b>${r.blade}</b><small>${u?'Déjà utilisée':r.name}</small></span></button>`;
+  }).join('')+'</div>';
+  const ok=G.pick[0]!==null&&G.pick[1]!==null;
+  setOv(`<div class="arena pickv"><div class="ahd">${xbtn}<span>Round ${G.round}</span><span></span></div><div class="mid mut">Chaque joueur choisit sa toupie pour ce round</div>${col(0)}${col(1)}<div class="foot"><button class="go" ${ok?'':'disabled'} onclick="confirmPick()">Valider</button></div></div>`);
+}
+const FIN=[['Spin',1],['Over',2],['Burst',2],['Xtreme',3]];
+const FL=k=>k?k+' Finish':'';
+function side(p){
+  const r=cur(p),on=G.phase==='fight',rd=G.phase==='ready';
+  const ctl=rd?`<button class="rdy ${G.ready[p]?'on':''}" onclick="setReady(${p})">Prêt<i>${G.ready[p]?' ✓':''}</i></button>`
+    :`<div class="pts">${FIN.map(([k,n])=>`<button ${on?'':'disabled'} onclick="score(${p},${n},'${k}')"><span>${FL(k)}</span><b>+${n}</b></button>`).join('')}</div>`;
+  return `<div class="side s${p} p${p}" style="--pc:${PCOL[p]}"><div class="si"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}<div class="bn">${r.blade}</div><div class="bs">${r.name===r.blade?'':r.name}</div><div class="sc">${G.score[p]}</div></div>${ctl}</div>`;
+}
+const SND={};
+function loadSnd(){ ['p1','p2','sc','nul','next','cd'].forEach(k=>{ try{ const a=new Audio('sons/'+(k==='cd'&&LANG!=='fr'?'cd_en':k)+'.mp3'); a.preload='auto'; SND[k]=a; }catch(e){} }); }
+function playSnd(k){ if(!st.son||!SND[k]) return; try{ SND[k].currentTime=0; const r=SND[k].play(); if(r&&r.catch) r.catch(()=>{}); }catch(e){} }
+loadSnd();
+function setReady(p){
+  if(!G||G.phase!=='ready') return;
+  G.ready[p]=!G.ready[p]; if(G.ready[p]) playSnd(p?'p2':'p1'); else beep(400,.1,.15); buzz(30); arena();
+  if(G.ready[0]&&G.ready[1]) setTimeout(()=>{ if(G&&G.phase==='ready'&&G.ready[0]&&G.ready[1]) launch(); },350);
+}
+function winText(){
+  const [a,b]=G.score,t=G.M.target,n=G.M.names;
+  const w=a>=t?0:b>=t?1:a>b?0:b>a?1:-1;
+  if(G.bo>1&&G.phase==='over'&&G.sw>=0) return `${esc(n[G.sw])} remporte la série ${G.wins[G.sw]} à ${G.wins[1-G.sw]}`;
+  return w<0?`Égalité ${a} à ${b}`:`${esc(n[w])} gagne ${a} à ${b}`;
+}
+/* ===== Mini-scène : les deux toupies ===== */
+const ST={mode:'',tops:[],fx:[],rings:[],bolts:[],frags:[],fin:null,fid:-1,xh:[],nA:-Math.PI/2,flash:0,shake:0,loop:0,last:0,col:["#39ff8c","#ff2d95"],R:.145};
+let stId=0;
+const rnd=(a,b)=>a+Math.random()*(b-a);
+/* comportement selon le type et le poids de la toupie */
+const PF={
+ 'Attack':{k:1.6,sw:1.2,vmin:1.3,vmax:2.3,seek:1.4,rad:0,mass:.95,w:32,dec:1.9,n:3,a0:-.7,a1:.15},
+ 'Déf':{k:3.4,sw:.5,vmin:.45,vmax:1,seek:0,rad:0,mass:1.35,w:20,dec:1.4,n:6,a0:-.33,a1:.33},
+ 'Stamina':{k:1.4,sw:1.1,vmin:.7,vmax:1.15,seek:0,rad:.5,mass:.9,w:24,dec:.8,n:2,a0:-.95,a1:.95},
+ 'Balance':{k:2.2,sw:.9,vmin:.9,vmax:1.7,seek:.4,rad:0,mass:1,w:26,dec:1.5,n:3,a0:-.55,a1:.38}
+};
+function stProf(p){ let r=null; try{ r=G?cur(p):(ST.hp&&ST.hp[p]); }catch(e){}
+  const b=PF[(r&&r.ty)||'Balance']||PF.Balance, wt=Math.min(1.25,Math.max(.8,((r&&+r.w)||38)/38));
+  const XA={'Attack':3.2,'Déf':1.6,'Stamina':2.4,'Balance':2.4};
+  return Object.assign({},b,{mass:b.mass*wt,rs:.92+(b.mass*wt-1)*.3,xa:XA[(r&&r.ty)||'Balance']||2.4}); }
+function stTop(p,x,y,vx,vy,w){const pf=stProf(p);return{p,pf,rs:pf.rs,m:pf.mass,x,y,vx,vy,ang:rnd(0,6.28),w:(w?pf.w*w/26:pf.w)*(p?-1:1),w0:w?pf.w*w/26:pf.w,s:1,al:1,fall:0,wob:rnd(0,6),hid:false,free:false,big:false};}
+function stInit(m){
+  ST.mode=m;ST.fin=null;ST.fid=-1;ST.xh=[];ST.fx=[];ST.rings=[];ST.bolts=[];ST.frags=[];ST.flash=0;ST.shake=0;
+  ST.tops=m==='idle'?[stTop(0,-.6,.05,0,0,8),stTop(1,.6,-.05,0,0,8)]:[stTop(0,-.5,.25,1.1,-.5,26),stTop(1,.5,-.25,-1.1,.5,26)];
+  ST.tops.forEach(t=>{ if(m!=='idle'){const k=t.pf.vmin/.9; t.vx*=k; t.vy*=k;} });
+}
+function stSpark(x,y,n,sp,cols){for(let i=0;i<n;i++){const a=rnd(0,6.28),v=rnd(.3,1)*sp;ST.fx.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:rnd(.25,.6),max:.6,c:cols?cols[i%cols.length]:'#fff'});}}
+function stRing(x,y,c,max,sz){ST.rings.push({x,y,t:0,max:max||.5,c,sz:sz||1});}
+function stBolt(x,y,a){const pts=[[x,y]];let px=x,py=y;for(let i=0;i<6;i++){px+=Math.cos(a+rnd(-.7,.7))*.16;py+=Math.sin(a+rnd(-.7,.7))*.16;pts.push([px,py]);}ST.bolts.push({pts,life:.35});}
+const XZ={a:Math.PI/2,xh:.5,oc:.72,oh:.2};
+function stGap(th){ let d=Math.abs(Math.atan2(Math.sin(th-XZ.a),Math.cos(th-XZ.a))); return false; }
+function stRailR(th){ const d=Math.abs(Math.atan2(Math.sin(th-ST.nA),Math.cos(th-ST.nA))); const v=d<.24?1:d<.36?(.36-d)/.12:0; return .93-.25*v; }
+function stRelease(t,sp,inward,tang,notch){
+  const a=t.rl.a,dir=t.rl.dir,nx=Math.cos(a),ny=Math.sin(a),tx=-ny*dir,ty=nx*dir;
+  t.vx=tx*sp*tang-nx*sp*inward; t.vy=ty*sp*tang-ny*sp*inward; t.rl=null; t.xc=2.2; t.bt=notch?1:.6;
+  ST.xh.push({a,life:notch?.7:.4,c:ST.rail,n:notch}); stSpark(t.x,t.y,notch?16:7,notch?2:1.2,[ST.rail,'#fff',ST.col[t.p]]); ST.flash=Math.max(ST.flash,notch?.3:.12);
+}
+function stRide(t,dt){
+  const rl=t.rl,R=ST.R*t.rs;
+  rl.t+=dt; rl.w=Math.min(rl.w+rl.acc*dt,5.2); rl.a+=rl.dir*rl.w*dt;
+  const rad=stRailR(rl.a)-R; t.x=Math.cos(rl.a)*rad; t.y=Math.sin(rl.a)*rad;
+  rl.sp=(rl.sp||0)-dt; if(rl.sp<0){ rl.sp=.07; ST.xh.push({a:rl.a,life:.25,c:ST.rail,n:false}); stSpark(t.x,t.y,2,.5,[ST.rail,'#fff']); }
+  const da=Math.atan2(Math.sin(rl.a-ST.nA),Math.cos(rl.a-ST.nA));
+  if(rl.t>.3&&Math.abs(da)<.22){ stRelease(t,rl.w*(1-R),1.0,.45,true); }
+  else if(rl.t>rl.dur){ stRelease(t,rl.w*(1-R),.55,.8,false); }
+  else { t.vx=0; t.vy=0; }
+}
+function stMove(t,dt){
+  if(t.rl&&!t.calm){ stRide(t,dt); return; }
+  const calm=t.calm,pf=t.pf,R=ST.R*t.rs;
+  if(calm){ t.vx-=(t.x-(t.tx||0))*3*dt; t.vy-=(t.y-(t.ty||0))*3*dt; const f=Math.exp(-dt*1.6);t.vx*=f;t.vy*=f; }
+  else{
+    const d0=Math.hypot(t.x,t.y)||.001,dir=t.p?-1:1;
+    t.vx-=t.x*pf.k*dt; t.vy-=t.y*pf.k*dt;
+    /* bol évasé : une pente continue du rail jusqu'au centre, de plus en plus creuse vers le milieu */
+    { const sm=Math.min(1,d0/.3), F=-(1.5*sm+2.2*Math.exp(-(d0/.2)*(d0/.2))*d0/.2); t.vx+=t.x/d0*F*dt; t.vy+=t.y/d0*F*dt; }
+    t.vx+=-t.y*pf.sw*dt*dir; t.vy+=t.x*pf.sw*dt*dir;
+    if(pf.rad){ const e=(pf.rad-d0)*3*dt; t.vx+=t.x/d0*e; t.vy+=t.y/d0*e; }
+    if(pf.seek){ const o=ST.tops[1-t.p]; if(o&&!o.hid&&!o.free){ const dx=o.x-t.x,dy=o.y-t.y,dd=Math.hypot(dx,dy)||1; t.vx+=dx/dd*pf.seek*dt; t.vy+=dy/dd*pf.seek*dt; } }
+    t.nt=(t.nt===undefined?rnd(.3,.9):t.nt)-dt; t.bt=Math.max(0,(t.bt||0)-dt);
+    if(t.nt<0){ t.nt=rnd(.45,1.2);
+      if(pf.rad) pf.rad=rnd(.3,.75);
+      const o=ST.tops[1-t.p],lunge=Math.random()<(pf.seek>1?.5:pf.rad?.3:.22);
+      if(lunge&&o&&!o.hid&&!o.free){ const dx=o.x-t.x,dy=o.y-t.y,dd=Math.hypot(dx,dy)||1,pw=1.3+Math.random()*.9; t.vx+=dx/dd*pw; t.vy+=dy/dd*pw; t.bt=.5; stSpark(t.x,t.y,5,.7,[ST.col[t.p]]); }
+      else { const an=rnd(0,6.28),pw=.5+Math.random()*.8; t.vx+=Math.cos(an)*pw; t.vy+=Math.sin(an)*pw; } }
+    const sp=Math.hypot(t.vx,t.vy),vmax=pf.vmax*(t.bt>0?1.9:1);
+    if(sp<pf.vmin){const k=sp>.01?pf.vmin/sp:1;t.vx*=k;t.vy*=k;if(sp<=.01)t.vx=pf.vmin;} else if(sp>vmax){t.vx*=vmax/sp;t.vy*=vmax/sp;}
+  }
+  t.x+=t.vx*dt; t.y+=t.vy*dt;
+  const d=Math.hypot(t.x,t.y),lim=stRailR(Math.atan2(t.y,t.x))-R;
+  if(d>lim){const nx=t.x/d,ny=t.y/d,dp=t.vx*nx+t.vy*ny; t.x=nx*lim;t.y=ny*lim;
+    if(!calm&&(t.xc||0)<=0){
+      /* le bit crânté s'accroche aux crans de la X-line : il roule le long du rail en accélérant */
+      const an=Math.atan2(t.y,t.x),dir=(-t.vy*nx+t.vx*ny)>=0?1:-1,ts=Math.abs(-t.vy*nx+t.vx*ny);
+      t.rl={a:an,dir,w:Math.max(1.6,ts/lim+.9),acc:pf.xa*(.8+Math.random()*.5),dur:.45+Math.random()*.55,t:0,sp:0}; t.vx=0;t.vy=0;
+      stSpark(t.x,t.y,5,.9,[ST.rail,'#fff']);
+    } else if(dp>0){ t.vx-=1.3*dp*nx; t.vy-=1.3*dp*ny; } }
+  t.xc=Math.max(0,(t.xc||0)-dt);
+}
+function stCollide(){
+  const [a,b]=ST.tops; if(a.hid||b.hid||a.free||b.free) return false;
+  const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy),m=ST.R*(a.rs+b.rs);
+  if(d>=m||d<.001) return false;
+  const nx=dx/d,ny=dy/d,rel=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;
+  if(rel<0){a.rl=null;b.rl=null;const j=-2*rel/(1/a.m+1/b.m);a.vx-=j/a.m*nx;a.vy-=j/a.m*ny;b.vx+=j/b.m*nx;b.vy+=j/b.m*ny;
+    const pw=-rel,now=performance.now();
+    if(pw>.4&&now-(ST.cd||0)>260){ ST.cd=now; const mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+      stSpark(mx,my,Math.round(3+pw*4),.8+pw*.6,[ST.col[0],ST.col[1],'#fff']);
+      if(pw>1.5&&Math.random()<.45) stRing(mx,my,[ST.col[0],ST.col[1],'#fff'][Math.floor(Math.random()*3)],.25+Math.random()*.15,.35+Math.random()*.3);
+      ST.flash=Math.max(ST.flash,Math.min(.35,pw*.12)); }}
+  const o=(m-d),ia=1/a.m,ib=1/b.m,sm=ia+ib; a.x-=nx*o*ia/sm;a.y-=ny*o*ia/sm;b.x+=nx*o*ib/sm;b.y+=ny*o*ib/sm; return true;
+}
+function stFinish(h){
+  const a=ST.tops[0],b=ST.tops[1],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1;
+  [a,b].forEach(t=>{t.calm=false;t.rl=null;});
+  a.vx=dx/d*1.9;a.vy=dy/d*1.9;b.vx=-dx/d*1.9;b.vy=-dy/d*1.9;
+  ST.fin={t:0,k:h.p<0?'nul':h.k,W:h.p<0?-1:h.p,L:h.p<0?-1:1-h.p,hit:false,ti:0};ST.mode='fin';
+}
+function stImpact(f){
+  f.hit=true; const T=ST.tops,a=T[0],b=T[1];
+  const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,k=f.k;
+  const L=f.L>=0?T[f.L]:null,W=f.W>=0?T[f.W]:null;
+  let nx=0,ny=0; if(L&&W){const d=Math.hypot(L.x-W.x,L.y-W.y)||1;nx=(L.x-W.x)/d;ny=(L.y-W.y)/d;}
+  stSpark(mx,my,22,2.2,[ST.col[0],ST.col[1],'#fff']); stRing(mx,my,'#fff',.45); ST.flash=.9;
+  const rt=L&&W?Math.min(1.7,Math.max(.6,Math.sqrt(W.m/L.m))):1; /* le plus lourd éjecte plus fort */
+  if(k==='Spin'){ L.tx=nx*.4;L.ty=ny*.4;W.tx=-nx*.4;W.ty=-ny*.4; L.vx=nx*.5;L.vy=ny*.5;W.vx=-nx*.5;W.vy=-ny*.5;L.calm=true;L.dec=true;W.calm=true; }
+  else if(k==='nul'){ const d=Math.hypot(b.x-a.x,b.y-a.y)||1,ux=(b.x-a.x)/d,uy=(b.y-a.y)/d; a.vx=-ux*.7;a.vy=-uy*.7;b.vx=ux*.7;b.vy=uy*.7;a.tx=-ux*.4;a.ty=-uy*.4;b.tx=ux*.4;b.ty=uy*.4; a.calm=b.calm=true;a.dec=b.dec=true; }
+  else if(k==='Over'){ const aL=Math.atan2(L.y,L.x),a1=XZ.a-XZ.oc,a2=XZ.a+XZ.oc,df=(u,v)=>Math.abs(Math.atan2(Math.sin(u-v),Math.cos(u-v))),ang=df(aL,a1)<df(aL,a2)?a1:a2; f.zone=ang===a1?'o1':'o2';
+    const ex=Math.cos(ang)*1.4-L.x,ey=Math.sin(ang)*1.4-L.y,el=Math.hypot(ex,ey)||1,ux=.65*ex/el+.35*nx,uy=.65*ey/el+.35*ny,ul=Math.hypot(ux,uy)||1; nx=ux/ul;ny=uy/ul;
+    L.free=true;L.vx=nx*3.4*rt;L.vy=ny*3.4*rt;W.vx=-nx*.5;W.vy=-ny*.5;W.calm=true;ST.shake=.25; }
+  else if(k==='Burst'){ L.hid=true; ST.shake=.4; stRing(L.x,L.y,ST.col[L.p],.7);
+    for(let i=0;i<7;i++){const an=i/7*6.28+rnd(-.2,.2),v=rnd(1.2,2.6);ST.frags.push({x:L.x,y:L.y,vx:Math.cos(an)*v,vy:Math.sin(an)*v,rot:rnd(0,6),vr:rnd(-14,14),sz:rnd(.07,.14),p:L.p,ring:i%3===0});}
+    W.vx=-nx*.6;W.vy=-ny*.6;W.calm=true; }
+  else if(k==='Xtreme'){ f.zone='x'; { const ex=Math.cos(XZ.a)*1.3-L.x,ey=Math.sin(XZ.a)*1.3-L.y,el=Math.hypot(ex,ey)||1,ux=.65*ex/el+.35*nx,uy=.65*ey/el+.35*ny,ul=Math.hypot(ux,uy)||1; nx=ux/ul;ny=uy/ul; }
+    L.free=true;L.big=true;L.vx=nx*5.4*rt;L.vy=ny*5.4*rt;W.vx=-nx*.8;W.vy=-ny*.8;W.calm=true;W.w*=1.35;ST.shake=.7;ST.flash=1;
+    stRing(mx,my,ST.col[W.p],.8);stRing(mx,my,'#fff',.6); for(let i=0;i<6;i++) stBolt(mx,my,i/6*6.28+rnd(-.3,.3)); }
+}
+function stStep(dt){
+  const T=ST.tops;
+  if(ST.mode==='idle'){T.forEach(t=>{t.ang+=t.w*dt;t.y+=Math.sin(performance.now()/500+t.p*3)*.0015;});}
+  else{
+    const f=ST.fin;
+    if(f){ f.t+=dt;
+      if(!f.hit){ T.forEach(t=>{t.x+=t.vx*dt;t.y+=t.vy*dt;});
+        if(Math.hypot(T[1].x-T[0].x,T[1].y-T[0].y)<ST.R*(T[0].rs+T[1].rs)*1.03||f.t>.9) stImpact(f);
+      } else { f.ti+=dt; }
+    }
+    T.forEach((t,i)=>{
+      t.ang+=t.w*dt;
+      if(f&&!f.hit) return;
+      if(t.free){ t.x+=t.vx*dt;t.y+=t.vy*dt;const f2=Math.exp(-dt*.25);t.vx*=f2;t.vy*=f2;
+        const d=Math.hypot(t.x,t.y);
+        if(t.big) t.s=1+.7*Math.sin(Math.min(1,f.ti*2.2)*3.14)+(d>1?-.25*Math.min(1,(d-1)/.8):0); else t.s=1-.45*Math.min(1,Math.max(0,(d-1)/.7));
+        if(d>1.25) t.al=Math.max(0,t.al-dt*1.1);
+      }
+      else if(t.hid){}
+      else if(t.dec){ t.w*=Math.exp(-dt*(t.pf.dec||1.5)); stMove(t,dt);
+        if(Math.abs(t.w)<5){t.fall=Math.min(1,t.fall+dt*1.2);} if(t.fall>=1)t.w*=.9; t.wob+=dt*(8+6*t.fall); }
+      else stMove(t,dt);
+    });
+    if(!f||!f.hit) stCollide();
+    else if(f.k==='Xtreme') T.forEach(t=>{if(!t.free&&!t.hid)t.glow=1;});
+    ST.frags.forEach(g=>{g.x+=g.vx*dt;g.y+=g.vy*dt;const fr=Math.exp(-dt*1.7);g.vx*=fr;g.vy*=fr;g.rot+=g.vr*dt;g.vr*=Math.exp(-dt*1.1);
+      const d=Math.hypot(g.x,g.y);if(d>1.3){g.vx-=g.x/d*3*dt;g.vy-=g.y/d*3*dt;}});
+  }
+  ST.fx=ST.fx.filter(s=>(s.life-=dt)>0);ST.fx.forEach(s=>{s.x+=s.vx*dt;s.y+=s.vy*dt;s.vx*=.94;s.vy*=.94;});
+  ST.rings=ST.rings.filter(r=>(r.t+=dt)<r.max);
+  ST.bolts=ST.bolts.filter(b=>(b.life-=dt)>0); ST.xh=ST.xh.filter(h=>(h.life-=dt)>0);
+  ST.flash*=Math.exp(-dt*4.5);ST.shake*=Math.exp(-dt*3.5);
+}
+function stDrawTop(c,t,sc){
+  if(t.hid||t.al<=0) return;
+  const r=ST.R*sc*t.s*t.rs,col=ST.col[t.p],sp=Math.min(1,Math.abs(t.w)/t.w0);
+  c.save();c.translate(t.x*sc,t.y*sc);c.globalAlpha=t.al*(1-.4*t.fall);
+  c.fillStyle='rgba(0,0,0,.5)';c.beginPath();c.ellipse(r*.18*t.s,r*.3*t.s,r*1.02,r*.9,0,0,7);c.fill();
+  if(t.dec){const amp=(1-sp)*(1-t.fall)*r*.35;c.translate(Math.cos(t.wob)*amp,Math.sin(t.wob*1.3)*amp);}
+  if(t.fall){c.rotate(t.wob*0+.5);c.scale(1,1-.32*t.fall);c.rotate(-.5);}
+  c.shadowColor=col;c.shadowBlur=(t.glow?18:6+9*sp)*(ST.dpr||1)*(1-.8*t.fall);
+  c.fillStyle='#070b0c';c.beginPath();c.arc(0,0,r,0,7);c.fill();
+  c.shadowBlur=0;
+  c.rotate(t.ang);
+  if(sp>.6){c.globalAlpha*=.22;c.fillStyle=col;c.beginPath();c.arc(0,0,r,0,7);c.fill();c.globalAlpha=t.al*(1-.4*t.fall);}
+  c.fillStyle=col;
+  const nb=t.pf.n;for(let i=0;i<nb;i++){c.save();c.rotate(i*6.2832/nb);c.globalAlpha*=.85;c.beginPath();c.moveTo(r*.18,0);c.arc(0,0,r*.98,t.pf.a0,t.pf.a1);c.lineTo(r*.18,0);c.closePath();c.fill();c.restore();}
+  c.strokeStyle=col;c.lineWidth=Math.max(1.5,r*.1);c.beginPath();c.arc(0,0,r*.99,0,7);c.stroke();
+  c.fillStyle='#e8fff2';c.beginPath();c.arc(0,0,r*.22,0,7);c.fill();
+  c.fillStyle='#070b0c';c.beginPath();c.arc(0,0,r*.09,0,7);c.fill();
+  c.restore();
+}
+function stDraw(cv){
+  const dpr=Math.min(2,window.devicePixelRatio||1),s=cv.clientWidth; if(!s) return;
+  ST.dpr=dpr; if(cv.width!==Math.round(s*dpr)){cv.width=cv.height=Math.round(s*dpr);}
+  const cs=getComputedStyle(cv);ST.rail=cs.getPropertyValue('--stg-rail').trim()||'#39ff88';ST.col=[cs.getPropertyValue('--pa').trim()||'#39ff8c',cs.getPropertyValue('--pink').trim()||'#ff2d95'];
+  const c=cv.getContext('2d'),W=cv.width,sc=W/2*.6,kk=Math.min(1,Math.max(.5,sc/dpr/110)); /* kk : traits et lueurs plus fins quand l'arène est petite */
+  c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,W,W);
+  c.translate(W/2+rnd(-1,1)*ST.shake*W*.03,W/2+rnd(-1,1)*ST.shake*W*.03);
+  { const rg0=cs.getPropertyValue('--stg-ring').trim()||'#aebcc2',x=sc*1.25,y0=-sc*1.2,y1=sc*1.5,k=sc*.3;
+    const poly=(d)=>{ c.beginPath();c.moveTo(-x+k+d,y0+d);c.lineTo(x-k-d,y0+d);c.lineTo(x-d,y0+k+d);c.lineTo(x-d,y1-k-d);c.lineTo(x-k-d,y1-d);c.lineTo(-x+k+d,y1-d);c.lineTo(-x+d,y1-k-d);c.lineTo(-x+d,y0+k+d);c.closePath(); };
+    c.save();poly(0);c.fillStyle='rgba(120,140,150,.10)';c.fill();c.strokeStyle=rg0;c.globalAlpha=.4;c.lineWidth=1.6*dpr;c.stroke();
+    c.save();poly(0);c.clip();c.globalAlpha=1;c.fillStyle='rgba(0,0,0,.22)';c.fillRect(-x,sc*.62,2*x,y1);c.restore();
+    c.globalAlpha=.18;c.lineWidth=dpr;poly(sc*.07);c.stroke();
+    c.globalAlpha=.7;c.fillStyle='#02060a';c.strokeStyle=rg0;c.lineWidth=dpr;
+    [[-.95,-.72],[.95,-.72],[-Math.sin(.55)*1.27,Math.cos(.55)*1.27],[Math.sin(.55)*1.27,Math.cos(.55)*1.27]].forEach(([px,py])=>{ c.beginPath();c.rect(px*sc-sc*.045,py*sc-sc*.045,sc*.09,sc*.09);c.fill();c.stroke(); });
+    c.restore(); }
+  const g=c.createRadialGradient(0,0,0,0,0,sc);g.addColorStop(0,(cs.getPropertyValue('--stg-a').trim()||'#10191c'));g.addColorStop(1,(cs.getPropertyValue('--stg-b').trim()||'#050809'));
+  c.fillStyle=g;c.beginPath();c.arc(0,0,sc,0,7);c.fill();
+  
+  const rg=cs.getPropertyValue('--stg-ring').trim()||'#aebcc2';c.shadowColor=rg;c.shadowBlur=6*dpr*kk;c.strokeStyle=rg;c.lineWidth=2.6*dpr*kk;c.beginPath();c.arc(0,0,sc,0,7);c.stroke();c.shadowBlur=0;
+  { /* stade BX-10 : 3 sorties du même côté (2 Over dans les coins, 1 Xtreme au centre) + Tornado Ridge au centre */
+    const ring=cs.getPropertyValue('--stg-ring').trim()||'#aebcc2', f=ST.fin&&ST.fin.hit?ST.fin:null, pul=.5+.5*Math.sin(performance.now()/240);
+    c.save();
+    const bowl=c.createRadialGradient(0,0,sc*.15,0,0,sc*.93);bowl.addColorStop(0,'rgba(255,255,255,0)');bowl.addColorStop(.7,'rgba(255,255,255,.035)');bowl.addColorStop(1,'rgba(255,255,255,.10)');
+    c.fillStyle=bowl;c.beginPath();c.arc(0,0,sc*.93,0,7);c.fill();
+    c.strokeStyle=ring;
+    c.globalAlpha=1;
+    { const g2=c.createRadialGradient(0,0,0,0,0,sc*.93);g2.addColorStop(0,'rgba(0,0,0,.6)');g2.addColorStop(.35,'rgba(0,0,0,.3)');g2.addColorStop(.75,'rgba(0,0,0,.08)');g2.addColorStop(1,'rgba(255,255,255,.12)');c.fillStyle=g2;c.beginPath();c.arc(0,0,sc*.93,0,7);c.fill();
+      c.strokeStyle='rgba(255,255,255,.2)';c.lineWidth=dpr;c.beginPath();c.arc(0,0,sc*.28,0,7);c.stroke(); }
+    const glow=(hot,col)=>{c.lineWidth=2*dpr;c.strokeStyle=hot?'#fff':col;c.shadowColor=col;c.shadowBlur=(hot?16:5)*dpr;c.globalAlpha=hot?.65+.35*pul:.9;};
+    const label=(txt,x,y,fs,hot,col)=>{ if(!hot) return; c.save();c.globalAlpha=hot?1:.85;c.fillStyle=hot?'#fff':col;c.font=`800 ${Math.round(sc*fs)}px system-ui,sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillText(txt,x,y);c.restore();};
+    /* Over : deux poches dans les coins avant, hors du cercle */
+    [['o1',XZ.a-XZ.oc],['o2',XZ.a+XZ.oc]].forEach(([id,a])=>{
+      const hot=f&&f.zone===id; c.save();c.translate(Math.cos(a)*sc*1.4,Math.sin(a)*sc*1.4);c.rotate(a);
+      const L=sc*.22,Wd=sc*.17,r=sc*.07;
+      c.beginPath();c.moveTo(-L+r,-Wd);c.lineTo(L-r,-Wd);c.arcTo(L,-Wd,L,-Wd+r,r);c.lineTo(L,Wd-r);c.arcTo(L,Wd,L-r,Wd,r);c.lineTo(-L+r,Wd);c.arcTo(-L,Wd,-L,Wd-r,r);c.lineTo(-L,-Wd+r);c.arcTo(-L,-Wd,-L+r,-Wd,r);c.closePath();
+      c.fillStyle=hot?'rgba(255,255,255,.5)':'#000';c.fill();glow(hot,ring);c.stroke();c.restore();
+      label('OVER',Math.cos(a)*sc*1.4,Math.sin(a)*sc*1.4,.085,hot,ring); });
+    /* Xtreme : fente en arc juste sous le cercle, au centre avant */
+    { const hot=f&&f.zone==='x',h=XZ.xh,r0=sc*1.08,r1=sc*1.37; c.save();c.rotate(XZ.a);
+      { const P=(r,a)=>[Math.cos(a)*r,Math.sin(a)*r], e=sc*.06, d=e/r1*1.4, q=(p,r,a)=>c.quadraticCurveTo(p[0],p[1],...P(r,a));
+        c.beginPath(); c.moveTo(...P(r1,-h+d)); c.arc(0,0,r1,-h+d,h-d);
+        q(P(r1,h),r1-e,h); c.lineTo(...P(r0+e,h));
+        q(P(r0,h),r0,h-d*1.3); c.arc(0,0,r0,h-d*1.3,-h+d*1.3,true);
+        q(P(r0,-h),r0+e,-h); c.lineTo(...P(r1-e,-h));
+        q(P(r1,-h),r1,-h+d); c.closePath(); }
+      c.fillStyle=hot?'rgba(255,255,255,.5)':'#000';c.fill();glow(hot,'#ff5a4f');c.stroke();c.restore();
+      label('XTREME',0,sc*1.225,.1,hot,'#ff5a4f'); }
+    c.restore(); }
+  c.save();c.strokeStyle=ST.col[0];c.globalAlpha=.0;c.restore();
+  { const gr=ST.rail;
+    const rr=th=>sc*stRailR(th);
+    c.save(); c.lineJoin='round';
+    c.strokeStyle=gr; c.shadowColor=gr; c.shadowBlur=7*dpr*kk; c.lineWidth=3.4*dpr*kk; c.globalAlpha=.95;
+    c.beginPath(); { let pen=false; for(let th=0;th<=6.2832+.001;th+=.03){ if(stGap(th)){pen=false;continue;} const r=rr(th); pen?c.lineTo(Math.cos(th)*r,Math.sin(th)*r):c.moveTo(Math.cos(th)*r,Math.sin(th)*r); pen=true; } } c.stroke();
+    c.shadowBlur=0; c.globalAlpha=.85; c.strokeStyle=gr; c.lineWidth=dpr*1.2*kk;
+    for(let th=0;th<6.2832;th+=.11){ if(stGap(th)) continue; const r=rr(th),r2=r-sc*.055; c.beginPath(); c.moveTo(Math.cos(th)*r,Math.sin(th)*r); c.lineTo(Math.cos(th)*r2,Math.sin(th)*r2); c.stroke(); }
+    c.shadowBlur=0;
+    ST.xh.forEach(h=>{ c.globalAlpha=Math.min(1,h.life*3); c.strokeStyle='#fff'; c.shadowColor=gr; c.shadowBlur=10*dpr; c.lineWidth=2.2*dpr; c.beginPath(); for(let th=h.a-.35;th<=h.a+.35;th+=.03){ const r=rr(th); th>h.a-.35?c.lineTo(Math.cos(th)*r,Math.sin(th)*r):c.moveTo(Math.cos(th)*r,Math.sin(th)*r); } c.stroke(); });
+    c.restore(); }
+  if(ST.flash>.02){const fg=c.createRadialGradient(0,0,0,0,0,sc);fg.addColorStop(0,`rgba(255,255,255,${ST.flash*.45})`);fg.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=fg;c.beginPath();c.arc(0,0,sc,0,7);c.fill();}
+  ST.rings.forEach(r=>{const k=r.t/r.max;c.globalAlpha=1-k;c.strokeStyle=r.c;c.lineWidth=3*dpr*(1-k)+1;c.beginPath();c.arc(r.x*sc,r.y*sc,(.08+k*.9*(r.sz||1))*sc,0,7);c.stroke();});c.globalAlpha=1;
+  ST.frags.forEach(g=>{const col=ST.col[g.p],z=g.sz*sc;c.save();c.translate(g.x*sc,g.y*sc);c.rotate(g.rot);c.globalAlpha=.9;c.fillStyle=col;c.strokeStyle=col;c.shadowColor=col;c.shadowBlur=5*dpr;
+    if(g.ring){c.lineWidth=z*.5;c.beginPath();c.arc(0,0,z,0,2.2);c.stroke();}else{c.beginPath();c.moveTo(0,0);c.arc(0,0,z*1.6,-.5,.45);c.closePath();c.fill();}c.restore();});
+  const T=ST.tops,order=[...T].sort((a,b)=>(b.free?1:0)-(a.free?1:0)); order.forEach(t=>stDrawTop(c,t,sc));
+  ST.bolts.forEach(b=>{c.globalAlpha=Math.min(1,b.life*4);c.strokeStyle='#fff';c.shadowColor='#fff';c.shadowBlur=6*dpr;c.lineWidth=1.5*dpr;c.beginPath();b.pts.forEach((p,i)=>i?c.lineTo(p[0]*sc,p[1]*sc):c.moveTo(p[0]*sc,p[1]*sc));c.stroke();});c.globalAlpha=1;c.shadowBlur=0;
+  ST.fx.forEach(s=>{c.globalAlpha=Math.max(0,s.life/s.max);c.fillStyle=s.c;c.fillRect(s.x*sc-1.5,s.y*sc-1.5,3*dpr/1.5,3*dpr/1.5);});c.globalAlpha=1;
+}
+function stLoop(id){
+  if(id!==ST.loop) return;
+  const cv=document.getElementById('stg')||document.getElementById('hstg'); if(!cv){ST.loop=0;return;}
+  const now=performance.now(),dt=Math.min(.033,(now-ST.last)/1000||.016);ST.last=now;
+  stStep(dt);stDraw(cv);requestAnimationFrame(()=>stLoop(id));
+}
+function mountStage(){
+  const cv=document.getElementById('stg'); if(!cv||!G){ST.loop=0;return;}
+  const ph=G.phase;
+  if(ph==='ready'){ if(ST.mode!=='idle') stInit('idle'); }
+  else if(ph==='fight'){ if(ST.mode!=='battle') stInit('battle'); }
+  else if(ph==='scored'||ph==='over'){
+    const h=G.hist[G.hist.length-1];
+    if(h&&ST.fid!==G.hist.length){ if(ST.mode!=='battle'&&ST.mode!=='fin') stInit('battle'); if(ST.mode==='fin') stInit('battle'); ST.fid=G.hist.length; stFinish(h); }
+  }
+  stDraw(cv);
+  if(!ST.loop){ST.loop=++stId;ST.last=performance.now();requestAnimationFrame(()=>stLoop(ST.loop));}
+}
+function arena(){
+  if(!G) return;
+  if(G.phase==='pick') return pickUI();
+  const h=G.hist[G.hist.length-1];
+  const last=h?(h.p>=0?`${esc(G.M.names[h.p])} +${h.pts}${h.k?' · '+FL(h.k):''}`:'Round nul'):'';
+  const mid={
+    ready:`<canvas id="stg"></canvas><div class="mut">Quand vous êtes prêts, appuyez chacun sur <b>Prêt</b> : le 3, 2, 1 part tout seul</div>`,
+    fight:`<div class="tm" id="tm">${fmt(Date.now()-G.t0)}</div><canvas id="stg"></canvas><button class="chip" onclick="nul()">Round nul</button>`,
+    scored:`<div class="tm">${fmt(G.t)}</div><canvas id="stg"></canvas><div class="bn2">${last}</div><div class="row2"><button class="chip" onclick="undo()">Annuler</button><button class="go sm" onclick="nextRound()">Round suivant</button></div>`,
+    over:`<div class="win">${winText()}</div>${G.bo>1?`<div class="bn2">${esc(G.M.names[0])} ${G.wins[0]} – ${G.wins[1]} ${esc(G.M.names[1])}</div>`:''}<canvas id="stg"></canvas><div class="row2"><button class="chip" onclick="undo()">Annuler</button><button class="chip" onclick="stopMatch()">Fermer</button><button class="chip" onclick="rsShow()">Partager</button>${G.bo>1&&G.sw<0?'<button class="go sm" onclick="nextMatch()">Match suivant</button>':'<button class="go sm" onclick="startMatch()">Rejouer</button>'}</div>`
+  }[G.phase];
+  setOv(`<div class="arena"><div class="ahd">${xbtn}<span>${G.bo>1?'BO'+G.bo+' · '+G.wins[0]+'–'+G.wins[1]+' · Match '+G.mn+' · ':''}Round ${G.round}${G.max?' sur '+G.max:''}</span><span>Premier à ${G.M.target}</span></div><div class="mid">${mid}</div>${side(0)}${side(1)}</div>`);
+  mountStage();
+}
+const cdc=p=>{ const r=cur(p); return `<div class="cdc p${p}" style="--pc:${PCOL[p]}"><div class="cdp"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}</div><div class="cdn"><div class="bn">${r.blade}</div><div class="bs">${r.name===r.blade?'':r.name}</div></div></div>`; };
+async function launch(){
+  if(!G||G.phase!=='ready') return;
+  const id=++run; G.phase='count';
+  if(G.tour) G.cur.forEach((s,p)=>{ if(!G.used[p].includes(s)) G.used[p].push(s); });
+  setOv('<div class="cd" id="cd" onclick="cancelCount()"><div class="rays"></div><div class="flash"></div><div class="cdw">'+cdc(0)+'<div class="ringw"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="rd" cx="50" cy="50" r="49.5"/><circle class="rt" cx="50" cy="50" r="46"/><circle class="rg" id="rg" cx="50" cy="50" r="46" pathLength="100"/></svg><div id="big"></div></div><div class="cdvs">VS</div>'+cdc(1)+'</div><div class="lines"><i></i><i></i></div></div>');
+  const big=document.getElementById('big'), cd=document.getElementById('cd'), rg=document.getElementById('rg');
+  const words=LANG==='fr'?['','un','deux','trois']:['','one','two','three'],SL=LANG==='fr'?'fr-FR':'en-US';
+  const show=n=>{ big.className=''; big.textContent=n; cd.classList.remove('fl'); void cd.offsetWidth; cd.classList.add('fl'); buzz(60); };
+  const hyper=()=>{ big.className='txt'; big.textContent=LANG==='fr'?'Hyper vitesse':'Let it rip!'; cd.classList.remove('fl'); void cd.offsetWidth; cd.classList.add('hv'); buzz([200,60,200]); };
+  if(st.son&&SND.cd){
+    /* le son dit « 3, 2, 1, Hyper vitesse » : les flashs suivent les mots (temps en secondes) */
+    const T=LANG==='fr'?[[3,.1],[2,1.1],[1,1.9]]:[[3,.1],[2,1.2],[1,2.0]],HV=LANG==='fr'?2.7:3.3,END=4.4;
+    try{ SND.cd.currentTime=0; const r=SND.cd.play(); if(r&&r.catch) r.catch(()=>{}); }catch(e){}
+    const t0=performance.now(), at=async s=>{ const d=s*1000-(performance.now()-t0); if(d>0) await wait(d); };
+    for(const [n,s] of T){ await at(s); if(id!==run) return; show(n); }
+    await at(HV); if(id!==run) return; hyper();
+    await at(END);
+  }else{
+    for(const n of [3,2,1]){
+      if(id!==run) return;
+      show(n); beep(660,.25); say(words[n],SL);
+      await wait(1000);
+    }
+    if(id!==run) return;
+    hyper(); beep(1100,.8,.4); say(LT('Hyper vitesse'),SL);
+    await wait(900);
+  }
+  if(id!==run||!G) return;
+  G.phase='fight'; G.t0=Date.now(); arena(); startTimer();
+}
+function cancelCount(){
+  if(!G||G.phase!=='count') return;
+  run++; try{ speechSynthesis.cancel(); }catch(e){} try{ SND.cd.pause(); }catch(e){}
+  if(G.tour) G.cur.forEach((s,p)=>{ const i=G.used[p].lastIndexOf(s); if(i>=0) G.used[p].splice(i,1); });
+  G.ready=[false,false]; G.phase='ready'; arena();
+}
+/* ===== Historique des matchs (par catégorie, gardé sur l'appareil) ===== */
+const HKEY='arene_hist';
+function hLoad(){ try{ const a=JSON.parse(localStorage.getItem(HKEY)||'[]'); if(!Array.isArray(a)) return []; const L=a.map(hClean).filter(Boolean), seen=new Set(); L.forEach((r,i)=>{ if(r.id<1e12||seen.has(r.id)){ r.id=1e9-1-i; r.oid=r.oid===undefined?undefined:r.oid; } seen.add(r.id); }); return L; }catch(e){ return []; } }
+function hSave(a){ try{ localStorage.setItem(HKEY,JSON.stringify(a.slice(0,300))); }catch(e){} }
+function histAdd(){
+  try{
+    const names=[0,1].map(p=>(G.tour?G.used[p]:[G.cur[p]]).map(sl=>resolve(G.M.p[p][sl]).name));
+    const pcs=[0,1].map(p=>(G.tour?G.used[p]:[G.cur[p]]).map(sl=>resolve(G.M.p[p][sl]).pc.filter(Boolean).join(' · ')));
+    const rec={id:Date.now(),pc:pcs,cat:G.tour?'tournoi':'simple',n:[G.M.names[0],G.M.names[1]],b:names,s:[G.score[0],G.score[1]],tg:G.M.target,bo:G.bo>1?G.bo:0,mn:G.mn,r:G.hist.length,me:G.M.me?1:0,ids:[G.M.me?PRF.id:((G.M.ids&&G.M.ids[0])||''),(G.M.ids&&G.M.ids[1])||''],w:G.score[0]>G.score[1]?0:G.score[1]>G.score[0]?1:-1};
+    const a=hLoad(); a.unshift(rec); hSave(a); G.hid=rec.id;
+  }catch(e){}
+}
+function histDel(id){ hSave(hLoad().filter(r=>r.id!==id)); }
+function histClear(cat){ if(confirm(LT(cat==='all'?'Vider tout l\'historique ?':'Vider l\'historique de cette catégorie ?'))){ hSave(cat==='all'?[]:hLoad().filter(r=>r.cat!==cat)); fmClose(); drawMatch(); } }
+function histRows(L){
+  const when=id=>{ if(id<1e12) return LT('Date inconnue'); const d=new Date(id); return d.toLocaleDateString(LOC,{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString(LOC,{hour:'2-digit',minute:'2-digit'}); };
+  return L.map(r=>{
+    const w=r.w,nm=i=>`<span class="hn ${w===i?'hw':''}" style="color:${i?'var(--pink)':'var(--pa)'}">${esc(r.n[i])}</span>`;
+    return `<div class="hr"><div class="hd mut">${when(r.id)} · ${r.r} round${r.r>1?'s':''} · à ${r.tg}${r.bo?' · BO'+r.bo+' · M'+r.mn:''}</div><div class="hm">${nm(0)}<b class="hsc">${r.s[0]} – ${r.s[1]}</b>${nm(1)}</div>${r.pc?`<div class="hs mut hpc"><div style="color:var(--pa)">${r.pc[0].map(esc).join(' | ')}</div><div style="color:var(--pink)">${r.pc[1].map(esc).join(' | ')}</div></div>`:`<div class="hs mut">${r.b[0].map(esc).join(' · ')} <i>vs</i> ${r.b[1].map(esc).join(' · ')}</div>`}${w<0?'<div class="mut">Égalité</div>':''}</div>`;
+  }).join('');
+}
+function histUI(cat){
+  const L=hLoad().filter(r=>r.cat===cat),title=cat==='tournoi'?'Match 3v3':'Match simple';
+  return `<div class="pcard hist"><div class="hh"><div class="sl">Historique · ${title}</div><button class="chip" onclick="histAll('${cat}')">${L.length>5?LT('Tout voir')+' ('+L.length+')':LT('Ouvrir')}</button></div>${L.length?`<div class="mut">${L.length} match${L.length>1?'s':''} terminé${L.length>1?'s':''}</div>${histRows(L.slice(0,5))}`:'<div class="mut">Aucun match pour l\'instant. Termine un match pour le retrouver ici.</div>'}</div>`;
+}
+function histAll(cat){
+  const L=hLoad().filter(r=>cat==='all'||r.cat===cat),S=pfStats(L),pct=S.n?Math.round(100*S.w/S.n)+'%':'—';
+  const c=(v,l)=>`<div class="pfc"><b>${v}</b><span>${l}</span></div>`;
+  shOpen(`<div class="fwrap hall"><div class="fh"><h2>Historique</h2><span class="bhb"><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></span></div>
+    <div class="frame f3 hseg">${[['all','Global'],['simple','Match simple'],['tournoi','Match 3v3']].map(([k,l])=>`<button class="${k===cat?'on':''}" onclick="histAll('${k}')"><span>${LT(l)}</span></button>`).join('')}</div>
+    <div class="pfg">${c(L.length,'Matchs')}${c(S.w,'Victoires')}${c(S.l,'Défaites')}${c(pct,'Réussite')}</div>
+    ${S.top?`<div class="mtop"><span class="mut">${LT('Toupie la plus jouée ici :')}</span> <b>${esc(S.top)}</b> <small>×${S.topn}</small></div>`:''}
+    <div class="mut note">${PRF.n?LT('Les stats comptent seulement tes matchs (pas ceux joués en invité).'):LT('Entre ton nom dans Profil pour compter tes stats.')}</div>
+    <div class="hscroll">${histRows(L)}</div><div class="hbar"><button class="chip hclr" onclick="scOpen(0)">${LT('Scanner')}</button>${L.length?`<button class="chip hclr" onclick="rsShow()">Partager la session</button><button class="chip dng hclr" onclick="histClear('${cat}')">Vider</button>`:''}</div></div>`);
+}
+function serieEnd(){
+  const [a,b]=G.score; G.cw=a>b?0:b>a?1:-1; G.sw=-1;
+  if(G.bo>1&&G.cw>=0){ G.wins[G.cw]++; if(G.wins[G.cw]>=Math.ceil(G.bo/2)) G.sw=G.cw; }
+}
+function nextMatch(){
+  if(!G||G.phase!=='over'||G.bo<2||G.sw>=0) return; playSnd('next');
+  G.mn++; G.round=1; G.score=[0,0]; G.hist=[]; G.used=[[],[]]; G.cur=[0,0]; G.pick=[null,null]; G.ready=[false,false]; G.hid=null; G.cw=-1; G.t=0; G.t0=0;
+  G.phase=G.tour?'pick':'ready'; ST.fid=-1; arena();
+}
+function endRound(){
+  stopTimer(); G.t=Date.now()-G.t0;
+  const t=G.M.target;
+  G.phase=(G.score[0]>=t||G.score[1]>=t||(G.max&&G.round>=G.max))?'over':'scored';
+  if(G.phase==='over'){ serieEnd(); histAdd(); [784,988,1319].forEach((f,i)=>setTimeout(()=>beep(f,.4,.35),i*220)); buzz([120,60,120,60,300]); }
+  arena();
+}
+function score(p,pts,k){
+  if(!G||G.phase!=='fight') return;
+  G.score[p]+=pts; G.hist.push({p,pts,k,t:Date.now()-G.t0});
+  playSnd('sc'); buzz(50); endRound();
+}
+function nul(){ if(!G||G.phase!=='fight') return; playSnd('nul'); G.hist.push({p:-1,pts:0,t:Date.now()-G.t0}); endRound(); }
+function undo(){
+  if(!G||G.phase==='fight'||!G.hist.length) return;
+  if(G.hid){ histDel(G.hid); G.hid=null; }
+  if(G.phase==='over'&&G.bo>1&&G.cw>=0){ G.wins[G.cw]--; G.cw=-1; G.sw=-1; }
+  const h=G.hist.pop(); if(h.p>=0) G.score[h.p]-=h.pts;
+  G.phase='fight'; G.t0=Date.now()-h.t; arena(); startTimer();
+}
+function nextRound(){
+  if(!G||G.phase!=='scored') return; playSnd('next');
+  G.round++; G.pick=[null,null]; G.ready=[false,false]; G.phase=G.tour?'pick':'ready'; arena();
+}
+function ctx(){ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); return AC; }
+function beep(f,d,v){
+  if(!st.son) return;
+  try{ const a=ctx(),t=a.currentTime,o=a.createOscillator(),g=a.createGain(),lp=a.createBiquadFilter();
+    o.type='sine'; o.frequency.value=f*.7; lp.type='lowpass'; lp.frequency.value=900;
+    const vol=(v||.3)*.16, dur=Math.max(d,.16);
+    g.gain.setValueAtTime(.0001,t); g.gain.linearRampToValueAtTime(vol,t+.05);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(lp); lp.connect(g); g.connect(a.destination); o.start(t); o.stop(t+dur+.02);
+  }catch(e){}
+}
+function say(txt,lang){
+  if(!st.voix||!('speechSynthesis' in window)) return;
+  try{ const u=new SpeechSynthesisUtterance(txt); u.lang=lang; u.rate=1.05; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){}
+}
+function buzz(p){ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} }
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* ===== Listes déroulantes maison (lisibles dans les deux thèmes) ===== */
+let csOpen=null,csLk=0;
+function csClose(){ if(csOpen){ csOpen.list.remove(); csOpen.btn.setAttribute('aria-expanded','false'); csOpen=null; } }
+function csShow(sel,btn){
+  csClose(); csLk=Date.now();
+  const l=document.createElement('div'); l.className='csl'; l.setAttribute('role','listbox');
+  const srch=sel.options.length>12, nrm=t=>String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,''); let sq=null;
+  if(srch){ sq=document.createElement('input'); sq.type='search'; sq.className='csq'; sq.placeholder=LT('Rechercher…'); sq.autocomplete='off'; sq.setAttribute('autocapitalize','off'); sq.setAttribute('aria-label',LT('Rechercher…'));
+    sq.oninput=()=>{ const n=nrm(sq.value); l.querySelectorAll('.cso').forEach(it=>{ it.style.display=(!n||!it.dataset.v||it.dataset.v.indexOf(n)>-1)?'':'none'; }); }; l.appendChild(sq); }
+  [...sel.options].forEach((o,i)=>{ const it=document.createElement('div'); it.className='cso'+(i===sel.selectedIndex?' on':''); it.setAttribute('role','option'); it.tabIndex=-1; if(o.value!=='') it.dataset.v=nrm(o.textContent); it.textContent=o.textContent;
+    it.onclick=()=>{ csClose(); if(sel.selectedIndex!==i){ sel.selectedIndex=i; sel.dispatchEvent(new Event('change',{bubbles:true})); } btn.focus&&0; };
+    l.appendChild(it); });
+  document.body.appendChild(l);
+  if(srch){ const fm=document.getElementById('fm'); if(fm&&fm.contains(btn)) fm.scrollTop+=btn.getBoundingClientRect().top-90; }
+  const r=btn.getBoundingClientRect(),h=Math.min(l.scrollHeight,Math.round(innerHeight*(srch?.34:.5)),320);
+  l.style.minWidth=r.width+'px'; l.style.maxHeight=h+'px';
+  const below=innerHeight-r.bottom, up=r.top>h+8&&below<h+8;
+  l.style.left=Math.max(4,Math.min(r.left,innerWidth-l.offsetWidth-4))+'px';
+  l.style.top=(up?r.top-h-4:r.bottom+4)+'px';
+  const on=l.querySelector('.on'); if(on) l.scrollTop=on.offsetTop-l.clientHeight/2+on.offsetHeight/2;
+  btn.setAttribute('aria-expanded','true'); csOpen={list:l,btn}; if(sq) sq.focus({preventScroll:true});
+  l.addEventListener('keydown',e=>{ const q=e.target===sq, its=[...l.querySelectorAll('.cso')].filter(x=>x.style.display!=='none'),i=its.indexOf(document.activeElement);
+    if(e.key==='Escape'){ csClose(); btn.focus(); } else if(e.key==='ArrowDown'){ e.preventDefault(); const t=its[i+1]||its[0]; t&&t.focus(); } else if(e.key==='ArrowUp'){ e.preventDefault(); const t=q?its[0]:(its[i-1]||its[its.length-1]); t&&t.focus(); } else if(e.key==='Enter'||(e.key===' '&&!q)){ e.preventDefault(); const t=q?(its.find(x=>x.dataset.v)||its[0]):document.activeElement; t&&t.click&&t.click(); } });
+}
+function csEnhance(root){
+  root.querySelectorAll('select:not([data-cs])').forEach(sel=>{
+    sel.dataset.cs='1';
+    const w=document.createElement('div'); w.className='cs';
+    const b=document.createElement('button'); b.type='button'; b.className='csb'; b.setAttribute('aria-haspopup','listbox'); b.setAttribute('aria-expanded','false');
+    if(sel.id==='k') w.classList.add('cs-auto');
+    const lab=()=>{ const o=sel.options[sel.selectedIndex]; b.textContent=o?o.textContent:''; };
+    sel.addEventListener('change',lab); lab(); b.disabled=sel.disabled; b.onclick=e=>{ e.preventDefault(); if(csOpen&&csOpen.btn===b) csClose(); else csShow(sel,b); };
+    b.onkeydown=e=>{ if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); csShow(sel,b); const f=csOpen&&csOpen.list.querySelector('.on')||csOpen.list.firstChild; f&&f.focus(); } };
+    sel.parentNode.insertBefore(w,sel); w.appendChild(b); w.appendChild(sel); sel.classList.add('csn');
+  });
+}
+document.addEventListener('click',e=>{ if(csOpen&&!csOpen.list.contains(e.target)&&!csOpen.btn.contains(e.target)) csClose(); },true);
+let csW=innerWidth; addEventListener('resize',()=>{ if(innerWidth!==csW){ csW=innerWidth; csClose(); } }); addEventListener('scroll',e=>{ if(Date.now()-csLk<900) return; if(csOpen&&e.target&&e.target.nodeType===1&&csOpen.list.contains(e.target)) return; if(csOpen&&e.target===csOpen.list) return; csClose(); },true);
+new MutationObserver(()=>csEnhance(document.body)).observe(document.body,{childList:true,subtree:true});
+csEnhance(document.body);
+
+/* ===== Accueil : arène animée + raccourcis ===== */
+const HM={on:0,iv:0,phase:'fight',tNext:0,hist:[],wins:[]};
+const HME=[['Spin',3],['Over',3],['Burst',2],['Xtreme',2],['nul',1]], HMT=['Attack','Déf','Stamina','Balance'];
+const hmWp=l=>{ let n=l.reduce((s,e)=>s+e[1],0)*Math.random(); for(const e of l){ if((n-=e[1])<0) return e[0]; } return l[0][0]; };
+function homeRound(){
+  ST.hp=[0,1].map(()=>({ty:HMT[Math.floor(Math.random()*4)],w:rnd(28,48)}));
+  stInit('battle'); ST.fid=-1; HM.phase='fight'; HM.tNext=performance.now()+rnd(3000,8500); }
+function homeTick(){
+  if(st.tab!=='home'||G||!document.getElementById('hstg')) return;
+  const now=performance.now(); if(now<HM.tNext) return;
+  if(HM.phase==='fight'){
+    let k,n=0; do{ k=hmWp(HME); }while(HM.hist.slice(-2).includes(k)&&++n<8); HM.hist.push(k);
+    const ra=ST.hp[0].w/(ST.hp[0].w+ST.hp[1].w); let w=Math.random()<ra?0:1;
+    if(HM.wins.length>=2&&HM.wins[HM.wins.length-1]===w&&HM.wins[HM.wins.length-2]===w) w=1-w; HM.wins.push(w);
+    stFinish({p:k==='nul'?-1:w,k}); HM.phase='after'; HM.tNext=now+(k==='Spin'||k==='nul'?5200:3600);
+  } else homeRound(); }
+function homeFit(){
+  if(st.tab!=='home') return; const c=document.getElementById('hstg'), t=document.getElementById('tabs'); if(!c||!t) return;
+  const land=matchMedia('(orientation:landscape) and (max-height:520px)').matches, ref=document.querySelector(land?'.hm-go':'.hm-grid'); if(!ref) return;
+  const maxW=land?Math.min(380,(window.visualViewport?visualViewport.height:innerHeight)):Math.min(380,c.parentElement.clientWidth||380), base=land?100:maxW; c.style.width=base+'px';
+  const slack=t.getBoundingClientRect().top-ref.getBoundingClientRect().bottom-(land?8:14);
+  c.style.width=Math.max(land?100:220,Math.min(maxW,Math.floor(base+slack)))+'px';
+}
+let hfT=[]; function homeFitLater(){ hfT.forEach(clearTimeout); hfT=[0,120,350,800].map(d=>setTimeout(()=>{ if(st.tab==='home') homeFit(); },d)); }
+addEventListener('resize',homeFitLater); addEventListener('orientationchange',homeFitLater); addEventListener('pageshow',homeFitLater);
+if(window.visualViewport) visualViewport.addEventListener('resize',homeFitLater);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>homeFit());
+function homeStart(){ if(!HM.iv) HM.iv=setInterval(homeTick,120); homeRound(); ST.loop=++stId; ST.last=performance.now(); const id=ST.loop; requestAnimationFrame(()=>stLoop(id)); }
+const IC_SUN=sv('<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.3M12 19.2v2.3M2.5 12h2.3M19.2 12h2.3M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>');
+const IC_MOON=sv('<path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/>');
+function homeTheme(){ setTheme(document.documentElement.dataset.theme==='futurl'?'futur':'futurl'); draw(); }
+function homeGo(k){
+  if(k==='toupies'){ st.view='collection'; setTab('toupies'); }
+  else if(k==='hist') histAll('all');
+  else if(k==='fr') setTab('amis');
+  else if(k==='pf') setTab('profil');
+  else setTab(k); }
+function hmMe(){
+  const S=pfStats(), p=S.n?Math.round(100*S.w/S.n):0, C=2*Math.PI*20.5, nm=(PRF.n||'').trim();
+  return `<button class="hm-me" onclick="homeGo('pf')" aria-label="${esc(nm||LT('Profil'))}"><span class="hm-av"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5" fill="none" stroke="var(--frame)" stroke-width="2"/><circle cx="22" cy="22" r="20.5" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="${C*p/100} ${C}" transform="rotate(-90 22 22)"/></svg><i>${PRF.av?'<img src="'+avSrc(PRF.av)+'" alt="">':esc((nm[0]||'?').toUpperCase())}</i>${S.n?'<em>'+p+'%</em>':''}</span><span class="hm-nm">${esc(nm||LT('Profil'))}</span><span class="hm-w"><small>V :</small><b>${String(S.w).padStart(2,'0')}</b></span></button>`;
+}
+function homeUI(){
+  const nT=T.length, nH=hLoad().length, nF=Object.keys(fLoad()).length, dark=(document.documentElement.dataset.theme||'futur')!=='futurl';
+  const b=(k,l,s)=>`<button class="hmb" onclick="homeGo('${k}')"><span>${l}</span><small>${s}</small></button>`;
+  return `<div class="hmx"><div class="hm-top">${hmMe()}<div class="hm-r"><button class="hm-ic" onclick="homeTheme()" aria-label="${dark?'Passer en thème clair':'Passer en thème sombre'}">${dark?IC_MOON:IC_SUN}</button></div></div>
+    <div class="hm-logo" role="heading" aria-level="1">BEYBEY</div>
+    <div class="hm-arena"><canvas id="hstg" aria-hidden="true"></canvas></div>
+    <button class="go hm-go" onclick="setTab('match')">MATCH</button>
+    <div class="hm-grid"><div class="hm-cl">${b('toupies','Collection',nT+' toupies')}${b('build','Build','assembler')}${b('hist','Historique',nH+' matchs')}</div><div class="hm-cr">${b('pf','Profil',esc(PRF.n||'—'))}${b('fr','Amis',nF+(nF>1?' amis':' ami'))}${b('opts','Options','sauvegarde')}</div></div></div>`;
+}
+
+/* ===== Bienvenue (premier lancement) ===== */
+const WKEY='arene_welcome';
+function wlDone(){ try{ localStorage.setItem(WKEY,'1'); }catch(e){} const e=document.getElementById('wlc'); if(e) e.remove(); draw(); }
+function wlGo(){ const v=document.getElementById('wln').value; if(v.trim()) pfSet(v); wlDone(); }
+function wlImp(inp){ try{ localStorage.setItem(WKEY,'1'); }catch(e){} backupImport(inp,()=>location.reload()); }
+function wlInit(){
+  let seen=true; try{ const L=localStorage; seen=L.getItem(WKEY)!==null; if(!seen&&(PRF.n||L.getItem('arene_hist')||L.getItem('arene_custom')||L.getItem('arene_amis'))){ L.setItem(WKEY,'1'); seen=true; } }catch(e){}
+  if(seen) return;
+  const d=document.createElement('div'); d.id='wlc'; d.className='wlc'; d.setAttribute('role','dialog'); d.setAttribute('aria-modal','true'); d.setAttribute('aria-label',LT('Bienvenue !'));
+  d.innerHTML='<div><h2>'+LT('Bienvenue !')+'</h2><input class="nm" id="wln" maxlength="16" placeholder="'+LT('Ton nom')+'" autofocus autocomplete="off" onkeydown="if(event.key===\'Enter\')wlGo()" aria-label="'+LT('Ton nom')+'"><button class="go" onclick="wlGo()">'+LT('Commencer')+'</button><label class="lnk" style="display:flex;align-items:center;justify-content:center"><input type="file" accept=".json,application/json" hidden onchange="wlImp(this)">'+LT('Importer ma sauvegarde')+'</label><div class="mut note" id="bkmsg"></div></div>';
+  document.body.appendChild(d);
+}
+wlInit();
+
+draw();
+
+/* ===== Rappel de sauvegarde après un ajout ===== */
+function rmShow(msg){ if(document.getElementById('rm')) return; const e=document.createElement('div'); e.id='rm'; e.setAttribute('role','status');
+  e.innerHTML='<div>'+(msg||'<b>Toupie enregistrée.</b> Pense à faire une sauvegarde : Options, puis Exporter. Sans ça, tu peux tout perdre si le navigateur nettoie ses données.')+'</div><div class="fact"><button class="go sm" onclick="rmClose();setTab(\'opts\')">Aller à la sauvegarde</button><button class="chip" onclick="rmClose()">Plus tard</button></div>'; document.body.appendChild(e); }
+function rmClose(){ const e=document.getElementById('rm'); if(e) e.remove(); }
+try{ const lb=+localStorage.getItem('arene_lastbk')||0, sh=+localStorage.getItem('arene_bkrem')||0, now=Date.now();
+  if(lb&&now-lb>30*864e5&&now-sh>3*864e5&&(CUSTOM.length||hLoad().length)){ localStorage.setItem('arene_bkrem',String(now)); setTimeout(()=>rmShow('<b>Ça fait plus de 30 jours</b> que tu n\'as pas sauvegardé. Fais un export dans Options pour ne rien perdre.'),1200); } }catch(e){}
+// Rappel après un ajout : "arene_dirty" note l'heure du DERNIER ajout non sauvegardé (il survit à la fermeture de l'appli).
+// Le rappel arrive 90 s après cet ajout ; si l'appli a été fermée avant, il vient dès la réouverture.
+// Il disparaît dès qu'une sauvegarde est faite, et il n'est montré qu'une fois toutes les 6 h au plus.
+try{ const t0=+localStorage.getItem('arene_dirty')||0; if(t0){ setTimeout(()=>{ try{
+    if(+localStorage.getItem('arene_dirty')!==t0) return;
+    const now=Date.now(), lb=+localStorage.getItem('arene_lastbk')||0, la=+localStorage.getItem('arene_bkadd')||0;
+    if(lb>=t0||now-la<216e5){ localStorage.removeItem('arene_dirty'); return; }
+    localStorage.removeItem('arene_dirty'); localStorage.setItem('arene_bkadd',String(now)); rmShow(); }catch(e){} },Math.max(1200,t0+90000-Date.now())); } }catch(e){}
+['gesturestart','gesturechange','gestureend'].forEach(g=>document.addEventListener(g,e=>e.preventDefault()));
+const PBOOT=photosBoot().catch(()=>{});
+try{ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }catch(e){}
+// iPhone : après le clavier (noms des joueurs, recherche…), la barre du bas pouvait rester coincée au milieu de l'écran.
+// Quand plus aucun champ n'est actif et que la vue est décalée, on remet la page d'aplomb.
+try{ const vv=window.visualViewport; let tm; const fixVp=()=>{ clearTimeout(tm); tm=setTimeout(()=>{
+    const a=document.activeElement; if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
+    if(vv&&(Math.abs(vv.height-innerHeight)>1||vv.offsetTop>1||vv.pageTop>scrollY+1)){ scrollTo(scrollX,scrollY); const tb=document.getElementById('tabs'); if(tb){ tb.style.display='none'; void tb.offsetHeight; tb.style.display=''; } } },150); };
+  if(vv){ vv.addEventListener('resize',fixVp); vv.addEventListener('scroll',fixVp); }
+  document.addEventListener('focusout',fixVp); addEventListener('orientationchange',fixVp); addEventListener('pageshow',fixVp);
+}catch(e){}
