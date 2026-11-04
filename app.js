@@ -125,7 +125,8 @@ addEventListener('resize',()=>{ if(bgMode!=='actuel') bgSize(); });
 { let m='actuel'; try{ m=localStorage.getItem('arene_bg')||'actuel'; }catch(e){} setBg(m); }
 /* Les toupies viennent de data.js */
 function fatal(titre,lignes){
-  document.body.innerHTML='<div style="padding:24px;font:16px/1.5 system-ui,sans-serif;color:#E5E7EB;background:#111318;min-height:100vh"><h2 style="color:#E58FB4;margin:0 0 12px">'+titre+'</h2>'+lignes.map(l=>'<p>'+l+'</p>').join('')+'</div>';
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  document.body.innerHTML='<div style="padding:24px;font:16px/1.5 system-ui,sans-serif;color:#E5E7EB;background:#111318;min-height:100vh"><h2 style="color:#E58FB4;margin:0 0 12px">'+esc(titre)+'</h2>'+lignes.map(l=>'<p>'+esc(l)+'</p>').join('')+'</div>';
   throw new Error(titre);
 }
 const CKEY='arene_custom';
@@ -1200,7 +1201,7 @@ function pickUI(){
   const imgp=r=>img(r.img,'sm');
   const col=p=>`<div class="pk s${p} p${p}" style="--pc:${PCOL[p]}"><div class="pnm">${esc(G.M.names[p])}</div>`+[0,1,2].map(s=>{
     const r=resolve(G.M.p[p][s]),u=G.used[p].includes(s);
-    return `<button class="pks ${G.pick[p]===s?'on':''}" ${u?'disabled':''} onclick="pickSlot(${p},${s})">${imgp(r)}<span><b>${r.blade}</b><small>${u?'Déjà utilisée':r.name}</small></span></button>`;
+    return `<button class="pks ${G.pick[p]===s?'on':''}" ${u?'disabled':''} onclick="pickSlot(${p},${s})">${imgp(r)}<span><b>${esc(r.blade)}</b><small>${u?'Déjà utilisée':esc(r.name)}</small></span></button>`;
   }).join('')+'</div>';
   const ok=G.pick[0]!==null&&G.pick[1]!==null;
   setOv(`<div class="arena pickv"><div class="ahd">${xbtn}<span>Round ${G.round}</span><span></span></div><div class="mid mut">Chaque joueur choisit sa toupie pour ce round</div>${col(0)}${col(1)}<div class="foot"><button class="go" ${ok?'':'disabled'} onclick="confirmPick()">Valider</button></div></div>`);
@@ -1211,7 +1212,7 @@ function side(p){
   const r=cur(p),on=G.phase==='fight',rd=G.phase==='ready';
   const ctl=rd?`<button class="rdy ${G.ready[p]?'on':''}" onclick="setReady(${p})">Prêt<i>${G.ready[p]?' ✓':''}</i></button>`
     :`<div class="pts">${FIN.map(([k,n])=>`<button ${on?'':'disabled'} onclick="score(${p},${n},'${k}')"><span>${FL(k)}</span><b>+${n}</b></button>`).join('')}</div>`;
-  return `<div class="side s${p} p${p}" style="--pc:${PCOL[p]}"><div class="si"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}<div class="bn">${r.blade}</div><div class="bs">${r.name===r.blade?'':r.name}</div><div class="sc">${G.score[p]}</div></div>${ctl}</div>`;
+  return `<div class="side s${p} p${p}" style="--pc:${PCOL[p]}"><div class="si"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}<div class="bn">${esc(r.blade)}</div><div class="bs">${r.name===r.blade?'':esc(r.name)}</div><div class="sc">${G.score[p]}</div></div>${ctl}</div>`;
 }
 const SND={};
 function loadSnd(){ ['p1','p2','sc','nul','next','cd'].forEach(k=>{ try{ const a=new Audio('sons/'+(k==='cd'&&LANG!=='fr'?'cd_en':k)+'.mp3'); a.preload='auto'; SND[k]=a; }catch(e){} }); }
@@ -1491,7 +1492,7 @@ function arena(){
   setOv(`<div class="arena"><div class="ahd">${xbtn}<span>${G.bo>1?'BO'+G.bo+' · '+G.wins[0]+'–'+G.wins[1]+' · Match '+G.mn+' · ':''}Round ${G.round}${G.max?' sur '+G.max:''}</span><span>Premier à ${G.M.target}</span></div><div class="mid">${mid}</div>${side(0)}${side(1)}</div>`);
   mountStage();
 }
-const cdc=p=>{ const r=cur(p); return `<div class="cdc p${p}" style="--pc:${PCOL[p]}"><div class="cdp"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}</div><div class="cdn"><div class="bn">${r.blade}</div><div class="bs">${r.name===r.blade?'':r.name}</div></div></div>`; };
+const cdc=p=>{ const r=cur(p); return `<div class="cdc p${p}" style="--pc:${PCOL[p]}"><div class="cdp"><div class="pnm">${esc(G.M.names[p])}</div>${img(r.img)}</div><div class="cdn"><div class="bn">${esc(r.blade)}</div><div class="bs">${r.name===r.blade?'':esc(r.name)}</div></div></div>`; };
 async function launch(){
   if(!G||G.phase!=='ready') return;
   const id=++run; G.phase='count';
