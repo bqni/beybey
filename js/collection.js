@@ -318,9 +318,15 @@ function bpDraw(){ const f=document.getElementById('fm'); if(!f||!BP) return; co
   const e=document.getElementById('bp_q'); if(e&&!BP.q) setTimeout(()=>{ try{ e.focus({preventScroll:true}); }catch(x){} },60); }
 function bpQ(v){ BP.q=v; const l=document.getElementById('bp_l'); if(l) l.innerHTML=bpList(); }
 function bpClose(){ BP=null; fmClose(); }
+function pkInfo(o,k){ // détails sous chaque pièce de la liste : stats, hauteur, dents, diamètre
+  const t=[]; if(o.s&&o.s.length===3) t.push(`A ${o.s[0]} · D ${o.s[1]} · S ${o.s[2]}`);
+  if(k===0&&typeof PHD!=='undefined'&&PHD[o.n]) t.push(PHD[o.n]+' mm');
+  if(k===1&&o.h) t.push(LT('Hauteur')+' '+o.h);
+  if(k===2){ const b=typeof PHBIT!=='undefined'&&PHBIT[o.n]; if(b) t.push(LT('Dents')+' '+b[0]+' · '+b[1]+' mm'); if(o.dash!==''&&o.dash!==undefined) t.push('Dash '+o.dash+' · Burst '+o.burst); }
+  return t.length?`<small class="pki">${t.join(' · ')}</small>`:''; }
 function bpList(){
   const L=bdLists(), Ls=[L.bl,L.ra,L.bi][BP.k], no=L.nOwn[BP.k], q=BP.q.trim(), cur=BD[BP.n][BP.k];
-  const row=(o,i)=>`<button class="pkr${i===cur?' cur':''}" onclick="bpPick(${i})">${img(o.img,'sm')}<span class="pkn"><b>${esc(o.n)}</b><small>${o.ty?typ(o.ty):''}${o.w?' <i>'+o.w+' g</i>':''}</small></span></button>`;
+  const row=(o,i)=>`<button class="pkr${i===cur?' cur':''}" onclick="bpPick(${i})">${img(o.img,'sm')}<span class="pkn"><b>${esc(o.n)}</b><small>${o.ty?typ(o.ty):''}${o.w?' <i>'+o.w+' g</i>':''}</small>${pkInfo(o,BP.k)}</span></button>`;
   const ok=o=>!q||pkOk(o.n,q), a=Ls.map((o,i)=>[o,i]).filter(x=>x[1]<no&&ok(x[0])), c=Ls.map((o,i)=>[o,i]).filter(x=>x[1]>=no&&ok(x[0]));
   let h='';
   if(a.length) h+=(c.length?`<div class="fs">${LT('Ma collection')}</div>`:'')+a.map(x=>row(x[0],x[1])).join('');
