@@ -1,12 +1,21 @@
 // Beybey : mode hors ligne. Le site s'ouvre sans internet après une première visite.
 // Réseau d'abord (tu as toujours la dernière version), cache en secours.
 const CACHE = 'beybey-v2';
-const BASE = ['./', 'index.html', 'style.css', 'boot.js', 'app.js', 'lib/qrcode.js', 'lib/jsQR.js', 'CREDITS.txt', 'data.js', 'catalogue.js', 'manifest.json', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png',
+// Cœur de l'appli : doit être complet, sinon la mise à jour est refusée et l'ancienne version reste active (pas d'appli à moitié à jour).
+const CORE = ['./', 'index.html', 'style.css', 'boot.js', 'app.js', 'data.js', 'catalogue.js', 'lib/qrcode.js', 'lib/jsQR.js', 'manifest.json'];
+// Le reste est mis en cache au mieux : s'il manque, l'appli marche quand même (réseau d'abord).
+const EXTRA = ['CREDITS.txt', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png',
   'fonts/inter-latin-400-normal.woff2', 'fonts/inter-latin-500-normal.woff2', 'fonts/inter-latin-600-normal.woff2', 'fonts/chakra-petch-latin-400-normal.woff2', 'fonts/chakra-petch-latin-500-normal.woff2', 'fonts/chakra-petch-latin-600-normal.woff2', 'fonts/chakra-petch-latin-700-normal.woff2',
   'sons/cd.mp3', 'sons/cd_en.mp3', 'sons/next.mp3', 'sons/nul.mp3', 'sons/p1.mp3', 'sons/p2.mp3', 'sons/sc.mp3'].concat(Array.from({length:16},(_,i)=>'avatars/a'+String(i+1).padStart(2,'0')+'.webp'));
+const fresh = u => new Request(u, { cache: 'reload' });
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => Promise.all(BASE.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting()));
+  e.waitUntil((async () => {
+    const c = await caches.open(CACHE);
+    await c.addAll(CORE.map(fresh));
+    await Promise.all(EXTRA.map(u => c.add(fresh(u)).catch(() => {})));
+    await self.skipWaiting();
+  })());
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => n.startsWith('beybey-') && n !== CACHE).map(n => caches.delete(n)))).then(() => self.clients.claim()));
