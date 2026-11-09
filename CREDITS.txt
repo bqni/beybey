@@ -10,14 +10,10 @@ Catalogue des toupies (catalogue.js et photos/cat)
   Données et images de la communauté Beydex : github.com/catgamer109/Beydex-Public-Resources
   Les noms, visuels et marques des toupies appartiennent à Takara Tomy et à Hasbro.
 
-Catalogue : ajouts (catalogue-ajouts.js : Metal Coat et éditions spéciales)
-  Liste des éditions : Beyblade X Viewer (https://beyblade.phstudy.org/), avec l'accord de son auteur. Poids de blades mesurés par
-  競技玩具研究所 (http://kyoganken.web.fc2.com/), utilisés avec leur accord. Photos et autres poids : catalogue Beydex ci-dessus.
-
-Mesures complémentaires (ph.js : diamètres des blades, dents et hauteur des bits)
-  Beyblade X Viewer (https://beyblade.phstudy.org/), avec l'accord de son auteur, qui demande une mention et un lien.
-  Une grande partie de ces mesures vient des recherches de 競技玩具研究所 (Kyogan Kenkyujo, http://kyoganken.web.fc2.com/),
-  utilisées avec leur accord (échange d'informations réciproque). Les mesures originales leur appartiennent.
+Données de pièces (ph.js, stats.js, catalogue-ajouts.js)
+  Beyblade X Viewer, PH Study (https://beyblade.phstudy.org/) et 競技玩具研究所 (http://kyoganken.web.fc2.com/), avec leur accord.
+  Beyblade Wiki (https://beyblade.fandom.com/), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/).
+  Ces données gardent la licence de leurs sources.
 
 Avatars (avatars/)
   Images générées avec ChatGPT (OpenAI), choisies et retouchées pour l'appli.
@@ -238,8 +234,3 @@ jsQR · Apache License 2.0
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
-
-Stats avancées (stats.js : ATK / DEF / STA, dash, burst, hauteur)
-  Source : Beyblade X Viewer, PH Study (https://beyblade.phstudy.org), utilisées avec leur accord.
-  Valeurs de jeu officielles des pièces, données à titre indicatif.
