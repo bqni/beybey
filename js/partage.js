@@ -142,9 +142,15 @@ function frH2H(f){
   const L=hLoad().filter(r=>r.me&&(!FRC||r.cat===FRC)&&((r.ids&&r.ids[1])?r.ids[1]===f.id:nz(r.n[1])===nz(f.n))); let w=0,l=0;
   L.forEach(r=>{ if(r.w===0) w++; else if(r.w===1) l++; }); return {n:L.length,w,l};
 }
-function frLinkL(f){ // noms tapés à la main (sans fiche ami) dans mon historique, des deux côtés, y compris les matchs joués par d'autres
-  const m={}; hLoad().forEach(r=>{ if(!r.n) return; [0,1].forEach(j=>{ if(j===0&&r.me) return; if(r.ids&&r.ids[j]) return; const k=nz(r.n[j]); if(!k||k===nz(f.n)) return; (m[k]=m[k]||{k,n:r.n[j],c:0}).c++; }); });
+function frMine(){ // matchs joués en « joueur 2 » sous mon nom, pas encore comptés pour moi
+  return hLoad().filter(r=>!r.me&&r.n&&isMe(r.n[1])&&!isMe(r.n[0])&&r.id>=(PRF.rst||0)); }
+function frClaim(){ const L=hLoad(); let c=0; L.forEach(r=>{ if(!r.me&&r.n&&isMe(r.n[1])&&!isMe(r.n[0])&&r.id>=(PRF.rst||0)){ histFlip(r); c++; } });
+  if(c) hSave(L); if(st.tab==='match') drawMatch(); else if(st.tab==='opts'||st.tab==='amis') draw(); shMsg(LT('Matchs comptés'),c+' match'+(c>1?'s':'')+' '+LT('ajoutés à tes stats.')); }
+function frLinkL(f){ // noms tapés à la main (sans fiche ami) dans mon historique, des deux côtés, sauf mon nom et celui de mes amis
+  const m={}, friends=Object.values(fLoad()).map(x=>nz(x.n)); hLoad().forEach(r=>{ if(!r.n) return; [0,1].forEach(j=>{ if(j===0&&r.me) return; if(r.ids&&r.ids[j]) return; const k=nz(r.n[j]); if(!k||k===nz(f.n)||isMe(r.n[j])||friends.includes(k)) return; (m[k]=m[k]||{k,n:r.n[j],c:0}).c++; }); });
   return Object.values(m).sort((a,b)=>b.c-a.c); }
+function frMineH(){ const n=frMine().length; if(!n) return '';
+  return `<div class="optl" style="padding:0">${LT('Tes matchs en joueur 2')}</div><div class="mut note">${LT('Ces matchs ont été joués sous ton nom en joueur 2, ils ne sont pas comptés dans tes stats.')}</div><button class="chip" onclick="frClaim()">${LT('Les compter pour moi')} (${n})</button>`; }
 function frLinkH(f){ const L=frLinkL(f); if(!L.length) return '';
   return `<div class="optl" style="padding:0">${LT('Matchs sous un autre nom')}</div><div class="mut note">${LT('Des matchs ont été joués contre un nom tapé à la main. Si c\'est lui, touche son nom pour les relier à sa fiche.')}</div><div class="flist pcard">${L.map(x=>`<button class="frow" onclick="frLink('${f.id}','${encodeURIComponent(x.k).replace(/'/g,'%27')}')"><b>${esc(x.n)}</b><span class="mut">${x.c} match${x.c>1?'s':''}</span></button>`).join('')}</div>`; }
 function frLink(id,k){ const f=fLoad()[id]; if(!f) return; try{ k=decodeURIComponent(k); }catch(e){ return; }
@@ -164,7 +170,7 @@ function frOpen(id){
     ${catSeg(FRC,`frCat('${id}',`)}<div class="optl" style="padding:0">${LT('Toi contre')} ${esc(f.n)}</div>
     <div class="pfg">${c(H.n,LT('Matchs'))}${c(H.w,LT('Victoires'))}${c(H.l,LT('Défaites'))}${c(H.n?Math.round(100*H.w/H.n)+'%':'—',LT('Réussite'))}</div>
     ${S?`<div class="optl" style="padding:0">${LT('Ses stats')}${when?' · '+LT('au scan du')+' '+when:''}</div><div class="pfg">${c(S[0]||0,LT('Matchs'))}${c(S[1]||0,LT('Victoires'))}${c(S[2]||0,LT('Défaites'))}${c(S[0]?Math.round(100*S[1]/S[0])+'%':'—',LT('Réussite'))}</div>${S[3]?`<div class="mut note">${LT('Toupie la plus jouée')} : <b>${esc(S[3])}</b> ×${S[4]||0}</div>`:''}`:`<div class="mut note">${LT('Scanne sa toupie pour voir ses stats.')}</div>`}
-    ${frLinkH(f)}
+    ${frLinkH(f)}${frMineH()}
     ${H.n?`<button class="chip" onclick="frSend('${id}')">${LT('Envoyer nos matchs')}</button><div class="mut note">${LT('Envoie à ton ami un lien avec tous ses matchs que tu as (même anciens) : il les ajoute à son historique.')}</div>`:''}
     <div class="fact"><button class="chip dng" onclick="frDel(this,'${id}')">${LT('Retirer')}</button><button class="chip" onclick="FRL?frList():fmClose()">${LT(FRL?'Retour':'Fermer')}</button></div></div>`);
 }

@@ -2,11 +2,16 @@
 const HKEY='arene_hist';
 function hLoad(){ try{ const a=JSON.parse(localStorage.getItem(HKEY)||'[]'); if(!Array.isArray(a)) return []; const L=a.map(hClean).filter(Boolean), seen=new Set(); L.forEach((r,i)=>{ if(r.id<1e12||seen.has(r.id)){ r.id=1e9-1-i; r.oid=r.oid===undefined?undefined:r.oid; } seen.add(r.id); }); return L; }catch(e){ return []; } }
 function hSave(a){ try{ localStorage.setItem(HKEY,JSON.stringify(a.slice(0,300))); }catch(e){} }
+const isMe=n=>{ const k=nz(n); return !!k&&(k===nz(PRF.n)||(PRF.al||[]).includes(k)); };
+function histFlip(r){ // remet un match dans mon point de vue (moi en premier) : noms, scores, toupies, résultat
+  const f=a=>Array.isArray(a)?[a[1],a[0]]:a; r.n=f(r.n); r.s=f(r.s); r.b=f(r.b); if(r.pc) r.pc=f(r.pc);
+  r.ids=[PRF.id,(r.ids&&r.ids[0])||'']; r.w=r.w<0?-1:1-r.w; r.me=1; return r; }
 function histAdd(){
   try{
     const names=[0,1].map(p=>(G.tour?G.used[p]:[G.cur[p]]).map(sl=>resolve(G.M.p[p][sl]).name));
     const pcs=[0,1].map(p=>(G.tour?G.used[p]:[G.cur[p]]).map(sl=>resolve(G.M.p[p][sl]).pc.filter(Boolean).join(' · ')));
     const rec={id:Date.now(),pc:pcs,cat:G.tour?'tournoi':'simple',n:[G.M.names[0],G.M.names[1]],b:names,s:[G.score[0],G.score[1]],tg:G.M.target,bo:G.bo>1?G.bo:0,mn:G.mn,r:G.hist.length,me:G.M.me?1:0,ids:[G.M.me?PRF.id:((G.M.ids&&G.M.ids[0])||''),(G.M.ids&&G.M.ids[1])||''],w:G.score[0]>G.score[1]?0:G.score[1]>G.score[0]?1:-1};
+    if(!rec.me&&isMe(rec.n[1])&&isMe(rec.n[0])===false) histFlip(rec);
     const a=hLoad(); a.unshift(rec); hSave(a); G.hid=rec.id;
   }catch(e){}
 }
