@@ -87,6 +87,7 @@ function frRecv(d){
   shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Ami ajouté')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
     <div class="fhelp">${favH({n:nm,av:avOk(d.a)},'')} <b>${esc(nm)}</b>${g?' · '+(g[0]||0)+' '+LT('matchs')+', '+(g[1]||0)+' '+LT('victoires'):''}</div>
     <div class="mut note">${had?LT('Sa fiche est mise à jour.'):LT('Il est dans ta liste d\'amis. Tu peux lui ajouter une note.')}</div>
+    ${frLinkH({id,n:nm})}
     <div class="fact"><button class="go sm" onclick="frOpen('${id}')">${LT('Voir la fiche')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div></div>`);
   if(st.tab==='opts'||st.tab==='amis') draw(); else if(st.tab==='match') drawMatch();
 }
@@ -141,6 +142,14 @@ function frH2H(f){
   const L=hLoad().filter(r=>r.me&&(!FRC||r.cat===FRC)&&((r.ids&&r.ids[1])?r.ids[1]===f.id:nz(r.n[1])===nz(f.n))); let w=0,l=0;
   L.forEach(r=>{ if(r.w===0) w++; else if(r.w===1) l++; }); return {n:L.length,w,l};
 }
+function frLinkL(f){ // noms d'adversaires tapés à la main (sans fiche ami) dans mon historique
+  const m={}; hLoad().forEach(r=>{ if(!r.me||!r.n||(r.ids&&r.ids[1])) return; const k=nz(r.n[1]); if(!k||k===nz(f.n)) return; (m[k]=m[k]||{k,n:r.n[1],c:0}).c++; });
+  return Object.values(m).sort((a,b)=>b.c-a.c); }
+function frLinkH(f){ const L=frLinkL(f); if(!L.length) return '';
+  return `<div class="optl" style="padding:0">${LT('Matchs sous un autre nom')}</div><div class="mut note">${LT('Des matchs ont été joués contre un nom tapé à la main. Si c\'est lui, touche son nom pour les relier à sa fiche.')}</div><div class="flist pcard">${L.map(x=>`<button class="frow" onclick="frLink('${f.id}','${encodeURIComponent(x.k).replace(/'/g,'%27')}')"><b>${esc(x.n)}</b><span class="mut">${x.c} match${x.c>1?'s':''}</span></button>`).join('')}</div>`; }
+function frLink(id,k){ const f=fLoad()[id]; if(!f) return; try{ k=decodeURIComponent(k); }catch(e){ return; } const L=hLoad(); let c=0;
+  L.forEach(r=>{ if(r.me&&r.n&&!(r.ids&&r.ids[1])&&nz(r.n[1])===k){ r.n[1]=f.n; r.ids=[(r.ids&&r.ids[0])||'',f.id]; c++; } });
+  if(c){ hSave(L); } if(st.tab==='match') drawMatch(); frOpen(id); }
 function frOpen(id){
   const f=fLoad()[id]; if(!f) return; const H=frH2H(f), S0=f.st, S=S0&&(Array.isArray(S0[0])?S0[FRC==='simple'?1:FRC==='tournoi'?2:0]:(FRC?null:S0)), c=(v,l)=>`<div class="pfc"><b>${v}</b><span>${l}</span></div>`;
   const when=f.at?new Date(f.at).toLocaleDateString(LOC,{day:'numeric',month:'short'}):'';
@@ -149,6 +158,7 @@ function frOpen(id){
     ${catSeg(FRC,`frCat('${id}',`)}<div class="optl" style="padding:0">${LT('Toi contre')} ${esc(f.n)}</div>
     <div class="pfg">${c(H.n,LT('Matchs'))}${c(H.w,LT('Victoires'))}${c(H.l,LT('Défaites'))}${c(H.n?Math.round(100*H.w/H.n)+'%':'—',LT('Réussite'))}</div>
     ${S?`<div class="optl" style="padding:0">${LT('Ses stats')}${when?' · '+LT('au scan du')+' '+when:''}</div><div class="pfg">${c(S[0]||0,LT('Matchs'))}${c(S[1]||0,LT('Victoires'))}${c(S[2]||0,LT('Défaites'))}${c(S[0]?Math.round(100*S[1]/S[0])+'%':'—',LT('Réussite'))}</div>${S[3]?`<div class="mut note">${LT('Toupie la plus jouée')} : <b>${esc(S[3])}</b> ×${S[4]||0}</div>`:''}`:`<div class="mut note">${LT('Scanne sa toupie pour voir ses stats.')}</div>`}
+    ${frLinkH(f)}
     <div class="fact"><button class="chip dng" onclick="frDel(this,'${id}')">${LT('Retirer')}</button><button class="chip" onclick="FRL?frList():fmClose()">${LT(FRL?'Retour':'Fermer')}</button></div></div>`);
 }
 function frNote(id,v){ const F=fLoad(); if(F[id]){ F[id].note=String(v).slice(0,60); fSave(F); } }
