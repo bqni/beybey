@@ -152,7 +152,7 @@ function frLink(id,k){ const f=fLoad()[id]; if(!f) return; try{ k=decodeURICompo
   L.forEach(r=>{ if(!r.n) return; [0,1].forEach(j=>{ if(j===0&&r.me) return; if(r.ids&&r.ids[j]) return; if(nz(r.n[j])!==k) return; r.n[j]=f.n; r.ids=[(r.ids&&r.ids[0])||'',(r.ids&&r.ids[1])||'']; r.ids[j]=f.id; c++; }); });
   if(c){ hSave(L); } if(st.tab==='match') drawMatch(); frOpen(id); }
 async function frSend(id){ // envoie à un ami tous nos matchs ensemble (lien), même anciens : il les ajoute à son historique
-  const f=fLoad()[id]; if(!f) return; let list=hLoad().filter(r=>r.me&&r.ids&&r.ids[1]===id).slice(0,60);
+  const f=fLoad()[id]; if(!f) return; let list=hLoad().filter(r=>r.ids&&(r.ids[1]===id||r.ids[0]===id)).slice(0,60); // tous ses matchs, même contre quelqu'un d'autre
   if(!list.length) return shMsg(LT('Envoyer nos matchs'),LT('Aucun match avec lui.'));
   let code=''; while(list.length){ code=await packJ(sessPack(list)); if((QRB+'#r='+code).length<=8000||list.length===1) break; list=list.slice(0,Math.max(1,list.length-5)); }
   QRU=QRB+'#r='+code; qrSend(); }
@@ -165,7 +165,7 @@ function frOpen(id){
     <div class="pfg">${c(H.n,LT('Matchs'))}${c(H.w,LT('Victoires'))}${c(H.l,LT('Défaites'))}${c(H.n?Math.round(100*H.w/H.n)+'%':'—',LT('Réussite'))}</div>
     ${S?`<div class="optl" style="padding:0">${LT('Ses stats')}${when?' · '+LT('au scan du')+' '+when:''}</div><div class="pfg">${c(S[0]||0,LT('Matchs'))}${c(S[1]||0,LT('Victoires'))}${c(S[2]||0,LT('Défaites'))}${c(S[0]?Math.round(100*S[1]/S[0])+'%':'—',LT('Réussite'))}</div>${S[3]?`<div class="mut note">${LT('Toupie la plus jouée')} : <b>${esc(S[3])}</b> ×${S[4]||0}</div>`:''}`:`<div class="mut note">${LT('Scanne sa toupie pour voir ses stats.')}</div>`}
     ${frLinkH(f)}
-    ${H.n?`<button class="chip" onclick="frSend('${id}')">${LT('Envoyer nos matchs')}</button><div class="mut note">${LT('Envoie à ton ami un lien avec vos matchs (même anciens) : il les ajoute à son historique.')}</div>`:''}
+    ${H.n?`<button class="chip" onclick="frSend('${id}')">${LT('Envoyer nos matchs')}</button><div class="mut note">${LT('Envoie à ton ami un lien avec tous ses matchs que tu as (même anciens) : il les ajoute à son historique.')}</div>`:''}
     <div class="fact"><button class="chip dng" onclick="frDel(this,'${id}')">${LT('Retirer')}</button><button class="chip" onclick="FRL?frList():fmClose()">${LT(FRL?'Retour':'Fermer')}</button></div></div>`);
 }
 function frNote(id,v){ const F=fLoad(); if(F[id]){ F[id].note=String(v).slice(0,60); fSave(F); } }
