@@ -142,14 +142,20 @@ function frH2H(f){
   const L=hLoad().filter(r=>r.me&&(!FRC||r.cat===FRC)&&((r.ids&&r.ids[1])?r.ids[1]===f.id:nz(r.n[1])===nz(f.n))); let w=0,l=0;
   L.forEach(r=>{ if(r.w===0) w++; else if(r.w===1) l++; }); return {n:L.length,w,l};
 }
-function frLinkL(f){ // noms d'adversaires tapés à la main (sans fiche ami) dans mon historique
-  const m={}; hLoad().forEach(r=>{ if(!r.me||!r.n||(r.ids&&r.ids[1])) return; const k=nz(r.n[1]); if(!k||k===nz(f.n)) return; (m[k]=m[k]||{k,n:r.n[1],c:0}).c++; });
+function frLinkL(f){ // noms tapés à la main (sans fiche ami) dans mon historique, des deux côtés, y compris les matchs joués par d'autres
+  const m={}; hLoad().forEach(r=>{ if(!r.n) return; [0,1].forEach(j=>{ if(j===0&&r.me) return; if(r.ids&&r.ids[j]) return; const k=nz(r.n[j]); if(!k||k===nz(f.n)) return; (m[k]=m[k]||{k,n:r.n[j],c:0}).c++; }); });
   return Object.values(m).sort((a,b)=>b.c-a.c); }
 function frLinkH(f){ const L=frLinkL(f); if(!L.length) return '';
   return `<div class="optl" style="padding:0">${LT('Matchs sous un autre nom')}</div><div class="mut note">${LT('Des matchs ont été joués contre un nom tapé à la main. Si c\'est lui, touche son nom pour les relier à sa fiche.')}</div><div class="flist pcard">${L.map(x=>`<button class="frow" onclick="frLink('${f.id}','${encodeURIComponent(x.k).replace(/'/g,'%27')}')"><b>${esc(x.n)}</b><span class="mut">${x.c} match${x.c>1?'s':''}</span></button>`).join('')}</div>`; }
-function frLink(id,k){ const f=fLoad()[id]; if(!f) return; try{ k=decodeURIComponent(k); }catch(e){ return; } const L=hLoad(); let c=0;
-  L.forEach(r=>{ if(r.me&&r.n&&!(r.ids&&r.ids[1])&&nz(r.n[1])===k){ r.n[1]=f.n; r.ids=[(r.ids&&r.ids[0])||'',f.id]; c++; } });
+function frLink(id,k){ const f=fLoad()[id]; if(!f) return; try{ k=decodeURIComponent(k); }catch(e){ return; }
+  const L=hLoad(); let c=0;
+  L.forEach(r=>{ if(!r.n) return; [0,1].forEach(j=>{ if(j===0&&r.me) return; if(r.ids&&r.ids[j]) return; if(nz(r.n[j])!==k) return; r.n[j]=f.n; r.ids=[(r.ids&&r.ids[0])||'',(r.ids&&r.ids[1])||'']; r.ids[j]=f.id; c++; }); });
   if(c){ hSave(L); } if(st.tab==='match') drawMatch(); frOpen(id); }
+async function frSend(id){ // envoie à un ami tous nos matchs ensemble (lien), même anciens : il les ajoute à son historique
+  const f=fLoad()[id]; if(!f) return; let list=hLoad().filter(r=>r.me&&r.ids&&r.ids[1]===id).slice(0,60);
+  if(!list.length) return shMsg(LT('Envoyer nos matchs'),LT('Aucun match avec lui.'));
+  let code=''; while(list.length){ code=await packJ(sessPack(list)); if((QRB+'#r='+code).length<=8000||list.length===1) break; list=list.slice(0,Math.max(1,list.length-5)); }
+  QRU=QRB+'#r='+code; qrSend(); }
 function frOpen(id){
   const f=fLoad()[id]; if(!f) return; const H=frH2H(f), S0=f.st, S=S0&&(Array.isArray(S0[0])?S0[FRC==='simple'?1:FRC==='tournoi'?2:0]:(FRC?null:S0)), c=(v,l)=>`<div class="pfc"><b>${v}</b><span>${l}</span></div>`;
   const when=f.at?new Date(f.at).toLocaleDateString(LOC,{day:'numeric',month:'short'}):'';
@@ -159,6 +165,7 @@ function frOpen(id){
     <div class="pfg">${c(H.n,LT('Matchs'))}${c(H.w,LT('Victoires'))}${c(H.l,LT('Défaites'))}${c(H.n?Math.round(100*H.w/H.n)+'%':'—',LT('Réussite'))}</div>
     ${S?`<div class="optl" style="padding:0">${LT('Ses stats')}${when?' · '+LT('au scan du')+' '+when:''}</div><div class="pfg">${c(S[0]||0,LT('Matchs'))}${c(S[1]||0,LT('Victoires'))}${c(S[2]||0,LT('Défaites'))}${c(S[0]?Math.round(100*S[1]/S[0])+'%':'—',LT('Réussite'))}</div>${S[3]?`<div class="mut note">${LT('Toupie la plus jouée')} : <b>${esc(S[3])}</b> ×${S[4]||0}</div>`:''}`:`<div class="mut note">${LT('Scanne sa toupie pour voir ses stats.')}</div>`}
     ${frLinkH(f)}
+    ${H.n?`<button class="chip" onclick="frSend('${id}')">${LT('Envoyer nos matchs')}</button><div class="mut note">${LT('Envoie à ton ami un lien avec vos matchs (même anciens) : il les ajoute à son historique.')}</div>`:''}
     <div class="fact"><button class="chip dng" onclick="frDel(this,'${id}')">${LT('Retirer')}</button><button class="chip" onclick="FRL?frList():fmClose()">${LT(FRL?'Retour':'Fermer')}</button></div></div>`);
 }
 function frNote(id,v){ const F=fLoad(); if(F[id]){ F[id].note=String(v).slice(0,60); fSave(F); } }
