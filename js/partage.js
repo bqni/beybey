@@ -80,6 +80,15 @@ function rcOpen(code,p){
     <div class="mut note">${LT('« Jouer avec » ne touche pas à ta collection ni à tes stats.')}</div>
     <div class="fact"><button class="go sm" onclick="rcPlay()">${LT('Jouer avec')}</button><button class="chip" onclick="rcAdd(this)">${LT('Ajouter à ma collection')}</button></div><div class="mut note" id="rcm" aria-live="polite"></div></div>`);
 }
+function pasteOpen(){ shOpen(`<div class="fwrap"><div class="fh"><h2>${LT('Coller un lien')}</h2><button class="chip sq" onclick="fmClose()" aria-label="Fermer">✕</button></div>
+  <div class="fhelp">${LT('Colle ici le lien Beybey que tu as reçu (matchs, toupie ou fiche ami).')}</div>
+  <input class="nm" id="pst" placeholder="https://…#r=…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${LT('Lien')}" onkeydown="if(event.key==='Enter'){event.preventDefault();pasteGo();}">
+  <div class="mut note bmsg" id="pstm" aria-live="polite"></div>
+  <div class="fact"><button class="go sm" onclick="pasteGo()">${LT('Ouvrir')}</button><button class="chip" onclick="fmClose()">${LT('Fermer')}</button></div></div>`);
+  setTimeout(()=>{ const e=document.getElementById('pst'); if(e) e.focus(); },60); }
+function pasteGo(){ const e=document.getElementById('pst'), m=e&&e.value.match(/#([sr])=([A-Za-z0-9_-]+)/);
+  if(!m){ const x=document.getElementById('pstm'); if(x) x.textContent=LT('Ce lien ne vient pas de Beybey.'); return; }
+  fmClose(); if(m[1]==='r') rrOpen(m[2]); else rcOpen(m[2],-1); }
 function frRecv(d){
   const id=sid(d.i), nm=ss(d.n,20).trim()||LT('Invité'), S=stClean(d.st), g=S&&S[0];
   if(id===PRF.id) return shMsg(LT('Ma fiche ami'),LT('C\'est ta propre fiche.'));
@@ -118,7 +127,7 @@ function fSave(o){ try{ localStorage.setItem(FKEY,JSON.stringify(o)); }catch(e){
 function fUpsert(id,n,sts,av){ id=sid(id); if(!id||id===PRF.id) return; const F=fLoad(), f=F[id]||{id,n:'',note:''}; if(ss(n,20)) f.n=ss(n,20); if(av!==undefined){ const a=avOk(av); if(a) f.av=a; else delete f.av; } const c=stClean(sts); if(c){ f.st=c; f.at=Date.now(); } F[id]=f; fSave(F); }
 function friendsPage(q){
   FRL=false; q=q||''; const F=Object.values(fLoad()).sort((a,b)=>String(a.n).localeCompare(b.n)), all=F.length;
-  const btns='<div class="frame"><button onclick="qrShow([])"><span>'+LT('Code')+'</span></button><button onclick="scOpen(-1)"><span>'+LT('Scanner')+'</span></button></div>';
+  const btns='<div class="frame"><button onclick="qrShow([])"><span>'+LT('Code')+'</span></button><button onclick="scOpen(-1)"><span>'+LT('Scanner')+'</span></button><button onclick="pasteOpen()"><span>'+LT('Coller un lien')+'</span></button></div>';
   if(!all) return '<div class="ops frp"><div class="pcard frempty"><b>'+LT('Pas encore d\'amis')+'</b><p class="mut">'+LT('Pour ajouter un pote, scanne son code QR. Il peut l\'afficher avec le bouton Code, et toi tu peux montrer le tien de la même façon.')+'</p></div>'+btns+'</div>';
   const L=q?F.filter(f=>nz(f.n+' '+(f.note||'')).includes(nz(q))):F;
   return '<div class="ops frp">'+btns+(all>6?'<input class="nm frn" id="frq" value="'+esc(q)+'" placeholder="'+LT('Chercher un ami…')+'" oninput="frSearch(this.value)" aria-label="'+LT('Chercher')+'">':'')+'<div class="optl">'+LT('Amis')+' ('+all+')</div><div class="flist pcard" id="frl">'+frRows(L)+'</div></div>';
@@ -131,7 +140,7 @@ function frList(q){
   FRL=true; q=q||''; const F=Object.values(fLoad()).sort((a,b)=>String(a.n).localeCompare(b.n)), all=F.length;
   const L=q?F.filter(f=>nz(f.n+' '+(f.note||'')).includes(nz(q))):F;
   shOpen(`<div class="fwrap hall"><div class="fh"><h2>${LT('Amis')} (${all})</h2><button class="chip sq" onclick="FRL=false;fmClose()" aria-label="Fermer">✕</button></div>
-    <div class="frame"><button onclick="scOpen(-1)"><span>${LT('Scanner')}</span></button><button onclick="qrShow([])"><span>${LT('Mon QR')}</span></button></div>
+    <div class="frame"><button onclick="scOpen(-1)"><span>${LT('Scanner')}</span></button><button onclick="pasteOpen()"><span>${LT('Coller un lien')}</span></button><button onclick="qrShow([])"><span>${LT('Mon QR')}</span></button></div>
     ${all>6?`<input class="nm frn" id="frq" value="${esc(q)}" placeholder="${LT('Chercher un ami…')}" oninput="frList(this.value)" aria-label="${LT('Chercher')}">`:''}
     <div class="hscroll"><div class="flist pcard">${L.map(f=>`<button class="frow" onclick="frOpen('${f.id}')"><b>${esc(f.n)}</b>${f.note?`<span class="mut">${esc(f.note)}</span>`:''}</button>`).join('')||`<div class="mut note">${LT('Aucun résultat')}</div>`}</div></div></div>`);
   if(q){ const e=document.getElementById('frq'); if(e){ e.focus(); e.setSelectionRange(q.length,q.length); } }
